@@ -37,13 +37,13 @@
 </head>
 
 <body>
-    
+
     <div class="alert alert-info alert-dismissible alert-visible hidden" role="alert" id="edit-alert-box">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <span id="edit-alert">You can <a id="edit" class="alert-link">edit this page</a>.<a id="export" class="alert-link">Export or Send this page
         (slack, googlegroups, email, download).</a> <a id="share" class="hidden alert-link">Allow others to edit this page.</a><a id="delete" class="hidden alert-link"> Delete this page.</a></span>
     </div>
-    
+
     </div>
     </p>
     <div class="container">
@@ -52,10 +52,10 @@
             <hr>
             <p class="event-description">Loading...</p>
             <br>
-                    <br>
-                    <br>
-                    <hr>
-                    <p>Read more at the event page:<span id="print-url"></span></p>
+            <br>
+            <br>
+            <hr>
+            <p>Read more at the event page:<span id="print-url"></span></p>
         </div>
         <div class="row" id="main">
             <div class="box">
@@ -66,7 +66,7 @@
                 </div>
                 <div class="col-md-12" id="event-description-box">
                     <div class="editable" id="event-description">Loading...</div>
-                    
+
                 </div>
 
                 <div class="clearfix"></div>
@@ -74,7 +74,7 @@
         </div>
 
         <script src="https://static.getclicky.com/js"></script>
-        <script>try{clicky.init(100869133)}catch(e){}</script>
+        <script>try {clicky.init(100869133)}catch (e) {}</script>
         <noscript><p><img alt="Clicky" width="1" height="1" src="https://in.getclicky.com/100869133ns.gif"></p></noscript>
 
     </div>
@@ -84,14 +84,17 @@
     <script src="js/jspdf.min.js"></script>
     <script src="js/printthis.js"></script>
     <script>
-        /* global firebase $ getQuery tinymce btoa auth Singulr*/
+        /* global firebase $ getQuery tinymce btoa auth Singulr jsPDF*/
+
         $(".at").html("@");
+        $(".event-page-url").html("https://t485.org/event.html?event=" + getQuery("event"));
         if (getQuery("event") === null || getQuery("event") === "") {
             window.location.href = "/resources.html";
         }
-        firebase.database().ref('/events/' + getQuery("event")).once('value').then(function(snapshot) {
+        firebase.database().ref('/events/' + encodeURIComponent(getQuery("event"))/*URL is url safe anyways, this is to trigger the data = null 404
+        when the event contains non URL safe charcters*/).once('value').then(function(snapshot) {
             var data = snapshot.val();
-            if (data === null) {
+            if (data === null || data === 0) {
                 $("#event-title").html("Error 404: Event Not Found");
                 $("#event-description").html("The specified event <b>" + getQuery("event") + "</b> was not found. If you typed in a link to view this page, try going to the <a href='resources.html'>resources page</a> and clicking a link from there.");
                 $(".event-title").html("Error 404: Event Not Found");
@@ -105,12 +108,13 @@
                 $(".event-title").html(data.title);
                 $(".event-description").html(data.description);
                 $("#print-url").html("<a href='" + "https://t485.org/event.html?event=" + getQuery("event") + "'>" + "https://t485.org/event.html?event=" + getQuery("event") + "</a>");
-
+                main();
             }
 
         });
 
-        if (getQuery("password") !== null) {
+       function main() {
+            if (getQuery("password") !== null) {
             firebase.database().ref('/events/' + getQuery("event") + "/editlinks/").on('child_added', function(snapshot) {
 
 
@@ -208,17 +212,7 @@
                     $("#delete").removeClass("hidden");
 
 
-                    window.onload = function() {
-                        window.addEventListener("beforeunload", function(e) {
-                            if (formSubmitting) {
-                                return undefined;
-                            }
-
-                            var confirmationMessage = "Your changes may not be saved. Remeber to press the save button in the toolbar after clicking on a box for editing before leaving. Press 'OK' to leave and 'cancel' to stay";
-                            (e || window.event).returnValue = confirmationMessage; //Gecko + IE
-                            return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
-                        });
-                    };
+                    
 
                     $("#delete").click(function() {
                         $("#confirm-delete").modal("show");
@@ -427,6 +421,7 @@
         }, function() {
             Singulr.loadPage('login.html?redir=event.html' + encodeURIComponent(window.location.search));
         });
+       }
 
         function reloadPage() {
             Singulr.loadPage(window.location.pathname + window.location.search + window.location.hash);
@@ -459,13 +454,15 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Export or Send this page.(Google Groups, slack, and more)</h4>
+                    <h4 class="modal-title" id="myModalLabel">Export or Send this page</h4>
                 </div>
                 <div class="modal-body col-lg-12">
 
                     <h3>Choose a export method:</h3>
                     <p>
-                        To export to the T485 google group, choose any email export and enter send it to the T485 google groups. <b>t485<span class="at"> [a t ]] </span>googlegroups.com</b> as the recipient.<br>
+                        The url of your event page is: <b class="event-page-url"></b>
+                        <br> To export to the T485 google group, choose any email export and enter send it to the T485 google groups. <b>t485<span class="at"> [a t ]] </span>googlegroups.com</b> as the recipient.
+                        <hr>
                         <b>Enter a description of the event(Required for all options except for download and print. Ignored for download and print. This will be exported):</b>
                         <textarea id="export-description" class="form-control"></textarea>
                         <a id="export-email">Email - Mail App/Defualt mail handler</a><br>
@@ -508,5 +505,5 @@
         </div>
     </div>
     </div>
-    
+
 </body>

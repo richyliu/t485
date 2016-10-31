@@ -22,7 +22,7 @@
                     <hr>
                     <h2 class="intro-text text-center">Loading. Please wait</h2>
                     <hr>
-                    <p>Your event page is being created. A message is being posted on #general on slack. Please wait. This usually takes around 15 seconds or less.</p>
+                    <p>Your event page is being created. A message is being posted on <a href="https://t485.slack.com/messages/general/" target="_blank">#general</a> on slack. Please wait. This usually takes around 15 seconds or less.</p>
                 </div>
             </div>
         </div>
@@ -34,9 +34,19 @@
 
                 <div id="event-list-box">
                     <hr>
+
                     <h2 class="intro-text text-center">Event Pages</h2>
+
                     <hr>
-                    <ul id="event-list">
+
+
+
+                    <ul id="event-list"></ul>
+
+
+
+
+
                     </ul>
                 </div>
             </div>
@@ -72,13 +82,13 @@
                 <hr>
                 <h2 class="intro-text text-center">Create New Event Page</h2>
                 <hr>
+                <b>When choosing a name, try to add the current year to the name so people can differentiate between the same event on different years.</b>
+                <br>
                 <label>Choose An Event Name(You can change this later):</label>
 
 
-                <div class="input-group">
-                    <input type="text" id="url" class="form-control" aria-describedby="basic-addon2">
-                    <span class="input-group-addon" id="year">&nbsp;2016</span>
-                </div>
+                <input type="text" id="name" class="form-control">
+
 
                 <p id="error" class="text-danger"></p>
                 <button class="btn btn-primary form-control" id="create-event-page">Create event page!</button>
@@ -122,8 +132,8 @@
 
         <script src="https://static.getclicky.com/js"></script>
         <script>try{clicky.init(100869133)}catch(e){}</script>
-        <noscript><p><img alt="Clicky" width="1" height="1" src="https://in.getclicky.com/100869133ns.gif"></p></noscript>
 
+        <noscript><p><img alt="Clicky" width="1" height="1" src="https://in.getclicky.com/100869133ns.gif"></p></noscript>
     </div>
     <!-- /.container -->
 
@@ -155,57 +165,59 @@
 
     <script>
         /* global firebase $ auth Singulr */
-        var year = new Date().getFullYear();
-        $("#year").html(year);
+
         String.prototype.replaceAll = function(search, replacement) {
             var target = this;
             return target.split(search).join(replacement);
         };
         auth(function(user) {
             $("#create-event-page").click(function() {
-                var url = $("#url").val().replaceAll(/[^a-zA-Z0-9]/g, "") + year;
+
                 $("#error").html("");
-                var title = $("#url").val() + " " + year;
-                firebase.database().ref("/events/" + url + "/").once("value").then(function(data) {
-                    if (data.val() === null) {
-                        firebase.database().ref("/events/" + url + "/").set({
-                            title: title,
-                            owner: user.uid,
-                            description: "This event has not been edited yet.<br> <b>Owner</b>: Click the above edit button and then click on this paragraph or the page title to edit that element. After editing a paragraph, click save changes in the toolbar that pops up to save your changes."
-                        });
-                        $("#main").addClass("hidden");
-                        $("#loading").removeClass("hidden");
-                        
-                        $.post("https://hooks.slack.com/services/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", "payload=" + JSON.stringify({
-                                "text": "New Event Page Created:",
-                                "attachments": [{
-                                    "fallback": "A new event page was created: <" + title + "|https://t485.org/event.html?event=" + url + ">.",
-                                    "title": title,
-                                    "title_link": "https://t485.org/event.html?event=" + url,
-                                    "text": "Go to <https://t485.org/event.html?event=" + url + "> to view the content",
-                                    "footer":"This is a T485 event page automated message"
-                                }]
-                            }),
-                            function(data) {
-                                window.location.href = "event.html?event=" + url;
-                            }
-                        );
+                var title = $("#name").val();
 
 
-                    }
-                    else {
-                        $("#url").val("");
-                        $("#error").html("Please choose another name. The URL for your name was already taken. Non letter or number charcters are ignored in url's.");
-                    }
+                var push = firebase.database().ref("/events/").push({
+                    title: title,
+                    owner: user.uid,
+                    description: "This event has not been edited yet.<br> <b>Owner</b>: Click the above edit button and then click on this paragraph or the page title to edit that element. After editing a paragraph, <b>click save changes in the toolbar that pops up to save your changes</b>."
                 });
+                var url = push.key;
+                $("#main").addClass("hidden");
+                $("#loading").removeClass("hidden");
+
+                $.post("https://hooks.slack.com/services/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", "payload=" + JSON.stringify({
+                        "text": "New Event Page Created:",
+                        "attachments": [{
+                            "fallback": "A new event page was created: <" + title + "|https://t485.org/event.html?event=" + url + ">.",
+                            "title": title,
+                            "title_link": "https://t485.org/event.html?event=" + url,
+                            "text": "Go to <https://t485.org/event.html?event=" + url + "> to view the content(May not have been updated by author yet.)",
+                            "footer": "This is a T485 event page automated message"
+                        }]
+                    }),
+                    function(data) {
+                        window.location.href = "event.html?event=" + url;
+                    }
+                );
+
+
+
+
             });
         }, function() {
             Singulr.loadPage('login.html?redir=resources.html');
         });
         firebase.database().ref("/events/").on("child_added", function(data) {
+
             var name = data.val().title;
-            $("#event-list").prepend("<li><a href='event.html?event=" + data.key + "'>" + name + "</a></li>");
+            $("#event-list").prepend("<li><a class='name' href='event.html?event=" + data.key + "'>" + name + "</a></li>");
+
         });
+
+
+
+
 
         /*
         var storageRef = firebase.storage().ref();
