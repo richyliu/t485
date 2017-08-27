@@ -239,7 +239,7 @@ textarea {
     margin-bottom: 15px!important;
 }
 
-#toTop {
+.toTop {
     width: 37px;
     height: 39px;
     background: url(../img/back2top.png) bottom center no-repeat;
@@ -253,7 +253,7 @@ textarea {
     border: none !important;
 }
 
-#toTop:hover {
+.toTop:hover {
     background-position: top center;
 }
 
