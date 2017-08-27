@@ -70,15 +70,15 @@ firebase.auth().onAuthStateChanged(function(user) {
 // Back to top button animation
 $(window).scroll(function() {
     if ($(this).scrollTop() > 0) {
-        $('#toTop').fadeIn(3000);
+        $('.toTop').fadeIn(3000);
     }
     else {
-        $('#toTop').fadeOut();
+        $('.toTop').fadeOut();
     }
 });
 
 //Trying to fix things but its hard
-$('#toTop').click(function(){
+$('.toTop').click(function(){
 		$('html, body').animate({scrollTop : 0},800);
 		return false;
 	});
