@@ -77,6 +77,12 @@ $(window).scroll(function() {
     }
 });
 
+//Trying to fix things but its hard
+$('#toTop').click(function(){
+		$('html, body').animate({scrollTop : 0},800);
+		return false;
+	});
+
 //email bot obfuscator sort of...
 $(".at").text("@")
     // Set LESS async to true to prevent warning on Chrome
