@@ -279,7 +279,7 @@
                 $("#error").html("");
                 let title = $("#name").val();
                 if (title == "" || title == undefined || title == null) {
-                    title = "untitled event page   
+                    title = "untitled event page"
                 }
 
                 let push = firebase.database().ref("/events/").push({
