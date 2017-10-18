@@ -33,18 +33,18 @@
  */
 ;
 (function($) {
-    var opt;
+    let opt;
     $.fn.printThis = function(options) {
         opt = $.extend({}, $.fn.printThis.defaults, options);
-        var $element = this instanceof jQuery ? this : $(this);
+        let $element = this instanceof jQuery ? this : $(this);
 
-        var strFrameName = "printThis-" + (new Date()).getTime();
+        let strFrameName = "printThis-" + (new Date()).getTime();
 
         if (window.location.hostname !== document.domain && navigator.userAgent.match(/msie/i)) {
             // Ugly IE hacks due to IE not inheriting document.domain from parent
             // checks if document.domain is set by comparing the host name against document.domain
-            var iframeSrc = "javascript:document.write(\"<head><script>document.domain=\\\"" + document.domain + "\\\";</script></head><body></body>\")";
-            var printI = document.createElement('iframe');
+            let iframeSrc = "javascript:document.write(\"<head><script>document.domain=\\\"" + document.domain + "\\\";</script></head><body></body>\")";
+            let printI = document.createElement('iframe');
             printI.name = "printIframe";
             printI.id = strFrameName;
             printI.className = "MSIE";
@@ -53,12 +53,12 @@
 
         } else {
             // other browsers inherit document.domain, and IE works if document.domain is not explicitly set
-            var $frame = $("<iframe id='" + strFrameName + "' name='printIframe' />");
+            let $frame = $("<iframe id='" + strFrameName + "' name='printIframe' />");
             $frame.appendTo("body");
         }
 
 
-        var $iframe = $("#" + strFrameName);
+        let $iframe = $("#" + strFrameName);
 
         // show frame if in debug mode
         if (!opt.debug) $iframe.css({
@@ -75,7 +75,7 @@
 
             // Add doctype to fix the style difference between printing and render
             function setDocType($iframe,doctype){
-                var win, doc;
+                let win, doc;
                 win = $iframe.get(0);
                 win = win.contentWindow || win.contentDocument || win;
                 doc = win.document || win.contentDocument || win;
@@ -87,7 +87,7 @@
                 setDocType($iframe,opt.doctypeString);
             }
 
-            var $doc = $iframe.contents(),
+            let $doc = $iframe.contents(),
                 $head = $doc.find("head"),
                 $body = $doc.find("body");
 
@@ -96,9 +96,9 @@
 
             // import page stylesheets
             if (opt.importCSS) $("link[rel=stylesheet]").each(function() {
-                var href = $(this).attr("href");
+                let href = $(this).attr("href");
                 if (href) {
-                    var media = $(this).attr("media") || "all";
+                    let media = $(this).attr("media") || "all";
                     $head.append("<link type='text/css' rel='stylesheet' href='" + href + "' media='" + media + "'>")
                 }
             });
@@ -137,10 +137,10 @@
             // capture form/field values
             if (opt.formValues) {
                 // loop through inputs
-                var $input = $element.find('input');
+                let $input = $element.find('input');
                 if ($input.length) {
                     $input.each(function() {
-                        var $this = $(this),
+                        let $this = $(this),
                             $name = $(this).attr('name'),
                             $checker = $this.is(':checkbox') || $this.is(':radio'),
                             $iframeInput = $doc.find('input[name="' + $name + '"]'),
@@ -161,10 +161,10 @@
                 }
 
                 //loop through selects
-                var $select = $element.find('select');
+                let $select = $element.find('select');
                 if ($select.length) {
                     $select.each(function() {
-                        var $this = $(this),
+                        let $this = $(this),
                             $name = $(this).attr('name'),
                             $value = $this.val();
                         $doc.find('select[name="' + $name + '"]').val($value);
@@ -172,10 +172,10 @@
                 }
 
                 //loop through textareas
-                var $textarea = $element.find('textarea');
+                let $textarea = $element.find('textarea');
                 if ($textarea.length) {
                     $textarea.each(function() {
-                        var $this = $(this),
+                        let $this = $(this),
                             $name = $(this).attr('name'),
                             $value = $this.val();
                         $doc.find('textarea[name="' + $name + '"]').val($value);

@@ -124,7 +124,7 @@
         /* global firebase */
 
         // Initialize Firebase
-        var config = {
+        let config = {
             apiKey: "AIzaSyAvhRMDTAxHRqIM0-RpHxPjZtMn7S_H7K4",
             authDomain: "t485.firebaseapp.com",
             databaseURL: "https://t485.firebaseio.com",
@@ -141,20 +141,20 @@
         // http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
         function getQuery(e) {
             e = e.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-            var c = new RegExp("[\\?&]" + e + "=([^&#]*)"),
+            let c = new RegExp("[\\?&]" + e + "=([^&#]*)"),
                 n = c.exec(location.search);
             return null === n ? "" : decodeURIComponent(n[1].replace(/\+/g, " "));
         }
 
         if (window.location.hash === "#testing" || getQuery("testing") === null || getQuery("testing") === true) {
-            var el = document.getElementById("testing");
+            let el = document.getElementById("testing");
             if (el.classList) el.classList.remove("hidden");
             else el.hidden = el.hidden.replace(new RegExp('(^|\\b)' + "hidden".split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
-            document.getElementById("cancel").addEventListener("click", function() {
+            document.getElementById("cancel").addEventListener("click", () => {
                 localStorage.setItem("signin-in-progress", "false");
-                firebase.auth().signOut().then(function() {
+                firebase.auth().signOut().then(() => {
                     window.location.href = "/";
-                }).catch(function(error) {
+                }).catch((error) => {
                     // An error happened.
                     window.location.href = "/";
                 });
@@ -165,11 +165,11 @@
             let redirectUrl = "https://t485.org" + (decodeURIComponent(getQuery('redir')) || 'index.html');
             let provider = new firebase.auth.GoogleAuthProvider();
             provider.addScope('https://www.googleapis.com/auth/userinfo.email');
-            document.getElementById("cancel").addEventListener("click", function() {
+            document.getElementById("cancel").addEventListener("click", () => {
                 localStorage.setItem("signin-in-progress", "false");
-                firebase.auth().signOut().then(function() {
+                firebase.auth().signOut().then(() => {
                     window.location.href = "/";
-                }).catch(function(error) {
+                }).catch((error) => {
                     // An error happened.
                     window.location.href = "/";
                 });
@@ -182,21 +182,21 @@
                 // The signed-in user info.
                 let user = result.user;
                 let email = user.providerData[0].email;
-                var request = new XMLHttpRequest();
+                let request = new XMLHttpRequest();
                 request.open('GET', 'members', true);
-                request.onreadystatechange = function() {
+                request.onreadystatechange = () => {
                     if (this.readyState === 4) {
                         if (this.status >= 200 && this.status < 400) {
                             // Success!
-                            var response = this.responseText;
+                            let response = this.responseText;
                             let members = response.split('\n');
                             // Check if email is on approved list
                             if (members.indexOf(email) > -1) {
                                 window.location.href = redirectUrl;
                             }
                             else {
-                                var className = "hidden";
-                                var el = document.getElementById("login-main-box");
+                                let className = "hidden";
+                                let el = document.getElementById("login-main-box");
                                 if (el.classList)
                                     el.classList.add(className);
                                 else

@@ -11,7 +11,7 @@
     <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
     <script>
         // Initialize Firebase
-        var config = {
+        let config = {
             apiKey: "AIzaSyAvhRMDTAxHRqIM0-RpHxPjZtMn7S_H7K4",
             authDomain: "t485.firebaseapp.com",
             databaseURL: "https://t485.firebaseio.com",
@@ -208,17 +208,17 @@
     <script src="/js/bootstrap-datepicker.min.js"></script>
     <script>
         /* global firebase $ */
-        firebase.auth().onAuthStateChanged(function(user) {
+        firebase.auth().onAuthStateChanged((user) => {
             if (user) {
                 // User is signed in.
-                firebase.database().ref("/managers/meeting-minutes/").once("value").then(function(snapshot) {
-                    var data = snapshot.val();
-                    for (var i = 0; i < data.length; i++) {
-                        if (user.uid === data[i]) {
+                firebase.database().ref("/managers/meeting-minutes/").once("value").then((snapshot) => {
+                    let data = snapshot.val();
+                    for (let d of data) {
+                        if (user.uid === d) {
                             $("#authorizing-box").addClass("hidden");
                             $("#manage").removeClass("hidden");
                             $('#date').datepicker();
-                            $("#add-mm-btn").click(function() {
+                            $("#add-mm-btn").click(() => {
 
                                 if ($("#tmm").val() !== "") {
                                     firebase.database().ref("/meetingminutes/").push({

@@ -11,7 +11,7 @@
     <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
     <script>
         // Initialize Firebase
-        var config = {
+        let config = {
             apiKey: "AIzaSyAvhRMDTAxHRqIM0-RpHxPjZtMn7S_H7K4",
             authDomain: "t485.firebaseapp.com",
             databaseURL: "https://t485.firebaseio.com",
@@ -298,15 +298,15 @@
 
         function main() {
             /*
-            var modalreg = /^https?:\/\/((docs\.google\.com\/document\/d.*)|(.+\.pdf([?#].*)?))$/;
-            $("#event-description a").each(function(i) {
+            let modalreg = /^https?:\/\/((docs\.google\.com\/document\/d.*)|(.+\.pdf([?#].*)?))$/;
+            $("#event-description a").each((i) => {
                 console.log("ASDF213");
                 console.log(i);
                 console.log($(this));
                 if ($(this).attr("href").match(modalreg)) {
                     console.log($(this).attr("href"));
                     console.log($(this).attr("href").replace(modalreg, "openModal(this, '" + $(this).attr("href") + "');"));
-                    var attrtxt = $(this).attr("href").replace(modalreg, "openModal(this, '" + $(this).attr("href") + "');");
+                    let attrtxt = $(this).attr("href").replace(modalreg, "openModal(this, '" + $(this).attr("href") + "');");
                     console.log("---");
                     console.log(attrtxt);
                     $(this).attr("onclick", attrtxt);
@@ -318,15 +318,15 @@
             */
             /*
             console.log(7)
-            $("#event-description a").each(function(i, el) {
+            $("#event-description a").each((i, el) => {
                 console.log(i);
-                var url = $(el).attr("href");
-                var html = $(el).html()
+                let url = $(el).attr("href");
+                let html = $(el).html()
                 console.log(url);
                 console.log(html);
                 console.log($(el));
                 console.log("a")
-                var modalreg = /^https?:\/\/((docs\.google\.com\/document\/d.*)|(.+\.pdf([?#].*)?))$/;
+                let modalreg = /^https?:\/\/((docs\.google\.com\/document\/d.*)|(.+\.pdf([?#].*)?))$/;
                 if (url.match(modalreg)) {
                     console.log("b")
                     $(el).attr("onclick", "openModal('" + url + "', '" + html + "')");
@@ -343,20 +343,20 @@
             */
             /*
             function forEachElement(selector, fn) {
-                var elements = document.querySelectorAll(selector);
-                for (var i = 0; i < elements.length; i++)
-                    fn(elements[i], i);
+                let elements = document.querySelectorAll(selector);
+                for (let element of elements)
+                    fn(element, i);
             }
 
-            forEachElement("#event-description a", function(el, i) {
+            forEachElement("#event-description a", (el, i) => {
                 console.log(i);
-                var url = el.getAttribute("href");
-                var html = el.innerHTML;
+                let url = el.getAttribute("href");
+                let html = el.innerHTML;
                 console.log(url);
                 console.log(html);
                 console.log(el);
                 console.log("a");
-                var modalreg = /^https?:\/\/((docs\.google\.com\/document\/d.*)|(.+\.pdf([?#].*)?))$/;
+                let modalreg = /^https?:\/\/((docs\.google\.com\/document\/d.*)|(.+\.pdf([?#].*)?))$/;
                 if (url.match(modalreg)) {
                     console.log("b");
                     el.setAttribute("onclick", "openModal('" + url + "', '" + html + "')");
@@ -371,7 +371,7 @@
             */
             if (getQuery("token") !== null) { 
                 console.log('/events/' + getQuery("event") + "/editlinks/" + encodeURIComponent(getQuery("token")));
-                firebase.database().ref('/events/' + getQuery("event")).once('value').then(function(snapshot) {
+                firebase.database().ref('/events/' + getQuery("event")).once('value').then((snapshot) => {
 
                     //console.log(encodeURIComponent(getQuery("token")));
                     //console.log(snapshot.val());
@@ -387,7 +387,7 @@
                         $("#edit-alert-box").removeClass("hidden");
                         console.log(2);
                         $("#edit").click(() => {
-                            $(window).on("beforeunload", function() {
+                            $(window).on("beforeunload", () => {
                                 return 'Changes you made may not be saved';
                             });
                             $("#edit-alert").html("Click on some text to edit it. After you edit some text, click save changes on the toolbar that pops up. This will save the text only on the paragraph you selected. Or <a id='view' class='alert-link'>View this page</a>.");
@@ -397,7 +397,7 @@
                             });
 
                             function modalURLConverter(url, node, on_save, name) {
-                                var modalreg = /^https?:\/\/((docs\.google\.com\/document\/d.*)|(.+\.pdf([?#].*)?))$/;
+                                let modalreg = /^https?:\/\/((docs\.google\.com\/document\/d.*)|(.+\.pdf([?#].*)?))$/;
                                 url = tinymce.convertURL(url)
                                 if (url.match(modalreg)) {
                                     return "javascript:openModal(this, '" + url + "');";
@@ -520,11 +520,11 @@
                         $("#share").click(() => {
                             $("#links").html("");
 
-                            firebase.database().ref('/events/' + getQuery("event") + "/editlinks/").on("value", function(snapshot) {
+                            firebase.database().ref('/events/' + getQuery("event") + "/editlinks/").on("value", (snapshot) => {
 
-                                var data = snapshot.val()
+                                let data = snapshot.val();
 
-                                for (var key in data) {
+                                for (let key in data) {
                                     if (data.hasOwnProperty(key)) {
                                         console.log(key + " -> " + data[key]);
                                         $("#links").append("<li><b id='el-" + encodeURIComponent(data[key]) + "'>https://t485.org/event.html?event=" + getQuery("event") + "&token=" + data[key] + "</b> (<a onclick='deleteLink(\"" + data[key] + "\")'>Remove This Link</a> | <a class='clipboard' data-clipboard-target='#el-" + encodeURIComponent(data[key]) + "'>Copy to clipboard</a>)</li><hr>");
@@ -543,7 +543,7 @@
 
                         });
                         $("#edit").click(() => {
-                            $(window).on("beforeunload", function() {
+                            $(window).on("beforeunload", () => {
                                 return 'Changes you made may not be saved';
                             });
                             $("#edit-alert").html("Click on some text to edit it. After you edit some text, click save changes on the toolbar that pops up. This will save the text only on the paragraph you selected. Or <a id='view' class='alert-link'>View this page</a>.");
@@ -722,7 +722,7 @@
         /*function modalURLConverter(url, node, on_save, name) {
             console.log(node);
             console.log(name);
-            var modalreg = /^https?:\/\/((docs\.google\.com\/document\/d.*)|(.+\.pdf([?#].*)?))$/;
+            let modalreg = /^https?:\/\/((docs\.google\.com\/document\/d.*)|(.+\.pdf([?#].*)?))$/;
             if (url.match(modalreg)) {
                 return "javascript:openModal('" + url + "');";
             }

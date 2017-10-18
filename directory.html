@@ -12,7 +12,7 @@
 
     <script>
         // Initialize Firebase
-        var config = {
+        let config = {
             apiKey: "AIzaSyAvhRMDTAxHRqIM0-RpHxPjZtMn7S_H7K4",
             authDomain: "t485.firebaseapp.com",
             databaseURL: "https://t485.firebaseio.com",
@@ -370,7 +370,7 @@
 
 
 
-        $('#search-query').keypress(function(e) {
+        $('#search-query').keypress((e) => {
             if (e.keyCode === 13) {
                 $('#search-btn').click();
             }
@@ -404,7 +404,7 @@
 
         function updateURLQuery(query) {
             if (history.pushState) {
-                var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + query;
+                let newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + query;
                 window.history.pushState({
                     path: newurl
                 }, '', newurl);
@@ -477,18 +477,18 @@
             let results = [];
             // score lower is better
             let score = [];
-            for (let i = 0; i < patrolnames.length; i++) {
+            for (let patrolName of patrolnames) {
                 // Only first/last name
                 if (query[1] === null) {
-                    if (patrolnames[i][0] === query[0] || patrolnames[i][1] === query[0]) {
+                    if (patrolName[0] === query[0] || patrolName[1] === query[0]) {
                         score.push({
                             id: i,
                             score: 0
                         });
                     }
                     else {
-                        let diff = compare(query[0], patrolnames[i][0]) < compare(query[0], patrolnames[i][1]) ?
-                            compare(query[0], patrolnames[i][0]) : compare(query[0], patrolnames[i][1]);
+                        let diff = compare(query[0], patrolName[0]) < compare(query[0], patrolName[1]) ?
+                            compare(query[0], patrolName[0]) : compare(query[0], patrolName[1]);
                         if (diff < query[0].length / 2) {
                             score.push({
                                 id: i,
@@ -498,7 +498,7 @@
                     }
                     // If direct match set score to 0
                 }
-                else if (patrolnames[i][0] === query[0] && patrolnames[i][1] === query[1]) {
+                else if (patrolName[0] === query[0] && patrolName[1] === query[1]) {
                     score.push({
                         id: i,
                         score: 0
@@ -507,7 +507,7 @@
                     // First and last name
                 }
                 else {
-                    let diff = compare(query[0], patrolnames[i][0]) + compare(query[1], patrolnames[i][1]);
+                    let diff = compare(query[0], patrolName[0]) + compare(query[1], patrolName[1]);
                     if (diff < (query[0].length + query[1].length) / 2) {
                         score.push({
                             id: i,

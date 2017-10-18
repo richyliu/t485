@@ -11,7 +11,7 @@
     <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
     <script>
         // Initialize Firebase
-        var config = {
+        let config = {
             apiKey: "AIzaSyAvhRMDTAxHRqIM0-RpHxPjZtMn7S_H7K4",
             authDomain: "t485.firebaseapp.com",
             databaseURL: "https://t485.firebaseio.com",
@@ -292,10 +292,10 @@
                 }
             }
         }
-        $("#upload-file-btn").click(function() {
-            var url = $("#upload-file-url").val();
-            var name = $("#upload-file-name").val();
-            var el;
+        $("#upload-file-btn").click(() => {
+            let url = $("#upload-file-url").val();
+            let name = $("#upload-file-name").val();
+            let el;
             if (url.match(/^(https:\/\/((docs\.google\.com\/document\/d\/.+\/.*)?)|(https:\/\/.+\..+.+\.pdf))$/g)) {
                 el = encodeURIComponent('<li><a onclick="openModal(this, ' + "'" + url.replace("/edit", "/moiblebasic") + "'" + ')">' + name + '</a></li>');
             }
@@ -306,9 +306,9 @@
             firebase.database().ref("/files/").push(el);
             window.location.href = window.location.href;
         });
-        firebase.database().ref("/files/").once("value").then(function(snapshot) {
-            var data = snapshot.val();
-            for (var key in data) {
+        firebase.database().ref("/files/").once("value").then((snapshot) => {
+            let data = snapshot.val();
+            for (let key in data) {
                 if (data.hasOwnProperty(key)) {
                     console.log(data[key]);
                     $("#files-box").append(decodeURIComponent(data[key]))

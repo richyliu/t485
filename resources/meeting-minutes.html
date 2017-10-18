@@ -11,7 +11,7 @@
     <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
     <script>
         // Initialize Firebase
-        var config = {
+        let config = {
             apiKey: "AIzaSyAvhRMDTAxHRqIM0-RpHxPjZtMn7S_H7K4",
             authDomain: "t485.firebaseapp.com",
             databaseURL: "https://t485.firebaseio.com",
@@ -351,19 +351,19 @@
         auth(() => $("#content").removeClass("hidden"), () => $("#login").removeClass("hidden"));
     </script>
     <script>
-        firebase.database().ref("/meetingminutes/").once("value").then(function(snapshot) {
-            var data = snapshot.val();
-            for (var key in data) {
+        firebase.database().ref("/meetingminutes/").once("value").then((snapshot) => {
+            let data = snapshot.val();
+            for (let key in data) {
                 if (data.hasOwnProperty(key)) {
-                    var value = data[key];
+                    let value = data[key];
                     
                 }
             }
         });
 
         function openModal(_this, url) {
-            var editurl;
-            var editregex = /(https:\/\/docs\.google\.com\/document\/d\/.+\/)edit/g.exec(url);
+            let editurl;
+            let editregex = /(https:\/\/docs\.google\.com\/document\/d\/.+\/)edit/g.exec(url);
             if (editregex !== null) {
                 editurl = editregex[0] + "edit"
             }
