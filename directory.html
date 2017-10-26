@@ -477,7 +477,8 @@
             let results = [];
             // score lower is better
             let score = [];
-            for (let patrolName of patrolnames) {
+            for (let i = 0; i < patrolnames.length; i++) {
+                const patrolName = patrolnames[i];
                 // Only first/last name
                 if (query[1] === null) {
                     if (patrolName[0] === query[0] || patrolName[1] === query[0]) {
