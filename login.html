@@ -147,7 +147,7 @@
             return null === n ? "" : decodeURIComponent(n[1].replace(/\+/g, " "));
         }
 
-        if (window.location.hash === "#testing" || getQuery("testing") === "" || getQuery("testing") === true) {
+        if (window.location.hash === "#testing" || getQuery("testing") === "true" || getQuery("testing") === true) {
             let el = document.getElementById("testing");
             if (el.classList) el.classList.remove("hidden");
             else el.hidden = el.hidden.replace(new RegExp('(^|\\b)' + "hidden".split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
