@@ -57,11 +57,11 @@
         .hidden {
             display: none;
         }
-        
+
         .print {
             display: none;
         }
-        
+
         @media print {
             * {
                 visibility: hidden;
@@ -75,12 +75,12 @@
                 display: block;
             }
         }
-        
+
         #export-description {
             resize: vertical;
             /* user can resize vertically, but width is fixed */
         }
-        
+
         #main-inner-box {
             word-wrap: break-word;
         }
@@ -158,13 +158,15 @@
     <div id="alertBox"></div>
     <div class="alert alert-info alert-dismissible alert-visible hidden" role="alert" id="edit-alert-box">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <span id="edit-alert">You <span id="role-owner" class="hidden">are the owner of</span><span id="role-editor" class="hidden">are using an access link for</span> this <span class="hidden" id="archived-span">archived</span> event page.<br> <span id="options">Options: <a id="edit" class="alert-link">edit</a> | <a id="export"
-            class="alert-link">Export/Send</a> <span id="share-box" class="hidden">| <a id="share" class="alert-link">Allow others to edit this page</a></span> | 
-        <a id="delete" class="hidden alert-link"> Archive this page</a>.</span></span>
+        <span id="edit-alert">You <span id="role-owner" class="hidden">are the owner of</span><span id="role-editor" class="hidden">are using an access link for</span> this <span class="hidden" id="archived-span">archived</span> event page.<br>
+        <span
+            id="options">Options: <a id="edit" class="alert-link">edit</a> | <a id="export" class="alert-link">Export/Send</a> <span id="share-box" class="hidden">| <a id="share" class="alert-link">Allow others to edit this page</a></span> |
+            <a id="delete" class="hidden alert-link"> Archive this page</a>.</span>
+            </span>
     </div>
     <div class="alert alert-warning alert-dismissible alert-visible hidden" role="alert" id="archived-alert-box">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        This event page has been archived. Archived event pages are no longer maintained, and may be outdated. These are kept only for historical reasons.<span id="archived-page-owner" class="hidden"><br>(You own this event page. You can email the webmaster to unarchive it.)</span><span id="archived-page-access" class="hidden"><br>(You're using an access link for this event page.)</span></span>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button> This event page has been archived. Archived event pages are no longer maintained, and may be outdated. These are kept
+        only for historical reasons.<span id="archived-page-owner" class="hidden"><br>(You own this event page. You can email the webmaster to unarchive it.)</span><span id="archived-page-access" class="hidden"><br>(You're using an access link for this event page.)</span></span>
     </div>
     </div>
     </p>
@@ -244,10 +246,10 @@
         auth(() => $("#content").removeClass("hidden"), () => $("#login").removeClass("hidden"));
     </script>
     <script>
-        
         /* global firebase $ getQuery tinymce btoa auth jsPDF Clipboard*/
-        
+
         new Clipboard('.clipboard');
+
         function deleteLink(id) {
             console.log("deleting: " + id)
             firebase.database().ref('/events/' + getQuery("event") + "/editlinks/" + id).set(null);
@@ -274,9 +276,7 @@
                     when the event contains non URL safe charcters*/
         ).once('value').then(snapshot => {
             let data = snapshot.val();
-            if (snapshot.val().archived === true) {
-                $("#archived-alert-box").removeClass("hidden");
-            }
+
             if (data === null || data === 0) {
                 $("#event-title").html("Error 404: Event Not Found");
                 $("#event-description").html("The specified event <b>" + getQuery("event") + "</b> was not found. If you typed in a link to view this page, try going to the <a href='resources/event-pages.html'>event pages list</a> and clicking a link from there.");
@@ -286,6 +286,9 @@
 
             }
             else {
+                if (snapshot.val().archived === true) {
+                    $("#archived-alert-box").removeClass("hidden");
+                }
                 $("#event-title").html(data.title);
                 $("#event-description").html(data.description);
                 $(".event-title").html(data.title);
@@ -370,16 +373,16 @@
                 }
             });
             */
-            if (getQuery("token") !== null) { 
+            if (getQuery("token") !== null) {
                 console.log('/events/' + getQuery("event") + "/editlinks/" + encodeURIComponent(getQuery("token")));
                 firebase.database().ref('/events/' + getQuery("event")).once('value').then((snapshot) => {
 
                     //console.log(encodeURIComponent(getQuery("token")));
                     //console.log(snapshot.val());
                     //console.log(snapshot.val() === encodeURIComponent(getQuery("token")));
-                    
+
                     if (snapshot.val().editlinks[encodeURIComponent(getQuery("token"))] === encodeURIComponent(getQuery("token")) && snapshot.val().archived === true) {
-                    
+
                         $("#archived-page-access").removeClass("hidden");
                     }
                     else if (snapshot.val().editlinks[encodeURIComponent(getQuery("token"))] === encodeURIComponent(getQuery("token")) && snapshot.val().archived !== true) {
@@ -834,7 +837,8 @@
                 </div>
                 <div class="modal-body" id="modal-body">
                     <h6>Dangrous Things will happen if you don't pay attention!</h6>
-                    <p class="test-danger">You are about to archive a event page. <b>Once you archive an event page, you will not be able to edit or export it anymore. You can ask the webmaster to unarchive it if you need to.</b> In order to proceed, please type in the name of this event page.</p>
+                    <p class="test-danger">You are about to archive a event page. <b>Once you archive an event page, you will not be able to edit or export it anymore. You can ask the webmaster to unarchive it if you need to.</b> In order to proceed, please type in the name
+                        of this event page.</p>
                     <input class="form-control" type="text" id="confirm-enter-name">
                     <button class="form-control btn btn-danger disabled" id="confirm-delete-button">Archive</button>
                 </div>
