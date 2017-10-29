@@ -83,7 +83,7 @@
         }
         
         body {
-            background-color: #2c3e50;
+            background-color: green;
             text-align: center;
         }
         
@@ -97,6 +97,7 @@
             display: none;
         }
     </style>
+    <title>Login to T485.org</title>
 </head>
 
 <body><noscript>Javascrpt must be enabled to use the login feature of T485. Please whitelist javascript for this website or the content below will not work. </noscript><br><br>
@@ -146,7 +147,7 @@
             return null === n ? "" : decodeURIComponent(n[1].replace(/\+/g, " "));
         }
 
-        if (window.location.hash === "#testing" || getQuery("testing") === null || getQuery("testing") === true) {
+        if (window.location.hash === "#testing" || getQuery("testing") === "" || getQuery("testing") === true) {
             let el = document.getElementById("testing");
             if (el.classList) el.classList.remove("hidden");
             else el.hidden = el.hidden.replace(new RegExp('(^|\\b)' + "hidden".split(' ').join('|') + '(\\b|$)', 'gi'), ' ');

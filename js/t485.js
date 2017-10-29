@@ -62,6 +62,7 @@ firebase.auth().onAuthStateChanged(function(user) {
     //$("#nav-user-email").html(" as " + user.providerData[0].email);
     $("#nav-user-status").removeClass("hidden");
   } else {
+      $("#nav-user-status").addClass("hidden");
     // No user is signed in, do nothing. Individual login script is on each page.
   }
 });
