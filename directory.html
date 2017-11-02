@@ -234,7 +234,8 @@
 
 
         auth(() => {
-            let text = '{"iv":"Ol2qHGWNi4YgQcAbtF5VhA==","v":1,"iter":1000,"ks":128,"ts":64,"mode":"ccm","adata":"","cipher":"aes","salt":"zIban8djCk8=","ct":"igvjNA0P3ITHOi1Qh85vaa/nwA7VJpSr0zVKkyHk1icmP2XGqKafl/Yy+hC4gZL3bsfKsJaugnLz2dAz9Z1lCK990Z3ZR8gahB2HkufRCNVUiuvZUd/iRTRDXKERyK8MmBWEFNyX3I9KoyripovjBxuR3OfxH/dYM7ouZL9M82JhW/f0RoptfSaRcbAtdQXwfVrknLRezouODguf0JpIsCt4nsBC8Co6YaUf9Ld5pmbNqsWdG5H1tpap4u34kzXu5wOtkny7n5/HYVYgTuNY4reTQIgIkMTKCVB1ruUFEOYuZNSIvULh5dY6eWmTbCg05/GGUiPeghYU/UXq8kE+QH/b94BUQwoT04RvD5sVqhyXP05ex6GixGMQ8v6JXM/neDU77PLvKbbjVdaEyRG4Q95KIm84Y8Ra0ntXT2BdsFnW54fo2bU1tPFauZ3ksnweaREoebTcTKcU3fMmsIk="}';
+             let text = '{"iv":"u94eK78S4EOGQqpYNDLrGw==","v":1,"iter":1000,"ks":128,"ts":64,"mode":"ccm","adata":"","cipher":"aes","salt":"g17ODbhwHcY=","ct":"66YjjNZp1zkWyBjPUD4XTHy2aHx8v2wPxywiPhbCxjCF8YWkhLzYnVgojeMZV2zbuQHjmrRLVbR+DTdeJzy0Xv70w1ez/eX4uX5nfiBCzi2kO4NwSLXUvJiIcuPGL7BLnXXXw893c0ADbqJUj6fS2nCfi0n9BT' +
+ -                'koU9U8fDNXrsnRUkD0Oqd7khInVvOBoa4c1hjGx1P8cI3WXn29l0ezln2GPH1xqDenWQJTC+tAZ12a2e0uIb+zHIHJkTtjiZPGPBlZDe5/mFeqzr3e6qvZyawlOyI+NlrlQ3a10txli8P9M65UgfPhRDSMdGmeTuhiYkOhvUayWXg/DqMzabBem7cBcflxl8EzNuneoQ43E3ACqr/PdWyC5FBeNKTktyUQR6ypHQIWQwng0d5D7N9ZdfhGTzBDr3IYFaczaBATUuTnlMnBvhF/Jxvs5Rf8uiobblIrP1J25p9kzLe8acU="}';
             let secretInfo = JSON.parse(sjcl.decrypt('XH7uDeHIOFaJvizWBhA', text));
 
 
