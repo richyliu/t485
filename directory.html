@@ -274,7 +274,7 @@
 
             // Cacti
             Tabletop.init({
-                key: "https://docs.google.com/spreadsheets/d/15Z9AgrqGNprz2K8c032ZhJ7Wm5bTV-2fJfublK7L1L8/edit#gid=' + secretInfo.cacti + '" target="_blank",
+                key: "https://docs.google.com/spreadsheets/d/15Z9AgrqGNprz2K8c032ZhJ7Wm5bTV-2fJfublK7L1L8/edit#gid=" + secretInfo.cacti,
                 callback: data => {
                     data.forEach(curData => {
                         curData.patrol = 'Cacti';
@@ -287,8 +287,7 @@
 
             // Hawks
             Tabletop.init({
-                key: "https://docs.google.com/spreadsheets/d/15Z9AgrqGNprz2K8c032ZhJ7Wm5bTV-2fJfublK7L1L8/edit#gid=' + secretInfo.hawks + '" target="_blank",
-                callback: data => {
+                key: "https://docs.google.com/spreadsheets/d/15Z9AgrqGNprz2K8c032ZhJ7Wm5bTV-2fJfublK7L1L8/edit#gid=" + secretInfo.hawks,
                     data.forEach(curData => {
                         curData.patrol = 'Hawks';
                     });
@@ -300,7 +299,7 @@
 
             // Wildcats
             Tabletop.init({
-                key: "https://docs.google.com/spreadsheets/d/15Z9AgrqGNprz2K8c032ZhJ7Wm5bTV-2fJfublK7L1L8/edit#gid=' + secretInfo.wildcats + '" target="_blank",
+                key: "https://docs.google.com/spreadsheets/d/15Z9AgrqGNprz2K8c032ZhJ7Wm5bTV-2fJfublK7L1L8/edit#gid=" + secretInfo.wildcats,
                 callback: data => {
                     data = data.Sheet1.elements;
                     data.forEach(curData => {
@@ -314,7 +313,7 @@
 
             // Serpents
             Tabletop.init({
-                key: "https://docs.google.com/spreadsheets/d/15Z9AgrqGNprz2K8c032ZhJ7Wm5bTV-2fJfublK7L1L8/edit#gid=' + secretInfo.serpents + '" target="_blank",
+                key: "https://docs.google.com/spreadsheets/d/15Z9AgrqGNprz2K8c032ZhJ7Wm5bTV-2fJfublK7L1L8/edit#gid=" + secretInfo.serpents,
                 callback: data => {
                     data.forEach(curData => {
                         curData.patrol = 'Serpents';
@@ -327,7 +326,7 @@
 
             // Blobfish
             Tabletop.init({
-                key: "https://docs.google.com/spreadsheets/d/15Z9AgrqGNprz2K8c032ZhJ7Wm5bTV-2fJfublK7L1L8/edit#gid=' + secretInfo.blobfish + '" target="_blank",
+                key: "https://docs.google.com/spreadsheets/d/15Z9AgrqGNprz2K8c032ZhJ7Wm5bTV-2fJfublK7L1L8/edit#gid=" + secretInfo.blobfish,
                 callback: data => {
                     data = data.Sheet1.elements;
                     data.forEach(curData => {
@@ -341,7 +340,7 @@
 
             // Dragons
             Tabletop.init({
-                key: "https://docs.google.com/spreadsheets/d/15Z9AgrqGNprz2K8c032ZhJ7Wm5bTV-2fJfublK7L1L8/edit#gid=' + secretInfo.dragons + '" target="_blank",
+                key: "https://docs.google.com/spreadsheets/d/15Z9AgrqGNprz2K8c032ZhJ7Wm5bTV-2fJfublK7L1L8/edit#gid=" + secretInfo.dragons,
                 callback: data => {
                     data.forEach(curData => {
                         curData.patrol = 'Dragons';
