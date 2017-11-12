@@ -288,6 +288,7 @@
             // Hawks
             Tabletop.init({
                 key: "https://docs.google.com/spreadsheets/d/15Z9AgrqGNprz2K8c032ZhJ7Wm5bTV-2fJfublK7L1L8/edit#gid=" + secretInfo.hawks,
+                callback: data => {
                     data.forEach(curData => {
                         curData.patrol = 'Hawks';
                     });
