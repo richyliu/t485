@@ -237,7 +237,7 @@
              let data = "eyJpdiI6Inh6Ris3OW4rbm1ndmNRTkhKczNKNXc9PSIsInYiOjEsIml0ZXIiOjEwMDAsImtzIjoxMjgsInRzIjo2" +
              "NCwibW9kZSI6ImNjbSIsImFkYXRhIjoiIiwiY2lwaGVyIjoiYWVzIiwic2FsdCI6ImcxN09EYmh3SGNZPSIsImN0IjoiaU1HN0hY" +
              "ODF5NGtjK2NtYUpxemxVYm91NnlmcFZVNmRHdHl0ZnQwUytrSjNnUGRqNVJUb1lCS2tHSWVPUEZjS1M3cEVRdz09In0=";
-            let id = JSON.parse(sjcl.decrypt('XH7uDeHIOFaJvizWBhA', atob(data)));
+            let id = sjcl.decrypt('XH7uDeHIOFaJvizWBhA', atob(data));
 
 
             $('#search-query').focus();
