@@ -113,7 +113,7 @@
                             <li><a href="/about/faq.html">FAQ</a></li>
                             <li><a href="/about/merit-badges.html">Merit Badges</a></li>
                             <li><a href="/about/eagle.html">Path to Eagle</a></li>
-                            <li><a href="/about/smc.html">SMC &amp; BOR</a></li>
+                            <li><a href="/about/smc.html">SMC & BOR</a></li>
                             <li><a href="/about/plc.html">PLC</a></li>
                             <li><a href="/about/troop-info.html">Troop Information</a></li>
                             <li><a href="/about/troop-jobs.html">Troop Jobs</a></li>
@@ -234,8 +234,10 @@
 
 
         auth(() => {
-             let text = '{"iv":"u94eK78S4EOGQqpYNDLrGw==","v":1,"iter":1000,"ks":128,"ts":64,"mode":"ccm","adata":"","cipher":"aes","salt":"g17ODbhwHcY=","ct":"66YjjNZp1zkWyBC5MWZzLSLLMGEXsF1OlBNFfHGgtUTHqNze8erUxSNfi7wYdmSPrAeKycUvT6lvU2EaeHejRvDn/meC1dL5jz4fdlEHwUrFHtp9fp3TrsPEMI+yR8EynQ+kwZN2PSVtOqdhg+qQiyXMxRypXXhqQ9cseGFvKU18M1LP7Xg="}';
-            let secretInfo = JSON.parse(sjcl.decrypt('XH7uDeHIOFaJvizWBhA', text));
+             let data = "eyJpdiI6Inh6Ris3OW4rbm1ndmNRTkhKczNKNXc9PSIsInYiOjEsIml0ZXIiOjEwMDAsImtzIjoxMjgsInRzIjo2" +
+             "NCwibW9kZSI6ImNjbSIsImFkYXRhIjoiIiwiY2lwaGVyIjoiYWVzIiwic2FsdCI6ImcxN09EYmh3SGNZPSIsImN0IjoiaU1HN0hY" +
+             "ODF5NGtjK2NtYUpxemxVYm91NnlmcFZVNmRHdHl0ZnQwUytrSjNnUGRqNVJUb1lCS2tHSWVPUEZjS1M3cEVRdz09In0=";
+            let id = JSON.parse(sjcl.decrypt('XH7uDeHIOFaJvizWBhA', atob(data)));
 
 
             $('#search-query').focus();
@@ -244,28 +246,28 @@
                 $('#spreadsheet-confirm').hide();
                 $('#spreadsheet-content').html(
                     '<div id="cacti" class="tab-pane fade in active">' +
-                    '<a href="https://docs.google.com/spreadsheets/d/15Z9AgrqGNprz2K8c032ZhJ7Wm5bTV-2fJfublK7L1L8/edit#gid=' + secretInfo.cacti + '" target="_blank">Edit Spreadsheet</a>' +
-                    '<iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSeGvLg047gQPtfolczqqJrnswpBs9dK4TtImQ8Ik678_rlVx8kZ4WRv-Z31zR42_1Vna9sAPOdYekH/pubhtml?gid=' + secretInfo.cacti + '&amp;single=true&amp;widget=true&amp;headers=false"></iframe>' +
+                    '<a href="https://docs.google.com/spreadsheets/d/' + id + '/edit#gid=90442790" target="_blank">Edit Spreadsheet</a>' +
+                    '<iframe src="https://docs.google.com/spreadsheets/d/e/' + id + '/pubhtml?gid=90442790&single=true&widget=true&headers=false"></iframe>' +
                     '</div>' +
                     '<div id="hawks" class="tab-pane fade">' +
-                    '<a href="https://docs.google.com/spreadsheets/d/15Z9AgrqGNprz2K8c032ZhJ7Wm5bTV-2fJfublK7L1L8/edit#gid=' + secretInfo.hawks + '" target="_blank">Edit Spreadsheet</a>' +
-                    '<iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSeGvLg047gQPtfolczqqJrnswpBs9dK4TtImQ8Ik678_rlVx8kZ4WRv-Z31zR42_1Vna9sAPOdYekH/pubhtml?gid=' + secretInfo.hawks + '&amp;single=true&amp;widget=true&amp;headers=false"></iframe>' +
+                    '<a href="https://docs.google.com/spreadsheets/d/' + id + '/edit#gid=1225623259" target="_blank">Edit Spreadsheet</a>' +
+                    '<iframe src="https://docs.google.com/spreadsheets/d/e/' + id + '/pubhtml?gid=1225623259&single=true&widget=true&headers=false"></iframe>' +
                     '</div>' +
                     '<div id="wildcats" class="tab-pane fade">' +
-                    '<a href="https://docs.google.com/spreadsheets/d/15Z9AgrqGNprz2K8c032ZhJ7Wm5bTV-2fJfublK7L1L8/edit#gid=' + secretInfo.wildcats + '" target="_blank">Edit Spreadsheet</a>' +
-                    '<iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSeGvLg047gQPtfolczqqJrnswpBs9dK4TtImQ8Ik678_rlVx8kZ4WRv-Z31zR42_1Vna9sAPOdYekH/pubhtml?gid=' + secretInfo.wildcats + '&amp;single=true&amp;widget=true&amp;headers=false"></iframe>' +
+                    '<a href="https://docs.google.com/spreadsheets/d/' + id + '/edit#gid=1225623259" target="_blank">Edit Spreadsheet</a>' +
+                    '<iframe src="https://docs.google.com/spreadsheets/d/e/' + id + '/pubhtml?gid=1225623259&single=true&widget=true&headers=false"></iframe>' +
                     '</div>' +
                     '<div id="serpents" class="tab-pane fade">' +
-                    '<a href="https://docs.google.com/spreadsheets/d/15Z9AgrqGNprz2K8c032ZhJ7Wm5bTV-2fJfublK7L1L8/edit#gid=' + secretInfo.serpents + '" target="_blank">Edit Spreadsheet</a>' +
-                    '<iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSeGvLg047gQPtfolczqqJrnswpBs9dK4TtImQ8Ik678_rlVx8kZ4WRv-Z31zR42_1Vna9sAPOdYekH/pubhtml?gid=' + secretInfo.serpents + '&amp;single=true&amp;widget=true&amp;headers=false"></iframe>' +
+                    '<a href="https://docs.google.com/spreadsheets/d/' + id + '/edit#gid=0" target="_blank">Edit Spreadsheet</a>' +
+                    '<iframe src="https://docs.google.com/spreadsheets/d/e/' + id + '/pubhtml?gid=0&single=true&widget=true&headers=false"></iframe>' +
                     '</div>' +
                     '<div id="blobfish" class="tab-pane fade">' +
-                    '<a href="https://docs.google.com/spreadsheets/d/15Z9AgrqGNprz2K8c032ZhJ7Wm5bTV-2fJfublK7L1L8/edit#gid=' + secretInfo.blobfish + '" target="_blank">Edit Spreadsheet</a>' +
-                    '<iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSeGvLg047gQPtfolczqqJrnswpBs9dK4TtImQ8Ik678_rlVx8kZ4WRv-Z31zR42_1Vna9sAPOdYekH/pubhtml?gid=' + secretInfo.blobfish + '&amp;single=true&amp;widget=true&amp;headers=false"></iframe>' +
+                    '<a href="https://docs.google.com/spreadsheets/d/' + id + '/edit#gid=1196318122" target="_blank">Edit Spreadsheet</a>' +
+                    '<iframe src="https://docs.google.com/spreadsheets/d/e/' + id + '/pubhtml?gid=1196318122&single=true&widget=true&headers=false"></iframe>' +
                     '</div>' +
                     '<div id="dragons" class="tab-pane fade">' +
-                    '<a href="https://docs.google.com/spreadsheets/d/15Z9AgrqGNprz2K8c032ZhJ7Wm5bTV-2fJfublK7L1L8/edit#gid=' + secretInfo.dragons + '" target="_blank">Edit Spreadsheet</a>' +
-                    '<iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSeGvLg047gQPtfolczqqJrnswpBs9dK4TtImQ8Ik678_rlVx8kZ4WRv-Z31zR42_1Vna9sAPOdYekH/pubhtml?gid=' + secretInfo.dragons + '&amp;single=true&amp;widget=true&amp;headers=false"></iframe>' +
+                    '<a href="https://docs.google.com/spreadsheets/d/' + id + '/edit#gid=179512825" target="_blank">Edit Spreadsheet</a>' +
+                    '<iframe src="https://docs.google.com/spreadsheets/d/e/' + id + '/pubhtml?gid=179512825&single=true&widget=true&headers=false"></iframe>' +
                     '</div>'
                 );
                 $('#spreadsheet').show();
@@ -274,7 +276,7 @@
 
             // Cacti
             Tabletop.init({
-                key: "https://docs.google.com/spreadsheets/d/15Z9AgrqGNprz2K8c032ZhJ7Wm5bTV-2fJfublK7L1L8/edit?usp=sharing#gid=" + secretInfo.cacti,
+                key: "https://docs.google.com/spreadsheets/d/" + id + "/edit?usp=sharing#gid=90442790",
                 callback: data => {
                     data.forEach(curData => {
                         curData.patrol = 'Cacti';
@@ -287,7 +289,7 @@
 
             // Hawks
             Tabletop.init({
-                key: "https://docs.google.com/spreadsheets/d/15Z9AgrqGNprz2K8c032ZhJ7Wm5bTV-2fJfublK7L1L8/edit?usp=sharing#gid=" + secretInfo.hawks,
+                key: "https://docs.google.com/spreadsheets/d/" + id + "/edit?usp=sharing#gid=1225623259",
                 callback: data => {
                     data.forEach(curData => {
                         curData.patrol = 'Hawks';
@@ -300,7 +302,7 @@
 
             // Wildcats
             Tabletop.init({
-                key: "https://docs.google.com/spreadsheets/d/15Z9AgrqGNprz2K8c032ZhJ7Wm5bTV-2fJfublK7L1L8/edit?usp=sharing#gid=" + secretInfo.wildcats,
+                key: "https://docs.google.com/spreadsheets/d/" + id + "/edit?usp=sharing#gid=1225623259",
                 callback: data => {
                     data = data.Sheet1.elements;
                     data.forEach(curData => {
@@ -314,7 +316,7 @@
 
             // Serpents
             Tabletop.init({
-                key: "https://docs.google.com/spreadsheets/d/15Z9AgrqGNprz2K8c032ZhJ7Wm5bTV-2fJfublK7L1L8/edit?usp=sharing#gid=" + secretInfo.serpents,
+                key: "https://docs.google.com/spreadsheets/d/" + id + "/pubhtml",
                 callback: data => {
                     data.forEach(curData => {
                         curData.patrol = 'Serpents';
@@ -327,7 +329,7 @@
 
             // Blobfish
             Tabletop.init({
-                key: "https://docs.google.com/spreadsheets/d/15Z9AgrqGNprz2K8c032ZhJ7Wm5bTV-2fJfublK7L1L8/edit?usp=sharing#gid=" + secretInfo.blobfish,
+                key: "https://docs.google.com/spreadsheets/d/" + id + "/edit?usp=sharing#gid=1196318122",
                 callback: data => {
                     data = data.Sheet1.elements;
                     data.forEach(curData => {
@@ -341,7 +343,7 @@
 
             // Dragons
             Tabletop.init({
-                key: "https://docs.google.com/spreadsheets/d/15Z9AgrqGNprz2K8c032ZhJ7Wm5bTV-2fJfublK7L1L8/edit?usp=sharing#gid=" + secretInfo.dragons,
+                key: "https://docs.google.com/spreadsheets/d/" + id + "/edit?usp=sharing#gid=179512825",
                 callback: data => {
                     data.forEach(curData => {
                         curData.patrol = 'Dragons';
@@ -547,7 +549,7 @@
 
             $('#results').hide();
             if (results.length === 0) {
-                $('#no-result').html('Your search - <b>' + userquery + '</b> - did not match any names.   << Sorry this is currently broken. Please check the spreadsheets below>>');
+                $('#no-result').html('Your search - <b>' + userquery + '</b> - did not match any names.');
                 $('#no-result').show();
             }
             else {
