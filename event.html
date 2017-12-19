@@ -168,6 +168,9 @@
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button> This event page has been archived. Archived event pages are no longer maintained, and may be outdated. These are kept
         only for historical reasons.<span id="archived-page-owner" class="hidden"><br>(You own this event page. You can email the webmaster to unarchive it.)</span><span id="archived-page-access" class="hidden"><br>(You're using an access link for this event page.)</span></span>
     </div>
+    <div class="alert alert-warning alert-dismissible alert-visible hidden" role="alert" id="hidden-alert-box">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button> This event page has been hidden. You can only view it via a direct link(which you are). It is not avaliable on the list of event pages.</span>
+    </div>
     </div>
     </p>
     <p id="loading">Loading...</p>
@@ -288,6 +291,9 @@
             else {
                 if (snapshot.val().archived === true) {
                     $("#archived-alert-box").removeClass("hidden");
+                }
+                if (snapshot.val().hidden === true) {
+                    $("#hidden-alert-box").removeClass("hidden");
                 }
                 $("#event-title").html(data.title);
                 $("#event-description").html(data.description);
