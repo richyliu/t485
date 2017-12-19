@@ -25,12 +25,12 @@ redirect:
     }
     else if (mode === "mirror") {
         $(document).ready(function() {
-            console.log(2);
+            //console.log(2);
             $("#alertBox").html('<div class="alert alert-warning">' +
                 '  <strong>Warning!</strong> You are currently viewing mirror ' + data + ' of the t485.org website. If you got redirected here by typing in https://t485.org, then the t485.org main site may be undergoing mantiance or is not working at this moment. This mirror is a fully functional version of the main site, but it may be slightly outdated.' +
                 '</div>');
         });
-        console.log(3);
+        //console.log(3);
     }
     else {
         //assume mode is normal, don't do anything, this is here just as a reminder.
