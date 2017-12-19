@@ -104,6 +104,7 @@
                             <li><a href="/resources/event-pages.html">Event Pages</a></li>
                             <li><a href="/resources/meeting-minutes.html">Meeting Minutes/Reflections</a></li>
                             <li><a href="/resources/pictures.html">Pictures</a></li>
+                            <li><a href="https://ls.t485.org/">Link Shortener</a></li>
                             <li><a href="/resources/app-download.html">Download App</a></li>
                         </ul>
                     </li>
@@ -115,7 +116,7 @@
                             <li><a href="/about/faq.html">FAQ</a></li>
                             <li><a href="/about/merit-badges.html">Merit Badges</a></li>
                             <li><a href="/about/eagle.html">Path to Eagle</a></li>
-                            <li><a href="/about/smc.html">SMC &amp; BOR</a></li>
+                            <li><a href="/about/smc.html">SMC & BOR</a></li>
                             <li><a href="/about/plc.html">PLC</a></li>
                             <li><a href="/about/troop-info.html">Troop Information</a></li>
                             <li><a href="/about/troop-jobs.html">Troop Jobs</a></li>
@@ -199,7 +200,8 @@
                 <h2 class="intro-text text-center">Create New Event Page</h2>
                 <hr>
                 <b>When choosing a name, try to add the current year to the name so people can differentiate between the same event on different years. You can view a guide to event pages
-                <a href="https://docs.google.com/presentation/d/1RfAZvUzIIWP8U3rwf0ORi3J88hB4p1QkhhW9qJENGsY/edit#slide=id.g1fb89b61f1_0_799">here</a></b>
+                <a href="https://docs.google.com/presentation/d/1RfAZvUzIIWP8U3rwf0ORi3J88hB4p1QkhhW9qJENGsY/edit">here</a>. If you want a hidden event page(link is required to access), 
+                an custom link(for a larger event), or need custom featues, you can contact the webmaster.</b>
                 <br>
                 <label>Choose An Event Name(You can change this later):</label>
 
@@ -320,8 +322,9 @@
             else {
                 id = "#event-list"
             }
-
-            $(id).prepend("<li><a class='name' href='/event.html?event=" + data.key + "'>" + name + "</a></li>");
+            if (data.val().hidden !== true) {
+                $(id).prepend("<li><a class='name' href='/event.html?event=" + data.key + "'>" + name + "</a></li>");
+            }
         });
     </script>
 

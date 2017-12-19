@@ -13187,7 +13187,7 @@
                         throw new Error('Template7: Passed context to "escape" helper should be a string');
                     }
                     return context
-                            .replace(/&/g, '&amp;')
+                            .replace(/&/g, '&')
                             .replace(/</g, '&lt;')
                             .replace(/>/g, '&gt;')
                             .replace(/"/g, '&quot;');
