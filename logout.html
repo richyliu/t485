@@ -138,7 +138,6 @@
                 </div>
                 <div class="col-md-12">
                     <p>You have successfully logged out.</p>
-                    <p>Accidentally clicked log out? Click <span id="logout"></span> to log back in.</p>
                     <p>Warning: you are still logged in to your google account. Click <a href="https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=http://t485.org">here</a> to log out of your Google account.</p>
                 </div>
                 <div class="clearfix"></div>
@@ -171,14 +170,7 @@
 
 
     <script>
-        let redir = getQuery('redir');
-        $("#logout").html(redir !== null ? '<a href="login.html?redir=' + redir + '">here</a>' : '<a href="login.html">here</a>');
-
-        firebase.auth().signOut().then(() => {
-            // Sign-out successful.
-        }, error => {
-            console.error(error);
-        });
+        localStorage.setItem('userHash', '');
     </script>
 </body>
 

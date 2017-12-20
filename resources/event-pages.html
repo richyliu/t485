@@ -43,8 +43,7 @@
     <script>
         try {
             localStorage.setItem('foo', 'bar');
-        }
-        catch (e) {
+        } catch (e) {
             if (e.message === 'The quota has been exceeded.') {
                 // using Safari(desktop & iOS) or Chrome(iOS) w/ private, localStorage not supported
                 // firebase will throw error, so better to alert user now
@@ -53,11 +52,6 @@
             throw '';
         }
     </script>
-    <style>
-        .hidden {
-            display: none;
-        }
-    </style>
 </head>
 
 <body>
@@ -131,25 +125,8 @@
     </nav>
     <div id="alertBox"></div>
 
-    <a class="toTop" href="#"></a>
-    <p id="loading2">Loading...</p>
-    <div class="container hidden" id="login">
 
-        <div class="row" id="search">
-            <div class="box col-xs-12">
-                <hr>
-                <h2 class="intro-text text-center">Login to continue</h2>
-                <hr>
-                <p>
-                    <a class="btn btn-block btn-social btn-google no-fancy-link" onclick="window.location.href = '/login.html?redir=' + encodeURIComponent(window.location.pathname + window.location.search + window.location.hash)">
-                        <span class="fa fa-google"></span> Sign in with Google
-                    </a>
-                </p>
-            </div>
-        </div>
-    </div>
-
-    <div class="container hidden" id="loading">
+    <div class="container" id="loading" style="display: none;">
         <div class="row">
             <div class="box col-md-12">
 
@@ -162,169 +139,133 @@
             </div>
         </div>
     </div>
-    <div class="container hidden" id="main">
+    
+    
+    <div class="container" id="main">
 
         <div class="row">
             <div class="box col-md-12">
-
                 <div id="event-list-box">
                     <hr>
                     <h2 class="intro-text text-center">Event Pages</h2>
                     <hr>
                     <ul id="event-list"></ul>
-                    </ul>
                     <div class="accordion-group">
                         <button class="viewmore btn btn-default" data-toggle="collapse" href="#collapse" onclick="if(this.innerHTML === 'Show Archived Event Pages') {this.innerHTML = 'Hide Archived Event Pages'} else {this.innerHTML = 'Show Archived Event Pages'}">Show Archived Event Pages</button>
                         <div id="collapse" class="accordion-body collapse">
                             <div class="accordion-inner">
-                                <p><b>Archived Event Pages:</b><br>These are no longer maintained, and may be outdated. They are kept only for historical reasons. If you are a SIC, however, this may be helpful to you.<br></p>
-                                <ul id="archived-event-list">
-
-
-                                </ul>
+                                <p><b>Archived Event Pages:</b><br>These are no longer maintained, and may be outdated. They are kept only for historical reasons. If you are a SiC, however, this may be helpful to you.<br></p>
+                                <ul id="archived-event-list"></ul>
                             </div>
                         </div>
-
                     </div>
-
                 </div>
             </div>
-
-
-
         </div>
+        
         <a name="event"></a>
         <div class="row">
             <div class="box col-md-12">
                 <hr>
                 <h2 class="intro-text text-center">Create New Event Page</h2>
                 <hr>
-                <b>When choosing a name, try to add the current year to the name so people can differentiate between the same event on different years. You can view a guide to event pages
-                <a href="https://docs.google.com/presentation/d/1RfAZvUzIIWP8U3rwf0ORi3J88hB4p1QkhhW9qJENGsY/edit">here</a>. If you want a hidden event page(link is required to access), 
-                an custom link(for a larger event), or need custom featues, you can contact the webmaster.</b>
-                <br>
+                <p>
+                    When choosing a name, try to add the current year to the name so people can differentiate between the same event on different years. You can view a guide to event pages
+                    <a href="https://docs.google.com/presentation/d/1RfAZvUzIIWP8U3rwf0ORi3J88hB4p1QkhhW9qJENGsY/edit">here</a>. If you want a hidden event page(link is required to access), 
+                    an custom link(for a larger event), or need custom featues, you can contact the webmaster.</b>
+                </p>
+                
                 <label>Choose An Event Name(You can change this later):</label>
-
-
                 <input type="text" id="name" class="form-control">
-
 
                 <p id="error" class="text-danger"></p>
                 <button class="btn btn-primary form-control" id="create-event-page">Create event page!</button>
             </div>
         </div>
-
-
-
-        <script src="https://static.getclicky.com/js"></script>
-        <script>
-            try {
-                clicky.init(100869133)
-            }
-            catch (e) {}
-        </script>
-
-        <noscript><p><img alt="Clicky" width="1" height="1" src="https://in.getclicky.com/100869133ns.gif"></p></noscript>
     </div>
     <!-- /.container -->
+    
     <footer>
         <div class="container">
             <div class="box">
                 <div class="col-lg-12 text-center">
                     <p>Copyright &copy; 2006-2017 Troop 485, Silicon Valley Monterey Bay Council, Boy Scouts of America.</p>
-
                 </div>
             </div>
         </div>
     </footer>
 
 
-    <!-- Modal -->
-    <div aria-hidden="true" aria-labelledby="myModalLabel" class="modal fade" id="myModal" role="dialog" tabindex="-1">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button aria-hidden="true" class="close" data-dismiss="modal" type="button">&times;</button>
-                    <h4 class="modal-title" id="myModalLabel">Content Unavaliable</h4>
-                </div>
-
-                <div class="modal-body">
-                    <iframe frameborder="0" height="90%" id="ifr" name="ifr" src="" width="90%">Unfortunately, this content is unavaliable at this time. Please give feedback for this bug, and view the document on your google drive.</iframe>
-                </div>
-
-                <div class="modal-footer">
-                    <a class="btn btn-primary" href="https://google.com" id="mdlk" target="_blank" type="button">Open in new tab</a>
-                    <button class="btn btn-primary" onclick="requestFullScreen();">Fullscreen mode</button>
-                    <button class="btn btn-default" data-dismiss="modal" type="button">Close</button>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-
-    <!--authentication checkpoint -->
+    <script src="https://static.getclicky.com/js"></script>
     <script>
-        $("#loading2").addClass("hidden");
-        auth(() => $("#main").removeClass("hidden"), () => $("#login").removeClass("hidden"));
+        try {
+            clicky.init(100869133)
+        } catch (e) {}
     </script>
+    <noscript><p><img alt="Clicky" width="1" height="1" src="https://in.getclicky.com/100869133ns.gif"></p></noscript>
+    
     <script>
-        /* global firebase $ auth */
-
-        String.prototype.replaceAll = (search, replacement) => {
-            let target = this;
-            return target.split(search).join(replacement);
-        };
-        auth(user => {
-            $("#create-event-page").click(() => {
-
-                $("#error").html("");
-                let title = $("#name").val();
-                if (title == "" || title == undefined || title == null) {
-                    title = "untitled event page"
-                }
-
-                let push = firebase.database().ref("/events/").push({
-                    title: title,
-                    owner: user.uid,
-                    description: "This event has not been edited yet.<br> <b>Owner</b>: Click the above edit button and then click on this paragraph or the page title to edit that element. After editing a paragraph, <b>click save changes in the toolbar that pops up to save your changes</b>."
-                });
-                let url = push.key;
-                $("#main").addClass("hidden");
-                $("#loading").removeClass("hidden");
-
-                $.post("https://hooks.slack.com/services/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", "payload=" + JSON.stringify({
-                        "text": "New Event Page Created:",
-                        "attachments": [{
-                            "fallback": "A new event page was created: <" + title + "|https://t485.org/event.html?event=" + url + ">.",
-                            "title": title,
-                            "title_link": "https://t485.org/event.html?event=" + url,
-                            "text": "Go to <https://t485.org/event.html?event=" + url + "> to view the content(May not have been updated by author yet.)",
-                            "footer": "This is a T485 event page automated message"
-                        }]
-                    }),
-                    data => {
-                        window.location.href = "/event.html?event=" + url;
-                    }
-                );
-
-
-
-
-            });
-        });
-        firebase.database().ref("/events/").on("child_added", data => {
+        // load all current event pages
+        firebase.database().ref('/events/').on('child_added', data => {
             let name = data.val().title;
+            
             let id;
             if (data.val().archived === true) {
-                id = "#archived-event-list"
+                id = '#archived-event-list';
+            } else {
+                id = '#event-list';
             }
-            else {
-                id = "#event-list"
-            }
+            
+            // hidden attribute can be turned on to prevent event page from showing up
             if (data.val().hidden !== true) {
-                $(id).prepend("<li><a class='name' href='/event.html?event=" + data.key + "'>" + name + "</a></li>");
+                console.log(data.key + ": " + name);
+                $(id).prepend(`
+                    <li>
+                        <a class="name" href="../event.html?event=${data.key}">${name}</a>
+                    </li>
+                `);
             }
+        });
+        
+
+        $('#create-event-page').click(() => {
+            $('#error').html('');
+            
+            // use default name if no title
+            let title = $('#name').val();
+            if (title == '' || title == undefined || title == null) {
+                title = 'Untitled event page';
+            }
+            
+            // push new event to firebase
+            let push = firebase.database().ref('/events/').push({
+                title: title,
+                description: 'This event has not been edited yet.<br> <b>Owner</b>: Click the above edit button and then click on this paragraph or the page title to edit that element. After editing a paragraph, <b>click save changes in the toolbar that pops up to save your changes</b>.'
+            });
+            let url = push.key;
+            
+            // show loading screen
+            $('#main').hide();
+            $('#loading').show();
+            
+            // post message to #general channel on Slack
+            $.post(
+                'https://hooks.slack.com/services/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',
+                'payload=' + JSON.stringify({
+                    text: 'New Event Page Created:',
+                    attachments: [{
+                        fallback: `A new event page was created: <${title}|https://t485.org/event.html?event=${url}>.`,
+                        title: title,
+                        title_link: `https://t485.org/event.html?event=${url}`,
+                        text: `Go to <https://t485.org/event.html?event=${url}> to view the content`,
+                        footer: 'This is a T485 event page automated message'
+                    }]
+                }),
+                () => {
+                    // once done posting message redirect to event.html
+                    window.location.href = `/event.html?event=${url}`;
+                }
+            );
         });
     </script>
 

@@ -129,22 +129,23 @@
     <div id="alertBox"></div>
 
     <a class="toTop" href="#"></a>
-    <div class="container" id="login" style="display: none;">>
+    <div class="container" id="login" style="display: none;">
 
         <div class="row">
             <div class="box col-xs-12">
                 <hr>
                 <h2 class="intro-text text-center">Login to continue</h2>
                 <hr>
-                <p>
-                    <a class="btn btn-block btn-social btn-google no-fancy-link" onclick="window.location.href = '/login.html?redir=' + encodeURIComponent(window.location.pathname + window.location.search + window.location.hash)">
-                        <span class="fa fa-google"></span> Sign in with Google
-                    </a>
-                </p>
+                <label>Your name (First Last):</label>
+                <input type="text" id="name" class="form-control">
+                <label>Your email:</label>
+                <input type="text" id="email" class="form-control">
+                <button class="btn btn-primary form-control" id="login-btn">Enter</button>
             </div>
         </div>
     </div>
-    <div class="container" id="content" style="display: none;">>
+    
+    <div class="container" id="content" style="display: none;">
 
         <div class="row" id="search">
             <div class="box col-xs-12">
@@ -215,10 +216,115 @@
 
     <script src="js/tabletop.min.js"></script>
     <script>
+        // load directory information
+        Tabletop.init({
+            key: '15Z9AgrqGNprz2K8c032ZhJ7Wm5bTV-2fJfublK7L1L8',
+            callback: data => {
+                window.globalData = [];
+                
+                for (let key of Object.keys(data)) {
+                    console.log(key);
+                    for (let person of data[key].elements) {
+                        person.patrol = key;
+                        
+                        // normalize name
+                        let fullname = person['Scout\'s Full Name (last name first):'].trim();
+                        let curName = [];
+                        if ((fullname.match(/\s/g) || []).length === 2) {
+                            // has middle name
+                            let temp = fullname.split(' ');
+                            curName[0] = temp[2];
+                            curName[1] = temp[0].slice(0, -1);
+                        }
+                        else if (fullname.search(', ') > 0) {
+                            curName = fullname.split(', ');
+                            let temp = curName[0];
+                            curName[0] = curName[1];
+                            curName[1] = temp;
+                        }
+                        else if ((fullname.match(/\s/g) || []).length === 1) {
+                            curName = fullname.split(' ');
+                        }
+                        else if (fullname.search(',') > 0) {
+                            curName = fullname.split(',');
+                            let temp = curName[0];
+                            curName[0] = curName[1];
+                            curName[1] = temp;
+                        }
+                        else {
+                            curName = 'ERROR';
+                            console.error('Unable to split given full name into first and last name');
+                        }
+                        curName[0] = curName[0].toLowerCase();
+                        curName[1] = curName[1].toLowerCase();
+                        curName = curName[0] + ' ' + curName[1];
+                        
+                        person['Scout\'s Full Name (last name first):'] = curName;
+                        
+                        window.globalData.push(person);
+                    }
+                }
+                
+                // alphabetize for id consistency
+                window.globalData.sort((a, b) => {
+                    if (a['Scout\'s Full Name (last name first):'] < b['Scout\'s Full Name (last name first):']) return -1;
+                    if (a['Scout\'s Full Name (last name first):'] > b['Scout\'s Full Name (last name first):']) return 1;
+                    return 0;
+                });
+                
+                checkLogin();
+            },
+            simpleSheet: false
+        });
     
-        // user has logged in
-        auth(() => {
+        function checkLogin() {
+            for (let user of window.globalData) {
+                if (hash(user['Scout\'s Full Name (last name first):'], user['Scout\'s E-mail:']) == localStorage.getItem('userHash')) {
+                    loggedIn();
+                    return;
+                }
+            }
+            // user needs to log in
+            $("#login").show();
+            
+            $('#login-btn').click(() => {
+                let name = $('#name').val().toLowerCase();
+                let email = $('#email').val();
+                
+                console.log(name + ", " + email);
+                for (let user of window.globalData) {
+                    if (name.toLowerCase() == user['Scout\'s Full Name (last name first):'] && email == user['Scout\'s E-mail:']) {
+                        // log in user
+                        localStorage.setItem('userHash', hash(name, email));
+                        loggedIn();
+                        return;
+                    }
+                }
+                alert('Incorrect name or email!');
+            });
+        }
+        
+        function hash(name, email) {
+            let hash = 0;
+            let str = name + email;
+            
+            if (str.length == 0) {
+                return hash;
+            }
+            for (let i = 0; i < str.length; i++) {
+                char = str.charCodeAt(i);
+                hash = ((hash<<5)-hash)+char;
+                hash = hash & hash; // Convert to 32bit integer
+            }
+            
+            console.log(hash);
+            return hash;
+        }
+        
+        function loggedIn() {
+            // user is logged in
             $("#content").show();
+            $('#login').hide();
             $('#search-query').focus();
 
             $('#spreadsheet-confirm-btn').click(() => {
@@ -229,32 +335,7 @@
                 `);
                 $('#spreadsheet').show();
             });
-
-
-            // Cacti
-            Tabletop.init({
-                key: '15Z9AgrqGNprz2K8c032ZhJ7Wm5bTV-2fJfublK7L1L8',
-                callback: data => {
-                    window.globalData = [];
-                    
-                    for (let key of Object.keys(data)) {
-                        console.log(key);
-                        for (let person of data[key].elements) {
-                            person.patrol = key;
-                            window.globalData.push(person);
-                        }
-                    }
-                    
-                    // alphabetize for id consistency
-                    window.globalData.sort((a, b) => {
-                        if (a['Scout\'s Full Name (last name first):'] < b['Scout\'s Full Name (last name first):']) return -1;
-                        if (a['Scout\'s Full Name (last name first):'] > b['Scout\'s Full Name (last name first):']) return 1;
-                        return 0;
-                    });
-                },
-                simpleSheet: false
-            });
-        }, () => $("#login").show());
+        }
 
 
 

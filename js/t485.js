@@ -37,6 +37,8 @@ redirect:
     }
 
 // ====================================================== END DANGER ZONE - DANGER ZONE ABOVE ===========================
+
+
 (() => {
     // remove leading slash
     let page = window.location.pathname.substr(1);
@@ -56,18 +58,6 @@ redirect:
 
 /* Initializers */
 
-// Logout link in navbar
-firebase.auth().onAuthStateChanged(function(user) {
-  if (user) {
-    //$("#nav-user-email").html(" as " + user.providerData[0].email);
-    $("#nav-user-status").removeClass("hidden");
-  } else {
-      $("#nav-user-status").addClass("hidden");
-    // No user is signed in, do nothing. Individual login script is on each page.
-  }
-});
-
- 
 // Back to top button animation
 $(window).scroll(function() {
     if ($(this).scrollTop() > 0) {
@@ -85,8 +75,9 @@ $('.toTop').click(function(){
 	});
 
 //email bot obfuscator sort of...
-$(".at").text("@")
-    // Set LESS async to true to prevent warning on Chrome
+$(".at").text("@");
+
+// Set LESS async to true to prevent warning on Chrome
 less = {
     async: true
 };
@@ -109,18 +100,9 @@ $('.dropdown a').click(function() {
 
 /* Helpers */
 
-// Checks if the user is logged in
+// Checks if the user is logged in using tabletop
 function auth(onAuthed, onUnauthed) {
-    firebase.auth().onAuthStateChanged(user => {
-        if (user) {
-            if (onAuthed)
-                onAuthed(user);
-        }
-        else {
-            if (onUnauthed)
-                onUnauthed();
-        }
-    });
+    
 }
 
 
