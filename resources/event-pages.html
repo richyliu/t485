@@ -218,7 +218,6 @@
             
             // hidden attribute can be turned on to prevent event page from showing up
             if (data.val().hidden !== true) {
-                console.log(data.key + ": " + name);
                 $(id).prepend(`
                     <li>
                         <a class="name" href="../event.html?event=${data.key}">${name}</a>
@@ -239,10 +238,28 @@
             
             // push new event to firebase
             let push = firebase.database().ref('/events/').push({
-                title: title,
-                description: 'This event has not been edited yet.<br> <b>Owner</b>: Click the above edit button and then click on this paragraph or the page title to edit that element. After editing a paragraph, <b>click save changes in the toolbar that pops up to save your changes</b>.'
+                title: '',
+                key: '',
+                description: ''
             });
-            let url = push.key;
+            let eventId = push.key;
+            let accessKey = Math.random().toString(36).substring(2, 15);
+            
+            firebase.database().ref(`/events/${eventId}/`).set({
+                title: title,
+                key: accessKey,
+                description: `
+                    This event has not been edited yet.<br> <b>Owner</b>:
+                    You (or anyone else you choose) will only be able to edit
+                    the page with this link:
+                    <a href="/event.html?event=${eventId}&key=${accessKey}">
+                    https://t485.org/event.html?event=${eventId}&key=${accessKey}</a>. Click the
+                    above edit button and then click on this paragraph or the page
+                    title to edit that element. After editing a paragraph, <b>click
+                    save changes in the toolbar that pops up to save your changes</b>.
+                `
+            });
+            
             
             // show loading screen
             $('#main').hide();
@@ -254,18 +271,19 @@
                 'payload=' + JSON.stringify({
                     text: 'New Event Page Created:',
                     attachments: [{
-                        fallback: `A new event page was created: <${title}|https://t485.org/event.html?event=${url}>.`,
+                        fallback: `A new event page was created: <${title}|https://t485.org/event.html?event=${eventId}>.`,
                         title: title,
-                        title_link: `https://t485.org/event.html?event=${url}`,
-                        text: `Go to <https://t485.org/event.html?event=${url}> to view the content`,
+                        title_link: `https://t485.org/event.html?event=${eventId}`,
+                        text: `Go to <https://t485.org/event.html?event=${eventId}> to view the content`,
                         footer: 'This is a T485 event page automated message'
                     }]
                 }),
                 () => {
                     // once done posting message redirect to event.html
-                    window.location.href = `/event.html?event=${url}`;
+                    window.location.href = `/event.html?event=${eventId}&key=${accessKey}`;
                 }
             );
+            window.location.href = `/event.html?event=${eventId}&key=${accessKey}`;
         });
     </script>
 
