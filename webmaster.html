@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+
+
+    <title>Webmaster Console</title>
+
+    <script src="/js/combined.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        let config = {
+            apiKey: "AIzaSyAvhRMDTAxHRqIM0-RpHxPjZtMn7S_H7K4",
+            authDomain: "t485.firebaseapp.com",
+            databaseURL: "https://t485.firebaseio.com",
+            storageBucket: "project-2556333409340273878.appspot.com",
+            messagingSenderId: "510743665020"
+        };
+        firebase.initializeApp(config);
+    </script>
+    <script src="/js/t485.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/t485.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Josefin+Slab:100,300,400,600,700,100italic,300italic,400italic,600italic,700italic">
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Join Troop 485 in Cupertino to experience an excellent Scouting experience">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <meta name="google-signin-client_id" content="154157170484-81ud6v3rfber96pekq75q86igmf1fsif.apps.googleusercontent.com">
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="152x152" href="/favicons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicons/favicon-16x16.png" sizes="16x16">
+
+    <link rel="manifest" href="/manifest.json">
+
+    <script>
+        try {
+            localStorage.setItem('foo', 'bar');
+        }
+        catch (e) {
+            if (e.message === 'The quota has been exceeded.') {
+                // using Safari(desktop & iOS) or Chrome(iOS) w/ private, localStorage not supported
+                // firebase will throw error, so better to alert user now
+                alert('Private browsing is not supported!');
+            }
+            throw '';
+        }
+    </script>
+
+</head>
+
+<body>
+    <div id="alertBox"></div>
+    
+    <div class="container" id="content" style="display: none;">
+        <div class="row">
+            <div class="box">
+                <div class="col-lg-12">
+                    <hr>
+                    <h2 class="intro-text text-center">Event Pages Manger</h2>
+                    <hr>
+                </div>
+                <div class="col-md-12">
+                    <ul id="event-pages-list"></ul>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+    
+    <footer>
+        <div class="container">
+            <div class="box">
+                <div class="col-lg-12 text-center">
+                    <p>Copyright &copy; 2006-2017 Troop 485, Silicon Valley Monterey Bay Council, Boy Scouts of America.</p>
+
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // to prevent prompt from blocking script
+        setTimeout(() => {
+            // if (true) {
+            if (prompt('Enter the password') == 'besttroopjob229') {
+                $('#content').show();
+            } else {
+                alert('Wrong password!');
+            }
+        }, 1);
+        
+        
+        
+        // get event pages data
+        firebase.database().ref('/events/').once('value', snapshot => {
+            const data = snapshot.val();
+            
+            for (let id in data) {
+                const link = `https://t485.org/event.html?event=${id}&key=${data[id].key}`;
+                $('#event-pages-list').append(`
+                    <li id="${id}"> <button class="archive">${data[id].archived ? 'Archived' : 'Unarchived'}</button> <button class="status">${data[id].hidden ? 'Hidden' : 'Shown'}</button> <a href="${link}">${link}</a> <span>${data[id].title}</span></li>
+                `);
+            }
+            
+            // toggle archive button
+            $('.archive').click(e => {
+                const isUnarchived = e.target.innerHTML != 'Archived';
+                
+                firebase.database().ref(`/events/${e.target.parentElement.id}/archived`).set(isUnarchived);
+                e.target.innerHTML = isUnarchived ? 'Archived' : 'Unarchived';
+            });
+            
+            // toggle status button (to hide an event page)
+            $('.status').click(e => {
+                const isShown = e.target.innerHTML != 'Hidden';
+
+                firebase.database().ref(`/events/${e.target.parentElement.id}/hidden`).set(isShown);
+                e.target.innerHTML = isShown ? 'Hidden' : 'Shown';
+            });
+        });
+    </script>
+
+</body>
+
+</html>
