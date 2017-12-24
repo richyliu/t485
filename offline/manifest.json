@@ -1,6 +1,6 @@
 {
     "short_name": "T485",
-    "name": "Troop 485"
+    "name": "Troop 485",
     "start_url": "/offline/index.html",
     "display": "standalone"
 }

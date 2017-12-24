@@ -1,11 +1,10 @@
 CACHE MANIFEST
-# 2016-11-13:v1
+# 2017-12-23:v4
 
 CACHE:
 index.html
 directory.html
 events.html
-calendar.html
 main.css
 js/my-app.js
 js/firebase.min.js

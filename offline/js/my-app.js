@@ -46,65 +46,41 @@ function updateCache() {
     /*
         Directory
     */
-    let directoryData = [];
-    
-    // Cacti
-    Tabletop.init({key: '1FUlVVgMz1IgP68LExESAFwokIGc5zWUq6mEk5auKiSU', callback: function (data) {
-        data.forEach(curData => {
-            curData.patrol = 'Cacti';
-        });
-        directoryData.push.apply(directoryData, data);
-        localStorage.setItem('directory-info', JSON.stringify(directoryData));
-    }, simpleSheet: true});
-    // Hawks
-    Tabletop.init({key: '1NUCXRoB3Z2Su-KCG5bTNna3nxNEYHO3KK3n3lIL0wTk', callback: function (data) {
-        data.forEach(curData => {
-            curData.patrol = 'Hawks';
-        });
-        directoryData.push.apply(directoryData, data);
-        localStorage.setItem('directory-info', JSON.stringify(directoryData));
-    }, simpleSheet: true});
-    // Wildcats
-    Tabletop.init({key: '1pEWKoQjXaekpDKfZSkAuKt0WCDKNfBIckMbDV-5m31Y', callback: function (data) {
-        data = data.Sheet1.elements;
-        data.forEach(curData => {
-            curData.patrol = 'Wildcats';
-        });
-        directoryData.push.apply(directoryData, data);
-        localStorage.setItem('directory-info', JSON.stringify(directoryData));
-    }, simpleSheet: false}); // has 3 sheets, so only use 1st one
-    // Serpents
-    Tabletop.init({key: '1GHWUQD86AGYW5H4M-YnU3c97gFMayzmdVLf2iG8ioEc', callback: function (data) {
-        data.forEach(curData => {
-            curData.patrol = 'Serpents';
-        });
-        directoryData.push.apply(directoryData, data);
-        localStorage.setItem('directory-info', JSON.stringify(directoryData));
-    }, simpleSheet: true});
-    // Blobfish
-    Tabletop.init({key: '1peBfMWQb0CGOhTwDDN5IQ-Xpvctucr9XqRji7sViKLo', callback: function (data) {
-        data = data.Sheet1.elements;
-        data.forEach(curData => {
-            curData.patrol = 'Blobfish';
-        });
-        directoryData.push.apply(directoryData, data);
-        localStorage.setItem('directory-info', JSON.stringify(directoryData));
-    }, simpleSheet: false}); // has 2 sheets, so only use 1st one
-    // Dragons
-    Tabletop.init({key: '1BDqSGHtNsa_pt6FHq40NS02sHcwsfh36QVTpwoykL_A', callback: function (data) {
-        data.forEach(curData => {
-            curData.patrol = 'Dragons';
-        });
-        directoryData.push.apply(directoryData, data);
-        localStorage.setItem('directory-info', JSON.stringify(directoryData));
-    }, simpleSheet: true});
+    Tabletop.init({
+        key: '15Z9AgrqGNprz2K8c032ZhJ7Wm5bTV-2fJfublK7L1L8',
+        callback: data => {
+            let directoryData = [];
+            
+            // for each sheet
+            for (let key of Object.keys(data)) {
+                // for each person
+                for (let person of data[key].elements) {
+                    person.patrol = key;
+                    
+                    directoryData.push(person);
+                }
+            }
+            
+            localStorage.setItem('directory-info', JSON.stringify(directoryData));
+        },
+        simpleSheet: false
+    });
     
     
     /*
         Events
     */
     firebase.database().ref('events').once('value', function(snapshot) {
-        localStorage.setItem('event-info', JSON.stringify(snapshot.val()));
+        let data = snapshot.val();
+        
+        for (let key of Object.keys(data)) {
+            console.log(data[key]);
+            if (data[key].archived || data[key].hidden) {
+                delete data[key];
+            }
+        }
+        
+        localStorage.setItem('event-info', JSON.stringify(data));
     });
     
     
@@ -210,7 +186,7 @@ myApp.onPageInit('events', function() {
         event = events[event];
         $$('#event-list').append(`
             <li>
-                <a href="#" class="item-link item-content" onclick="showEventInfo('${encodeURIComponent(event.title)}','${encodeURIComponent(event.description)}')">
+                <a href="#" class="item-link item-content" onclick="showEventInfo(\`${encodeURIComponent(event.title)}\`,\`${encodeURIComponent(event.description)}\`)">
                     <div class="item-inner">
                         <div class="item-title">${event.title}</div>
                     </div>
