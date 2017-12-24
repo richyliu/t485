@@ -1,14 +1,16 @@
-$(".event-page-url").html("https://t485.org/event.html?event=" + getQuery("event"));
-
 // redirect to event pages if no event id
 if (getQuery("event") === null || getQuery("event") === "") {
     window.location.href = "/resources/event-pages.html";
 }
 
+
+
 // get event pages data from firebase
+// encodeURIComponent to prevent code injection when querying
 firebase.database().ref('/events/' + encodeURIComponent(getQuery("event"))).once('value').then(snapshot => {
     let data = snapshot.val();
-
+    
+    
     // error if no data
     if (data === null || data === 0) {
         $("#event-title").html("Error 404: Event Not Found");
@@ -21,9 +23,19 @@ firebase.database().ref('/events/' + encodeURIComponent(getQuery("event"))).once
         $("#event-title").html(data.title);
         $("#event-description").html(data.description);
         
-        if (data.archived) {
-            $('#archived-alert-box').show();
-            $('#edit-alert-box').hide();
+        
+        // enable edit/archiving privilage if key is correct
+        if (data.key == getQuery('key')) {
+            if (data.archived) {
+                $('#archived-alert-box').show();
+                $('#restore').show();
+            } else {
+                $('#edit-alert-box').show();
+            }
+        } else {
+            if (data.archived) {
+                $('#archived-alert-box').show();
+            }
         }
         
         
@@ -76,8 +88,6 @@ firebase.database().ref('/events/' + encodeURIComponent(getQuery("event"))).once
                         text: "Save Changes",
                         icon: false,
                         onclick: () => {
-                            console.log(editor.getContent());
-                            console.log(editor.id);
                             firebase.database().ref("/events/" + getQuery("event") + "/" + editor.id.replace("event-", "") + "/").set(editor.getContent());
                         }
                     });
@@ -101,8 +111,6 @@ firebase.database().ref('/events/' + encodeURIComponent(getQuery("event"))).once
                         text: "Save Changes",
                         icon: false,
                         onclick: () => {
-                            console.log(editor.getContent());
-                            console.log(editor.id);
                             firebase.database().ref("/events/" + getQuery("event") + "/" + editor.id.replace("event-", "") + "/").set(editor.getContent());
                         }
                     });

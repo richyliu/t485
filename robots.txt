@@ -1,3 +1,7 @@
 User-agent: *
-Disallow: /members
 Disallow: /blog/
+
+User-agent: Googlebot-Image
+Disallow: /img/new-scout_1.gif
+Disallow: /img/index_4.jpg
+Disallow: /img/index_5.jpg

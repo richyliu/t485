@@ -135,15 +135,22 @@
 
     <!-- BTW Event pages were created by Jeffrey Meng in 2016 -->
     <!-- Good job Jeffrey, however your code was very unreadable/had bugs, and so I had to fix it -Richard Liu -->
-    
-    <div class="alert alert-info alert-dismissible alert-visible" role="alert" id="edit-alert-box">
+    <!-- "Fix": What bugs? 20+ event pages created, 0 bug reports, 100% Approval Rating* Seriously though, no bugs. And by unreadable, do you mean that it dosent use ES6? -->
+    <!-- *Approval ratings peformed by third party survey company, SurveyPlus, INC. ** -->
+    <!-- ** We are required by law to list that SurveyPlus, INC is a subsidery of CustomerSolutions, 
+    a company owned by a shell company based in the Cayman islands, owned by Robert Frank, LLC.,
+    a subsidery of the Italian Mafia, INC.(Registered in Russia), 
+    a child of Kim Jong Daniel Laundering Services(As in clothes), 
+    routed through the Russian Mafia, LLC(registered in Italy), 
+    owned by Loyd Wright, a Shell company owned by Jeffrey, INC. -->
+    <div class="alert alert-info alert-dismissible alert-visible" role="alert" id="edit-alert-box" style="display: none;">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <span id="edit-alert" style="display: none;">Click on some text to edit it. After you edit some text, click save changes on the toolbar that pops up. This will save the text only on the paragraph you selected. Or <a id='view' class='alert-link'>View this page</a>.</span>
         <span id="options">Options: <a id="edit" class="alert-link">Edit</a> | <a id="delete" class="alert-link"> Archive this page</a>.</span>
     </div>
     
     <div class="alert alert-warning alert-dismissible alert-visible" role="alert" id="archived-alert-box" style="display: none;">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button> This event page has been archived. Archived event pages are no longer maintained, and may be outdated. These are kept only for historical reasons. <a id="restore" class="alert-link">Unarchive this page</a>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button> This event page has been archived. Archived event pages are no longer maintained, and may be outdated. These are kept only for historical reasons. <a id="restore" class="alert-link" style="display: none;">Unarchive this page</a>
     </div>
 
     <div class="container" id="content">
