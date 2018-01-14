@@ -14,11 +14,11 @@ Tabletop.init({
                 person['Scout\'s Full Name (last name first):'] = normalizeName(person['Scout\'s Full Name (last name first):'].trim());
                 window.globalData.push(person);
                 
-                let scoutEmail = person['Scout\'s E-mail:'];
+                let scoutEmail = person['Scout\'s E-mail:'].toLowerCase();
                 let fatherName = normalizeName(person[`父親全名 Father's Full Name (last name first)`]);
-                let fatherEmail = person[`Father's E-mail`];
+                let fatherEmail = person[`Father's E-mail`].toLowerCase();
                 let motherName = normalizeName(person[`母親全名 Mother's Full Name (last name first)`]);
-                let motherEmail = person[`Mother's E-mail`];
+                let motherEmail = person[`Mother's E-mail`].toLowerCase();
                 
                 if (scoutEmail.length > 5)
                     people.push({name: person['Scout\'s Full Name (last name first):'], email: scoutEmail});
@@ -66,9 +66,9 @@ function checkLogin(people) {
         let email = $('#email').val();
         
         for (let person of people) {
-            if (name.toLowerCase() == person.name && email == person.email) {
+            if (name.toLowerCase() == person.name && email.toLowerCase() == person.email) {
                 // log in user
-                localStorage.setItem('userHash', hash(name, email));
+                localStorage.setItem('userHash', hash(name.toLowerCase(), email.toLowerCase()));
                 loggedIn();
                 return;
             }
