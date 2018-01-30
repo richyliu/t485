@@ -20,12 +20,19 @@ Tabletop.init({
                 let motherName = normalizeName(person[`母親全名 Mother's Full Name (last name first)`]);
                 let motherEmail = person[`Mother's E-mail`].toLowerCase();
                 
-                if (scoutEmail.length > 2)
+                if (scoutEmail.length > 2) {
                     people.push({name: person['Scout\'s Full Name (last name first):'], email: scoutEmail});
+                    // flip name as well
+                    people.push({name: person['Scout\'s Full Name (last name first):'].split(' ').reverse().join(' '), email: scoutEmail});
+                }
                 if (fatherName.length > 2 && fatherEmail.length > 2)
                     people.push({name: fatherName, email: fatherEmail});
+                    // flip name as well
+                    people.push({name: fatherName.split(' ').reverse().join(' '), email: scoutEmail});
                 if (motherName.length > 2 && motherEmail.length > 2)
                     people.push({name: motherName, email: motherEmail});
+                    // flip name as well
+                    people.push({name: motherName.split(' ').reverse().join(' '), email: scoutEmail});
                 
             }
         }
