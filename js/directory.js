@@ -20,11 +20,11 @@ Tabletop.init({
                 let motherName = normalizeName(person[`母親全名 Mother's Full Name (last name first)`]);
                 let motherEmail = person[`Mother's E-mail`].toLowerCase();
                 
-                if (scoutEmail.length > 5)
+                if (scoutEmail.length > 2)
                     people.push({name: person['Scout\'s Full Name (last name first):'], email: scoutEmail});
-                if (fatherName.length > 5 && fatherEmail.length > 5)
+                if (fatherName.length > 2 && fatherEmail.length > 2)
                     people.push({name: fatherName, email: fatherEmail});
-                if (motherName.length > 5 && motherEmail.length > 5)
+                if (motherName.length > 2 && motherEmail.length > 2)
                     people.push({name: motherName, email: motherEmail});
                 
             }
@@ -62,13 +62,13 @@ function checkLogin(people) {
     $("#login").show();
     
     $('#login-btn').click(() => {
-        let name = $('#name').val().toLowerCase();
+        let name = $('#name').val();
         let email = $('#email').val();
         
         for (let person of people) {
-            if (name.toLowerCase().trim() == person.name.trim() && email.trim() == person.email.trim()) {
+            if (name.toLowerCase().trim() == person.name.toLowerCase().trim() && email.toLowerCase().trim() == person.email.toLowerCase().trim()) {
                 // log in user
-                localStorage.setItem('userHash', hash(name.toLowerCase(), email.toLowerCase()));
+                localStorage.setItem('userHash', hash(name.toLowerCase().trim(), email.toLowerCase().toLowerCase().trim()));
                 loggedIn();
                 return;
             }
