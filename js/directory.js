@@ -66,7 +66,7 @@ function checkLogin(people) {
         let email = $('#email').val();
         
         for (let person of people) {
-            if (name.toLowerCase() == person.name && email == person.email) {
+            if (name.toLowerCase().trim() == person.name.trim() && email.trim() == person.email.trim()) {
                 // log in user
                 localStorage.setItem('userHash', hash(name, email));
                 loggedIn();
