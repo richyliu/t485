@@ -15,14 +15,13 @@ redirect:
     data should contain a string with an url to redirect to. INCLUDE PROTOCOL, CURRENT PATH AUTOMATICALLY APPENDED, SO DO NOT INCLUDE TRAILING SLASH
 */
 
-    if (mode === "redirect" && getQuery("mirror-no-redirect") !== "true") {
-	window.location.href = data + window.location.pathname + window.location.search + window.location.hash;
+    if (mode === "redirect" && (getQuery("mirror-no-redirect") !== "true"&& localStorage.getItem("mirror-no-redirect") !== "true") {
         $(document).ready(function() {
             $("#alertBox").html('<div class="alert alert-warning">' +
                 '  <strong>Warning!</strong> You are being redirected to a mirror of t485.org because the main site is undergoing mantiance. If you are not automatically redirected in a few seconds, go to this URL: <a href="' + data + '">' + data + '</a>' +
                 '</div>');
         });
-        
+        window.location.href = data + window.location.pathname;
     }
     else if (mode === "mirror") {
         $(document).ready(function() {
