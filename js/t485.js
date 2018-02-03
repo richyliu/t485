@@ -41,7 +41,7 @@ redirect:
 //BEGIN CAMPAIGN bug reports
 var bugReport = `
 <div class="alert alert-warning alert-dismissible alert-visible" role="alert">
-        Email bug reports to the webmaster <a href="https://docs.google.com/forms/d/1rjahVqUbKsufXWKYcMvN2JuXGuusCydb9GCp9K6tw2Q/edit">here
+        Please let us know of any bugs <a href="https://docs.google.com/forms/d/1rjahVqUbKsufXWKYcMvN2JuXGuusCydb9GCp9K6tw2Q/edit">here
         <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="localStorage.setItem('bug-report-alert-closed', Date())">x</a>
     </div>
 `
