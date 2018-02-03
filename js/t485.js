@@ -16,7 +16,7 @@ redirect:
 */
 
     if (mode === "redirect" && getQuery("mirror-no-redirect") !== "true") {
-	window.location.href = data + window.location.pathname;
+	window.location.href = data + window.location.pathname + window.location.search + window.location.hash;
         $(document).ready(function() {
             $("#alertBox").html('<div class="alert alert-warning">' +
                 '  <strong>Warning!</strong> You are being redirected to a mirror of t485.org because the main site is undergoing mantiance. If you are not automatically redirected in a few seconds, go to this URL: <a href="' + data + '">' + data + '</a>' +
