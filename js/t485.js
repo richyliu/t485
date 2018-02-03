@@ -38,7 +38,7 @@ redirect:
 
 // ====================================================== END DANGER ZONE - DANGER ZONE ABOVE ===========================
 
-//BUG REPORT CAMPAIGN
+//BEGIN CAMPAIGN bug reports
 var bugReport = `
 <div class="alert alert-warning alert-dismissible alert-visible" role="alert">
         Email bug reports to the webmaster <a href="https://docs.google.com/forms/d/1rjahVqUbKsufXWKYcMvN2JuXGuusCydb9GCp9K6tw2Q/edit">here
@@ -46,6 +46,8 @@ var bugReport = `
     </div>
 `
 $("#alert-box").append(bugReport);
+//END
+
 (() => {
     // remove leading slash
     let page = window.location.pathname.substr(1);
