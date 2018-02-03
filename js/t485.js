@@ -1,3 +1,11 @@
+// http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
+function getQuery(e) {
+    e = e.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    let c = new RegExp("[\\?&]" + e + "=([^&#]*)"),
+        n = c.exec(location.search);
+    return null === n ? "" : decodeURIComponent(n[1].replace(/\+/g, " "))
+}
+
 //========================================================= DANGER ZONE BELOW ===========================================
 let mode = "redirect"; // normal", "mirror", "redirect"
 let data = "https://mirror1.t485.org"; //specific to above mode, see below 
