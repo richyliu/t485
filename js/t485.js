@@ -1,6 +1,6 @@
 //========================================================= DANGER ZONE BELOW ===========================================
 let mode = "redirect"; // normal", "mirror", "redirect"
-let data = 1; //specific to above mode, see below 
+let data = "https://mirror1.t485.org"; //specific to above mode, see below 
 /* Modes:
 normal:
     normal, site should be loaded from github.com/t485/t485
@@ -16,12 +16,13 @@ redirect:
 */
 
     if (mode === "redirect" && getQuery("mirror-no-redirect") !== "true") {
+	window.location.href = data + window.location.pathname;
         $(document).ready(function() {
             $("#alertBox").html('<div class="alert alert-warning">' +
                 '  <strong>Warning!</strong> You are being redirected to a mirror of t485.org because the main site is undergoing mantiance. If you are not automatically redirected in a few seconds, go to this URL: <a href="' + data + '">' + data + '</a>' +
                 '</div>');
         });
-        window.location.href = data + window.location.pathname;
+        
     }
     else if (mode === "mirror") {
         $(document).ready(function() {
