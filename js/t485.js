@@ -1,6 +1,6 @@
 //========================================================= DANGER ZONE BELOW ===========================================
-let mode = "normal"; // normal", "mirror", "redirect"
-let data = null; //specific to above mode, see below 
+let mode = "redirect"; // normal", "mirror", "redirect"
+let data = 1; //specific to above mode, see below 
 /* Modes:
 normal:
     normal, site should be loaded from github.com/t485/t485
@@ -11,7 +11,7 @@ mirror:
     the mirror number will be displayed in an alert
     
 redirect:
-    onle use if this is the website loaded from the normal repository, and is LOADED, but does not work(not live, etc.)
+    only use if this is the website loaded from the normal repository, and is LOADED, but does not work(not live, etc.)
     data should contain a string with an url to redirect to. INCLUDE PROTOCOL, CURRENT PATH AUTOMATICALLY APPENDED, SO DO NOT INCLUDE TRAILING SLASH
 */
 
