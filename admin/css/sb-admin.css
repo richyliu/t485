@@ -77,11 +77,14 @@ body.fixed-nav {
 #mainNav .navbar-collapse .navbar-sidenav .nav-link-collapse:after {
   float: right;
   content: '\f107';
-  font-family: 'Font Awesome 5 Prox ';
+  font-family: 'Font Awesome 5 Pro';
+  font-weight:900;
 }
 
 #mainNav .navbar-collapse .navbar-sidenav .nav-link-collapse.collapsed:after {
   content: '\f105';
+  font-family: 'Font Awesome 5 Pro';
+  font-weight:900;
 }
 
 #mainNav .navbar-collapse .navbar-sidenav .sidenav-second-level,
@@ -123,7 +126,8 @@ body.fixed-nav {
   width: auto;
   content: '\f105';
   border: none;
-  font-family: 'FontAwesome';
+  font-family: 'Font Awesome 5 Pro';
+  font-weight:900;
 }
 
 #mainNav .navbar-collapse .navbar-nav > .nav-item.dropdown > .nav-link .indicator {
@@ -135,6 +139,8 @@ body.fixed-nav {
 
 #mainNav .navbar-collapse .navbar-nav > .nav-item.dropdown.show > .nav-link:after {
   content: '\f107';
+  font-family: 'Font Awesome 5 Pro';
+  font-weight:900;
 }
 
 #mainNav .navbar-collapse .navbar-nav > .nav-item.dropdown .dropdown-menu > .dropdown-item > .dropdown-message {
