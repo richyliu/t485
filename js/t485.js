@@ -7,7 +7,7 @@ function getQuery(e) {
 }
 
 //========================================================= DANGER ZONE BELOW ===========================================
-let mode = "redirect"; // normal", "mirror", "redirect"
+let mode = "normal"; // normal", "mirror", "redirect"
 let data = "https://mirror1.t485.org"; //specific to above mode, see below 
 /* Modes:
 normal:
