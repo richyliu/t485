@@ -100,7 +100,37 @@
 
       </ol>
       <h1>Event Pages</h1>
-      <p>This is a blank page for the t485 dashboard.</p>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Link</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Archived</th>
+            <th scope="col">Hidden</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td>Mark</td>
+            <td>Otto</td>
+            <td>@mdo</td>
+          </tr>
+          <tr>
+            <th scope="row">2</th>
+            <td>Jacob</td>
+            <td>Thornton</td>
+            <td>@fat</td>
+          </tr>
+          <tr>
+            <th scope="row">3</th>
+            <td colspan="2">Larry the Bird</td>
+            <td>@twitter</td>
+          </tr>
+        </tbody>
+      </table>
+      
     </div>
   </div>
   <!-- /.container-fluid-->
@@ -143,6 +173,34 @@
   <script src="/admin/js/jquery.easing.min.js"></script>
   <!-- Custom scripts for all pages-->
   <script src="/admin/js/sb-admin.min.js"></script>
+  <script>
+  firebase.database().ref('/events/').once('value', snapshot => {
+            const data = snapshot.val();
+            
+            for (let id in data) {
+                const link = `https://t485.org/event.html?event=${id}&key=${data[id].key}`;
+                $('#list').append(`
+                    <li id="${id}"> <button class="archive">${data[id].archived ? 'Archived' : 'Unarchived'}</button> <button class="status">${data[id].hidden ? 'Hidden' : 'Shown'}</button> <a href="${link}">${link}</a> <span>${data[id].title}</span></li>
+                `);
+            }
+            
+            // toggle archive button
+            $('.archive').click(e => {
+                const isUnarchived = e.target.innerHTML != 'Archived';
+                
+                firebase.database().ref(`/events/${e.target.parentElement.id}/archived`).set(isUnarchived);
+                e.target.innerHTML = isUnarchived ? 'Archived' : 'Unarchived';
+            });
+            
+            // toggle status button (to hide an event page)
+            $('.status').click(e => {
+                const isShown = e.target.innerHTML != 'Hidden';
+
+                firebase.database().ref(`/events/${e.target.parentElement.id}/hidden`).set(isShown);
+                e.target.innerHTML = isShown ? 'Hidden' : 'Shown';
+            });
+        });
+        </script>
   </div>
 </body>
 

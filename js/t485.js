@@ -29,7 +29,7 @@ redirect:
                 '  <strong>Warning!</strong> You are being redirected to a mirror of t485.org because the main site is undergoing mantiance. If you are not automatically redirected in a few seconds, go to this URL: <a href="' + data + '">' + data + '</a>' +
                 '</div>');
         });
-        window.location.href = data + window.location.pathname;
+        window.location.href = data + window.location.pathname + window.location.search + window.location.hash;
     }
     else if (mode === "mirror") {
         $(document).ready(function() {
