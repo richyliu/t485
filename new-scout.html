@@ -53,11 +53,39 @@
             throw '';
         }
     </script>
+    <style>
+        /* https://stackoverflow.com/a/26245056/5511561 */
+   #join-info ol {
+  list-style-type: none;
+  counter-reset: item;
+  margin: 0;
+  padding: 0;
+}
+
+#join-info ol > li {
+  display: table;
+  counter-increment: item;
+  margin-bottom: 0.6em;
+}
+
+#join-info ol > li:before {
+  content: counters(item, ".") ". ";
+  display: table-cell;
+  padding-right: 0.6em;    
+}
+
+#join-info li ol > li {
+  margin: 0;
+}
+
+#join-info li ol > li:before {
+  content: counters(item, ".") " ";
+} 
+    </style>
 
 </head>
 
 <body><img src="/img/header.gif" id="header" alt="Troop 485 banner" width="990" height="151">
-
     <!-- Navigation -->
     <nav class="navbar navbar-default">
         <div class="container">
@@ -134,24 +162,53 @@
                 <hr>
                 <h2 class="intro-text text-center">How to join Boy Scouts</h2>
                 <hr>
-                <ol type="1">
-                    <li>Request to join the <a href="https://groups.google.com/forum/#!forum/t485" target="_blank">T485 google groups</a> to start receiving email updates.</li>
-                    <li>Complete the online <a href="https://my.bsa.us/055taa0485mb">Boy Scouts of America Youth Application process</a>, submit the payment online and then email the Membership Chair (kwei86220826@gmail.com) the payment confirmation with
-                        the amount paid as soon as possible but no later than the next troop meeting. Please make sure to check the box by "Boy's Life" magazine to subscribe it. The total amount you paid online will be deducted from your annual due.</li>
-                    <li>Our annual due for year 2017 is $300 (this amount could vary yearly), including the amount you paid directly to BSA online. If you joined mid-year the rate is prorated ($25/month for 2017) counting from the month you registered at
-                        BSA website to December of the same year). Please bring a check payable to T485 to Membership Chair by the next troop meeting. The amount is calculated as : Your prorated due minus the amount paid directly to BSA.</li>
-                    <li>Complete the <a href="/resources/new-scout-files/Troop-485-New-Scout-Registration-Packet.pdf" target="_blank">Troop 485 New Scout Registration Packet</a>. Print out, sign and date then return to Membership Chair by next Committee meeting.
-                        meeting(Usually once a month. Check our <a href="/calendar.html">calendar</a> for details).</li>
-                    <li>Complete the <a href="/resources/new-scout-files/Boy-Scout-Medical-Forms.pdf" target="_blank">Boy Scout Medical Forms A, B and C</a>. Form C must be signed by your son’s doctor.</li>
-                    <li>Read the <a href="/resources/new-scout-files/New-Scout-Important-Information.pdf" target="_blank">important information</a> packet, which includes the T485 program policy, sub-committee description, and parent handbook.</li>
-                    <li>Purchase the boy scout uniform and scout handbook(you can get it from the <a href="https://www.google.com/maps/place/Boy+Scouts+of+America/@37.3334037,-121.9118852,17z/data=!3m1!4b1!4m5!3m4!1s0x808fcb677d3701a5:0xb30b2e1b3cb65696!8m2!3d37.3334037!4d-121.9096912"
-                            target="_blank">South bay scout shop</a>). See the <a href="/resources/new-scout-files/Uniform-Guide.pdf" target="_blank">uniform guide</a>. Contact Shirley Zhou (tjzhoupj@gmail.com) for the class B Shirt and special t485 neckerchief(do
-                        not buy this from the scout shop). Contact Margaret Zhao (margaret_zhao@hotmail.com) for the Unit number "485” patch.</li>
-                    <li>Complete the online training at the BSA website: <a href=" http://www.scouting.org/Training/YouthProtection.aspx" target="_blank">http://www.scouting.org/Training/YouthProtection.aspx</a> and <a href="http://olc.scouting.org/info/bsfs.html"
-                            target="_blank">http://olc.scouting.org/info/bsfs.html</a></li>
-                    <li>Attend the New Parent Orientation. The date and time of the next New Parent Orientation session will be emailed to you at a later time.</li>
+                <p>There is a lot of stuff to do to reigster your son as a scout, but compared to the experience that your son will remember for his entire life, it is worth it a hundred times over. You can also email the Membership SubCommittee for help: <a href="mailto:lechun.c.wu@gmail.com,kwei8620826@gmail.com,jingchen72@gmail.com">lechun.c.wu@gmail.com, kwei8620826@gmail.com,   jingchen72@gmail.com</a></p>
+                <div>
+                        <ol>
+                            <li>Request to join the T485 <a href="https://groups.google.com/forum/#!forum/t485">Google Group here</a> to start receiving email updates (You don't need to be added before continuing to the next steps).</li>
+                            <li>Register with the BSA Council
+                                <ol>
+                                    <li>Begin your registration at the Boy Scouts of America Online Application page <a href="https://my.bsa.us/055taa0485mb">here</a>.</li>
+                                    <li>During online registration make sure you tick the checkbox "Boy's Life" magazine to subscribe to it. </li>
+                                    <li>Pay the registration fee online and email to the T485 Membership SubCommittee 
+                                        (<a href="mailto:lechun.c.wu@gmail.com,kwei8620826@gmail.com,jingchen72@gmail.com">lechun.c.wu@gmail.com, kwei8620826@gmail.com,   jingchen72@gmail.com</a>)
+                                         the amount you paid to the BSA Council. This amount will be deducted from your annual due to T485.</li>
+                                </ol>
+                            </li>
+                            <li>Register with Troop 485
+                                <ol>
+                                    <li>
+                                            Our annual due for 2018 is $300 (this amount may vary yearly), including the amount you paid directly to BSA online.  
+                                            If you joined mid-year the rate is prorated (at $25/month for 2018) counting from the month you registered at BSA website to December of the same year).  
+                                    
+                                    </li>
+                                    <li>
+                                            Please bring a check (payable to <b>T485</b>) to the Membership SubCommittee by the next Committee meeting (2/19/2018). The amount is calculated as:  
+                                            Your prorated due minus the amount paid directly to BSA. For example, if your son joined in Feb 2018 and you pain $45 to the BSA Council, you will write a check of $320. 
+                                            If you are unsure of the amount we will help you calculate it at the time you turn in the check.
+                                    </li>
+                                    <li>Print and complete the <a href="#" onclick="openModal(this, '/resources/new-scout-files/New-Scout-Forms.pdf');">T485 new scout forms</a>, then sign and date it before bringing it to the Membership SubCommittee by the next Committee meeting</li>
+                                    <li>Print and complete the <a href="#" onclick="openModal(this, '/resources/new-scout-files/Medical-Form-ABC-and-insurance-card.pdf');">BSA ABC Medical Forms</a>. Form C must be signed by your son's doctor. Give the completed forms to the Membership SubCommittee by the next Committee meeting.</li>
+                                    <li>Complete the online training at the BSA website:  <a href="http://www.scouting.org/Training/YouthProtection.aspx">scouting.org/Training/YouthProtection.aspx</a> and <a href="http://olc.scouting.org/info/bsfs.html">olc.scouting.org/info/bsfs.html</a></li>
+                                    <li> Use the check list page (the first page of the new scout forms) to check off each items and return all completed/signed documents in the order of the checklist to Membership SubCommittee by the next Committee meeting. Incomplete document will delay the registration and may affect your son's ability to attend certain activities until he (is registered).</li>
 
-                </ol>
+                                </ol>
+                                <li>Scout Uniform<ol>
+                                    <li>Purchase the scout uniform and scout handbook.  Please read the <a href="#" onclick="openModal(this, '/resources/new-scout-files/Important-Information.pdf');">Important Information Packet</a> carefully, for details of what to buy at BSA store,
+                                         what to buy with T485 and what no need to buy.</li>
+                                         <li>
+                                                Contact Rachel Qiu (<a href="mailto:Rachel.qiu03@gmail.com">Rachel.qiu03@gmail.com</a>)  for the class B Shirt and neckerchief, and Margaret Zhao (<a href="mailto:margaret_zhao@hotmail.com">margaret_zhao@hotmail.com</a>) for Unit number "485” patch.  
+                                         </li>
+                                </ol></li>
+                                <li>Camping Equipment<ol>
+                                    You can use the document <a href="#" onclick="openModal(this, 'https://docs.google.com/document/d/1a56ZOlhhT1MT7QGXwLSzmsD5l1cahH44O6kUFNTAJ3I/mobilebasic');">here</a> as a basic guide for packing.
+                                </ol></li>
+                                </li>
+                        
+                        
+                        </ol>
+                </div>
+                
                 <p>
                     Scouting is a family activity and we encourage all parents to be involved in their Scout's development. Like anything else in life, you/your son, will get as much out of Scouting as you/he put into it.
                     <br><br> Again, welcome to Scouting!</p>
@@ -245,6 +302,76 @@
             </div>
         </div>
     </footer>
+
+    <!-- Modal -->
+    <div aria-hidden="true" aria-labelledby="myModalLabel" class="modal fade" id="myModal" role="dialog" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button aria-hidden="true" class="close" data-dismiss="modal" type="button">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Content Unavaliable</h4>
+                </div>
+
+                <div class="modal-body">
+                    <iframe frameborder="0" height="90%" id="ifr" name="ifr" src="" width="90%">Unfortunately, this content is unavaliable at this time. Please give feedback for this bug, and view the document on your google drive.</iframe>
+                </div>
+
+                <div class="modal-footer">
+                    <a class="btn btn-primary" href="https://google.com" id="mdlk" target="_blank" type="button">Open in new tab</a>
+                    <button class="btn btn-primary" onclick="requestFullScreen();">Fullscreen mode</button>
+                    <button class="btn btn-default" data-dismiss="modal" type="button">Close</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    
+    <script>
+        /* global firebase $ auth */
+
+        String.prototype.replaceAll = (search, replacement) => {
+            let target = this;
+            return target.split(search).join(replacement);
+        };
+
+
+
+
+        function openModal(e, url, name) {
+
+            let title;
+            if (name === undefined && e !== undefined) {
+                title = (e.tagName === 'A' ? title = e.innerHTML : e.attributes.alt.nodeValue);
+            }
+            else {
+                title = name;
+            }
+            $('#myModalLabel').html(title);
+            $('#ifr').attr('src', url);
+            $('#mdlk').attr('href', url.replace("/mobilebasic", "/"));
+            $('#myModal').modal('show');
+        }
+
+        function requestFullScreen() {
+            let el = document.getElementById("ifr");
+            // Supports most browsers and their versions.
+            let requestMethod = el.requestFullScreen || el.webkitRequestFullScreen || el.mozRequestFullScreen || el.msRequestFullScreen;
+
+            if (requestMethod) {
+                requestMethod.call(el);
+                // Older IE.
+            }
+            else if (typeof window.ActiveXObject !== "undefined") {
+                let wscript = new ActiveXObject("WScript.Shell");
+
+                if (wscript !== null) {
+                    wscript.SendKeys("{F11}");
+                }
+            }
+        }
+        
+    </script>
 
 
 </body>
