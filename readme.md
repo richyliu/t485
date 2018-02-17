@@ -1,7 +1,11 @@
 # T485
 
 The official Troop 485 website.
+## To install
+Get node and npm.
 
+run `npm install` to install dependencies.
+install and run `gulp`
 
 **Note for webmaster**:
 You should be updating [t485/mirror1](https://github.com/t485/mirror1/) about every two weeks, 
