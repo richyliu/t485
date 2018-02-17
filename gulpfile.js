@@ -23,11 +23,11 @@ let nunjucksEnv = new nunjucksModule.Environment(new nunjucksModule.FileSystemLo
 gulp.task("catchall", function () {
 	//get all scss files in the css folder
 	return gulp.src(["./**/*"])
-		.pipe(plumber())
-		.pipe(gulp.dest("./docs/css"))
-		.pipe(browserSync.reload({
-			stream: true
-		}))
+		//.pipe(plumber())
+		.pipe(gulp.dest("./docs/"))
+		//.pipe(browserSync.reload({
+		//	stream: true
+		//}))
 });
 
 
@@ -104,7 +104,7 @@ gulp.task("html", function () {
 			//if it's an absolute url
 			
 			if (p2.charAt(0) != "/") {
-				p2 = "./css/" + p2;
+				p2 = "/css/" + p2;
 			}
 			//this is assuming that the sass function is run
 			return "<link href=\"" + p2 + ".css\" rel=\"stylesheet\" type=\"text/css\">";
@@ -127,8 +127,8 @@ gulp.task("html", function () {
 gulp.task("img", function () {
 	return gulp.src(["./app/img/*", "./app/img/**/*.+(png|jpg|jpeg|gif|svg)"])
 		.pipe(plumber())
-		.pipe(cache(imagemin()))//optimize the image and cache the result
-
+		//.pipe(cache(imagemin()))//optimize the image and cache the result
+		//dont optimize because takes too long and not very useful
 		.pipe(gulp.dest("./docs/img"))
 		.pipe(browserSync.reload({
 			stream: true
