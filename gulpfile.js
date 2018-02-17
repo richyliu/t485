@@ -34,7 +34,7 @@ gulp.task("catchall", function () {
 // Process Sass
 gulp.task("sass", function () {
 	//get all scss files in the css folder
-	return gulp.src(["./app/css/**/*.scss"])
+	return gulp.src(["./app/css/**/*.scss", "./app/admin/css/**/*.scss"])
 		.pipe(plumber())
 		.pipe(sass()) // Use gulp-sass
 		.pipe(gulp.dest("./docs/css"))
@@ -46,7 +46,7 @@ gulp.task("sass", function () {
 // Process CSS
 gulp.task("styles", function () {
 	//get all scss files in the css folder
-	return gulp.src(["./app/css/**/*.css", "!./app/css/**/*.scss"])
+	return gulp.src(["./app/css/**/*.css", "./app/admin/css/**/*.css", "!./app/css/**/*.scss"])
 		.pipe(plumber())
 		.pipe(cssnano())
 		.pipe(gulp.dest("./docs/css"))
@@ -57,7 +57,7 @@ gulp.task("styles", function () {
 // Process JS
 gulp.task("scripts", function () {
 	
-	return gulp.src(["./app/js/**/*.js"])
+	return gulp.src(["./app/js/*.js", "./app/admin/js/*.js"])//Dont uglify tinymce, instead that is piped into others
 		.pipe(plumber())
 		.pipe(uglify())
 		.pipe(gulp.dest("./docs/js"))
@@ -65,6 +65,12 @@ gulp.task("scripts", function () {
 			stream: true
 		}))
 });
+
+gulp.task("tinymce", function(){
+    return gulp.src(["./app/js/tinymce/**/*.js"])
+    .pipe(gulp.dest("./docs/js"))
+})
+
 gulp.task("templates", function () {
 	//get all scss files in the css folder
 	return gulp.src(["./app/templates/**/*"])
@@ -146,9 +152,11 @@ gulp.task("fonts", function () {
 })
 
 gulp.task("other", function(){
-    return gulp.src(["./app/CNAME"])
+    return gulp.src(["./app/CNAME", "./app/favicons/**/*", "./app/favicon.ico"])
     .pipe(gulp.dest("./docs"))
 })
+
+
 
 gulp.task("clean:docs", function () {
 	return del.sync("docs");
@@ -162,13 +170,15 @@ gulp.task("build", function (callback) {
 		["templates", "sass", "img", "fonts", "html", "styles", "scripts", "other"],
 		callback
 	)
+	
 })
+
 gulp.task("default", function (callback) {
-	runSequence("build", [ "browserSync", "watch"],
+	runSequence("build", "watch",
 		callback
 	)
 })
-gulp.task("watch", ["browserSync", "sass"], function () {
+gulp.task("watch", ["browserSync"], function () {
     //gulp.watch(["./**/*"], ["catchall"])
 	gulp.watch(["./app/css/**/*.scss"], ["sass"]);
 	gulp.watch(["./app/css/**/*.css", "!./app/css/**/*.scss"], ["styles"]);
