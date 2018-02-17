@@ -110,6 +110,7 @@ gulp.task("html", function () {
 			return "<link href=\"" + p2 + ".css\" rel=\"stylesheet\" type=\"text/css\">";
 		}))
 		//save the useref files so it can be uglified
+		.pipe(useref())
 		.pipe(gulp.dest("./docs"))
 		// Minifies JS only
 		.pipe(gulpIf("*.js", uglify()))
