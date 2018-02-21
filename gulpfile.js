@@ -20,15 +20,15 @@ const plumber = require("gulp-plumber");//error handling
 let nunjucksEnv = new nunjucksModule.Environment(new nunjucksModule.FileSystemLoader("./app/templates"));
 
 //Catchall
-gulp.task("catchall", function () {
-	//get all scss files in the css folder
-	return gulp.src(["./**/*"])
-		//.pipe(plumber())
-		.pipe(gulp.dest("./docs/"))
-		//.pipe(browserSync.reload({
-		//	stream: true
-		//}))
-});
+// gulp.task("catchall", function () {
+// 	//get all scss files in the css folder
+// 	return gulp.src(["./app/**/*"])
+// 		//.pipe(plumber())
+// 		.pipe(gulp.dest("./docs/"))
+// 		//.pipe(browserSync.reload({
+// 		//	stream: true
+// 		//}))
+// });
 
 
 // Process Sass
@@ -46,7 +46,7 @@ gulp.task("sass", function () {
 // Process CSS
 gulp.task("styles", function () {
 	//get all scss files in the css folder
-	return gulp.src(["./app/css/**/*.css", "./app/admin/css/**/*.css", "!./app/css/**/*.scss"])
+	return gulp.src(["./app/css/**/*.css", "!./app/css/**/*.scss"])
 		.pipe(plumber())
 		.pipe(cssnano())
 		.pipe(gulp.dest("./docs/css"))
@@ -57,7 +57,7 @@ gulp.task("styles", function () {
 // Process JS
 gulp.task("scripts", function () {
 	
-	return gulp.src(["./app/js/*.js", "./app/admin/js/*.js"])//Dont uglify tinymce, instead that is piped into others
+	return gulp.src(["./app/js/*.js"])//Dont uglify tinymce, instead that is piped into others
 		.pipe(plumber())
 		.pipe(uglify())
 		.pipe(gulp.dest("./docs/js"))
@@ -67,7 +67,7 @@ gulp.task("scripts", function () {
 });
 
 gulp.task("tinymce", function(){
-    return gulp.src(["./app/js/tinymce/**/*.js"])
+    return gulp.src(["./app/js/tinymce/*.js"])
     .pipe(gulp.dest("./docs/js"))
 })
 
@@ -100,7 +100,7 @@ gulp.task("templates", function () {
 // Process HTML
 gulp.task("html", function () {
 	//get all scss files in the css folder
-	return gulp.src(["./app/**/*.+(html|htm)", "!./app/offline/**/*", "!./app/templates/**/*"])
+	return gulp.src(["./app/**/*.+(html|htm)", "!./app/offline/**/*", "!./app/templates/**/*", "!./app/admin/**/*"])
 		.pipe(plumber())
 		.pipe(nunjucks.compile(nunjucks_config, { env: nunjucksEnv }))
 		.pipe(replace(/<!--\s*build:(scss|sass)(?: |	){1,2}([a-zA-Z0-9-_\.+:]+)\.(\1|css)\s*-->/gim, function (match, p1, p2, p3, offset, string) {
@@ -152,7 +152,7 @@ gulp.task("fonts", function () {
 })
 
 gulp.task("other", function(){
-    return gulp.src(["./app/CNAME", "./app/favicons/**/*", "./app/favicon.ico"])
+    return gulp.src(["./app/CNAME", "./app/favicons/**/*", "./app/favicon.ico", "./admin/**/*"])
     .pipe(gulp.dest("./docs"))
 })
 
@@ -167,7 +167,7 @@ gulp.task("cache:clear", function (callback) {
 //TODO
 gulp.task("build", function (callback) {
 	runSequence("clean:docs",/*"catchall", */
-		["templates", "sass", "img", "fonts", "html", "styles", "scripts", "other"],
+		["templates", "sass", "img", "fonts", "html", "styles", "scripts", "other", "tinymce"],
 		callback
 	)
 	
@@ -183,7 +183,7 @@ gulp.task("watch", ["browserSync"], function () {
 	gulp.watch(["./app/css/**/*.scss"], ["sass"]);
 	gulp.watch(["./app/css/**/*.css", "!./app/css/**/*.scss"], ["styles"]);
 	gulp.watch(["./app/**/*.html", "./app/js/**/*.js", "./app/css/**/*.scss", "./app/css/**/*.css"], ["html", "templates"]);
-	gulp.watch(["./app/js/**/*.js"], ["scripts"]);
+	gulp.watch(["./app/js/**/*.js"], ["scripts", "tinymce"]);
 	gulp.watch(["./app/fonts/**/*"], ["fonts"]);
 	gulp.watch(["./app/img/**/*.+(png|jpg|jpeg|gif|svg)"], ["img"]);
 
