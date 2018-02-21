@@ -25,98 +25,97 @@ firebase.database().ref('/events/' + encodeURIComponent(getQuery("event"))).once
         
         
         // enable edit/archiving privilage if key is correct
-        if (data.key == getQuery('key')) {
+        if (data.key != getQuery('key')) {
+            if (data.archived) {
+                $('#archived-alert-box').show();
+            }
+        } else {
             if (data.archived) {
                 $('#archived-alert-box').show();
                 $('#restore').show();
             } else {
                 $('#edit-alert-box').show();
             }
-        } else {
-            if (data.archived) {
-                $('#archived-alert-box').show();
-            }
-        }
         
-        
-        // archive the event page
-        $("#delete").click(() => {
-            firebase.database().ref('/events/' + getQuery("event") + "/archived/").set(true).then(() => {
-                alert('Event page successfully archived! You may unarchive the event page at any time.');
-                window.location.reload();
-            }).catch(error => {
-                console.error(error);
+            // archive the event page
+            $("#delete").click(() => {
+                firebase.database().ref('/events/' + getQuery("event") + "/archived/").set(true).then(() => {
+                    alert('Event page successfully archived! You may unarchive the event page at any time.');
+                    window.location.reload();
+                }).catch(error => {
+                    console.error(error);
+                });
             });
-        });
-        
-        // restore the event page
-        $("#restore").click(() => {
-            firebase.database().ref('/events/' + getQuery("event") + "/archived/").set(false).then(() => {
-                alert('Event page successfully restored! You may now edit this page.');
-                window.location.reload();
-            }).catch(error => {
-                console.error(error);
-            });
-        });
-
-        // edit the event page
-        $("#edit").click(() => {
-            // prompt user before leaving page
-            $(window).on("beforeunload", () => {
-                return 'Changes you made may not be saved';
-            });
-            // show editing options
-            $("#edit-alert").show();
-            $('#options').hide();
             
-            // reload page when user wants to only view event page
-            $("#view").click(() => {
-                window.location.reload();
+            // restore the event page
+            $("#restore").click(() => {
+                firebase.database().ref('/events/' + getQuery("event") + "/archived/").set(false).then(() => {
+                    alert('Event page successfully restored! You may now edit this page.');
+                    window.location.reload();
+                }).catch(error => {
+                    console.error(error);
+                });
             });
 
-            // edit title
-            tinymce.init({
-                selector: "#event-title", //'h2.editable',
-                inline: true,
-                plugins: [
-                    "textcolor colorpicker link"
-                ],
-                toolbar: "undo redo | forecolor backcolor | link | save",
-                menubar: false,
-                setup: editor => {
-                    editor.addButton("save", {
-                        text: "Save Changes",
-                        icon: false,
-                        onclick: () => {
-                            firebase.database().ref("/events/" + getQuery("event") + "/" + editor.id.replace("event-", "") + "/").set(editor.getContent());
-                        }
-                    });
-                }
-            });
+            // edit the event page
+            $("#edit").click(() => {
+                // prompt user before leaving page
+                $(window).on("beforeunload", () => {
+                    return 'Changes you made may not be saved';
+                });
+                // show editing options
+                $("#edit-alert").show();
+                $('#options').hide();
+                
+                // reload page when user wants to only view event page
+                $("#view").click(() => {
+                    window.location.reload();
+                });
 
-            // edit content
-            tinymce.init({
-                selector: "#event-description", //'div.editable',
-                inline: true,
-                //urlconverter_callback: 'modalURLConverter',
-                plugins: [
-                    "advlist autolink lists link image charmap print preview",
-                    "searchreplace visualblocks fullscreen textcolor colorpicker",
-                    "insertdatetime media table contextmenu paste imagetools"
-                ],
-                link_assume_external_targets: true,
-                removed_menuitems: "newdocument",
-                setup: editor => {
-                    editor.addButton("save", {
-                        text: "Save Changes",
-                        icon: false,
-                        onclick: () => {
-                            firebase.database().ref("/events/" + getQuery("event") + "/" + editor.id.replace("event-", "") + "/").set(editor.getContent());
-                        }
-                    });
-                },
-                toolbar: "insertfile undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | save"
+                // edit title
+                tinymce.init({
+                    selector: "#event-title", //'h2.editable',
+                    inline: true,
+                    plugins: [
+                        "textcolor colorpicker link"
+                    ],
+                    toolbar: "undo redo | forecolor backcolor | link | save",
+                    menubar: false,
+                    setup: editor => {
+                        editor.addButton("save", {
+                            text: "Save Changes",
+                            icon: false,
+                            onclick: () => {
+                                firebase.database().ref("/events/" + getQuery("event") + "/" + editor.id.replace("event-", "") + "/").set(editor.getContent());
+                            }
+                        });
+                    }
+                });
+
+                // edit content
+                tinymce.init({
+                    selector: "#event-description", //'div.editable',
+                    inline: true,
+                    //urlconverter_callback: 'modalURLConverter',
+                    plugins: [
+                        "advlist autolink lists link image charmap print preview",
+                        "searchreplace visualblocks fullscreen textcolor colorpicker",
+                        "insertdatetime media table contextmenu paste imagetools"
+                    ],
+                    link_assume_external_targets: true,
+                    removed_menuitems: "newdocument",
+                    setup: editor => {
+                        editor.addButton("save", {
+                            text: "Save Changes",
+                            icon: false,
+                            onclick: () => {
+                                firebase.database().ref("/events/" + getQuery("event") + "/" + editor.id.replace("event-", "") + "/").set(editor.getContent());
+                            }
+                        });
+                    },
+                    toolbar: "insertfile undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | save"
+                });
             });
-        });
+        }
     }
 });
