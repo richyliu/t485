@@ -1,6 +1,7 @@
 #gulp
 node_modules/
 #build/
+#docs/ - we want to keep compiled output
 
 # Other
 yarn.lock
