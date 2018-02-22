@@ -43,10 +43,11 @@
                                     <a onclick="openModal(this, 'https://docs.google.com/spreadsheets/d/1YO--SYuKL2BRyKjyS3ucLOvIfr2JLRgWZSEQLst_Ruc/')">Troop Meeting Headcounts 8/3/2015 - 12/5/2017</a><br>
                                     <a onclick="openModal(this, 'https://docs.google.com/spreadsheets/d/1jTW0rk3aguf-27bOCQxeSFtFBYXWrt5EyVQl8B4SUos/')">Troop and PLC Headcounts 1/2/2017 - 2/6/2017</a><br>
                                 </p>
-                                <iframe src="https://drive.google.com/embeddedfolderview?id=0B25fgJUTMKt_TzlueXN5ODhkYUE#grid" width="700" height="500" frameborder="0"></iframe>
-
+                                <br>
                                 <ul id="meeting-minute-list">
-                                    <br>
+                                    <li>10/23/17 <a onclick="openModal(this, 'https://docs.google.com/document/d/1i_T0qjFspccXhuzTfWmQjPNaxqxCAMz8inrt8U405M0/edit')">Troop Meeting Minutes</a>,
+                                        <a onclick="openModal(this, 'https://docs.google.com/document/d/1oB5Ez7lyyvqcv2o_P_t730c-tH29VhvOV7iOtWPN-Jk/edit')">PLC Meeting Minutes</a></li>
+                                    
                                     <li>5/1/17 <a onclick="openModal(this, 'https://docs.google.com/document/d/1EPYd4YIQwHOr162seNU4GgR_XB7r477ByOmszXoOgBc/edit')">Troop Meeting Minutes</a>,
                                         <a onclick="openModal(this, 'https://docs.google.com/document/d/125eIuDc-prx3VGL9aPXq8mC_siJGG4Jogu6ILEMJMZI/edit')">PLC Meeting Minutes</a>,
                                         <a href="https://docs.google.com/spreadsheets/d/1qiNsrInjRAtxI4VOnCu7T6_P0QtS9T-ZFpvozJCdRB8/edit#gid=0">Headcounts</a></li>
@@ -165,7 +166,34 @@
             </div>
         </div>
 </div>
+{% endblock %}
+
+{% block modal %}
+<!-- Modal -->
+<div aria-hidden="true" aria-labelledby="myModalLabel" class="modal fade" id="myModal" role="dialog" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button aria-hidden="true" class="close" data-dismiss="modal" type="button">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Content Unavailable</h4>
+            </div>
+
+            <div class="modal-body">
+                <iframe frameborder="0" height="90%" id="ifr" name="ifr" src="" width="90%">Unfortunately, this content is unavaliable at this time. Please give feedback for this bug, and view the document on your google drive.</iframe>
+            </div>
+
+            <div class="modal-footer">
+                <a class="btn btn-primary" href="https://google.com" id="mdlk" target="_blank" type="button">Open in new tab</a>
+                <button class="btn btn-primary" onclick="requestFullScreen();">Fullscreen mode</button>
+                <button class="btn btn-default" data-dismiss="modal" type="button">Close</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+
 {% endblock %} 
+
 {% block js %}   
 <script src="/js/list.min.js"></script>
     <script>

@@ -182,7 +182,7 @@ gulp.task("watch", ["browserSync"], function () {
     //gulp.watch(["./**/*"], ["catchall"])
 	gulp.watch(["./app/css/**/*.scss"], ["sass"]);
 	gulp.watch(["./app/css/**/*.css", "!./app/css/**/*.scss"], ["styles"]);
-	gulp.watch(["./app/**/*.html", "./app/js/**/*.js", "./app/css/**/*.scss", "./app/css/**/*.css"], ["html", "templates"]);
+	gulp.watch(["./app/**/*.html"], ["html"/*, "templates"*/]);
 	gulp.watch(["./app/js/**/*.js"], ["scripts", "tinymce"]);
 	gulp.watch(["./app/fonts/**/*"], ["fonts"]);
 	gulp.watch(["./app/img/**/*.+(png|jpg|jpeg|gif|svg)"], ["img"]);
