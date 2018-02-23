@@ -34,7 +34,7 @@ let baseurl = "./app/";
 // Process Sass
 gulp.task("sass", function () {
 	//get all scss files in the css folder
-	return gulp.src(["./app/css/**/*.scss", "./app/admin/css/**/*.scss"], {base: baseurl})
+	return gulp.src(["./app/css/**/*.scss", "./app/admin/css/**/*.scss"], {base: baseurl + "css/"})
 	// {base: baseurl} ensures that files in subdirectories stay in subdirectories(baseurl is a variable)
 	// https://github.com/gulpjs/gulp/blob/master/docs/recipes/maintain-directory-structure-while-globbing.md
 	
@@ -49,7 +49,7 @@ gulp.task("sass", function () {
 // Process CSS
 gulp.task("styles", function () {
 	//get all scss files in the css folder
-	return gulp.src(["./app/css/**/*.css", "!./app/css/**/*.scss"], {base: baseurl})
+	return gulp.src(["./app/css/**/*.css", "!./app/css/**/*.scss"], {base: baseurl + "css/"})
 		.pipe(plumber())
 		.pipe(cssnano())
 		.pipe(gulp.dest("./docs/css"))
@@ -60,7 +60,7 @@ gulp.task("styles", function () {
 // Process JS
 gulp.task("scripts", function () {
 	
-	return gulp.src(["./app/js/*.js"], {base: baseurl})//Dont uglify tinymce, instead that is piped into others
+	return gulp.src(["./app/js/*.js"], {base: baseurl + "js/"})//Dont uglify tinymce, instead that is piped into others
 		.pipe(plumber())
 		.pipe(uglify())
 		.pipe(gulp.dest("./docs/js"))
@@ -70,13 +70,13 @@ gulp.task("scripts", function () {
 });
 
 gulp.task("tinymce", function(){
-    return gulp.src(["./app/js/tinymce/*.js"], {base: baseurl})
+    return gulp.src(["./app/js/tinymce/*.js"], {base: baseurl + "js/tinymce/"})
     .pipe(gulp.dest("./docs/js"))
 })
 
 gulp.task("templates", function () {
 	//get all scss files in the css folder
-	return gulp.src(["./app/templates/**/*"], {base: baseurl})
+	return gulp.src(["./app/templates/**/*"], {base: baseurl + "templates/"})
 		.pipe(plumber())
 		.pipe(nunjucks.compile(nunjucks_config, { env: nunjucksEnv }))
 		.pipe(replace(/<!--\s*build:(scss|sass)(?: |	){1,2}([a-zA-Z0-9-_\.+:]+)\.(\1|css)\s*-->/gim, function (match, p1, p2, p3, offset, string) {
@@ -134,7 +134,7 @@ gulp.task("html", function () {
 
 //images
 gulp.task("img", function () {
-	return gulp.src(["./app/img/*", "./app/img/**/*.+(png|jpg|jpeg|gif|svg)"], {base: baseurl})
+	return gulp.src(["./app/img/**/*"], {base: baseurl + "img/"})
 		.pipe(plumber())
 		//.pipe(cache(imagemin()))//optimize the image and cache the result
 		//dont optimize because takes too long and not very useful
@@ -146,7 +146,7 @@ gulp.task("img", function () {
 
 //fonts
 gulp.task("fonts", function () {
-	return gulp.src("./app/fonts/**/*", {base: baseurl})
+	return gulp.src("./app/fonts/**/*", {base: baseurl + "fonts/"})
 		.pipe(plumber())
 		.pipe(gulp.dest("./docs/fonts"))
 		.pipe(browserSync.reload({
@@ -155,7 +155,7 @@ gulp.task("fonts", function () {
 })
 
 gulp.task("other", function(){
-    return gulp.src(["./app/CNAME", "./app/favicons/**/*", "./app/favicon.ico", "./admin/**/*"], {base: baseurl})
+    return gulp.src(["./app/CNAME", "./app/favicons/**/*", "./app/favicon.ico", "./admin/**/*"])
     .pipe(gulp.dest("./docs"))
 })
 
