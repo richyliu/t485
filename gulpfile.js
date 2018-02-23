@@ -18,7 +18,7 @@ const nunjucksModule = require("nunjucks");//nunjucks
 const plumber = require("gulp-plumber");//error handling
 
 let nunjucksEnv = new nunjucksModule.Environment(new nunjucksModule.FileSystemLoader("./app/templates"));
-
+let baseurl = "./app/";
 //Catchall
 // gulp.task("catchall", function () {
 // 	//get all scss files in the css folder
@@ -34,8 +34,8 @@ let nunjucksEnv = new nunjucksModule.Environment(new nunjucksModule.FileSystemLo
 // Process Sass
 gulp.task("sass", function () {
 	//get all scss files in the css folder
-	return gulp.src(["./app/css/**/*.scss", "./app/admin/css/**/*.scss"], {base: '.'})
-	// {base: '.'} ensures that files in subdirectories stay in subdirectories
+	return gulp.src(["./app/css/**/*.scss", "./app/admin/css/**/*.scss"], {base: baseurl})
+	// {base: baseurl} ensures that files in subdirectories stay in subdirectories(baseurl is a variable)
 	// https://github.com/gulpjs/gulp/blob/master/docs/recipes/maintain-directory-structure-while-globbing.md
 	
 		.pipe(plumber())
@@ -49,7 +49,7 @@ gulp.task("sass", function () {
 // Process CSS
 gulp.task("styles", function () {
 	//get all scss files in the css folder
-	return gulp.src(["./app/css/**/*.css", "!./app/css/**/*.scss"], {base: '.'})
+	return gulp.src(["./app/css/**/*.css", "!./app/css/**/*.scss"], {base: baseurl})
 		.pipe(plumber())
 		.pipe(cssnano())
 		.pipe(gulp.dest("./docs/css"))
@@ -60,7 +60,7 @@ gulp.task("styles", function () {
 // Process JS
 gulp.task("scripts", function () {
 	
-	return gulp.src(["./app/js/*.js"], {base: '.'})//Dont uglify tinymce, instead that is piped into others
+	return gulp.src(["./app/js/*.js"], {base: baseurl})//Dont uglify tinymce, instead that is piped into others
 		.pipe(plumber())
 		.pipe(uglify())
 		.pipe(gulp.dest("./docs/js"))
@@ -70,13 +70,13 @@ gulp.task("scripts", function () {
 });
 
 gulp.task("tinymce", function(){
-    return gulp.src(["./app/js/tinymce/*.js"], {base: '.'})
+    return gulp.src(["./app/js/tinymce/*.js"], {base: baseurl})
     .pipe(gulp.dest("./docs/js"))
 })
 
 gulp.task("templates", function () {
 	//get all scss files in the css folder
-	return gulp.src(["./app/templates/**/*"], {base: '.'})
+	return gulp.src(["./app/templates/**/*"], {base: baseurl})
 		.pipe(plumber())
 		.pipe(nunjucks.compile(nunjucks_config, { env: nunjucksEnv }))
 		.pipe(replace(/<!--\s*build:(scss|sass)(?: |	){1,2}([a-zA-Z0-9-_\.+:]+)\.(\1|css)\s*-->/gim, function (match, p1, p2, p3, offset, string) {
@@ -103,7 +103,7 @@ gulp.task("templates", function () {
 // Process HTML
 gulp.task("html", function () {
 	//get all scss files in the css folder
-	return gulp.src(["./app/**/*.+(html|htm)", "!./app/offline/**/*", "!./app/templates/**/*", "!./app/admin/**/*"], {base: '.'})
+	return gulp.src(["./app/**/*.+(html|htm)", "!./app/offline/**/*", "!./app/templates/**/*", "!./app/admin/**/*"], {base: baseurl})
 		.pipe(plumber())
 		.pipe(nunjucks.compile(nunjucks_config, { env: nunjucksEnv }))
 		.pipe(replace(/<!--\s*build:(scss|sass)(?: |	){1,2}([a-zA-Z0-9-_\.+:]+)\.(\1|css)\s*-->/gim, function (match, p1, p2, p3, offset, string) {
@@ -134,7 +134,7 @@ gulp.task("html", function () {
 
 //images
 gulp.task("img", function () {
-	return gulp.src(["./app/img/*", "./app/img/**/*.+(png|jpg|jpeg|gif|svg)"], {base: '.'})
+	return gulp.src(["./app/img/*", "./app/img/**/*.+(png|jpg|jpeg|gif|svg)"], {base: baseurl})
 		.pipe(plumber())
 		//.pipe(cache(imagemin()))//optimize the image and cache the result
 		//dont optimize because takes too long and not very useful
@@ -146,7 +146,7 @@ gulp.task("img", function () {
 
 //fonts
 gulp.task("fonts", function () {
-	return gulp.src("./app/fonts/**/*", {base: '.'})
+	return gulp.src("./app/fonts/**/*", {base: baseurl})
 		.pipe(plumber())
 		.pipe(gulp.dest("./docs/fonts"))
 		.pipe(browserSync.reload({
@@ -155,7 +155,7 @@ gulp.task("fonts", function () {
 })
 
 gulp.task("other", function(){
-    return gulp.src(["./app/CNAME", "./app/favicons/**/*", "./app/favicon.ico", "./admin/**/*"], {base: '.'})
+    return gulp.src(["./app/CNAME", "./app/favicons/**/*", "./app/favicon.ico", "./admin/**/*"], {base: baseurl})
     .pipe(gulp.dest("./docs"))
 })
 
