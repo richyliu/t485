@@ -16,6 +16,7 @@ const nunjucks = require("gulp-nunjucks");//nunjucks
 const nunjucks_config = require("./nunjucks-data");//nunjucks config data
 const nunjucksModule = require("nunjucks");//nunjucks
 const plumber = require("gulp-plumber");//error handling
+const merge = require('merge-stream');
 
 let nunjucksEnv = new nunjucksModule.Environment(new nunjucksModule.FileSystemLoader("./app/templates"));
 let baseurl = "./app/";
@@ -129,7 +130,7 @@ gulp.task("html", function () {
 		
 		.pipe(browserSync.reload({
 			stream: true
-		}))
+		}));
 });
 
 //images
@@ -141,7 +142,7 @@ gulp.task("img", function () {
 		.pipe(gulp.dest("./docs/img"))
 		.pipe(browserSync.reload({
 			stream: true
-		}))
+		}));
 });
 
 //fonts
@@ -151,12 +152,26 @@ gulp.task("fonts", function () {
 		.pipe(gulp.dest("./docs/fonts"))
 		.pipe(browserSync.reload({
 			stream: true
-		}))
+		}));
 })
 
 gulp.task("other", function(){
-    return gulp.src(["./app/CNAME", "./app/favicons/**/*", "./app/favicon.ico", "./admin/**/*"])
-    .pipe(gulp.dest("./docs"))
+	
+	var cname = gulp.src(["./app/CNAME"], {base: baseurl})
+	.pipe(plumber())
+	.pipe(gulp.dest("./app/"));
+	var favicon1 = gulp.src(["./app/favicons/**/*"], {base: baseurl + "favicons/"})
+	.pipe(plumber())
+	.pipe(gulp.dest("./app/"));
+	var favicon2 = gulp.src(["./app/favicon.ico"], {base: baseurl})
+	.pipe(plumber())
+	.pipe(gulp.dest("./app/"));
+	var admin = gulp.src(["./app/admin/**/*"], {base: baseurl + "admin/"})
+	.pipe(plumber())
+	.pipe(gulp.dest("./app/"));
+
+	return merge(cname, favicon1, favicon2, admin);
+
 })
 
 
@@ -176,12 +191,20 @@ gulp.task("build", function (callback) {
 	
 })
 
-gulp.task("default", function (callback) {
+gulp.task("default", gulp.series(function (callback) {
 	runSequence("build", "watch",
 		callback
 	)
+}))
+gulp.task("browserSync", function () {
+	browserSync.init({
+		server: {
+			baseDir: "./docs"
+		},
+	})
 })
-gulp.task("watch", ["browserSync"], function () {
+
+gulp.task("watch", gulp.series("browserSync", function () {
     //gulp.watch(["./**/*"], ["catchall"])
 	gulp.watch(["./app/css/**/*.scss"], ["sass"]);
 	gulp.watch(["./app/css/**/*.css", "!./app/css/**/*.scss"], ["styles"]);
@@ -190,13 +213,6 @@ gulp.task("watch", ["browserSync"], function () {
 	gulp.watch(["./app/fonts/**/*"], ["fonts"]);
 	gulp.watch(["./app/img/**/*.+(png|jpg|jpeg|gif|svg)"], ["img"]);
 
-})
+}))
 
 
-gulp.task("browserSync", function () {
-	browserSync.init({
-		server: {
-			baseDir: "./docs"
-		},
-	})
-})
