@@ -13,3 +13,4 @@ and after major revisions that are bug free.
 
 In case of bugs that makes the website unusable(for example, cant log in, great inconvinence, etc.),
 follow the instructions at [t485/mirror1](https://github.com/t485/mirror1/).
+
