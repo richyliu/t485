@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+
+
+    <title>Troop 485 | Path to Eagle</title>
+    <meta name="google-site-verification" content="CSqeLDMZGRzv3kSsdNW-mMvhz91q5bcVRoWs_gcXnno" />
+    
+    
+<script src="https://www.gstatic.com/firebasejs/4.10.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyB-ly8ax35aWTAGhX2UDVuYxPSDlAU8kMk",
+    authDomain: "t485-main.firebaseapp.com",
+    databaseURL: "https://t485-main.firebaseio.com",
+    projectId: "t485-main",
+    storageBucket: "t485-main.appspot.com",
+    messagingSenderId: "368513727602"
+  };
+  firebase.initializeApp(config);
+</script>
+    
+    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Josefin+Slab:100,300,400,600,700,100italic,300italic,400italic,600italic,700italic">
+    <link rel="stylesheet" href="/css/styles.min.css">
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Join Troop 485 in Cupertino to experience an excellent Scouting experience">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <meta name="google-signin-client_id" content="154157170484-81ud6v3rfber96pekq75q86igmf1fsif.apps.googleusercontent.com">
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="152x152" href="/favicons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicons/favicon-16x16.png" sizes="16x16">
+
+    <link rel="manifest" href="/manifest.json">
+
+    <script>
+        try {
+            localStorage.setItem('foo', 'bar');
+        }
+        catch (e) {
+            if (e.message === 'The quota has been exceeded.') {
+                // using Safari(desktop & iOS) or Chrome(iOS) w/ private, localStorage not supported
+                // firebase will throw error, so better to alert user now
+                alert('Private browsing is not supported!');
+            }
+            throw '';
+        }
+    </script>
+    <style>
+        #index-img-1 {
+            width:450px;
+        }
+        #index-img-3,
+        #index-img-4,
+        #index-img-5 {
+             width:270px;
+             height:120px;
+        }
+        
+    </style>
+
+</head>
+
+<body>
+    
+    <img src="/img/header.gif" id="header" alt="Troop 485 banner" width="990" height="151">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+                <!-- navbar-brand is hidden on larger screens, but visible when the menu is collapsed -->
+                <a class="navbar-brand" href="/">T485</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    <li>
+                        <a href="/calendar.html">Calendar</a>
+                    </li>
+                    <li>
+                        <a href="/directory.html">Directory </a>
+                    </li>
+
+                    <li>
+                        <a href="/new-scout.html">New Scouts</a>
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        Resources <span class="caret"></span>
+                    </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/resources/files.html">Files</a></li>
+                            <li><a href="/resources/event-pages.html">Event Pages</a></li>
+                            <li><a href="/resources/meeting-minutes.html">Meeting Minutes/Reflections</a></li>
+                            <li><a href="/resources/pictures.html">Pictures</a></li>
+                            <li><a href="https://ls.t485.org/">Link Shortener</a></li>
+                            <li><a href="/resources/app-download.html">Download App</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        About <span class="caret"></span>
+                    </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/about/faq.html">FAQ</a></li>
+                            <li><a href="/about/merit-badges.html">Merit Badges</a></li>
+                            <li><a href="/about/eagle.html">Path to Eagle</a></li>
+                            <li><a href="/about/smc.html">SMC &amp; BOR</a></li>
+                            <li><a href="/about/plc.html">PLC</a></li>
+                            <li><a href="/about/troop-info.html">Troop Information</a></li>
+                            <li><a href="/about/troop-jobs.html">Troop Jobs</a></li>
+                        </ul>
+                    </li>
+                    <li id="nav-user-status"><a onclick="window.location.href = '/logout.html?redir=' + encodeURIComponent(window.location.pathname + window.location.search + window.location.hash);">Logout</a></li>
+
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+    
+    <div id="alertBox"></div>
+    <a class="toTop" href="#"></a> 
+    
+<div class="container">
+
+        <div class="row">
+            <div class="box">
+                <div class="col-lg-12">
+                    <hr>
+                    <h2 class="intro-text text-center"><strong>Eagle</strong> Rank Requirements</h2>
+                    <hr>
+                </div>
+                <div class="col-md-12">
+                    <ol type="1">
+                        <li>
+                            <p>Be active in your troop, team, crew, or ship for a period of at least six months after you have achieved the rank of Life Scout.</p>
+                        </li>
+                        <li>
+                            <p>Demonstrate that you live by the principles of the Scout Oath and Scout Law in your daily life. List on your Eagle Scout Rank Application the names of individuals who know you personally and would be willing to provide a recommendation
+                                on your behalf, including parents/guardians, religious, educational, and employer references.</p>
+                        </li>
+                        <li>
+                            <p>Earn a total of 21 merit badges (10 more than you already have), including the following:</p>
+                            <ol type="a">
+                                <li><a href="http://www.scouting.org/boyscouts/advancementandawards/meritbadges/mb-FIRS.aspx">First Aid</a></li>
+                                <li><a href="http://www.scouting.org/boyscouts/advancementandawards/meritbadges/mb-CITC.aspx">Citizenship in the Community</a></li>
+                                <li><a href="http://www.scouting.org/boyscouts/advancementandawards/meritbadges/mb-CITN.aspx">Citizenship in the Nation</a></li>
+                                <li><a href="http://www.scouting.org/boyscouts/advancementandawards/meritbadges/mb-CITW.aspx">Citizenship in the World</a></li>
+                                <li><a href="http://www.scouting.org/boyscouts/advancementandawards/meritbadges/mb-COMM.aspx">Communication</a></li>
+                                <li><a href="http://www.scouting.org/boyscouts/advancementandawards/meritbadges/mb-COOK.aspx">Cooking</a></li>
+                                <li><a href="http://www.scouting.org/boyscouts/advancementandawards/meritbadges/mb-PERF.aspx">Personal Fitness</a></li>
+                                <li><a href="http://www.scouting.org/boyscouts/advancementandawards/meritbadges/mb-EMER.aspx">Emergency Preparedness</a> OR <a href="http://www.scouting.org/boyscouts/advancementandawards/meritbadges/mb-LIFE.aspx">Lifesaving</a></li>
+                                <li><a href="http://www.scouting.org/boyscouts/advancementandawards/meritbadges/mb-ENVS.aspx">Environmental Science</a> OR <a href="http://www.scouting.org/scoutsource/BoyScouts/AdvancementandAwards/MeritBadges/mb-SUST.aspx">Sustainability</a></li>
+                                <li><a href="http://www.scouting.org/boyscouts/advancementandawards/meritbadges/mb-PERM.aspx">Personal Management</a></li>
+                                <li><a href="http://www.scouting.org/boyscouts/advancementandawards/meritbadges/mb-SWIM.aspx">Swimming</a> OR <a href="http://www.scouting.org/boyscouts/advancementandawards/meritbadges/mb-HIKE.aspx">Hiking</a> OR <a href="http://www.scouting.org/boyscouts/advancementandawards/meritbadges/mb-CYCL.aspx">Cycling</a></li>
+                                <li><a href="http://www.scouting.org/boyscouts/advancementandawards/meritbadges/mb-CAMP.aspx">Camping</a></li>
+                                <li><a href="http://www.scouting.org/boyscouts/advancementandawards/meritbadges/mb-FAML.aspx">Family Life</a></li>
+                            </ol>
+                        </li>
+                        <li>
+                            <p>While a Life Scout, serve actively in your unit for a period of six months in one or more of the following positions of responsibility. List only those position served after your Life board of review date.</p>
+                            <ul>
+                                <li><strong>Boy Scout troop</strong>. Patrol leader, assistant senior patrol leader, senior patrol leader, Venture patrol leader, troop guide, Order of the Arrow troop representative, den chief, scribe, librarian, historian,
+                                    quartermaster, junior assistant Scoutmaster, chaplain aide, instructor, webmaster, or Leave No Trace trainer.</li>
+                                <li><strong>Varsity Scout team</strong>. Captain, cocaptain, program manager, squad leader, team secretary, Order of the Arrow team representative, librarian, historian, quartermaster, chaplain aide, instructor, den chief,
+                                    webmaster, or Leave No Trace trainer.</li>
+                                <li><strong>Venturing crew/ship</strong>. President, vice president, secretary, treasurer, quartermaster, historian, den chief, guide, boatswain, boatswain’s mate, yeoman, purser, storekeeper, webmaster, or Leave No Trace trainer.</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <p>While a Life Scout, plan, develop, and give leadership to others in a service project helpful to any religious institution, any school, or your community. (The project must benefit an organization other than Boy Scouting.)
+                                A project proposal must be approved by the organization benefiting from the effort, your unit leader and unit committee, and the council or district before you start. You must use the Eagle Scout Service Project Workbook,
+                                BSA publication No. 512-927, in meeting this requirement.</p>
+                        </li>
+                        <li>
+                            <p>Take part in a unit leader conference.</p>
+                        </li>
+                        <li>
+                            <p>Successfully complete an Eagle Scout board of review. In preparation for your board of review, prepare and attach to your Eagle Scout Rank Application a statement of your ambitions and life purpose and a listing of positions
+                                held in your religious institution, school, camp, community, or other organizations, during which you demonstrated leadership skills. Include honors and awards received during this service. (This requirement may be met
+                                after age 18)
+                            </p>
+                        </li>
+                    </ol>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+
+    </div>
+
+
+        <script src="//static.getclicky.com/js" type="text/javascript"></script>
+        <script type="text/javascript">
+            try {
+                clicky.init(100869133);
+            }
+            catch (e) {}
+        </script>
+        <noscript><p><img alt="Clicky" width="1" height="1" src="//in.getclicky.com/100869133ns.gif" /></p></noscript>
+
+    
+    
+    
+    <footer>
+        <div class="container">
+            <div class="box">
+                <div class="col-lg-12 text-center">
+                    <p>Copyright &copy; 2006-2018 Troop 485, Silicon Valley Monterey Bay Council, Boy Scouts of America.</p>
+
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    
+    <script src="/js/scripts.min.js"></script>
+       
+<script>
+       
+</script>
+
+</body>
+
+</html>
