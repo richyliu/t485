@@ -116,7 +116,8 @@
             for (let key in data) {
                 if (data.hasOwnProperty(key)) {
                     console.log(data[key]);
-                    $("#files-box").append(decodeURIComponent(data[key]))
+                    //TODO: fix XSS risk
+                    $("#files-box").append($(decodeURIComponent(data[key])).attr("target", "_blank"))
                 }
             }
         })
