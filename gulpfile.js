@@ -162,7 +162,7 @@ gulp.task("other", function(){
 	.pipe(gulp.dest("./docs/"));
 	var favicon1 = gulp.src(["./app/favicons/**/*"], {base: baseurl + "favicons/"})
 	.pipe(plumber())
-	.pipe(gulp.dest("./docs/favicons"));
+	.pipe(gulp.dest("./docs/favicons/"));
 	var favicon2 = gulp.src(["./app/favicon.ico"], {base: baseurl})
 	.pipe(plumber())
 	.pipe(gulp.dest("./docs/"));
