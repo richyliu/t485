@@ -71,8 +71,8 @@ gulp.task("scripts", function () {
 });
 
 gulp.task("tinymce", function(){
-    return gulp.src(["./app/js/tinymce/*.js"], {base: baseurl + "js/tinymce/"})
-    .pipe(gulp.dest("./docs/js/tinymce"))
+    return gulp.src(["./app/js/tinymce/**/*"], {base: baseurl + "js/tinymce/"})
+    .pipe(gulp.dest("./docs/js/tinymce/"))
 })
 
 gulp.task("templates", function () {
