@@ -169,8 +169,11 @@ gulp.task("other", function(){
 	var admin = gulp.src(["./app/admin/**/*"], {base: baseurl + "admin/"})
 	.pipe(plumber())
 	.pipe(gulp.dest("./docs/admin/"));
+	var resources = gulp.src(["./app/resources/**/*"], {base: baseurl + "resources/"})
+	.pipe(plumber())
+	.pipe(gulp.dest("./docs/resources/"));
 
-	return merge(cname, favicon1, favicon2, admin);
+	return merge(cname, favicon1, favicon2, admin, resources);
 
 })
 
