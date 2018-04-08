@@ -71,8 +71,8 @@ gulp.task("scripts", function () {
 });
 
 gulp.task("tinymce", function(){
-    return gulp.src(["./app/js/tinymce/*.js"], {base: baseurl + "js/tinymce/"})
-    .pipe(gulp.dest("./docs/js"))
+    return gulp.src(["./app/js/tinymce/**/*"], {base: baseurl + "js/tinymce/"})
+    .pipe(gulp.dest("./docs/js/tinymce/"))
 })
 
 gulp.task("templates", function () {
@@ -162,15 +162,18 @@ gulp.task("other", function(){
 	.pipe(gulp.dest("./docs/"));
 	var favicon1 = gulp.src(["./app/favicons/**/*"], {base: baseurl + "favicons/"})
 	.pipe(plumber())
-	.pipe(gulp.dest("./docs/"));
+	.pipe(gulp.dest("./docs/favicons/"));
 	var favicon2 = gulp.src(["./app/favicon.ico"], {base: baseurl})
 	.pipe(plumber())
 	.pipe(gulp.dest("./docs/"));
 	var admin = gulp.src(["./app/admin/**/*"], {base: baseurl + "admin/"})
 	.pipe(plumber())
-	.pipe(gulp.dest("./docs/"));
+	.pipe(gulp.dest("./docs/admin/"));
+	var resources = gulp.src(["./app/resources/**/*"], {base: baseurl + "resources/"})
+	.pipe(plumber())
+	.pipe(gulp.dest("./docs/resources/"));
 
-	return merge(cname, favicon1, favicon2, admin);
+	return merge(cname, favicon1, favicon2, admin, resources);
 
 })
 

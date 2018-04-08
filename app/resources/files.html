@@ -1,125 +1,163 @@
-{% set title="Troop 485 | Files" %}
-{% set basepath="../" %}
-
-{% extends "base.html" %}
-
-{% block main %}
+{% set title="Troop 485 | Files" %} {% set basepath="../" %} {% extends "base.html" %} {% block main %}
 <div class="container" id="main">
 
-        <div class="row">
+    <div class="row">
 
-            <div class="box col-md-12">
-                <div id="resource-list">
-                    <hr>
-                    <h2 class="intro-text text-center">Files</h2>
-                    <hr>
+        <div class="box col-md-12">
+            <div id="resource-list">
+                <hr>
+                <h2 class="intro-text text-center">Files</h2>
+                <hr>
 
-                    <ul id="files-box">
-                        <li><a href="#" onclick="openModal(this, 'https://docs.google.com/document/d/1IC1fttf7tEZhezKfNKs0ADtHOQjgyBcMSqjQ_75zUKk/mobilebasic');">Council and District information</a></li>
-                        <li><a href="#" onclick="openModal(this, 'other-files/resume-guide.pdf');">Resume Guide</a></li>
-                        <li><a href="#" onclick="openModal(this, 'https://docs.google.com/document/d/1a56ZOlhhT1MT7QGXwLSzmsD5l1cahH44O6kUFNTAJ3I/mobilebasic');">Packing Guide</a></li>
-                        <li><a href="#" onclick="openModal(this, 'https://firebasestorage.googleapis.com/v0/b/project-2556333409340273878.appspot.com/o/resources%2FPatrol%20Leader%20Handbook.pdf?alt=media&token=2c696c57-719e-4c23-9e70-d1154bd3f55e');">Patrol Leader Handbook.pdf (3.2 MB)</a></li>
-                        <li><a href="#" onclick="openModal(this, 'https://firebasestorage.googleapis.com/v0/b/project-2556333409340273878.appspot.com/o/resources%2FBSA%20Fieldbook.pdf?alt=media&token=06cf3993-def1-4e2d-b461-373ce77712a2');">BSA Fieldbook.pdf (69.8 MB)</a></li>
-                        <li><a href="#" onclick="openModal(this, 'https://docs.google.com/spreadsheets/d/1fjrkSV_svlleL1ltqJGgozIvEafzmmiMPCe7xEqnngI/pubhtml?widget=true&headers=false');">Event Files</a></li>
-                        <li><a href="#" onclick="openModal(this, 'https://drive.google.com/embeddedfolderview?id=0BygadbpNuUSXUXhRMUlycW0yNGs#' + (window.innerWidth > 767 ? 'grid' : 'list'));">Event Cheatsheets</a></li>
-                        <li><a href="#" onclick="openModal(this, 'https://docs.google.com/presentation/d/1RfAZvUzIIWP8U3rwf0ORi3J88hB4p1QkhhW9qJENGsY/edit#slide=id.g1fb89b61f1_0_799')">Event Pages Presentation</a></li>
-                        <li><a href="/resources/event-pages.html">Event Pages</a></li>
-                    </ul>
-                </div>
+                <ul id="files-box">
+                    <li>
+                        <a href="#" onclick="openModal(this, 'https://docs.google.com/document/d/1IC1fttf7tEZhezKfNKs0ADtHOQjgyBcMSqjQ_75zUKk/mobilebasic');">Council and District information</a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="openModal(this, 'other-files/resume-guide.pdf');">Resume Guide</a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="openModal(this, 'https://docs.google.com/document/d/1a56ZOlhhT1MT7QGXwLSzmsD5l1cahH44O6kUFNTAJ3I/mobilebasic');">Packing Guide</a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="openModal(this, 'https://firebasestorage.googleapis.com/v0/b/project-2556333409340273878.appspot.com/o/resources%2FPatrol%20Leader%20Handbook.pdf?alt=media&token=2c696c57-719e-4c23-9e70-d1154bd3f55e');">Patrol Leader Handbook.pdf (3.2 MB)</a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="openModal(this, 'https://firebasestorage.googleapis.com/v0/b/project-2556333409340273878.appspot.com/o/resources%2FBSA%20Fieldbook.pdf?alt=media&token=06cf3993-def1-4e2d-b461-373ce77712a2');">BSA Fieldbook.pdf (69.8 MB)</a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="openModal(this, 'https://docs.google.com/spreadsheets/d/1fjrkSV_svlleL1ltqJGgozIvEafzmmiMPCe7xEqnngI/pubhtml?widget=true&headers=false');">Event Files</a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="openModal(this, 'https://drive.google.com/embeddedfolderview?id=0BygadbpNuUSXUXhRMUlycW0yNGs#' + (window.innerWidth > 767 ? 'grid' : 'list'));">Event Cheatsheets</a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="openModal(this, 'https://docs.google.com/presentation/d/1RfAZvUzIIWP8U3rwf0ORi3J88hB4p1QkhhW9qJENGsY/edit#slide=id.g1fb89b61f1_0_799')">Event Pages Presentation</a>
+                    </li>
+                    <li>
+                        <a href="/resources/event-pages.html">Event Pages</a>
+                    </li>
+                </ul>
             </div>
-
-
         </div>
 
 
+    </div>
 
-        <div class="row">
-            <div class="box col-md-12">
-                <hr>
-                <h2 class="intro-text text-center">Add <strong>Files</strong></h2>
-                <hr>
-                <p>
-                    You can add your own file links below. To remove a file, email the webmaster.<br>
-                    Google documents and PDF's with the protocol https only(for security reasons) will be opened in a popup automatically.
-                </p>
-                <label for="upload-file-name">File name:</label>
-                <input class="form-control" id="upload-file-name" type="text">
-                
-                <label for="upload-file-url">File URL:</label>
-                <input class="form-control" id="upload-file-url" type="text">
-                <button id="upload-file-btn" class="form-control btn btn-primary">Add file</button>
-            </div>
+
+
+    <div class="row">
+        <div class="box col-md-12">
+            <hr>
+            <h2 class="intro-text text-center">Add
+                <strong>Files</strong>
+            </h2>
+            <hr>
+            <p>
+                You can add your own file links below. To remove a file, email the webmaster.
+                <br> Google documents and PDF's with the protocol https only(for security reasons) will be opened in a popup
+                automatically.
+            </p>
+            <label for="upload-file-name">File name:</label>
+            <input class="form-control" id="upload-file-name" type="text">
+
+            <label for="upload-file-url">File URL:</label>
+            <input class="form-control" id="upload-file-url" type="text">
+            <button id="upload-file-btn" class="form-control btn btn-primary">Add file</button>
         </div>
     </div>
-    <!-- /.container -->
-{% endblock %} 
-{% block js %}   
+</div>
+<!-- /.container -->
+<!-- Modal -->
+<div aria-hidden="true" aria-labelledby="myModalLabel" class="modal fade" id="myModal" role="dialog" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button aria-hidden="true" class="close" data-dismiss="modal" type="button">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Content Unavailable</h4>
+            </div>
+
+            <div class="modal-body">
+                <iframe frameborder="0" height="90%" id="ifr" name="ifr" src="" width="90%">Unfortunately, this content is unavailable at this time. Please give feedback for this bug, and view the
+                    document on your google drive with the open in new tab button below.</iframe>
+            </div>
+
+            <div class="modal-footer">
+                <a class="btn btn-primary" href="data:text/html,<h1>Oh No! this URL is broken too!</h1><p> Please contact the webmaster to report this bug. Take note of the file that brought you here.</p>" id="mdlk" target="_blank" type="button">Open in new tab</a>
+                <button class="btn btn-primary" onclick="requestFullScreen();">Fullscreen mode</button>
+                <button class="btn btn-default" data-dismiss="modal" type="button">Close</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+{% endblock %} {% block js %}
 <script>
-       /* global firebase $ auth */
+    /* global firebase $ auth */
 
-        String.prototype.replaceAll = (search, replacement) => {
-            let target = this;
-            return target.split(search).join(replacement);
-        };
-
-
+    String.prototype.replaceAll = (search, replacement) => {
+        let target = this;
+        return target.split(search).join(replacement);
+    };
 
 
-        function openModal(e, url, name) {
 
-            let title;
-            if (name === undefined && e !== undefined) {
-                title = (e.tagName === 'A' ? title = e.innerHTML : e.attributes.alt.nodeValue);
+
+    function openModal(e, url, name) {
+
+        let title;
+        if (name === undefined && e !== undefined) {
+            title = (e.tagName === 'A' ? title = e.innerHTML : e.attributes.alt.nodeValue);
+        }
+        else {
+            title = name;
+        }
+        $('#myModalLabel').html(title);
+        $('#ifr').attr('src', url);
+        $('#mdlk').attr('href', url.replace("/mobilebasic", "/"));
+        $('#myModal').modal('show');
+    }
+
+    function requestFullScreen() {
+        let el = document.getElementById("ifr");
+        // Supports most browsers and their versions.
+        let requestMethod = el.requestFullScreen || el.webkitRequestFullScreen || el.mozRequestFullScreen || el.msRequestFullScreen;
+
+        if (requestMethod) {
+            requestMethod.call(el);
+            // Older IE.
+        }
+        else if (typeof window.ActiveXObject !== "undefined") {
+            let wscript = new ActiveXObject("WScript.Shell");
+
+            if (wscript !== null) {
+                wscript.SendKeys("{F11}");
             }
-            else {
-                title = name;
-            }
-            $('#myModalLabel').html(title);
-            $('#ifr').attr('src', url);
-            $('#mdlk').attr('href', url.replace("/mobilebasic", "/"));
-            $('#myModal').modal('show');
+        }
+    }
+    $("#upload-file-btn").click(() => {
+        let url = $("#upload-file-url").val();
+        let name = $("#upload-file-name").val();
+        let el;
+        if (url.match(/^(https:\/\/((docs\.google\.com\/document\/d\/.+\/.*)?)|(https:\/\/.+\..+.+\.pdf))$/g)) {
+            el = encodeURIComponent('<li><a onclick="openModal(this, ' + "'" + url.replace("/edit", "/moiblebasic") + "'" + ')">' + name + '</a></li>');
+        }
+        else {
+            el = encodeURIComponent('<li><a href="' + url + '">' + name + "</a></li>");
         }
 
-        function requestFullScreen() {
-            let el = document.getElementById("ifr");
-            // Supports most browsers and their versions.
-            let requestMethod = el.requestFullScreen || el.webkitRequestFullScreen || el.mozRequestFullScreen || el.msRequestFullScreen;
-
-            if (requestMethod) {
-                requestMethod.call(el);
-                // Older IE.
-            }
-            else if (typeof window.ActiveXObject !== "undefined") {
-                let wscript = new ActiveXObject("WScript.Shell");
-
-                if (wscript !== null) {
-                    wscript.SendKeys("{F11}");
-                }
+        firebase.database().ref("/files/").push(el);
+        window.location.href = window.location.href;
+    });
+    firebase.database().ref("/files/").once("value").then((snapshot) => {
+        let data = snapshot.val();
+        for (let key in data) {
+            if (data.hasOwnProperty(key)) {
+                console.log(data[key]);
+                //TODO: fix XSS risk
+                $("#files-box").append($(decodeURIComponent(data[key])).attr("target", "_blank"))
             }
         }
-        $("#upload-file-btn").click(() => {
-            let url = $("#upload-file-url").val();
-            let name = $("#upload-file-name").val();
-            let el;
-            if (url.match(/^(https:\/\/((docs\.google\.com\/document\/d\/.+\/.*)?)|(https:\/\/.+\..+.+\.pdf))$/g)) {
-                el = encodeURIComponent('<li><a onclick="openModal(this, ' + "'" + url.replace("/edit", "/moiblebasic") + "'" + ')">' + name + '</a></li>');
-            }
-            else {
-                el = encodeURIComponent('<li><a href="' + url + '">' + name + "</a></li>");
-            }
-
-            firebase.database().ref("/files/").push(el);
-            window.location.href = window.location.href;
-        });
-        firebase.database().ref("/files/").once("value").then((snapshot) => {
-            let data = snapshot.val();
-            for (let key in data) {
-                if (data.hasOwnProperty(key)) {
-                    console.log(data[key]);
-                    //TODO: fix XSS risk
-                    $("#files-box").append($(decodeURIComponent(data[key])).attr("target", "_blank"))
-                }
-            }
-        })
-</script>
-{% endblock %}
+    })
+</script> {% endblock %}
