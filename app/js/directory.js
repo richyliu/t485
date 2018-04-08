@@ -56,12 +56,29 @@ Tabletop.init({
  * @param  {Object[]} people Object of scouts and parents' names and emails
  */
 function checkLogin(people) {
+    function lgI() {
+        // user is logged in
+        $("#content").show();
+        $('#login').hide();
+        $('#search-query').focus();
+
+        $('#spreadsheet-confirm-btn').click(() => {
+            $('#spreadsheet-confirm').hide();
+            $('#spreadsheet-content').html(`
+                <a href="https://docs.google.com/spreadsheets/d/15Z9AgrqGNprz2K8c032ZhJ7Wm5bTV-2fJfublK7L1L8/edit?usp=drive_web" target="_blank">Edit Spreadsheet</a>
+                <iframe src="https://docs.google.com/spreadsheets/d/15Z9AgrqGNprz2K8c032ZhJ7Wm5bTV-2fJfublK7L1L8/pubhtml?widget=true&amp;headers=false"></iframe>
+            `);
+            $('#spreadsheet').show();
+        });
+    }
+
+
     // loading finished (since called from Tabletop callback)
     $('#loading-login').hide();
     
     for (let person of people) {
         if (hash(person.name, person.email) == localStorage.getItem('userHash')) {
-            loggedIn();
+            lgI();
             return;
         }
     }
@@ -76,7 +93,7 @@ function checkLogin(people) {
             if (name.toLowerCase().trim() == person.name.toLowerCase().trim() && email.toLowerCase().trim() == person.email.toLowerCase().trim()) {
                 // log in user
                 localStorage.setItem('userHash', hash(name.toLowerCase().trim(), email.toLowerCase().toLowerCase().trim()));
-                loggedIn();
+                lgI();
                 return;
             }
         }
@@ -125,27 +142,6 @@ function normalizeName(name) {
         return name;
     }
 }
-
-
-/**
- * Called once we know the user is logged in
- */
-function loggedIn() {
-    // user is logged in
-    $("#content").show();
-    $('#login').hide();
-    $('#search-query').focus();
-
-    $('#spreadsheet-confirm-btn').click(() => {
-        $('#spreadsheet-confirm').hide();
-        $('#spreadsheet-content').html(`
-            <a href="https://docs.google.com/spreadsheets/d/15Z9AgrqGNprz2K8c032ZhJ7Wm5bTV-2fJfublK7L1L8/edit?usp=drive_web" target="_blank">Edit Spreadsheet</a>
-            <iframe src="https://docs.google.com/spreadsheets/d/15Z9AgrqGNprz2K8c032ZhJ7Wm5bTV-2fJfublK7L1L8/pubhtml?widget=true&amp;headers=false"></iframe>
-        `);
-        $('#spreadsheet').show();
-    });
-}
-
 
 
 window.globalData = [];
