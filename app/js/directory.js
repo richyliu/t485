@@ -1,3 +1,5 @@
+((window, $) => {
+
 // load directory information
 Tabletop.init({
     key: '15Z9AgrqGNprz2K8c032ZhJ7Wm5bTV-2fJfublK7L1L8',
@@ -56,7 +58,7 @@ Tabletop.init({
  * @param  {Object[]} people Object of scouts and parents' names and emails
  */
 function checkLogin(people) {
-    function lgI() {
+    function loggedIn() {
         // user is logged in
         $("#content").show();
         $('#login').hide();
@@ -78,7 +80,7 @@ function checkLogin(people) {
     
     for (let person of people) {
         if (hash(person.name, person.email) == localStorage.getItem('userHash')) {
-            lgI();
+            loggedIn();
             return;
         }
     }
@@ -93,7 +95,7 @@ function checkLogin(people) {
             if (name.toLowerCase().trim() == person.name.toLowerCase().trim() && email.toLowerCase().trim() == person.email.toLowerCase().trim()) {
                 // log in user
                 localStorage.setItem('userHash', hash(name.toLowerCase().trim(), email.toLowerCase().toLowerCase().trim()));
-                lgI();
+                loggedIn();
                 return;
             }
         }
@@ -351,17 +353,19 @@ function showfullinfo(id, updateQuery) {
         updateURLQuery("?type=profile&id=" + encodeURIComponent(id));
     }
     $('#results').hide();
+
+    const user = window.globalData[id]
     $('#detail').show().html('').append(`
         <br>
-        Name:                               ${window.globalData[id]['Scout\'s Full Name (last name first):']}<br>
-        Email: <a href="mailto:             ${window.globalData[id]['Scout\'s E-mail:']}">     ${window.globalData[id]['Scout\'s E-mail:']}</a><br>
-        Cell Phone: <a href="tel:           ${window.globalData[id]['Scout\'s Cell Phone']}">  ${window.globalData[id]['Scout\'s Cell Phone']}</a><br>
-        Home Phone: <a href="tel:           ${window.globalData[id]['Scout\'s Home Phone']}">  ${window.globalData[id]['Scout\'s Home Phone']}</a><br>
-        Patrol:                             ${window.globalData[id].patrol}<br><br>
-        Father\'s Cell Phone: <a href="tel: ${window.globalData[id]['Father\'s Cell Phone']}"> ${window.globalData[id]['Father\'s Cell Phone']}</a><br>
-        Father\'s E-mail: <a href="mailto:  ${window.globalData[id]['Father\'s E-mail']}">     ${window.globalData[id]['Father\'s E-mail']}</a><br>
-        Mother\'s Cell Phone: <a href="tel: ${window.globalData[id]['Mother\'s Cell Phone']}"> ${window.globalData[id]['Mother\'s Cell Phone']}</a><br>
-        Mother\'s E-mail: <a href="mailto:  ${window.globalData[id]['Mother\'s E-mail']}">     ${window.globalData[id]['Mother\'s E-mail']}</a><br>
+        Name:                               ${user['Scout\'s Full Name (last name first):']}<br>
+        Email: <a href="mailto:             ${user['Scout\'s E-mail:']}">     ${user['Scout\'s E-mail:']}</a><br>
+        Cell Phone: <a href="tel:           ${user['Scout\'s Cell Phone']}">  ${user['Scout\'s Cell Phone']}</a><br>
+        Home Phone: <a href="tel:           ${user['Scout\'s Home Phone']}">  ${user['Scout\'s Home Phone']}</a><br>
+        Patrol:                             ${user.patrol}<br><br>
+        Father\'s Cell Phone: <a href="tel: ${user['Father\'s Cell Phone']}"> ${user['Father\'s Cell Phone']}</a><br>
+        Father\'s E-mail: <a href="mailto:  ${user['Father\'s E-mail']}">     ${user['Father\'s E-mail']}</a><br>
+        Mother\'s Cell Phone: <a href="tel: ${user['Mother\'s Cell Phone']}"> ${user['Mother\'s Cell Phone']}</a><br>
+        Mother\'s E-mail: <a href="mailto:  ${user['Mother\'s E-mail']}">     ${user['Mother\'s E-mail']}</a><br>
     `);
 }
 
@@ -371,3 +375,5 @@ $('#email').keypress(e => {
     if (e && e.keyCode == 13)
         $('#login-btn').click();
 });
+
+})(window, jQuery)
