@@ -1,13 +1,15 @@
+((window, $) => {
+
 // redirect to event pages if no event id
 if (getQuery("event") === null || getQuery("event") === "") {
     window.location.href = "/resources/event-pages.html";
 }
 
-
+const db = firebase.database();
 
 // get event pages data from firebase
 // encodeURIComponent to prevent code injection when querying
-firebase.database().ref('/events/' + encodeURIComponent(getQuery("event"))).once('value').then(function(snapshot) {
+db.ref('/events/' + encodeURIComponent(getQuery("event"))).once('value').then(function(snapshot) {
     let data = snapshot.val();
     
     
@@ -39,7 +41,7 @@ firebase.database().ref('/events/' + encodeURIComponent(getQuery("event"))).once
         
             // archive the event page
             $("#delete").click(() => {
-                firebase.database().ref('/events/' + getQuery("event") + "/archived/").set(true).then(() => {
+                db.ref('/events/' + getQuery("event") + "/archived/").set(true).then(() => {
                     alert('Event page successfully archived! You may unarchive the event page at any time.');
                     window.location.reload();
                 }).catch(error => {
@@ -49,7 +51,7 @@ firebase.database().ref('/events/' + encodeURIComponent(getQuery("event"))).once
             
             // restore the event page
             $("#restore").click(() => {
-                firebase.database().ref('/events/' + getQuery("event") + "/archived/").set(false).then(() => {
+                db.ref('/events/' + getQuery("event") + "/archived/").set(false).then(() => {
                     alert('Event page successfully restored! You may now edit this page.');
                     window.location.reload();
                 }).catch(error => {
@@ -86,7 +88,7 @@ firebase.database().ref('/events/' + encodeURIComponent(getQuery("event"))).once
                             text: "Save Changes",
                             icon: false,
                             onclick: () => {
-                                firebase.database().ref("/events/" + getQuery("event") + "/" + editor.id.replace("event-", "") + "/").set(editor.getContent());
+                                db.ref("/events/" + getQuery("event") + "/" + editor.id.replace("event-", "") + "/").set(editor.getContent());
                             }
                         });
                     }
@@ -109,7 +111,7 @@ firebase.database().ref('/events/' + encodeURIComponent(getQuery("event"))).once
                             text: "Save Changes",
                             icon: false,
                             onclick: () => {
-                                firebase.database().ref("/events/" + getQuery("event") + "/" + editor.id.replace("event-", "") + "/").set(editor.getContent());
+                                db.ref("/events/" + getQuery("event") + "/" + editor.id.replace("event-", "") + "/").set(editor.getContent());
                             }
                         });
                     },
@@ -119,3 +121,5 @@ firebase.database().ref('/events/' + encodeURIComponent(getQuery("event"))).once
         }
     }
 });
+
+})(window, jQuery)

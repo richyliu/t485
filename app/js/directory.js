@@ -1,3 +1,5 @@
+((window, $) => {
+
 // load directory information
 Tabletop.init({
     key: '15Z9AgrqGNprz2K8c032ZhJ7Wm5bTV-2fJfublK7L1L8',
@@ -56,6 +58,23 @@ Tabletop.init({
  * @param  {Object[]} people Object of scouts and parents' names and emails
  */
 function checkLogin(people) {
+    function loggedIn() {
+        // user is logged in
+        $("#content").show();
+        $('#login').hide();
+        $('#search-query').focus();
+
+        $('#spreadsheet-confirm-btn').click(() => {
+            $('#spreadsheet-confirm').hide();
+            $('#spreadsheet-content').html(`
+                <a href="https://docs.google.com/spreadsheets/d/15Z9AgrqGNprz2K8c032ZhJ7Wm5bTV-2fJfublK7L1L8/edit?usp=drive_web" target="_blank">Edit Spreadsheet</a>
+                <iframe src="https://docs.google.com/spreadsheets/d/15Z9AgrqGNprz2K8c032ZhJ7Wm5bTV-2fJfublK7L1L8/pubhtml?widget=true&amp;headers=false"></iframe>
+            `);
+            $('#spreadsheet').show();
+        });
+    }
+
+
     // loading finished (since called from Tabletop callback)
     $('#loading-login').hide();
     
@@ -125,27 +144,6 @@ function normalizeName(name) {
         return name;
     }
 }
-
-
-/**
- * Called once we know the user is logged in
- */
-function loggedIn() {
-    // user is logged in
-    $("#content").show();
-    $('#login').hide();
-    $('#search-query').focus();
-
-    $('#spreadsheet-confirm-btn').click(() => {
-        $('#spreadsheet-confirm').hide();
-        $('#spreadsheet-content').html(`
-            <a href="https://docs.google.com/spreadsheets/d/15Z9AgrqGNprz2K8c032ZhJ7Wm5bTV-2fJfublK7L1L8/edit?usp=drive_web" target="_blank">Edit Spreadsheet</a>
-            <iframe src="https://docs.google.com/spreadsheets/d/15Z9AgrqGNprz2K8c032ZhJ7Wm5bTV-2fJfublK7L1L8/pubhtml?widget=true&amp;headers=false"></iframe>
-        `);
-        $('#spreadsheet').show();
-    });
-}
-
 
 
 window.globalData = [];
@@ -355,17 +353,19 @@ function showfullinfo(id, updateQuery) {
         updateURLQuery("?type=profile&id=" + encodeURIComponent(id));
     }
     $('#results').hide();
+
+    const user = window.globalData[id]
     $('#detail').show().html('').append(`
         <br>
-        Name:                               ${window.globalData[id]['Scout\'s Full Name (last name first):']}<br>
-        Email: <a href="mailto:             ${window.globalData[id]['Scout\'s E-mail:']}">     ${window.globalData[id]['Scout\'s E-mail:']}</a><br>
-        Cell Phone: <a href="tel:           ${window.globalData[id]['Scout\'s Cell Phone']}">  ${window.globalData[id]['Scout\'s Cell Phone']}</a><br>
-        Home Phone: <a href="tel:           ${window.globalData[id]['Scout\'s Home Phone']}">  ${window.globalData[id]['Scout\'s Home Phone']}</a><br>
-        Patrol:                             ${window.globalData[id].patrol}<br><br>
-        Father\'s Cell Phone: <a href="tel: ${window.globalData[id]['Father\'s Cell Phone']}"> ${window.globalData[id]['Father\'s Cell Phone']}</a><br>
-        Father\'s E-mail: <a href="mailto:  ${window.globalData[id]['Father\'s E-mail']}">     ${window.globalData[id]['Father\'s E-mail']}</a><br>
-        Mother\'s Cell Phone: <a href="tel: ${window.globalData[id]['Mother\'s Cell Phone']}"> ${window.globalData[id]['Mother\'s Cell Phone']}</a><br>
-        Mother\'s E-mail: <a href="mailto:  ${window.globalData[id]['Mother\'s E-mail']}">     ${window.globalData[id]['Mother\'s E-mail']}</a><br>
+        Name:                               ${user['Scout\'s Full Name (last name first):']}<br>
+        Email: <a href="mailto:             ${user['Scout\'s E-mail:']}">     ${user['Scout\'s E-mail:']}</a><br>
+        Cell Phone: <a href="tel:           ${user['Scout\'s Cell Phone']}">  ${user['Scout\'s Cell Phone']}</a><br>
+        Home Phone: <a href="tel:           ${user['Scout\'s Home Phone']}">  ${user['Scout\'s Home Phone']}</a><br>
+        Patrol:                             ${user.patrol}<br><br>
+        Father\'s Cell Phone: <a href="tel: ${user['Father\'s Cell Phone']}"> ${user['Father\'s Cell Phone']}</a><br>
+        Father\'s E-mail: <a href="mailto:  ${user['Father\'s E-mail']}">     ${user['Father\'s E-mail']}</a><br>
+        Mother\'s Cell Phone: <a href="tel: ${user['Mother\'s Cell Phone']}"> ${user['Mother\'s Cell Phone']}</a><br>
+        Mother\'s E-mail: <a href="mailto:  ${user['Mother\'s E-mail']}">     ${user['Mother\'s E-mail']}</a><br>
     `);
 }
 
@@ -375,3 +375,5 @@ $('#email').keypress(e => {
     if (e && e.keyCode == 13)
         $('#login-btn').click();
 });
+
+})(window, jQuery)

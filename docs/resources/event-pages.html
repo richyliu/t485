@@ -244,8 +244,11 @@
     <script src="/js/scripts.min.js"></script>
        
 <script>
-       // load all current event pages
-        firebase.database().ref('/events/').on('child_added', data => {
+        ((window, $) => {
+        
+        const db = firebase.database();
+        // load all current event pages
+        db.ref('/events/').on('child_added', data => {
             let name = data.val().title;
             
             let id;
@@ -276,7 +279,7 @@
             }
             
             // push new event to firebase
-            let push = firebase.database().ref('/events/').push({
+            let push = db.ref('/events/').push({
                 title: '',
                 key: '',
                 description: ''
@@ -284,7 +287,7 @@
             let eventId = push.key;
             let accessKey = Math.random().toString(36).substring(2, 15);
             
-            firebase.database().ref(`/events/${eventId}/`).set({
+            db.ref(`/events/${eventId}/`).set({
                 title: title,
                 key: accessKey,
                 description: `
@@ -324,6 +327,8 @@
             );
             window.location.href = `/event.html?event=${eventId}&key=${accessKey}`;
         });
+
+        })(window, jQuery)
 </script>
 
 </body>
