@@ -140,7 +140,7 @@ function normalizeName(name) {
         
         return (parts[1] + ' ' + parts[0]).toLowerCase();
     } else {
-        console.error(`Unable to split name ${name} into first and last name`);
+        console.log(`Unable to split name ${name} into first and last name`);
         return name;
     }
 }
