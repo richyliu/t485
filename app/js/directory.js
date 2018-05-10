@@ -1,4 +1,3 @@
-((window, $) => {
 
 // load directory information
 Tabletop.init({
@@ -376,4 +375,3 @@ $('#email').keypress(e => {
         $('#login-btn').click();
 });
 
-})(window, jQuery)
