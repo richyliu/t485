@@ -20,7 +20,7 @@ const htmlMinOptions = {
 
 var nunjucksEnv = new nunjucksModule.Environment(new nunjucksModule.FileSystemLoader("app/templates"));
 let env = process.env.NODE_ENV || "development";
-const outdir = "dist";
+let outdir = env == "production" ? "dist" : "devserver";
 
 gulp.task("sass", function () {
     return gulp.src("./app/css/*.+(scss|sass)")
@@ -138,6 +138,7 @@ gulp.task("libraries", function () {
 gulp.task("set-production", function(callback) {
 
 	env = "production";
+	outdir = "dist";
 	callback();
 });
 gulp.task("build", gulp.series("set-production", "clean:docs",

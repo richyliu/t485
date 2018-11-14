@@ -1,7 +1,6 @@
 #gulp
 node_modules/
-#build/
-#docs/ - we want to keep compiled output
+devserver/
 
 # Other
 yarn.lock
