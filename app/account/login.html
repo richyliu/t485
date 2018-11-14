@@ -1,0 +1,81 @@
+{% set page = "Login" %}
+{% extends "base.html" %}
+
+{% block main %}
+
+<div class="row col-lg-12" id="main-box">
+    <div class="box w-100">
+        <div class="col-lg-12">
+            <h2 class="primary-heading">Login</h2>
+
+
+            <div>
+                <div class="form-group">
+                    <label for="email">Email address:</label>
+                    <input type="email" class="form-control" id="email" placeholder="Enter your email...">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" class="form-control" id="password" placeholder="Enter your password...">
+                </div>
+                <button class="btn btn-primary btn-block" id="login">Login</button>
+				<p class="text-danger" id="error"></p>
+                <p id="account-tray" class="text-center"><a href="/account/create.html" id="create-link" class="preserve-state">Create an account</a> | <a href="/account/resetpassword.html" id="forgot-password-link" class="preserve-state">Forgot password</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row col-lg-12 hidden" id="verify-box">
+	<div class="box w-100">
+		<div class="col-lg-12">
+			<h2 class="primary-heading">Verify your email</h2>
+
+
+			<div>
+				<p>Please <a href="/account/create.html?verifEmailOnly=true">verify your email</a> to finish setting up your account and use the website.</p>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+	$("#main-box").on("keyup", function(event) {
+		// Cancel the default action, if needed
+		//event.preventDefault();
+		// Number 13 is the "Enter" key on the keyboard
+		if (event.keyCode === 13) {
+			// Trigger the button element with a click
+			$("#login").click();
+		}
+	});
+
+	firebase.auth().onAuthStateChanged(function(user) {
+		if (user) {
+			if (!user.emailVerified) {
+				$("#main-box").addClass("hidden");
+				$("#verify-box").removeClass("hidden");
+            } else {
+				$("#error").html("");
+
+				if (getQuery("continue") == "" || getQuery("continue") == null) {
+					window.location.href = "/account/";
+				} else {
+					window.location.href = getQuery("continue");
+				}
+			}
+		}
+	});
+$("#login").click(function() {
+	var email = $("#email").val();
+	var password = $("#password").val();
+	$("#error").html("");
+    firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+		$("#error").html("Error: Email/Password incorrect.");
+
+    })
+
+});
+</script>
+{% endblock %}

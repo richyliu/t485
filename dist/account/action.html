@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+	
+		<meta charset="utf-8">
+		<meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+		<meta content=" The official Boy Scout Troop 485 website. " name="description">
+	
+	 
+	
+		<title>Troop 485</title>
+		
+	
+
+	
+		<!-- Bootstrap core CSS -->
+		<link href="/css/bootstrap.min.css" rel="stylesheet">
+		<!-- Custom fonts for this template -->
+		<link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i"
+			rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i" rel="stylesheet">
+		<!-- Custom styles for this template -->
+		<link href="/css/theme.css" rel="stylesheet">
+		<link href="/css/t485.css" rel="stylesheet">
+	
+	
+		<!-- Favicons -->
+		<link rel="apple-touch-icon" sizes="152x152" href="/favicons/apple-touch-icon-152x152.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon-180x180.png">
+		<link rel="icon" type="image/png" href="/favicons/favicon-16x16.png" sizes="16x16">
+	
+	
+	
+	
+		<script>
+			try {
+				localStorage.setItem('firebaseErrorTest', 'test');
+			}
+			catch (e) {
+				console.log(e)
+				if (e.message === 'The quota has been exceeded.') {
+					// using Safari(desktop & iOS) or Chrome(iOS) w/ private, localStorage not supported
+					// firebase will throw error, so better to alert user now
+					alert("Private browsing is not supported on Safari or the Chrome IOS app. " +
+					"Turn off private browsing or use a supported private browsing app.");
+				}
+				throw 'notEnoughLocalStorage';
+			}
+		</script>
+	
+</head>
+
+<body>
+	
+		<div class="text-center">
+			<a href="/">
+				<img src="/img/header.png" alt="Boy Scout Troop 485" id="header">
+			</a>
+		</div>
+	
+	
+	
+
+		<div id="alertBox">
+		</div>
+	
+	
+		<!-- Navigation -->
+
+
+		<nav class="navbar navbar-expand-lg navbar-light py-lg-4" id="navbar">
+			<div class="container">
+				<a class="navbar-brand text-uppercase text-expanded font-weight-bold d-lg-none" href="/">Troop 485</a>
+				<button aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"
+						class="navbar-toggler"
+					data-target="#navbarResponsive" data-toggle="collapse" type="button">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+
+				<div class="collapse navbar-collapse" id="navbarResponsive">
+					<ul class="navbar-nav mx-auto">
+
+
+						<li class="nav-item px-lg-4">
+							<a class="nav-link text-uppercase text-expanded" href="/">Home</a>
+						</li>
+
+						<li class="nav-item px-lg-4">
+							<a class="nav-link text-uppercase text-expanded" href="/calendar.html">Calendar</a>
+						</li>
+						<li class="nav-item px-lg-4">
+							<a class="nav-link text-uppercase text-expanded" href="/directory.html">Directory</a>
+						</li>
+						<li class="nav-item px-lg-4">
+							<a class="nav-link text-uppercase text-expanded" href="/event-pages.html">Event Pages</a>
+						</li>
+						<li class="nav-item px-lg-4">
+							<a class="nav-link text-uppercase text-expanded" href="/pictures.html">Pictures</a>
+						</li>
+
+
+
+
+						<li class="nav-item dropdown px-lg-4">
+							<a class="nav-link dropdown-toggle text-uppercase text-expanded"
+							   data-toggle="dropdown" href="#" role="button">About</a>
+
+							<div class="dropdown-menu">
+								<a class="dropdown-item" href="/about/faq.html">FAQ</a>
+								<a class="dropdown-item" href="/about/merit-badges.html">Merit Badges</a>
+							</div>
+						</li>
+						<li class="nav-item dropdown px-lg-4">
+							<a aria-expanded="false" aria-haspopup="true"
+							   class="nav-link dropdown-toggle text-uppercase text-expanded" data-toggle="dropdown"
+							   href="#" id="account-dropdown" role="button">Account</a>
+
+							<div aria-labelledby="account-dropdown" class="dropdown-menu">
+								<!-- acct-dd-status = account dropdown status -->
+								<!-- lo-show = logged out show, li-show = logged in show.
+								lo-show is hidden when logged in, and vice versa --->
+								<h6 class="dropdown-header" id="acct-dd-status">
+									<span id="acct-dd-status-notloggedin" class="lo-show">You are not logged in.</span>
+									<span id="acct-dd-status-loggedin" class="li-show hidden">Logged in as <b id="acct-dd-status-loggedin-username" class="user-displayname">loading...</b>.</span></h6>
+								<a id="acct-dd-login-link" class="lo-show dropdown-item preserve-page" href="/account/login.html">Login</a>
+								<a id="acct-dd-logout-link" class="li-show dropdown-item preserve-page" href="/account/logout.html">Logout</a>
+								<a id="acct-dd-settings-link" class="li-show dropdown-item preserve-page" href="/account/settings.html">Account Settings</a>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	
+	
+
+		<div class="container" id="mainContainer">
+			
+<div class="row col-lg-12" id="loading">
+	<div class="box w-100">
+		<div class="col-lg-12" id="loading-inner">
+			<h2 class="primary-heading">Loading...</h2>
+			<p class="text-muted">Loading...</p>
+
+
+		</div>
+	</div>
+</div>
+<div class="row col-lg-12 hidden" id="badurl-box">
+	<div class="box w-100">
+		<div class="col-lg-12" id="badurl">
+			<h2 class="primary-heading">400 Bad Request</h2>
+			<p class="text-muted">This page can only be accessed with links sent via email. You can manage your account (after logging in) <a href="manage.html">here</a>.</p>
+
+
+		</div>
+	</div>
+</div>
+<div class="row col-lg-12 hidden" id="error-box">
+	<div class="box w-100">
+		<div class="col-lg-12">
+			<h2 class="primary-heading error-title">An Unknown Error Occurred</h2>
+			<p class="text-muted error-text">Please get a new link and try again later (Code: UNKNOWN_ERR). </p>
+
+
+		</div>
+	</div>
+</div>
+<div class="row col-lg-12 hidden" id="success-box">
+	<div class="box w-100">
+		<div class="col-lg-12">
+			<h2 class="primary-heading success-title">Success</h2>
+			<div class="success-body">
+
+			</div>
+
+
+		</div>
+	</div>
+</div>
+<div class="row col-lg-12 hidden" id="pw-reset-box">
+	<div class="box w-100">
+		<div class="col-lg-12" id="pw-reset">
+			<h2 class="primary-heading">Reset Password</h2>
+
+			<div class="form-group">
+				<label for="pw-reset-email">Email address:</label>
+				<input type="email" class="form-control" id="pw-reset-email" placeholder="Enter your email...">
+				<div class="invalid-feedback" id="em-validation-invalid">
+					You must enter the same email address as both the account you are updating the password for and the email where you received the password reset email.
+				</div>
+
+			</div>
+			<div class="form-group">
+				<label for="pw-reset-password">New Password:</label>
+				<input type="password" class="form-control" id="pw-reset-password" placeholder="Enter your password...">
+				<div class="invalid-feedback pw-validation" id="pw-validation-none">
+					Please enter a password.
+				</div>
+				<div class="invalid-feedback pw-validation hidden" id="pw-validation-strength">
+					Please enter a stronger password. Try adding numbers, uppercase and lowercase letters, and special characters.
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="pw-reset-confirm-password">Confirm New Password:</label>
+				<input type="password" class="form-control" id="pw-reset-confirm-password" placeholder="Confirm password...">
+				<div class="invalid-feedback pw-validation">
+					Enter a matching password!
+				</div>
+			</div>
+			<button class="btn btn-primary btn-block" id="pw-update">Update Password</button>
+			<p class="text-danger" id="error"></p>
+		</div>
+		<div class="col-lg-12 hidden" id="check-email">
+			<h2 class="primary-heading">Email Verified</h2>
+			<p>Your email has been successfully verified.</p>
+			<button class="btn-primary btn-block">Click here to finish setting up your account.</button>
+
+		</div>
+		<div class="col-lg-12 hidden" id="unknown-error">
+			<h2 class="primary-heading">Email Change Reversed</h2>
+			<p></p>
+
+		</div>
+	</div>
+</div>
+
+
+
+
+		</div>
+	
+	
+		<div id="feedback-box">
+			<button class="btn" id="feedback-btn">Feedback</button>
+		</div>
+	
+	
+	<div class="container hidden" id="unexpectederror">
+
+		<div class="row">
+			<div class="box">
+				<div class="col-lg-12">
+					<h2 class="error">An Unexpected Error Occured</h2>
+
+
+					<p>Please report this bug or try again in a few minutes. <b>Code <span id="unexpectederror-code">UNKNOWN_ERR</span></b></p>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+
+		<footer class="footer text-faded text-center py-5">
+			<div class="container">
+				<p class="m-0 small">Copyright &copy; 2006-2018 Troop 485, Silicon Valley Monterey Bay Council,
+					Boy Scouts of America.</p>
+			</div>
+		</footer>
+	
+
+	 
+	
+	<!-- Modal -->
+	<div class="modal fade" id="feedback-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLongTitle">Feedback</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<h3>First things first</h3>
+					<div class="form-group">
+						<label for="name">Your Name:</label>
+						<input type="text" class="form-control" id="name">
+						<div class="invalid-feedback">
+							Your name is required.
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="email">Your Email:</label>
+						<input type="email" class="form-control" id="email">
+						<div class="invalid-feedback">
+							You must enter a valid email.
+						</div>
+					</div>
+
+					<label>Issue Type:</label>
+					<select class="custom-select mb-3" id="issueType">
+						<option value="bug" selected>I want to report a bug</option>
+						<option value="feature">I have a feature request</option>
+						<option value="other">Other - I want to send a message to the webmaster</option>
+					</select>
+					<div class="feedback-section feedback-bug collapse show">
+						<h3>Tell us more</h3>
+						<div class="form-group">
+							<label for="bug-title">Bug title:</label>
+							<input type="text" class="form-control" id="bug-title">
+							<small id="bug-title-help" class="form-text text-muted">Give a short description of the bug.</small>
+							<div class="invalid-feedback">
+								The bug title is required.
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="bug-description">Description (optional):</label>
+							<textarea class="form-control" id="bug-description"></textarea>
+							<small id="description-help" class="form-text text-muted">For some bugs, it's helpful to include steps for reproduction of the bug (what did you do to get the bug?)</small>
+
+						</div>
+						<div class="form-group">
+							<label for="bug-affected-pages">Affected Pages (optional):</label>
+							<textarea class="form-control" id="bug-affected-pages"></textarea>
+							<small id="bug-affected-pages-help" class="form-text text-muted">Enter the URL, the page name (e.g. directory), or <i>Whole Website</i></small>
+
+						</div>
+						<div class="form-group">
+							<label for="bug-file">Screenshot (optional):</label>
+							<div class="input-group mb-3">
+
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="bug-file-addon">Upload</span>
+								</div>
+								<div class="custom-file">
+									<input type="file" class="custom-file-input" id="bug-file" aria-describedby="inputGroupFileAddon01">
+									<label class="custom-file-label" for="bug-file">Choose file</label>
+								</div>
+							</div>
+							<small id="bug-file-htlp" class="form-text text-muted">Upload any file < 100MB</small>
+
+						</div>
+
+					</div>
+					<div class="feedback-section feedback-feature collapse">
+						<h3>Tell us more</h3>
+						<div class="form-group">
+							<label for="bug-title">Feature title:</label>
+							<input type="text" class="form-control" id="feat-title">
+							<small id="feat-title-help" class="form-text text-muted">Give a short description of the feature - a name is perfect.</small>
+							<div class="invalid-feedback">
+								The feature title is required.
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="bug-description">Description (optional):</label>
+							<textarea class="form-control" id="feat-description"></textarea>
+
+						</div>
+
+					</div>
+					<div class="feedback-section feedback-other collapse">
+						Please email the webmaster at <a href="mailto:webmaster@t485.org">webmaster@t485.org</a>.<br>
+						If you do not receive a response within 2-3 days, it's probably an issue with the email - please file a bug report.
+					</div>
+
+				</div>
+				<div class="modal-footer">
+					<small class="text-muted feedback-other-hide">We automatically include diagnostic data such as your browser type with your report.</small>
+					<button type="button" class="btn btn-primary feedback-other-hide">Submit</button>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	
+
+
+	
+		<script src="https://www.gstatic.com/firebasejs/5.5.3/firebase-app.js">
+		</script>
+		<script src="https://www.gstatic.com/firebasejs/5.5.3/firebase-auth.js">
+		</script>
+		<script src="https://www.gstatic.com/firebasejs/5.5.3/firebase-database.js">
+		</script>
+		<script src="https://www.gstatic.com/firebasejs/5.5.3/firebase-storage.js">
+		</script>
+		<!-- <script src="https://www.gstatic.com/firebasejs/5.5.3/firebase-firestore.js"></script> -->
+		<!-- <script src="https://www.gstatic.com/firebasejs/5.5.3/firebase-messaging.js"></script> -->
+		<!-- <script src="https://www.gstatic.com/firebasejs/5.5.3/firebase-functions.js"></script> -->
+
+		<script>
+			// Initialize Firebase
+			var config = {
+				apiKey: "AIzaSyB-ly8ax35aWTAGhX2UDVuYxPSDlAU8kMk",
+				authDomain: "t485-main.firebaseapp.com",
+				databaseURL: "https://t485-main.firebaseio.com",
+				projectId: "t485-main",
+				storageBucket: "t485-main.appspot.com",
+				messagingSenderId: "368513727602"
+			};
+			firebase.initializeApp(config);
+		</script>
+	
+	
+		<!-- Bootstrap core JavaScript -->
+
+		<script src="/js/jquery.min.js"></script>
+		<script src="/js/popper.min.js"></script>
+		<script src="/js/bootstrap.min.js"></script>
+		<script src="/js/dropzone.min.js"></script>
+		<script src="/js/logger.js"></script>
+		<script src="/js/t485.js"></script>
+
+	
+
+	
+<script id="scripts">
+	firebase.auth().signOut().then(function() {
+		// Sign-out successful.
+		firebase.auth().onAuthStateChanged(function(user) {
+			if (user) {
+				if (getQuery("mode") == "resetPassword") {
+					$(".success-title").text("Password successfully updated");
+					if (getQuery('continueUrl') != null && getQuery('continueUrl') !== "") {
+						$(".success-body").html("<p>Your password has been updated and you have been logged in.</p>" +
+							"<a class='btn btn-primary btn-block' href='" + getQuery('continueUrl') + "'>Continue to " + getQuery('continueUrl') + "</a>");
+					} else {
+						$(".success-body").html("<p>Your password has been updated and you have been logged in.</p>" +
+							"<a class='btn btn-primary btn-block' href='/'>Return to home page</a>");
+					}
+					$("#pw-reset-box").addClass("hidden");
+					$("#success-box").removeClass("hidden");
+				}
+			}
+		})
+	}).catch(function(error) {
+		// An error happened.
+		console.log(error);
+	});
+
+	if (getQuery("mode") == null || getQuery("oobCode") == null) {
+		$("#loading").addClass("hidden");
+		$("#badurl-box").removeClass("hidden");
+	} else {
+		// Get the action to complete.
+		var mode = getQuery("mode");
+
+		// Get the one-time code from the query parameter.
+		var actionCode = getQuery("oobCode");
+
+		//  Get the continue URL from the query parameter if available.
+		var continueUrl = getQuery("continueUrl");
+
+		//  Get the language code if available.
+		var lang = getQuery('lang') || 'en';
+
+		// Handle the user management action.
+		switch (mode) {
+			case 'resetPassword':
+				// Display reset password handler and UI.
+				handleResetPassword(actionCode, continueUrl, lang);
+				break;
+			case 'recoverEmail':
+				// Display email recovery handler and UI.
+				handleRecoverEmail(actionCode, lang);
+				break;
+			case 'verifyEmail':
+				console.log(actionCode);
+				// Display email verification handler and UI.
+				handleVerifyEmail(actionCode, continueUrl, lang);
+				break;
+			default:
+				// Error: invalid mode.
+				$("#loading").addClass("hidden");
+				$("#badurl-box").removeClass("hidden");
+		}
+	}
+	function handleResetPassword(actionCode, continueUrl, lang) {
+
+
+		// Verify the password reset code is valid.
+		firebase.auth().verifyPasswordResetCode(actionCode).then(function(email) {
+			$("#loading").addClass("hidden");
+			$("#pw-reset-box").removeClass("hidden");
+			$("#pw-update").click(function() {
+
+				var invalid = false;
+				if (email !== $("#pw-reset-email").val()) {
+					$("#pw-reset-email").addClass("hidden");
+					$("#em-validation-invalid").removeClass("hidden");
+					$("#pw-reset-email").addClass("is-invalid");
+					invalid = true;
+				}
+				var newPassword = $("#pw-reset-password").val();
+				if (newPassword !== $("#pw-reset-confirm-password").val()) {
+					$("#pw-reset-confirm-password").addClass("is-invalid");
+					invalid = true;
+					$("#pw-reset-password").val("");
+					$("#pw-reset-confirm-password").val("");
+				}
+				console.log(newPassword);
+				if (!invalid) {
+
+					firebase.auth().confirmPasswordReset(actionCode, newPassword).then(function (resp) {
+						// Password reset has been confirmed and new password updated.
+
+
+						 firebase.auth().signInWithEmailAndPassword(email, newPassword);
+
+
+
+					}).catch(function (error) {
+						// Error occurred during confirmation. The code might have expired or the
+						// password is too weak.
+						var errortext = "";
+						console.log(error);
+						switch (error.code) {
+
+							case "auth/weak-password":
+								$("#pw-reset-password").val("");
+								$("#pw-reset-confirm-password").val("");
+								$("#em-validation-invalid").addClass("hidden");
+								$("#em-validation-inuse").removeClass("hidden");
+								$("#email").addClass("is-invalid");
+								errortext = "";
+								break;
+							case "auth/user-not-found":
+							case "auth/user-disabled":
+								errortext = "The user to which this action code was issued from was disabled or deleted";
+								break;
+							case "auth/expired-action-code":
+								errortext = "The link given has been expired. <a href='/account/resetpassword.html'>Reset your password again</a> to get a new link."
+								break;
+							case "auth/invalid-action-code":
+								errortext = "The link given has already been used. <a href='/account/resetpassword.html'>Reset your password again</a> to get a new link."
+								break;
+							default:
+								errortext = "An unknown error occurred. (Code: " + error.code + ")";
+						}
+						if (errortext != null && errortext !== "") {
+							$("#error").html("Error: " + errortext);
+						}
+					});
+				}
+			});
+		}).catch(function(error) {
+			// Invalid or expired action code. Ask user to try to reset the password
+			// again.
+			// Error occurred during confirmation. The code might have expired or the
+			// password is too weak.
+			var errortext = "";
+			console.log(error);
+			switch (error.code) {
+
+				case "auth/user-not-found":
+				case "auth/user-disabled":
+					errortext = "The user to which this action code was issued from was disabled or deleted";
+					break;
+				case "auth/expired-action-code":
+					errortext = "The link given has been expired. <a href='/account/resetpassword.html'>Reset your password again</a> to get a new link."
+					break;
+				case "auth/invalid-action-code":
+					errortext = "The link given has already been used. <a href='/account/resetpassword.html'>Reset your password again</a> to get a new link."
+					break;
+				default:
+					errortext = "An unknown error occurred. (Code: " + error.code + ")";
+			}
+			if (errortext != null && errortext !== "") {
+				$("#loading").addClass("hidden");
+				$("#error-box").removeClass("hidden");
+				$(".error-title").html("Error");
+				$(".error-text").html("Error: " + errortext);
+			}
+		});
+	}
+	function handleRecoverEmail(actionCode) {
+
+		var restoredEmail = null;
+		// Confirm the action code is valid.
+		firebase.auth().checkActionCode(actionCode).then(function(info) {
+			// Get the restored email address.
+			restoredEmail = info.data.email;
+
+			// Revert to the old email.
+			return auth.applyActionCode(actionCode);
+		}).then(function() {
+			// Account email reverted to restoredEmail
+
+			// Display a confirmation message to the user.
+			$("#success-title").text("The email change has been reverted back to " + restoredEmail);
+			// You might also want to give the user the option to reset their password
+			// in case the account was compromised:
+			$("#success-body").html("If you did not request the original email change then your account may have been compromised. Click <a href='/account/resetpassword.html' id='pw-reset-link'>here</a> to reset your password.");
+			$("#pw-reset-link").attr("href", "/account/resetpassword.html?email=" + restoredEmail);
+			$("#loading").addClass("hidden");
+			$("#success-box").removeClass("hidden");
+			auth.sendPasswordResetEmail(restoredEmail).then(function() {
+				// Password reset confirmation sent. Ask user to check their email.
+			}).catch(function(error) {
+				// Error encountered while sending password reset code.
+			});
+		}).catch(function(error) {
+			// Invalid code.
+			var errortext = "";
+			console.log(error);
+			switch (error.code) {
+
+				case "auth/user-not-found":
+				case "auth/user-disabled":
+					errortext = "The user to which this action code was issued from was disabled or deleted";
+					break;
+				case "auth/expired-action-code":
+					errortext = "The link given has been expired. Please contact the webmaster."
+					break;
+				case "auth/invalid-action-code":
+					errortext = "The link given has already been used. <a href='/account/login.html'>Login</a> or contact the webmaster."
+					break;
+				default:
+					errortext = "An unknown error occurred. (Code: " + error.code + ")";
+			}
+			if (errortext != null && errortext !== "") {
+				$("#loading").addClass("hidden");
+				$("#error-box").removeClass("hidden");
+				$(".error-title").html("Error");
+				$(".error-text").html("Error: " + errortext);
+			}
+		});
+	}
+	function handleVerifyEmail(actionCode, continueUrl) {
+		// Localize the UI to the selected language as determined by the lang
+		// parameter.
+		// Try to apply the email verification code.
+		console.log(actionCode);
+		console.log(getQuery("oobCode"))
+		firebase.auth().applyActionCode(actionCode).then(function(resp) {
+			// Email address has been verified.
+
+			if (continueUrl != null && continueUrl != "") {
+				window.location.href = "/account/setup.html?continue=" + continueUrl;
+			} else {
+				window.location.href = "/account/setup.html";
+			}
+		}).catch(function(error) {
+			// Code is invalid or expired. Ask the user to verify their email address
+			// again.
+			// Invalid code.
+			var errortext = "";
+			console.log(error);
+			switch (error.code) {
+
+				case "auth/user-not-found":
+				case "auth/user-disabled":
+					errortext = "The user to which this action code was issued from was disabled or deleted";
+					break;
+				case "auth/expired-action-code":
+					errortext = "The link given has been expired. <a href='/account/create.html?verifEmailOnly=true'>Verify your email again</a> to get a new link."
+					break;
+				case "auth/invalid-action-code":
+					errortext = "The link given has already been used. <a href='/account/create.html?verifEmailOnly=true'>Verify your email again</a> to get a new link."
+					break;
+				default:
+					errortext = "An unknown error occurred. (Code: " + error.code + ")";
+			}
+		});
+	}
+</script>
+
+
+</body>

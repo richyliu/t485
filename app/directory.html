@@ -1,87 +1,238 @@
-{% set title="Troop 485 | Directory" %}
-{% set basepath="/" %}
-
+{% set page = "Directory" %}
 {% extends "base.html" %}
+{% block styles %}
+<link href="/css/bootstrap-select.min.css" rel="stylesheet">
+<style>
+.table-wrapper,
+.row,
+.box {
+    width: 100%; 
+    height:100%;
+}
 
-{% block main %}
-
-    <div class="container" id="loading-login">
-        <div class="row">
-            <div class="box col-xs-12">
-                <hr>
-                <h2 class="intro-text text-center">Loading...</h2>
-                <hr>
-                <p>Loading...</p>
-            </div>
-        </div>
-    </div>
+#table {
+    display: block !important;
+    width:100%;
+    overflow:auto;
     
-    
-    <div class="container" id="login" style="display: none;">
-        <div class="row">
-            <div class="box col-xs-12">
-                <hr>
-                <h2 class="intro-text text-center">Login to continue</h2>
-                <hr>
-                <label>Your name (First Last):</label>
-                <input type="text" id="name" class="form-control">
-                <label>Your email:</label>
-                <input type="text" id="email" class="form-control">
-                <button class="btn btn-primary form-control" id="login-btn">Enter</button>
-            </div>
-        </div>
-    </div>
-    
-    
-    <div class="container" id="content" style="display: none;">
-        <div class="row" id="search">
-            <div class="box col-xs-12">
-                <hr>
-                <h2 class="intro-text text-center">Search Directory</h2>
-                <hr>
-                <p>Click on the name for more information.</p>
-                <div class="input-group col-xs-12">
-                    <input type="text" id="search-query" class="form-control" placeholder="Type a name...">
-                    <span class="input-group-btn" style="vertical-align: top">
-                        <button class="btn btn-default" type="button" id="search-btn">
-                            <i class="glyphicon glyphicon-search"></i>
-                        </button>
-                    </span>
-                </div>
-                <p style="display: none" class="loading">Loading...</p>
-                <table class="table" id="results" style="display: none;">
-                    <thead>
-                        <tr>
-                            <th class="col-xs-1">Name</th>
-                            <th class="col-xs-1">Cell Phone</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-                <p id="no-result" style="display: none;"></p>
-                <div id="detail" style="display: none;"></div>
-                <p class="loading" style="display: none;">Loading...</p>
-            </div>
-        </div>
+}
+/* always show scroll bar 
 
-        <div class="row" id="spreadsheet-confirm">
-            <div class="box">
-                <button type="button" id="spreadsheet-confirm-btn" class="btn btn-default">Show patrol spreadsheets</button>
-            </div>
-        </div>
+#table::-webkit-scrollbar {
+    -webkit-appearance: none;
+}
 
-        <div class="row" id="spreadsheet" style="display: none;">
-            <div class="box" id="spreadsheet-content">
-                
-            </div>
-        </div>
-</div>
-</div>
+#table::-webkit-scrollbar:vertical {
+    width: 11px;
+}
 
+#table::-webkit-scrollbar:horizontal {
+    height: 11px;
+}
+
+#table::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    border: 2px solid white; 
+    background-color: rgba(0, 0, 0, .5);
+}
+*/
+</style>
 {% endblock %}
+{% block main %}
+<div class="row">
+    <div class="box">
+        <div class="col-lg-12 table-wrapper">	
+            <h2 class="primary-heading">
+                Directory
+            </h2>
+            <div id="directory-list">
+                <b>Search:</b>
+                <input type="text" class="form-control fuzzy-search" id="search" placeholder="Search by name, job, phone number, slack username, etc.">
+                <form class="pt-1">
+                    <div class="row">
+                        <div class="col">
+                        <b>Sort by:</b>
+                            <select class="selectpicker form-control" data-live-search="true" id="sortby-select">
+                                <optgroup label="Scout">
+                                    <option value="0">Scout's First Name</option>
+                                    <option value="1" selected>Scout's Last Name <i class="fas fa-sort-up"></i></option>
+                                    <option value="2">Patrol</option>
+                                    <option value="3">Scout's E-mail</option>
+                                    <option value="4">Scout's Home Phone</option>
+                                    <option value="5">Slack Username</option>
+                                    <option value="6" >Troop Job</option>
+                                    <option value="7">Date Joined Troop 485</option>
+                                    <option value="8">Active</option>
+                                    <option value="9">Wilderness First Aid Trained</option>
+                                    <option value="10">School Attending</option>
+                                    <option value="11">Scout's Cell Phone</option>
+                                </optgroup>
+                                <optgroup label="Father">
+                                    <option value="12">Father's First Name</option>
+                                    <option value="13">Father's Last Name</option>
+                                    <option value="14">Father's Cell Phone</option>
+                                    <option value="15">Father's E-mail</option>
+                                    <option value="16">Father's Slack Username</option>
+                                </optgroup>
+                                <optgroup label="Mother">
+                                    <option value="17">Mother's First Name</option>
+                                    <option value="18">Mother's Last Name</option>
+                                    <option value="19">Mother's Cell Phone</option>
+                                    <option value="20">Mother's E-mail</option>
+                                    <option value="21">Mother's Slack Username</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <b>Sort order:</b>
+                            <select class="selectpicker form-control" id="sortorder-select">
+                                <option value="asc">Ascending</option>
+                                <option value="desc">Descending</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                        <b>Show:</b>
+                            <select class="selectpicker form-control" multiple id="filter-select" data-live-search="true" data-actions-box="true">
+                                <optgroup label="Scout">
+                                    <option value="0" selected>Scout's First Name</option>
+                                    <option value="1" selected>Scout's Last Name</option>
+                                    <option value="2" selected>Patrol</option>
+                                    <option value="3" selected>Scout's E-mail</option>
+                                    <option value="4" selected>Scout's Home Phone</option>
+                                    <option value="5" >Slack Username</option>
+                                    <option value="6" >Troop Job</option>
+                                    <option value="7">Date Joined Troop 485</option>
+                                    <option value="8">Active</option>
+                                    <option value="9">Wilderness First Aid Trained</option>
+                                    <option value="10">School Attending</option>
+                                    <option value="11" selected>Scout's Cell Phone</option>
+                                </optgroup>
+                                <optgroup label="Father">
+                                    <option value="12">Father's First Name</option>
+                                    <option value="13">Father's Last Name</option>
+                                    <option value="14">Father's Cell Phone</option>
+                                    <option value="15">Father's E-mail</option>
+                                    <option value="16">Father's Slack Username</option>
+                                </optgroup>
+                                <optgroup label="Mother">
+                                    <option value="17">Mother's First Name</option>
+                                    <option value="18">Mother's Last Name</option>
+                                    <option value="19">Mother's Cell Phone</option>
+                                    <option value="20">Mother's E-mail</option>
+                                    <option value="21">Mother's Slack Username</option>
+                                </optgroup>
+                            </select>
+                            
+                        </div>
+                    </div>
+                    
+                    </form>
+                
+                <br>
+                <p id="modified-settings" class="hidden"> Modified search/sort settings saved in URL. <a href="?#">Reset to default settings</a>. </p>
+                <p>Select a row to view all information about that scout:</p>
+                <div id="table-secondscrollbar-wrapper">
+                    <div class="table-secondscrollbar-div"></div>
+                </div>
+                <div id="table-wrapper">
+                    <table class="table table-hover" id="table">
+                        <thead>
+                            <tr>
+                                
+                            <th scope="col" class="col0" data-col="0">Scout's First Name</th>
+                            <th scope="col" class="col1" data-col="1">Scout's Last Name</th>
+                            <th scope="col" class="col2" data-col="2">Patrol</th>
+                            <th scope="col" class="col3" data-col="3">Scout's E-mail:</th>
+                            <th scope="col" class="col4" data-col="4">Scout's Home Phone</th>
+                            <th scope="col" class="col5" data-col="5">Slack Username</th>
+                            <th scope="col" class="col6" data-col="6">Troop Job</th>
+                            <th scope="col" class="col6" data-col="7">Date Joined Troop 485</th>
+                            <th scope="col" class="col7" data-col="8">Active (Y)es/ (R)arely/ (N)o</th>
+                            <th scope="col" class="col8" data-col="9">Wilderness First Aid Trained</th>
+                            <th scope="col" class="col9" data-col="10">School Attending</th>
+                            <th scope="col" class="col10" data-col="11">Scout's Cell Phone</th>
+                            <th scope="col" class="col11" data-col="12">Father's First Name</th>
+                            <th scope="col" class="col12" data-col="13">Father's Last Name</th>
+                            <th scope="col" class="col13" data-col="14">Father's Cell Phone</th>
+                            <th scope="col" class="col14" data-col="15">Father's E-mail</th>
+                            <th scope="col" class="col15" data-col="16">Father's Slack Username or None</th>
+                            <th scope="col" class="col16" data-col="17">Mother's First Name</th>
+                            <th scope="col" class="col17" data-col="18">Mother's Last Name</th>
+                            <th scope="col" class="col18" data-col="19">Mother's Cell Phone</th>
+                            <th scope="col" class="col19" data-col="20">Mother's E-mail</th>
+                            <th scope="col" class="col20" data-col="21">Mother's Slack Username or None</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dir-body" class="list">
+                            <tr id="loading-text"><td colspan="21">Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <p>View/Edit the troop directory spreadsheet on <a target="_blank" class="link-google-sheet-dir">Google Sheets</a>.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="/fonts/fontawesome/fontawesome.js"></script>
+<script src="/fonts/fontawesome/solid.js"></script>
+<script src="/js/list.min.js"></script>
+<script src="/js/bootstrap-select.min.js"></script>
 
- {% block js %}
-<script src="js/tabletop.min.js"></script>
-    <script src="js/directory.js"></script>
-
- {% endblock %}   
+<script src="/js/directory.js"></script>
+{% endblock %}
+{% block modals %}
+<div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title infoModal-scoutFullName">Loading...</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ul class="list-group list-group-flush">
+                    
+                    
+                    <li class="list-group-item nfoModal-scoutFullNameElement"> <b>Scout's Name:</b> <span class="infoModal-scoutFullName"></span>	</li>
+                    <li class="list-group-item infoModal-scoutFirstNameElement hidden "> <b>Scout's First Name:</b> <span class="infoModal-scoutFirstName"></span>	</li>
+                    <li class="list-group-item infoModal-scoutLastNameElement hidden"> <b>Scout's Last Name:</b> <span class="infoModal-scoutLastName"></span>	</li>
+                    <li class="list-group-item"> <b>Scout's E-mail:</b>	<a class="infoModal-scoutEmail infoModal-scoutEmailLink"></a></li>
+                    <li class="list-group-item"> <b>Scout's Home Phone:</b>	<a class="infoModal-scoutHomePhone infoModal-scoutHomePhoneLink"></a></li>
+                    <li class="list-group-item">
+                        <b>Scout's Slack:</b> <a class="infoModal-scoutSlackDMLink" target="_blank"><span class="infoModal-scoutSlackUsername"></span><span class="infoModal-scoutSlackDMLoadingText"></span></a>
+                    </li>
+                    
+                    <li class="list-group-item"> <b>Scout's Cell Phone:</b> <a class="infoModal-scoutCellPhone infoModal-scoutCellPhoneLink"></a></li>
+                    <li class="list-group-item infoModal-fatherFullNameElement"> <b>Father's Name: </b><span class="infoModal-fatherFullName"></span></li>
+                    <li class="list-group-item infoModal-fatherFirstNameElement hidden"> <b>Father's First Name: </b><span class="infoModal-fatherFirstName"></span></li>
+                    <li class="list-group-item infoModal-fatherLastNameElement hidden"> <b>Father's Last Name: </b><span class="infoModal-fatherLastName"></span></li>
+                    <li class="list-group-item"> <b>Father's Cell Phone: </b><a class="infoModal-fatherCellPhone infoModal-fatherCellPhoneLink"></a></li>
+                    <li class="list-group-item"> <b>Father's E-mail:	</b><a class="infoModal-fatherEmail infoModal-fatherEmailLink"></a></li>
+                    <li class="list-group-item"> 
+                        <b>Father's Slack:	</b><a class="infoModal-fatherSlackDMLink" target="_blank"><span class="infoModal-fatherSlackUsername">loading</span><span class="infoModal-fatherSlackDMLoadingText">loading</span></a>
+                    </li>
+                    <li class="list-group-item infoModal-motherFullNameElement "> <b>Mother's Name:	</b><span class="infoModal-motherFullName"></span></li>
+                    <li class="list-group-item infoModal-motherFirstNameElement hidden "> <b>Mother's First Name:	</b><span class="infoModal-motherFirstName"></span></li>
+                    <li class="list-group-item infoModal-motherLastNameElement hidden"> <b>Mother's Last Name:	</b><span class="infoModal-motherLastName"></span></li>
+                    <li class="list-group-item"> <b>Mother's Cell Phone:	</b><a class="infoModal-motherCellPhone infoModal-motherCellPhoneLink"></a></li>
+                    <li class="list-group-item"> <b>Mother's E-mail:	</b><a class="infoModal-motherEmail infoModal-motherEmailLink"></a></li>
+                    <li class="list-group-item"> 
+                        <b>Mother's Slack:	</b><a class="infoModal-motherSlackDMLink" target="_blank"><span class="infoModal-motherSlackUsername"></span><span class="infoModal-motherSlackDMLoadingText"></span></a>
+                    </li>
+                    <li class="list-group-item"> <b>Date Joined Troop 485:	</b><span class="infoModal-scoutJoinDate"></span></li>
+                    <li class="list-group-item"> <b>Active:	</b><span class="infoModal-scoutActive"></span></li>
+                    <li class="list-group-item"> <b>Wilderness First Aid Trained:	</b><span class="infoModal-scoutWFATrained"></span></li>
+                    <li class="list-group-item"> <b>School Attending:	</b><span class="infoModal-scoutSchool"></span></li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Edit in spreadsheet</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

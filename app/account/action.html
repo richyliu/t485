@@ -1,0 +1,347 @@
+{% extends "base.html" %}
+
+{% block main %}
+<div class="row col-lg-12" id="loading">
+	<div class="box w-100">
+		<div class="col-lg-12" id="loading-inner">
+			<h2 class="primary-heading">Loading...</h2>
+			<p class="text-muted">Loading...</p>
+
+
+		</div>
+	</div>
+</div>
+<div class="row col-lg-12 hidden" id="badurl-box">
+	<div class="box w-100">
+		<div class="col-lg-12" id="badurl">
+			<h2 class="primary-heading">400 Bad Request</h2>
+			<p class="text-muted">This page can only be accessed with links sent via email. You can manage your account (after logging in) <a href="manage.html">here</a>.</p>
+
+
+		</div>
+	</div>
+</div>
+<div class="row col-lg-12 hidden" id="error-box">
+	<div class="box w-100">
+		<div class="col-lg-12">
+			<h2 class="primary-heading error-title">An Unknown Error Occurred</h2>
+			<p class="text-muted error-text">Please get a new link and try again later (Code: UNKNOWN_ERR). </p>
+
+
+		</div>
+	</div>
+</div>
+<div class="row col-lg-12 hidden" id="success-box">
+	<div class="box w-100">
+		<div class="col-lg-12">
+			<h2 class="primary-heading success-title">Success</h2>
+			<div class="success-body">
+
+			</div>
+
+
+		</div>
+	</div>
+</div>
+<div class="row col-lg-12 hidden" id="pw-reset-box">
+	<div class="box w-100">
+		<div class="col-lg-12" id="pw-reset">
+			<h2 class="primary-heading">Reset Password</h2>
+
+			<div class="form-group">
+				<label for="pw-reset-email">Email address:</label>
+				<input type="email" class="form-control" id="pw-reset-email" placeholder="Enter your email...">
+				<div class="invalid-feedback" id="em-validation-invalid">
+					You must enter the same email address as both the account you are updating the password for and the email where you received the password reset email.
+				</div>
+
+			</div>
+			<div class="form-group">
+				<label for="pw-reset-password">New Password:</label>
+				<input type="password" class="form-control" id="pw-reset-password" placeholder="Enter your password...">
+				<div class="invalid-feedback pw-validation" id="pw-validation-none">
+					Please enter a password.
+				</div>
+				<div class="invalid-feedback pw-validation hidden" id="pw-validation-strength">
+					Please enter a stronger password. Try adding numbers, uppercase and lowercase letters, and special characters.
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="pw-reset-confirm-password">Confirm New Password:</label>
+				<input type="password" class="form-control" id="pw-reset-confirm-password" placeholder="Confirm password...">
+				<div class="invalid-feedback pw-validation">
+					Enter a matching password!
+				</div>
+			</div>
+			<button class="btn btn-primary btn-block" id="pw-update">Update Password</button>
+			<p class="text-danger" id="error"></p>
+		</div>
+		<div class="col-lg-12 hidden" id="check-email">
+			<h2 class="primary-heading">Email Verified</h2>
+			<p>Your email has been successfully verified.</p>
+			<button class="btn-primary btn-block">Click here to finish setting up your account.</button>
+
+		</div>
+		<div class="col-lg-12 hidden" id="unknown-error">
+			<h2 class="primary-heading">Email Change Reversed</h2>
+			<p></p>
+
+		</div>
+	</div>
+</div>
+
+
+{% endblock %}
+
+{% block scripts %}
+<script id="scripts">
+	firebase.auth().signOut().then(function() {
+		// Sign-out successful.
+		firebase.auth().onAuthStateChanged(function(user) {
+			if (user) {
+				if (getQuery("mode") == "resetPassword") {
+					$(".success-title").text("Password successfully updated");
+					if (getQuery('continueUrl') != null && getQuery('continueUrl') !== "") {
+						$(".success-body").html("<p>Your password has been updated and you have been logged in.</p>" +
+							"<a class='btn btn-primary btn-block' href='" + getQuery('continueUrl') + "'>Continue to " + getQuery('continueUrl') + "</a>");
+					} else {
+						$(".success-body").html("<p>Your password has been updated and you have been logged in.</p>" +
+							"<a class='btn btn-primary btn-block' href='/'>Return to home page</a>");
+					}
+					$("#pw-reset-box").addClass("hidden");
+					$("#success-box").removeClass("hidden");
+				}
+			}
+		})
+	}).catch(function(error) {
+		// An error happened.
+		console.log(error);
+	});
+
+	if (getQuery("mode") == null || getQuery("oobCode") == null) {
+		$("#loading").addClass("hidden");
+		$("#badurl-box").removeClass("hidden");
+	} else {
+		// Get the action to complete.
+		var mode = getQuery("mode");
+
+		// Get the one-time code from the query parameter.
+		var actionCode = getQuery("oobCode");
+
+		//  Get the continue URL from the query parameter if available.
+		var continueUrl = getQuery("continueUrl");
+
+		//  Get the language code if available.
+		var lang = getQuery('lang') || 'en';
+
+		// Handle the user management action.
+		switch (mode) {
+			case 'resetPassword':
+				// Display reset password handler and UI.
+				handleResetPassword(actionCode, continueUrl, lang);
+				break;
+			case 'recoverEmail':
+				// Display email recovery handler and UI.
+				handleRecoverEmail(actionCode, lang);
+				break;
+			case 'verifyEmail':
+				console.log(actionCode);
+				// Display email verification handler and UI.
+				handleVerifyEmail(actionCode, continueUrl, lang);
+				break;
+			default:
+				// Error: invalid mode.
+				$("#loading").addClass("hidden");
+				$("#badurl-box").removeClass("hidden");
+		}
+	}
+	function handleResetPassword(actionCode, continueUrl, lang) {
+
+
+		// Verify the password reset code is valid.
+		firebase.auth().verifyPasswordResetCode(actionCode).then(function(email) {
+			$("#loading").addClass("hidden");
+			$("#pw-reset-box").removeClass("hidden");
+			$("#pw-update").click(function() {
+
+				var invalid = false;
+				if (email !== $("#pw-reset-email").val()) {
+					$("#pw-reset-email").addClass("hidden");
+					$("#em-validation-invalid").removeClass("hidden");
+					$("#pw-reset-email").addClass("is-invalid");
+					invalid = true;
+				}
+				var newPassword = $("#pw-reset-password").val();
+				if (newPassword !== $("#pw-reset-confirm-password").val()) {
+					$("#pw-reset-confirm-password").addClass("is-invalid");
+					invalid = true;
+					$("#pw-reset-password").val("");
+					$("#pw-reset-confirm-password").val("");
+				}
+				console.log(newPassword);
+				if (!invalid) {
+
+					firebase.auth().confirmPasswordReset(actionCode, newPassword).then(function (resp) {
+						// Password reset has been confirmed and new password updated.
+
+
+						 firebase.auth().signInWithEmailAndPassword(email, newPassword);
+
+
+
+					}).catch(function (error) {
+						// Error occurred during confirmation. The code might have expired or the
+						// password is too weak.
+						var errortext = "";
+						console.log(error);
+						switch (error.code) {
+
+							case "auth/weak-password":
+								$("#pw-reset-password").val("");
+								$("#pw-reset-confirm-password").val("");
+								$("#em-validation-invalid").addClass("hidden");
+								$("#em-validation-inuse").removeClass("hidden");
+								$("#email").addClass("is-invalid");
+								errortext = "";
+								break;
+							case "auth/user-not-found":
+							case "auth/user-disabled":
+								errortext = "The user to which this action code was issued from was disabled or deleted";
+								break;
+							case "auth/expired-action-code":
+								errortext = "The link given has been expired. <a href='/account/resetpassword.html'>Reset your password again</a> to get a new link."
+								break;
+							case "auth/invalid-action-code":
+								errortext = "The link given has already been used. <a href='/account/resetpassword.html'>Reset your password again</a> to get a new link."
+								break;
+							default:
+								errortext = "An unknown error occurred. (Code: " + error.code + ")";
+						}
+						if (errortext != null && errortext !== "") {
+							$("#error").html("Error: " + errortext);
+						}
+					});
+				}
+			});
+		}).catch(function(error) {
+			// Invalid or expired action code. Ask user to try to reset the password
+			// again.
+			// Error occurred during confirmation. The code might have expired or the
+			// password is too weak.
+			var errortext = "";
+			console.log(error);
+			switch (error.code) {
+
+				case "auth/user-not-found":
+				case "auth/user-disabled":
+					errortext = "The user to which this action code was issued from was disabled or deleted";
+					break;
+				case "auth/expired-action-code":
+					errortext = "The link given has been expired. <a href='/account/resetpassword.html'>Reset your password again</a> to get a new link."
+					break;
+				case "auth/invalid-action-code":
+					errortext = "The link given has already been used. <a href='/account/resetpassword.html'>Reset your password again</a> to get a new link."
+					break;
+				default:
+					errortext = "An unknown error occurred. (Code: " + error.code + ")";
+			}
+			if (errortext != null && errortext !== "") {
+				$("#loading").addClass("hidden");
+				$("#error-box").removeClass("hidden");
+				$(".error-title").html("Error");
+				$(".error-text").html("Error: " + errortext);
+			}
+		});
+	}
+	function handleRecoverEmail(actionCode) {
+
+		var restoredEmail = null;
+		// Confirm the action code is valid.
+		firebase.auth().checkActionCode(actionCode).then(function(info) {
+			// Get the restored email address.
+			restoredEmail = info.data.email;
+
+			// Revert to the old email.
+			return auth.applyActionCode(actionCode);
+		}).then(function() {
+			// Account email reverted to restoredEmail
+
+			// Display a confirmation message to the user.
+			$("#success-title").text("The email change has been reverted back to " + restoredEmail);
+			// You might also want to give the user the option to reset their password
+			// in case the account was compromised:
+			$("#success-body").html("If you did not request the original email change then your account may have been compromised. Click <a href='/account/resetpassword.html' id='pw-reset-link'>here</a> to reset your password.");
+			$("#pw-reset-link").attr("href", "/account/resetpassword.html?email=" + restoredEmail);
+			$("#loading").addClass("hidden");
+			$("#success-box").removeClass("hidden");
+			auth.sendPasswordResetEmail(restoredEmail).then(function() {
+				// Password reset confirmation sent. Ask user to check their email.
+			}).catch(function(error) {
+				// Error encountered while sending password reset code.
+			});
+		}).catch(function(error) {
+			// Invalid code.
+			var errortext = "";
+			console.log(error);
+			switch (error.code) {
+
+				case "auth/user-not-found":
+				case "auth/user-disabled":
+					errortext = "The user to which this action code was issued from was disabled or deleted";
+					break;
+				case "auth/expired-action-code":
+					errortext = "The link given has been expired. Please contact the webmaster."
+					break;
+				case "auth/invalid-action-code":
+					errortext = "The link given has already been used. <a href='/account/login.html'>Login</a> or contact the webmaster."
+					break;
+				default:
+					errortext = "An unknown error occurred. (Code: " + error.code + ")";
+			}
+			if (errortext != null && errortext !== "") {
+				$("#loading").addClass("hidden");
+				$("#error-box").removeClass("hidden");
+				$(".error-title").html("Error");
+				$(".error-text").html("Error: " + errortext);
+			}
+		});
+	}
+	function handleVerifyEmail(actionCode, continueUrl) {
+		// Localize the UI to the selected language as determined by the lang
+		// parameter.
+		// Try to apply the email verification code.
+		console.log(actionCode);
+		console.log(getQuery("oobCode"))
+		firebase.auth().applyActionCode(actionCode).then(function(resp) {
+			// Email address has been verified.
+
+			if (continueUrl != null && continueUrl != "") {
+				window.location.href = "/account/setup.html?continue=" + continueUrl;
+			} else {
+				window.location.href = "/account/setup.html";
+			}
+		}).catch(function(error) {
+			// Code is invalid or expired. Ask the user to verify their email address
+			// again.
+			// Invalid code.
+			var errortext = "";
+			console.log(error);
+			switch (error.code) {
+
+				case "auth/user-not-found":
+				case "auth/user-disabled":
+					errortext = "The user to which this action code was issued from was disabled or deleted";
+					break;
+				case "auth/expired-action-code":
+					errortext = "The link given has been expired. <a href='/account/create.html?verifEmailOnly=true'>Verify your email again</a> to get a new link."
+					break;
+				case "auth/invalid-action-code":
+					errortext = "The link given has already been used. <a href='/account/create.html?verifEmailOnly=true'>Verify your email again</a> to get a new link."
+					break;
+				default:
+					errortext = "An unknown error occurred. (Code: " + error.code + ")";
+			}
+		});
+	}
+</script>
+{% endblock %}

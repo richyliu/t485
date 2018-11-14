@@ -1,0 +1,35 @@
+{% set page = "Login" %}
+{% extends "base.html" %}
+
+{% block main %}
+
+<div class="row col-lg-12">
+    <div class="box w-100">
+        <div class="col-lg-12">
+            <h2 class="primary-heading">Logout</h2>
+
+
+            <div>
+                <p>
+                    You have been successfully logged out.
+                </p>
+                <p class="text-center"> <a href="/account/login.html" class="preserve-state">Login again</a> </p>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    firebase.auth().signOut().then(function() {
+        // Sign-out successful.
+    }).catch(function(error) {
+        // An error happened.
+        console.log(error);
+    });
+</script>
+{% endblock %}

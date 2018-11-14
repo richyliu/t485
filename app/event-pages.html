@@ -1,0 +1,192 @@
+{% set page = "Event Pages" %}
+{% extends "base.html" %}
+{% block styles %}
+<link href="/css/bootstrap-select.min.css" rel="stylesheet">
+<link href="/css/flatpickr.css" rel="stylesheet">
+
+
+<style>
+    .caret {
+        display:none;
+    }
+    .sort.asc .caret.caret-up {
+        display:inline;
+    }
+
+    .sort.desc .caret.caret-down {
+        display:inline;
+    }
+    #date-select[readonly] {
+        background-color:white;
+        color:black;
+    }
+
+    label {
+        font-weight: bold;
+
+    }
+</style>
+{% endblock %}
+{% block main %}
+<div class="row">
+    <div class="box w-100">
+        <div class="col-lg-12">
+            <h2 class="primary-heading">
+                Event Pages
+            </h2>
+            <div id="event-list">
+                <b for="event-list-search">Search Events:</b>
+                <input type="text" class="form-control fuzzy-search" id="event-list-search" placeholder="e.g. Summer Camp 2018">
+                <form class="pt-1">
+                    <div class="row">
+                        <div class="col">
+                        <br>
+                            <button type="button" class="btn btn-primary btn-block sort" data-sort="date">Sort by date <span class="caret caret-up "><i class="fas fa-caret-up"></i></span><span class="caret caret-down"><i class="fas fa-caret-down"></i></span></button>
+                        </div>
+                        <div class="col">
+                        <br>
+                            <button type="button" class="btn btn-primary btn-block sort" data-sort="name">Sort by name <span class="caret caret-up "><i class="fas fa-caret-up"></i></span><span class="caret caret-down"><i class="fas fa-caret-down"></i></span></button>
+                        </div>
+                        <div class="col">
+                        <b>Show events in:</b>
+                            <select class="selectpicker form-control" multiple data-actions-box="true" id="event-filter">
+                                <option value="future" selected>the future</option>
+                                <option value="month" selected>last 30 days</option>
+                                <option data-divider="true"></option>
+                                <option value="2018">2018</option>
+                                <option value="2017">2017</option>
+                                <option value="2016">2016</option>
+                            </select>
+
+                        </div>
+                    </div>
+                </form>
+                <hr>
+                <ul class="list">
+                    <li><a href="">
+                        <span class="date">10/5/18</span>
+                        <span class="start-date hidden">10/5/18</span>
+                        <span class="end-date hidden">9/10/18</span>
+                        <span class="date-month hidden">September</span>
+                        <span class="date-year hidden">2018</span>
+                        - <span class="name">Bike Trail</span></a></li>
+                    <li><a href="">
+                        <span class="date">10/8/18 to 10/9/18</span>
+                        <span class="start-date hidden">10/8/18</span>
+                        <span class="end-date hidden">10/9/18</span>
+                        <span class="date-month hidden">September</span>
+                        <span class="date-year hidden">2018</span>
+                        - <span class="name">CASA</span></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="box w-100">
+        <div class="col-lg-12">
+            <h2 class="primary-heading">
+                Create an event page
+            </h2>
+            <div id="event-list">
+                <p>Creating event page as <b class="username">Loading...</b>. <a href="/account/logout/">Logout.</a></p>
+
+                <form class="pt-1">
+                    <div class="row">
+                        <div class="col col-lg-12">
+                            <label for="new-ep-name">Event Name:</label>
+                            <input type="text" class="form-control fuzzy-search" id="new-ep-name" placeholder="e.g. CASA Camporee">
+                        </div>
+                    </div>
+                    <div class="row">
+
+
+                        <div class="col-lg-12">
+                            <label for="date-select">Date:</label>
+                            <input id="date-select" class="form-control" placeholder="Click to open calendar.">
+                            <small class="form-text text-muted">Click the input to open a calendar. Click a number once to set start date. Click again to set single day event, or click the end date instead to set a muti day event.</small>
+
+                        </div>
+
+                    </div>
+                    <div class="row">
+
+
+                        <div class="col-lg-12">
+                            <button class="btn btn-block btn-primary" id="ep-create">Create new event page</button>
+                        </div>
+
+                    </div>
+                </form>
+
+            </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="/fonts/fontawesome/fontawesome.js"></script>
+<script src="/fonts/fontawesome/solid.js"></script>
+<script src="/js/list.min.js"></script>
+<script src="/js/bootstrap-select.min.js"></script>
+<script src="/js/flatpickr.js"></script>
+
+
+<script>
+var options = {
+  valueNames: ["name", "date", "date-month", "date-year", "start-date", "end-date"]
+};
+var list = new List('event-list', options);
+
+$(document).ready(function() {
+
+    //init the filtering
+    $("#event-filter").change(function() {
+        var selected = $(this).val();
+        list.filter(function(item) {
+            console.log(item.values());
+            console.log(selected);
+            if (selected.indexOf(item.values()["date-year"]) > -1) {
+                return true;
+            } else if (selected.indexOf("future") > -1 || selected.indexOf("month") > -1) {
+                //the future is selected and the item wouldn't have otherwise passed
+                // https://stackoverflow.com/a/8305306/5511561
+                var selectedDate = new Date(item.values()["end-date"]).getTime();
+                var now = new Date().setHours(0,0,0,0);//set it to the start of today, we only want to compare the date, not time.
+                console.log(selectedDate);
+                console.log(now);
+                if (selected.indexOf("future") > -1 && selectedDate >= now) {
+                    //event is today or in the future
+                    return true;//show it
+                }
+                //check the month too
+                var monthms = 30 * 24 * 60 * 60 * 1000;// the number of ms in a month
+                if (selected.indexOf("month") > -1 && selectedDate >= (now - (monthms)) && selectedDate <= now) {//the event is after/equal 30 days ago but before/equal today
+                        //event is between 30 days ago and today
+                        return true;//show it
+                    }
+            } else {
+                return false;
+            }
+        });
+    });
+    $("#event-filter").change();
+    //If on moible, tell seectpicker to default to system default select.
+    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
+        $(".selectpicker").selectpicker("mobile");
+    }
+    flatpickr("#date-select", {
+        dateFormat: "m/d/y",
+        mode: "range"
+    });
+
+});
+
+
+$("#ep-create").click(function() {
+    //new event page
+})
+</script>
+{% endblock %}

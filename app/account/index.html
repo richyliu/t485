@@ -1,0 +1,32 @@
+{% set page = "Login" %}<
+{% extends "base.html" %}
+
+{% block main %}
+
+<div class="row col-lg-12">
+    <div class="box w-100">
+        <div class="col-lg-12">
+            <h2 class="primary-heading">Your Account</h2>
+
+            <p>
+                You are logged in as <span class="user-displayname">Loading...</span>.
+            </p>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+
+            $(".username").text(user.username);
+        }
+    });
+    
+</script>
+{% endblock %}

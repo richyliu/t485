@@ -1,181 +1,340 @@
 <!DOCTYPE html>
-<html>
+
+<html lang="en">
 
 <head>
+	{% block coreMeta %}
+		<meta charset="utf-8">
+		<meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+		<meta content="{% if description %} {{description}} {% else %} The official Boy Scout Troop 485 website. {% endif %}" name="description">
+	{% endblock %}
+	{% block meta %} {% endblock %}
+	{% block title %}
+		{% block titletag -%}
+			<title>Troop 485{%- if title %} - {% elif title == "" -%}{#If title is empty dont display dash, even if page is present#}{%- elif page %} - {% elif page == "" %} - {% endif -%}{%- if title -%}{{-title-}}{%- elif title == "" -%}{{-title-}}{% else -%}{{-page}}{%endif%}</title>
+		{% endblock %}
+	{% endblock %}
 
-
-
-    <title>{{title}}</title>
-    <meta name="google-site-verification" content="CSqeLDMZGRzv3kSsdNW-mMvhz91q5bcVRoWs_gcXnno" />
-    {% block firebase %}
-    {% include "_firebase.html" %}
-    {% endblock %}
-    
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Josefin+Slab:100,300,400,600,700,100italic,300italic,400italic,600italic,700italic">
-    <!-- build:css /css/styles.min.css -->
-    {% block css_core %}
-    <link rel="stylesheet" href="{{basepath}}css/bootstrap.min.css">
-    <link rel="stylesheet" href="{{basepath}}css/t485.css">
-
-    {% endblock %}
-    {% block css_concat %}{% endblock %}
-    <!-- endbuild -->
-    {% block css %}{%endblock%}
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Join Troop 485 in Cupertino to experience an excellent Scouting experience">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-
-    <meta name="google-signin-client_id" content="154157170484-81ud6v3rfber96pekq75q86igmf1fsif.apps.googleusercontent.com">
-
-    <!-- Favicons -->
-    <link rel="apple-touch-icon" sizes="152x152" href="/favicons/apple-touch-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon-180x180.png">
-    <link rel="icon" type="image/png" href="/favicons/favicon-16x16.png" sizes="16x16">
-
-    <link rel="manifest" href="/manifest.json">
-
-    <script>
-        try {
-            localStorage.setItem('foo', 'bar');
-        }
-        catch (e) {
-            if (e.message === 'The quota has been exceeded.') {
-                // using Safari(desktop & iOS) or Chrome(iOS) w/ private, localStorage not supported
-                // firebase will throw error, so better to alert user now
-                alert('Private browsing is not supported!');
-            }
-            throw '';
-        }
-    </script>
-    <style>
-        #index-img-1 {
-            width:450px;
-        }
-        #index-img-3,
-        #index-img-4,
-        #index-img-5 {
-             width:270px;
-             height:120px;
-        }
-        
-    </style>
-
+	{% block coreStyles %}
+		<!-- Bootstrap core CSS -->
+		<link href="/css/bootstrap.min.css" rel="stylesheet">
+		<!-- Custom fonts for this template -->
+		<link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i"
+			rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i" rel="stylesheet">
+		<!-- Custom styles for this template -->
+		<link href="/css/theme.css" rel="stylesheet">
+		<link href="/css/t485.css" rel="stylesheet">
+	{% endblock %}
+	{% block favicons %}
+		<!-- Favicons -->
+		<link rel="apple-touch-icon" sizes="152x152" href="/favicons/apple-touch-icon-152x152.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon-180x180.png">
+		<link rel="icon" type="image/png" href="/favicons/favicon-16x16.png" sizes="16x16">
+	{% endblock %}
+	{% block styles %}{% endblock %}
+	{% block head_scripts %}{% endblock %}
+	{% block firebaseErrorCheck %}
+		<script>
+			try {
+				localStorage.setItem('firebaseErrorTest', 'test');
+			}
+			catch (e) {
+				console.log(e)
+				if (e.message === 'The quota has been exceeded.') {
+					// using Safari(desktop & iOS) or Chrome(iOS) w/ private, localStorage not supported
+					// firebase will throw error, so better to alert user now
+					alert("Private browsing is not supported on Safari or the Chrome IOS app. " +
+					"Turn off private browsing or use a supported private browsing app.");
+				}
+				throw 'notEnoughLocalStorage';
+			}
+		</script>
+	{% endblock %}
 </head>
 
 <body>
-    {% block nav %}
-    <img src="/img/header.gif" id="header" alt="Troop 485 banner" width="990" height="151">
+	{% block header %}
+		<div class="text-center">
+			<a href="/">
+				<img src="/img/header.png" alt="Boy Scout Troop 485" id="header">
+			</a>
+		</div>
+	{% endblock %}
+	{% block alertBox %}
+	{# note: when adding custom alerts to a page via template,
+	call super() first instead of overriding the alertbox block #}
 
-    <!-- Navigation -->
-    <nav class="navbar navbar-default">
-        <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-                <!-- navbar-brand is hidden on larger screens, but visible when the menu is collapsed -->
-                <a class="navbar-brand" href="/">T485</a>
-            </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li>
-                        <a href="/">Home</a>
-                    </li>
-                    <li>
-                        <a href="/calendar.html">Calendar</a>
-                    </li>
-                    <li>
-                        <a href="/directory.html">Directory </a>
-                    </li>
+		<div id="alertBox">
+		</div>
+	{% endblock %}
+	{% block navbar %}
+		<!-- Navigation -->
 
-                    <li>
-                        <a href="/new-scout.html">New Scouts</a>
-                    </li>
 
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                        Resources <span class="caret"></span>
-                    </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/resources/files.html">Files</a></li>
-                            <li><a href="/resources/event-pages.html">Event Pages</a></li>
-                            <li><a href="/resources/meeting-minutes.html">Meeting Minutes/Reflections</a></li>
-                            <li><a href="/resources/pictures.html">Pictures</a></li>
-                            <li><a href="https://ls.t485.org/">Link Shortener</a></li>
-                            <li><a href="/resources/app-download.html">Download App</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                        About <span class="caret"></span>
-                    </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/about/faq.html">FAQ</a></li>
-                            <li><a href="/about/merit-badges.html">Merit Badges</a></li>
-                            <li><a href="/about/eagle.html">Path to Eagle</a></li>
-                            <li><a href="/about/smc.html">SMC &amp; BOR</a></li>
-                            <li><a href="/about/plc.html">PLC</a></li>
-                            <li><a href="/about/troop-info.html">Troop Information</a></li>
-                            <li><a href="/about/troop-jobs.html">Troop Jobs</a></li>
-                        </ul>
-                    </li>
-                    <li id="nav-user-status"><a onclick="window.location.href = '/logout.html?redir=' + encodeURIComponent(window.location.pathname + window.location.search + window.location.hash);">Logout</a></li>
+		<nav class="navbar navbar-expand-lg navbar-light py-lg-4" id="navbar">
+			<div class="container">
+				<a class="navbar-brand text-uppercase text-expanded font-weight-bold d-lg-none" href="/">Troop 485</a>
+				<button aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"
+						class="navbar-toggler"
+					data-target="#navbarResponsive" data-toggle="collapse" type="button">
+					<span class="navbar-toggler-icon"></span>
+				</button>
 
-                </ul>
+				<div class="collapse navbar-collapse" id="navbarResponsive">
+					<ul class="navbar-nav mx-auto">
 
-            </div>
-        </div>
-    </nav>
-    {% endblock %}
-    <div id="alertBox"></div>
-    <a class="toTop" href="#"></a> 
-    {% block main %}
 
-    {% endblock %}
+						<li class="nav-item px-lg-4">
+							<a class="nav-link text-uppercase text-expanded" href="/">Home</a>
+						</li>
 
-        <script src="//static.getclicky.com/js" type="text/javascript"></script>
-        <script type="text/javascript">
-            try {
-                clicky.init(100869133);
-            }
-            catch (e) {}
-        </script>
-        <noscript><p><img alt="Clicky" width="1" height="1" src="//in.getclicky.com/100869133ns.gif" /></p></noscript>
+						<li class="nav-item px-lg-4">
+							<a class="nav-link text-uppercase text-expanded" href="/calendar.html">Calendar</a>
+						</li>
+						<li class="nav-item px-lg-4">
+							<a class="nav-link text-uppercase text-expanded" href="/directory.html">Directory</a>
+						</li>
+						<li class="nav-item px-lg-4">
+							<a class="nav-link text-uppercase text-expanded" href="/event-pages.html">Event Pages</a>
+						</li>
+						<li class="nav-item px-lg-4">
+							<a class="nav-link text-uppercase text-expanded" href="/pictures.html">Pictures</a>
+						</li>
 
-    
-    
-    {% block footer %}
-    <footer>
-        <div class="container">
-            <div class="box">
-                <div class="col-lg-12 text-center">
-                    <p>Copyright &copy; 2006-2018 Troop 485, Silicon Valley Monterey Bay Council, Boy Scouts of America.</p>
 
-                </div>
-            </div>
-        </div>
-    </footer>
-    {% endblock %}
-    {% block modal %}{% endblock %}
-    <!-- build:js /js/scripts.min.js -->
-    {% block js_core %}
-    <script src="{{basepath}}js/combined.min.js"></script>
-    
-    
-    <script src="{{basepath}}js/t485.js"></script>
-    {% endblock %}
-    {% block js_concat %}
-    {% endblock %}
-    <!-- endbuild -->
-    {% block js %}
-    {% endblock %}
+
+
+						<li class="nav-item dropdown px-lg-4">
+							<a class="nav-link dropdown-toggle text-uppercase text-expanded"
+							   data-toggle="dropdown" href="#" role="button">About</a>
+
+							<div class="dropdown-menu">
+								<a class="dropdown-item" href="/about/faq.html">FAQ</a>
+								<a class="dropdown-item" href="/about/merit-badges.html">Merit Badges</a>
+							</div>
+						</li>
+						<li class="nav-item dropdown px-lg-4">
+							<a aria-expanded="false" aria-haspopup="true"
+							   class="nav-link dropdown-toggle text-uppercase text-expanded" data-toggle="dropdown"
+							   href="#" id="account-dropdown" role="button">Account</a>
+
+							<div aria-labelledby="account-dropdown" class="dropdown-menu">
+								<!-- acct-dd-status = account dropdown status -->
+								<!-- lo-show = logged out show, li-show = logged in show.
+								lo-show is hidden when logged in, and vice versa --->
+								<h6 class="dropdown-header" id="acct-dd-status">
+									<span id="acct-dd-status-notloggedin" class="lo-show">You are not logged in.</span>
+									<span id="acct-dd-status-loggedin" class="li-show hidden">Logged in as <b id="acct-dd-status-loggedin-username" class="user-displayname">loading...</b>.</span></h6>
+								<a id="acct-dd-login-link" class="lo-show dropdown-item preserve-page" href="/account/login.html">Login</a>
+								<a id="acct-dd-logout-link" class="li-show dropdown-item preserve-page" href="/account/logout.html">Logout</a>
+								<a id="acct-dd-settings-link" class="li-show dropdown-item preserve-page" href="/account/settings.html">Account Settings</a>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	{% endblock %}
+	{% block mainOuter %}
+
+		<div class="container" id="mainContainer">
+			{% block main %}
+
+				<div class="row">
+					<div class="box">
+						<div class="col-lg-12">
+							<h2 class="primary-heading">Work in Progress</h2>
+
+
+							<p>This page is not done yet! We apologize for any inconvenience this may cause.
+								<br>Code BASE_404</p>
+						</div>
+					</div>
+				</div>
+
+			{%endblock %}
+
+		</div>
+	{% endblock %}
+	{% block feedbackBtn %}
+		<div id="feedback-box">
+			<button class="btn" id="feedback-btn">Feedback</button>
+		</div>
+	{% endblock %}
+	{% block unexpectederror %}
+	<div class="container hidden" id="unexpectederror">
+
+		<div class="row">
+			<div class="box">
+				<div class="col-lg-12">
+					<h2 class="error">An Unexpected Error Occured</h2>
+
+
+					<p>Please report this bug or try again in a few minutes. <b>Code <span id="unexpectederror-code">UNKNOWN_ERR</span></b></p>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	{% endblock %}
+	{% block footer %}
+
+		<footer class="footer text-faded text-center py-5">
+			<div class="container">
+				<p class="m-0 small">Copyright &copy; 2006-2018 Troop 485, Silicon Valley Monterey Bay Council,
+					Boy Scouts of America.</p>
+			</div>
+		</footer>
+	{% endblock %}
+
+	{% block modals %} {% endblock %}
+	{% block feedback %}
+	<!-- Modal -->
+	<div class="modal fade" id="feedback-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLongTitle">Feedback</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<h3>First things first</h3>
+					<div class="form-group">
+						<label for="name">Your Name:</label>
+						<input type="text" class="form-control" id="name">
+						<div class="invalid-feedback">
+							Your name is required.
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="email">Your Email:</label>
+						<input type="email" class="form-control" id="email">
+						<div class="invalid-feedback">
+							You must enter a valid email.
+						</div>
+					</div>
+
+					<label>Issue Type:</label>
+					<select class="custom-select mb-3" id="issueType">
+						<option value="bug" selected>I want to report a bug</option>
+						<option value="feature">I have a feature request</option>
+						<option value="other">Other - I want to send a message to the webmaster</option>
+					</select>
+					<div class="feedback-section feedback-bug collapse show">
+						<h3>Tell us more</h3>
+						<div class="form-group">
+							<label for="bug-title">Bug title:</label>
+							<input type="text" class="form-control" id="bug-title">
+							<small id="bug-title-help" class="form-text text-muted">Give a short description of the bug.</small>
+							<div class="invalid-feedback">
+								The bug title is required.
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="bug-description">Description (optional):</label>
+							<textarea class="form-control" id="bug-description"></textarea>
+							<small id="description-help" class="form-text text-muted">For some bugs, it's helpful to include steps for reproduction of the bug (what did you do to get the bug?)</small>
+
+						</div>
+						<div class="form-group">
+							<label for="bug-affected-pages">Affected Pages (optional):</label>
+							<textarea class="form-control" id="bug-affected-pages"></textarea>
+							<small id="bug-affected-pages-help" class="form-text text-muted">Enter the URL, the page name (e.g. directory), or <i>Whole Website</i></small>
+
+						</div>
+						<div class="form-group">
+							<label for="bug-file">Screenshot (optional):</label>
+							<div class="input-group mb-3">
+
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="bug-file-addon">Upload</span>
+								</div>
+								<div class="custom-file">
+									<input type="file" class="custom-file-input" id="bug-file" aria-describedby="inputGroupFileAddon01">
+									<label class="custom-file-label" for="bug-file">Choose file</label>
+								</div>
+							</div>
+							<small id="bug-file-help" class="form-text text-muted">Videos work too! Upload any image or video less than 100MB.</small>
+
+						</div>
+
+					</div>
+					<div class="feedback-section feedback-feature collapse">
+						<h3>Tell us more</h3>
+						<div class="form-group">
+							<label for="bug-title">Feature title:</label>
+							<input type="text" class="form-control" id="feat-title">
+							<small id="feat-title-help" class="form-text text-muted">Give a short description of the feature - a name is perfect.</small>
+							<div class="invalid-feedback">
+								The feature title is required.
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="bug-description">Description (optional):</label>
+							<textarea class="form-control" id="feat-description"></textarea>
+
+						</div>
+
+					</div>
+					<div class="feedback-section feedback-other collapse">
+						Please email the webmaster at <a href="mailto:webmaster@t485.org">webmaster@t485.org</a>.<br>
+						If you do not receive a response within 2-3 days, it's probably an issue with the email - please file a bug report.
+					</div>
+
+				</div>
+				<div class="modal-footer">
+					<small class="text-muted feedback-other-hide">We automatically include diagnostic data such as your browser type with your report.</small>
+					<button type="button" class="btn btn-primary feedback-other-hide">Submit</button>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	{% endblock %}
+
+
+	{% block firebase %}
+		<script src="https://www.gstatic.com/firebasejs/5.5.3/firebase-app.js">
+		</script>
+		<script src="https://www.gstatic.com/firebasejs/5.5.3/firebase-auth.js">
+		</script>
+		<script src="https://www.gstatic.com/firebasejs/5.5.3/firebase-database.js">
+		</script>
+		<script src="https://www.gstatic.com/firebasejs/5.5.3/firebase-storage.js">
+		</script>
+		<!-- <script src="https://www.gstatic.com/firebasejs/5.5.3/firebase-firestore.js"></script> -->
+		<!-- <script src="https://www.gstatic.com/firebasejs/5.5.3/firebase-messaging.js"></script> -->
+		<!-- <script src="https://www.gstatic.com/firebasejs/5.5.3/firebase-functions.js"></script> -->
+
+		<script>
+			// Initialize Firebase
+			var config = {
+				apiKey: "AIzaSyB-ly8ax35aWTAGhX2UDVuYxPSDlAU8kMk",
+				authDomain: "t485-main.firebaseapp.com",
+				databaseURL: "https://t485-main.firebaseio.com",
+				projectId: "t485-main",
+				storageBucket: "t485-main.appspot.com",
+				messagingSenderId: "368513727602"
+			};
+			firebase.initializeApp(config);
+		</script>
+	{% endblock %}
+	{% block coreScripts %}
+		<!-- Bootstrap core JavaScript -->
+
+		<script src="/js/jquery.min.js"></script>
+		<script src="/js/popper.min.js"></script>
+		<script src="/js/bootstrap.min.js"></script>
+		<script src="/js/dropzone.min.js"></script>
+		<script src="/js/logger.js"></script>
+		<script src="/js/t485.js"></script>
+
+	{% endblock %}
+
+	{% block scripts %} {% endblock %}
+
 </body>
-
-</html>

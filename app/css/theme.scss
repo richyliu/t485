@@ -1,0 +1,183 @@
+
+
+
+/* CSS based on start bootstrap buisness casual theme, MIT licensed. The modified content is not licensed*/
+
+body {
+    font-family: Lora, serif;
+    background: green;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: Raleway, serif;
+}
+
+p {
+    line-height: 1.75;
+}
+
+.text-faded {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+.section-heading,
+.primary-heading {
+    text-transform: uppercase;
+    .section-heading-upper {
+        display: block;
+        font-size: 1rem;
+        font-weight: 800;
+    }
+    .section-heading-lower {
+        display: block;
+        font-size: 3rem;
+        font-weight: 100;
+    }
+}
+
+.primary-heading {
+    display: block;
+    font-size: 3rem;
+    font-weight: 100;
+}
+
+.page-section {
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+}
+
+.bg-faded {
+    background-color: rgba(255, 255, 255, 0.85);
+}
+
+#navbar {
+    background-color: hsla(0, 0%, 100%, 0.9);
+    font-family: Raleway;
+    .navbar-brand {
+        color: #e6a756;
+    }
+    .navbar-nav .nav-item {
+        .nav-link {
+            color: #777;
+            font-weight: 800;
+            &:hover {
+                color: #000;
+            }
+        }
+        &.active .nav-link {
+            color: #e6a756;
+        }
+    }
+}
+
+@media (min-width: 992px) {
+    #navbar .navbar-nav .nav-item {
+        .nav-link {
+            font-size: 0.9rem;
+            &:hover {
+                color: #000;
+            }
+        }
+        &.active {
+            color: #e6a756;
+        }
+    }
+}
+
+.btn-xl {
+    font-weight: 700;
+    font-size: .8rem;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+.intro {
+    position: relative;
+}
+
+@media (min-width: 992px) {
+    .intro {
+        .intro-img {
+            width: 75%;
+            float: right;
+        }
+        .intro-text {
+            left: 0;
+            width: 60%;
+            margin-top: 3rem;
+            position: absolute;
+            .intro-button {
+                width: 100%;
+                left: 0;
+                position: absolute;
+                bottom: -2rem;
+            }
+        }
+    }
+}
+
+@media (min-width: 1200px) {
+    .intro .intro-text {
+        width: 45%;
+    }
+}
+
+.box {
+    /*redice number of classes by imitating bootstraps */
+    //mx-auto
+    margin-left: auto !important;
+    margin-right: auto !important; //same as .bg-faded
+    background-color: rgba(255, 255, 255, 0.85); //.rounded
+    border-radius: .25rem !important; //p-5
+    padding: 3rem !important;
+}
+
+
+.box {
+    //my-5
+    margin-top: 3rem !important;
+    margin-bottom: 3rem !important;
+    width: 100%;
+}
+
+.footer {
+    background-color: hsla(0, 0%, 100%, 0.9);
+    color: #777;
+}
+
+
+.btn {
+    box-shadow: 0 3px 3px 0 rgba(33, 37, 41, 0.1);
+}
+
+
+
+.font-weight-light {
+    font-weight: 100 !important;
+}
+
+
+a {
+    cursor: pointer;
+}
+
+
+@media screen and (min-width: 768px) {
+    .img-left {
+        float: left;
+        margin-right: 25px;
+    }
+}
+
+
+iframe {
+    width: 100%;
+    height: 600px;
+}

@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+	
+		<meta charset="utf-8">
+		<meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+		<meta content=" The official Boy Scout Troop 485 website. " name="description">
+	
+	 
+	
+		<title>Troop 485 - Directory</title>
+		
+	
+
+	
+		<!-- Bootstrap core CSS -->
+		<link href="/css/bootstrap.min.css" rel="stylesheet">
+		<!-- Custom fonts for this template -->
+		<link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i"
+			rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i" rel="stylesheet">
+		<!-- Custom styles for this template -->
+		<link href="/css/theme.css" rel="stylesheet">
+		<link href="/css/t485.css" rel="stylesheet">
+	
+	
+		<!-- Favicons -->
+		<link rel="apple-touch-icon" sizes="152x152" href="/favicons/apple-touch-icon-152x152.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon-180x180.png">
+		<link rel="icon" type="image/png" href="/favicons/favicon-16x16.png" sizes="16x16">
+	
+	
+<link href="/css/bootstrap-select.min.css" rel="stylesheet">
+<style>
+.table-wrapper,
+.row,
+.box {
+    width: 100%; 
+    height:100%;
+}
+
+#table {
+    display: block !important;
+    width:100%;
+    overflow:auto;
+    
+}
+/* always show scroll bar 
+
+#table::-webkit-scrollbar {
+    -webkit-appearance: none;
+}
+
+#table::-webkit-scrollbar:vertical {
+    width: 11px;
+}
+
+#table::-webkit-scrollbar:horizontal {
+    height: 11px;
+}
+
+#table::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    border: 2px solid white; 
+    background-color: rgba(0, 0, 0, .5);
+}
+*/
+</style>
+
+	
+	
+		<script>
+			try {
+				localStorage.setItem('firebaseErrorTest', 'test');
+			}
+			catch (e) {
+				console.log(e)
+				if (e.message === 'The quota has been exceeded.') {
+					// using Safari(desktop & iOS) or Chrome(iOS) w/ private, localStorage not supported
+					// firebase will throw error, so better to alert user now
+					alert("Private browsing is not supported on Safari or the Chrome IOS app. " +
+					"Turn off private browsing or use a supported private browsing app.");
+				}
+				throw 'notEnoughLocalStorage';
+			}
+		</script>
+	
+</head>
+
+<body>
+	
+		<div class="text-center">
+			<a href="/">
+				<img src="/img/header.png" alt="Boy Scout Troop 485" id="header">
+			</a>
+		</div>
+	
+	
+	
+
+		<div id="alertBox">
+		</div>
+	
+	
+		<!-- Navigation -->
+
+
+		<nav class="navbar navbar-expand-lg navbar-light py-lg-4" id="navbar">
+			<div class="container">
+				<a class="navbar-brand text-uppercase text-expanded font-weight-bold d-lg-none" href="/">Troop 485</a>
+				<button aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"
+						class="navbar-toggler"
+					data-target="#navbarResponsive" data-toggle="collapse" type="button">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+
+				<div class="collapse navbar-collapse" id="navbarResponsive">
+					<ul class="navbar-nav mx-auto">
+
+
+						<li class="nav-item px-lg-4">
+							<a class="nav-link text-uppercase text-expanded" href="/">Home</a>
+						</li>
+
+						<li class="nav-item px-lg-4">
+							<a class="nav-link text-uppercase text-expanded" href="/calendar.html">Calendar</a>
+						</li>
+						<li class="nav-item px-lg-4">
+							<a class="nav-link text-uppercase text-expanded" href="/directory.html">Directory</a>
+						</li>
+						<li class="nav-item px-lg-4">
+							<a class="nav-link text-uppercase text-expanded" href="/event-pages.html">Event Pages</a>
+						</li>
+						<li class="nav-item px-lg-4">
+							<a class="nav-link text-uppercase text-expanded" href="/pictures.html">Pictures</a>
+						</li>
+
+
+
+
+						<li class="nav-item dropdown px-lg-4">
+							<a class="nav-link dropdown-toggle text-uppercase text-expanded"
+							   data-toggle="dropdown" href="#" role="button">About</a>
+
+							<div class="dropdown-menu">
+								<a class="dropdown-item" href="/about/faq.html">FAQ</a>
+								<a class="dropdown-item" href="/about/merit-badges.html">Merit Badges</a>
+							</div>
+						</li>
+						<li class="nav-item dropdown px-lg-4">
+							<a aria-expanded="false" aria-haspopup="true"
+							   class="nav-link dropdown-toggle text-uppercase text-expanded" data-toggle="dropdown"
+							   href="#" id="account-dropdown" role="button">Account</a>
+
+							<div aria-labelledby="account-dropdown" class="dropdown-menu">
+								<!-- acct-dd-status = account dropdown status -->
+								<!-- lo-show = logged out show, li-show = logged in show.
+								lo-show is hidden when logged in, and vice versa --->
+								<h6 class="dropdown-header" id="acct-dd-status">
+									<span id="acct-dd-status-notloggedin" class="lo-show">You are not logged in.</span>
+									<span id="acct-dd-status-loggedin" class="li-show hidden">Logged in as <b id="acct-dd-status-loggedin-username" class="user-displayname">loading...</b>.</span></h6>
+								<a id="acct-dd-login-link" class="lo-show dropdown-item preserve-page" href="/account/login.html">Login</a>
+								<a id="acct-dd-logout-link" class="li-show dropdown-item preserve-page" href="/account/logout.html">Logout</a>
+								<a id="acct-dd-settings-link" class="li-show dropdown-item preserve-page" href="/account/settings.html">Account Settings</a>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	
+	
+
+		<div class="container" id="mainContainer">
+			
+<div class="row">
+    <div class="box">
+        <div class="col-lg-12 table-wrapper">	
+            <h2 class="primary-heading">
+                Directory
+            </h2>
+            <div id="directory-list">
+                <b>Search:</b>
+                <input type="text" class="form-control fuzzy-search" id="search" placeholder="Search by name, job, phone number, slack username, etc.">
+                <form class="pt-1">
+                    <div class="row">
+                        <div class="col">
+                        <b>Sort by:</b>
+                            <select class="selectpicker form-control" data-live-search="true" id="sortby-select">
+                                <optgroup label="Scout">
+                                    <option value="0">Scout's First Name</option>
+                                    <option value="1" selected>Scout's Last Name <i class="fas fa-sort-up"></i></option>
+                                    <option value="2">Patrol</option>
+                                    <option value="3">Scout's E-mail</option>
+                                    <option value="4">Scout's Home Phone</option>
+                                    <option value="5">Slack Username</option>
+                                    <option value="6" >Troop Job</option>
+                                    <option value="7">Date Joined Troop 485</option>
+                                    <option value="8">Active</option>
+                                    <option value="9">Wilderness First Aid Trained</option>
+                                    <option value="10">School Attending</option>
+                                    <option value="11">Scout's Cell Phone</option>
+                                </optgroup>
+                                <optgroup label="Father">
+                                    <option value="12">Father's First Name</option>
+                                    <option value="13">Father's Last Name</option>
+                                    <option value="14">Father's Cell Phone</option>
+                                    <option value="15">Father's E-mail</option>
+                                    <option value="16">Father's Slack Username</option>
+                                </optgroup>
+                                <optgroup label="Mother">
+                                    <option value="17">Mother's First Name</option>
+                                    <option value="18">Mother's Last Name</option>
+                                    <option value="19">Mother's Cell Phone</option>
+                                    <option value="20">Mother's E-mail</option>
+                                    <option value="21">Mother's Slack Username</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <b>Sort order:</b>
+                            <select class="selectpicker form-control" id="sortorder-select">
+                                <option value="asc">Ascending</option>
+                                <option value="desc">Descending</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                        <b>Show:</b>
+                            <select class="selectpicker form-control" multiple id="filter-select" data-live-search="true" data-actions-box="true">
+                                <optgroup label="Scout">
+                                    <option value="0" selected>Scout's First Name</option>
+                                    <option value="1" selected>Scout's Last Name</option>
+                                    <option value="2" selected>Patrol</option>
+                                    <option value="3" selected>Scout's E-mail</option>
+                                    <option value="4" selected>Scout's Home Phone</option>
+                                    <option value="5" >Slack Username</option>
+                                    <option value="6" >Troop Job</option>
+                                    <option value="7">Date Joined Troop 485</option>
+                                    <option value="8">Active</option>
+                                    <option value="9">Wilderness First Aid Trained</option>
+                                    <option value="10">School Attending</option>
+                                    <option value="11" selected>Scout's Cell Phone</option>
+                                </optgroup>
+                                <optgroup label="Father">
+                                    <option value="12">Father's First Name</option>
+                                    <option value="13">Father's Last Name</option>
+                                    <option value="14">Father's Cell Phone</option>
+                                    <option value="15">Father's E-mail</option>
+                                    <option value="16">Father's Slack Username</option>
+                                </optgroup>
+                                <optgroup label="Mother">
+                                    <option value="17">Mother's First Name</option>
+                                    <option value="18">Mother's Last Name</option>
+                                    <option value="19">Mother's Cell Phone</option>
+                                    <option value="20">Mother's E-mail</option>
+                                    <option value="21">Mother's Slack Username</option>
+                                </optgroup>
+                            </select>
+                            
+                        </div>
+                    </div>
+                    
+                    </form>
+                
+                <br>
+                <p id="modified-settings" class="hidden"> Modified search/sort settings saved in URL. <a href="?#">Reset to default settings</a>. </p>
+                <p>Select a row to view all information about that scout:</p>
+                <div id="table-secondscrollbar-wrapper">
+                    <div class="table-secondscrollbar-div"></div>
+                </div>
+                <div id="table-wrapper">
+                    <table class="table table-hover" id="table">
+                        <thead>
+                            <tr>
+                                
+                            <th scope="col" class="col0" data-col="0">Scout's First Name</th>
+                            <th scope="col" class="col1" data-col="1">Scout's Last Name</th>
+                            <th scope="col" class="col2" data-col="2">Patrol</th>
+                            <th scope="col" class="col3" data-col="3">Scout's E-mail:</th>
+                            <th scope="col" class="col4" data-col="4">Scout's Home Phone</th>
+                            <th scope="col" class="col5" data-col="5">Slack Username</th>
+                            <th scope="col" class="col6" data-col="6">Troop Job</th>
+                            <th scope="col" class="col6" data-col="7">Date Joined Troop 485</th>
+                            <th scope="col" class="col7" data-col="8">Active (Y)es/ (R)arely/ (N)o</th>
+                            <th scope="col" class="col8" data-col="9">Wilderness First Aid Trained</th>
+                            <th scope="col" class="col9" data-col="10">School Attending</th>
+                            <th scope="col" class="col10" data-col="11">Scout's Cell Phone</th>
+                            <th scope="col" class="col11" data-col="12">Father's First Name</th>
+                            <th scope="col" class="col12" data-col="13">Father's Last Name</th>
+                            <th scope="col" class="col13" data-col="14">Father's Cell Phone</th>
+                            <th scope="col" class="col14" data-col="15">Father's E-mail</th>
+                            <th scope="col" class="col15" data-col="16">Father's Slack Username or None</th>
+                            <th scope="col" class="col16" data-col="17">Mother's First Name</th>
+                            <th scope="col" class="col17" data-col="18">Mother's Last Name</th>
+                            <th scope="col" class="col18" data-col="19">Mother's Cell Phone</th>
+                            <th scope="col" class="col19" data-col="20">Mother's E-mail</th>
+                            <th scope="col" class="col20" data-col="21">Mother's Slack Username or None</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dir-body" class="list">
+                            <tr id="loading-text"><td colspan="21">Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <p>View/Edit the troop directory spreadsheet on <a target="_blank" class="link-google-sheet-dir">Google Sheets</a>.</p>
+        </div>
+    </div>
+</div>
+
+
+		</div>
+	
+	
+		<div id="feedback-box">
+			<button class="btn" id="feedback-btn">Feedback</button>
+		</div>
+	
+	
+	<div class="container hidden" id="unexpectederror">
+
+		<div class="row">
+			<div class="box">
+				<div class="col-lg-12">
+					<h2 class="error">An Unexpected Error Occured</h2>
+
+
+					<p>Please report this bug or try again in a few minutes. <b>Code <span id="unexpectederror-code">UNKNOWN_ERR</span></b></p>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+
+		<footer class="footer text-faded text-center py-5">
+			<div class="container">
+				<p class="m-0 small">Copyright &copy; 2006-2018 Troop 485, Silicon Valley Monterey Bay Council,
+					Boy Scouts of America.</p>
+			</div>
+		</footer>
+	
+
+	
+<div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title infoModal-scoutFullName">Loading...</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ul class="list-group list-group-flush">
+                    
+                    
+                    <li class="list-group-item nfoModal-scoutFullNameElement"> <b>Scout's Name:</b> <span class="infoModal-scoutFullName"></span>	</li>
+                    <li class="list-group-item infoModal-scoutFirstNameElement hidden "> <b>Scout's First Name:</b> <span class="infoModal-scoutFirstName"></span>	</li>
+                    <li class="list-group-item infoModal-scoutLastNameElement hidden"> <b>Scout's Last Name:</b> <span class="infoModal-scoutLastName"></span>	</li>
+                    <li class="list-group-item"> <b>Scout's E-mail:</b>	<a class="infoModal-scoutEmail infoModal-scoutEmailLink"></a></li>
+                    <li class="list-group-item"> <b>Scout's Home Phone:</b>	<a class="infoModal-scoutHomePhone infoModal-scoutHomePhoneLink"></a></li>
+                    <li class="list-group-item">
+                        <b>Scout's Slack:</b> <a class="infoModal-scoutSlackDMLink" target="_blank"><span class="infoModal-scoutSlackUsername"></span><span class="infoModal-scoutSlackDMLoadingText"></span></a>
+                    </li>
+                    
+                    <li class="list-group-item"> <b>Scout's Cell Phone:</b> <a class="infoModal-scoutCellPhone infoModal-scoutCellPhoneLink"></a></li>
+                    <li class="list-group-item infoModal-fatherFullNameElement"> <b>Father's Name: </b><span class="infoModal-fatherFullName"></span></li>
+                    <li class="list-group-item infoModal-fatherFirstNameElement hidden"> <b>Father's First Name: </b><span class="infoModal-fatherFirstName"></span></li>
+                    <li class="list-group-item infoModal-fatherLastNameElement hidden"> <b>Father's Last Name: </b><span class="infoModal-fatherLastName"></span></li>
+                    <li class="list-group-item"> <b>Father's Cell Phone: </b><a class="infoModal-fatherCellPhone infoModal-fatherCellPhoneLink"></a></li>
+                    <li class="list-group-item"> <b>Father's E-mail:	</b><a class="infoModal-fatherEmail infoModal-fatherEmailLink"></a></li>
+                    <li class="list-group-item"> 
+                        <b>Father's Slack:	</b><a class="infoModal-fatherSlackDMLink" target="_blank"><span class="infoModal-fatherSlackUsername">loading</span><span class="infoModal-fatherSlackDMLoadingText">loading</span></a>
+                    </li>
+                    <li class="list-group-item infoModal-motherFullNameElement "> <b>Mother's Name:	</b><span class="infoModal-motherFullName"></span></li>
+                    <li class="list-group-item infoModal-motherFirstNameElement hidden "> <b>Mother's First Name:	</b><span class="infoModal-motherFirstName"></span></li>
+                    <li class="list-group-item infoModal-motherLastNameElement hidden"> <b>Mother's Last Name:	</b><span class="infoModal-motherLastName"></span></li>
+                    <li class="list-group-item"> <b>Mother's Cell Phone:	</b><a class="infoModal-motherCellPhone infoModal-motherCellPhoneLink"></a></li>
+                    <li class="list-group-item"> <b>Mother's E-mail:	</b><a class="infoModal-motherEmail infoModal-motherEmailLink"></a></li>
+                    <li class="list-group-item"> 
+                        <b>Mother's Slack:	</b><a class="infoModal-motherSlackDMLink" target="_blank"><span class="infoModal-motherSlackUsername"></span><span class="infoModal-motherSlackDMLoadingText"></span></a>
+                    </li>
+                    <li class="list-group-item"> <b>Date Joined Troop 485:	</b><span class="infoModal-scoutJoinDate"></span></li>
+                    <li class="list-group-item"> <b>Active:	</b><span class="infoModal-scoutActive"></span></li>
+                    <li class="list-group-item"> <b>Wilderness First Aid Trained:	</b><span class="infoModal-scoutWFATrained"></span></li>
+                    <li class="list-group-item"> <b>School Attending:	</b><span class="infoModal-scoutSchool"></span></li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Edit in spreadsheet</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+	
+	<!-- Modal -->
+	<div class="modal fade" id="feedback-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLongTitle">Feedback</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<h3>First things first</h3>
+					<div class="form-group">
+						<label for="name">Your Name:</label>
+						<input type="text" class="form-control" id="name">
+						<div class="invalid-feedback">
+							Your name is required.
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="email">Your Email:</label>
+						<input type="email" class="form-control" id="email">
+						<div class="invalid-feedback">
+							You must enter a valid email.
+						</div>
+					</div>
+
+					<label>Issue Type:</label>
+					<select class="custom-select mb-3" id="issueType">
+						<option value="bug" selected>I want to report a bug</option>
+						<option value="feature">I have a feature request</option>
+						<option value="other">Other - I want to send a message to the webmaster</option>
+					</select>
+					<div class="feedback-section feedback-bug collapse show">
+						<h3>Tell us more</h3>
+						<div class="form-group">
+							<label for="bug-title">Bug title:</label>
+							<input type="text" class="form-control" id="bug-title">
+							<small id="bug-title-help" class="form-text text-muted">Give a short description of the bug.</small>
+							<div class="invalid-feedback">
+								The bug title is required.
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="bug-description">Description (optional):</label>
+							<textarea class="form-control" id="bug-description"></textarea>
+							<small id="description-help" class="form-text text-muted">For some bugs, it's helpful to include steps for reproduction of the bug (what did you do to get the bug?)</small>
+
+						</div>
+						<div class="form-group">
+							<label for="bug-affected-pages">Affected Pages (optional):</label>
+							<textarea class="form-control" id="bug-affected-pages"></textarea>
+							<small id="bug-affected-pages-help" class="form-text text-muted">Enter the URL, the page name (e.g. directory), or <i>Whole Website</i></small>
+
+						</div>
+						<div class="form-group">
+							<label for="bug-file">Screenshot (optional):</label>
+							<div class="input-group mb-3">
+
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="bug-file-addon">Upload</span>
+								</div>
+								<div class="custom-file">
+									<input type="file" class="custom-file-input" id="bug-file" aria-describedby="inputGroupFileAddon01">
+									<label class="custom-file-label" for="bug-file">Choose file</label>
+								</div>
+							</div>
+							<small id="bug-file-htlp" class="form-text text-muted">Upload any file < 100MB</small>
+
+						</div>
+
+					</div>
+					<div class="feedback-section feedback-feature collapse">
+						<h3>Tell us more</h3>
+						<div class="form-group">
+							<label for="bug-title">Feature title:</label>
+							<input type="text" class="form-control" id="feat-title">
+							<small id="feat-title-help" class="form-text text-muted">Give a short description of the feature - a name is perfect.</small>
+							<div class="invalid-feedback">
+								The feature title is required.
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="bug-description">Description (optional):</label>
+							<textarea class="form-control" id="feat-description"></textarea>
+
+						</div>
+
+					</div>
+					<div class="feedback-section feedback-other collapse">
+						Please email the webmaster at <a href="mailto:webmaster@t485.org">webmaster@t485.org</a>.<br>
+						If you do not receive a response within 2-3 days, it's probably an issue with the email - please file a bug report.
+					</div>
+
+				</div>
+				<div class="modal-footer">
+					<small class="text-muted feedback-other-hide">We automatically include diagnostic data such as your browser type with your report.</small>
+					<button type="button" class="btn btn-primary feedback-other-hide">Submit</button>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	
+
+
+	
+		<script src="https://www.gstatic.com/firebasejs/5.5.3/firebase-app.js">
+		</script>
+		<script src="https://www.gstatic.com/firebasejs/5.5.3/firebase-auth.js">
+		</script>
+		<script src="https://www.gstatic.com/firebasejs/5.5.3/firebase-database.js">
+		</script>
+		<script src="https://www.gstatic.com/firebasejs/5.5.3/firebase-storage.js">
+		</script>
+		<!-- <script src="https://www.gstatic.com/firebasejs/5.5.3/firebase-firestore.js"></script> -->
+		<!-- <script src="https://www.gstatic.com/firebasejs/5.5.3/firebase-messaging.js"></script> -->
+		<!-- <script src="https://www.gstatic.com/firebasejs/5.5.3/firebase-functions.js"></script> -->
+
+		<script>
+			// Initialize Firebase
+			var config = {
+				apiKey: "AIzaSyB-ly8ax35aWTAGhX2UDVuYxPSDlAU8kMk",
+				authDomain: "t485-main.firebaseapp.com",
+				databaseURL: "https://t485-main.firebaseio.com",
+				projectId: "t485-main",
+				storageBucket: "t485-main.appspot.com",
+				messagingSenderId: "368513727602"
+			};
+			firebase.initializeApp(config);
+		</script>
+	
+	
+		<!-- Bootstrap core JavaScript -->
+
+		<script src="/js/jquery.min.js"></script>
+		<script src="/js/popper.min.js"></script>
+		<script src="/js/bootstrap.min.js"></script>
+		<script src="/js/dropzone.min.js"></script>
+		<script src="/js/logger.js"></script>
+		<script src="/js/t485.js"></script>
+
+	
+
+	
+<script src="/fonts/fontawesome/fontawesome.js"></script>
+<script src="/fonts/fontawesome/solid.js"></script>
+<script src="/js/list.min.js"></script>
+<script src="/js/bootstrap-select.min.js"></script>
+
+<script src="/js/directory.js"></script>
+
+
+</body>

@@ -1,23 +1,11 @@
-{% set title="Troop 485 | Calendar" %}
-{% set basepath="/" %}
-
+{% set page = "Calendar" %}
 {% extends "base.html" %}
 
 {% block main %}
-<div class="container" style="overflow: none;">
+<div class="container ">
+    
+    <iframe class="d-block d-xs-none d-sm-none d-md-none d-lg-block d-xl-block my-5" src="https://calendar.google.com/calendar/embed?title=Boy%20Scout%20Troop%20485&amp;height=600&amp;wkst=1&amp;bgcolor=%23FFFFFF&amp;src=bsa485%40gmail.com&amp;color=%230F4B38&amp;ctz=America%2FLos_Angeles" style="border-width:0" width="100%" height="600" frameborder="0" scrolling="no"></iframe>
+    <iframe class="d-none d-xs-block d-sm-block d-md-block d-lg-none d-xl-none my-3 mx-2" src="https://calendar.google.com/calendar/embed?mode=AGENDA&title=Boy%20Scout%20Troop%20485&amp;height=600&amp;wkst=1&amp;bgcolor=%23FFFFFF&amp;src=bsa485%40gmail.com&amp;color=%230F4B38&amp;ctz=America%2FLos_Angeles" style="border-width:0" width="100%" height="600" frameborder="0" scrolling="no"></iframe>
 
-        <iframe id="calendar" src="https://calendar.google.com/calendar/embed?mode=AGENDA&height=600&wkst=1&hl=en&bgcolor=%23FFFFFF&src=bsa485%40gmail.com&color=%232952A3&ctz=America%2FLos_Angeles" style="border-width: 0; width: 100%;"></iframe>
-
-    </div>
-
+</div>
 {% endblock %}
-    {% block js %}
-     <script>
-        if ($(window).width() > 992) {
-            $('#calendar').attr('src', 'https://calendar.google.com/calendar/embed?mode=MONTH&height=600&wkst=1&hl=en&bgcolor=%23FFFFFF&src=bsa485%40gmail.com&color=%232952A3&ctz=America%2FLos_Angeles');
-        }
-        else {
-            $('#calendar').attr('src', 'https://calendar.google.com/calendar/embed?mode=AGENDA&height=600&wkst=1&hl=en&bgcolor=%23FFFFFF&src=bsa485%40gmail.com&color=%232952A3&ctz=America%2FLos_Angeles');
-        }
-    </script>
-    {% endblock %}

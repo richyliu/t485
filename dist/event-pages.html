@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+	
+		<meta charset="utf-8">
+		<meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+		<meta content=" The official Boy Scout Troop 485 website. " name="description">
+	
+	 
+	
+		<title>Troop 485 - Event Pages</title>
+		
+	
+
+	
+		<!-- Bootstrap core CSS -->
+		<link href="/css/bootstrap.min.css" rel="stylesheet">
+		<!-- Custom fonts for this template -->
+		<link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i"
+			rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i" rel="stylesheet">
+		<!-- Custom styles for this template -->
+		<link href="/css/theme.css" rel="stylesheet">
+		<link href="/css/t485.css" rel="stylesheet">
+	
+	
+		<!-- Favicons -->
+		<link rel="apple-touch-icon" sizes="152x152" href="/favicons/apple-touch-icon-152x152.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon-180x180.png">
+		<link rel="icon" type="image/png" href="/favicons/favicon-16x16.png" sizes="16x16">
+	
+	
+<link href="/css/bootstrap-select.min.css" rel="stylesheet">
+<link href="/css/flatpickr.css" rel="stylesheet">
+
+
+<style>
+    .caret {
+        display:none;
+    }
+    .sort.asc .caret.caret-up {
+        display:inline;
+    }
+
+    .sort.desc .caret.caret-down {
+        display:inline;
+    }
+    #date-select[readonly] {
+        background-color:white;
+        color:black;
+    }
+
+    label {
+        font-weight: bold;
+
+    }
+</style>
+
+	
+	
+		<script>
+			try {
+				localStorage.setItem('firebaseErrorTest', 'test');
+			}
+			catch (e) {
+				console.log(e)
+				if (e.message === 'The quota has been exceeded.') {
+					// using Safari(desktop & iOS) or Chrome(iOS) w/ private, localStorage not supported
+					// firebase will throw error, so better to alert user now
+					alert("Private browsing is not supported on Safari or the Chrome IOS app. " +
+					"Turn off private browsing or use a supported private browsing app.");
+				}
+				throw 'notEnoughLocalStorage';
+			}
+		</script>
+	
+</head>
+
+<body>
+	
+		<div class="text-center">
+			<a href="/">
+				<img src="/img/header.png" alt="Boy Scout Troop 485" id="header">
+			</a>
+		</div>
+	
+	
+	
+
+		<div id="alertBox">
+		</div>
+	
+	
+		<!-- Navigation -->
+
+
+		<nav class="navbar navbar-expand-lg navbar-light py-lg-4" id="navbar">
+			<div class="container">
+				<a class="navbar-brand text-uppercase text-expanded font-weight-bold d-lg-none" href="/">Troop 485</a>
+				<button aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"
+						class="navbar-toggler"
+					data-target="#navbarResponsive" data-toggle="collapse" type="button">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+
+				<div class="collapse navbar-collapse" id="navbarResponsive">
+					<ul class="navbar-nav mx-auto">
+
+
+						<li class="nav-item px-lg-4">
+							<a class="nav-link text-uppercase text-expanded" href="/">Home</a>
+						</li>
+
+						<li class="nav-item px-lg-4">
+							<a class="nav-link text-uppercase text-expanded" href="/calendar.html">Calendar</a>
+						</li>
+						<li class="nav-item px-lg-4">
+							<a class="nav-link text-uppercase text-expanded" href="/directory.html">Directory</a>
+						</li>
+						<li class="nav-item px-lg-4">
+							<a class="nav-link text-uppercase text-expanded" href="/event-pages.html">Event Pages</a>
+						</li>
+						<li class="nav-item px-lg-4">
+							<a class="nav-link text-uppercase text-expanded" href="/pictures.html">Pictures</a>
+						</li>
+
+
+
+
+						<li class="nav-item dropdown px-lg-4">
+							<a class="nav-link dropdown-toggle text-uppercase text-expanded"
+							   data-toggle="dropdown" href="#" role="button">About</a>
+
+							<div class="dropdown-menu">
+								<a class="dropdown-item" href="/about/faq.html">FAQ</a>
+								<a class="dropdown-item" href="/about/merit-badges.html">Merit Badges</a>
+							</div>
+						</li>
+						<li class="nav-item dropdown px-lg-4">
+							<a aria-expanded="false" aria-haspopup="true"
+							   class="nav-link dropdown-toggle text-uppercase text-expanded" data-toggle="dropdown"
+							   href="#" id="account-dropdown" role="button">Account</a>
+
+							<div aria-labelledby="account-dropdown" class="dropdown-menu">
+								<!-- acct-dd-status = account dropdown status -->
+								<!-- lo-show = logged out show, li-show = logged in show.
+								lo-show is hidden when logged in, and vice versa --->
+								<h6 class="dropdown-header" id="acct-dd-status">
+									<span id="acct-dd-status-notloggedin" class="lo-show">You are not logged in.</span>
+									<span id="acct-dd-status-loggedin" class="li-show hidden">Logged in as <b id="acct-dd-status-loggedin-username" class="user-displayname">loading...</b>.</span></h6>
+								<a id="acct-dd-login-link" class="lo-show dropdown-item preserve-page" href="/account/login.html">Login</a>
+								<a id="acct-dd-logout-link" class="li-show dropdown-item preserve-page" href="/account/logout.html">Logout</a>
+								<a id="acct-dd-settings-link" class="li-show dropdown-item preserve-page" href="/account/settings.html">Account Settings</a>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	
+	
+
+		<div class="container" id="mainContainer">
+			
+<div class="row">
+    <div class="box w-100">
+        <div class="col-lg-12">
+            <h2 class="primary-heading">
+                Event Pages
+            </h2>
+            <div id="event-list">
+                <b for="event-list-search">Search Events:</b>
+                <input type="text" class="form-control fuzzy-search" id="event-list-search" placeholder="e.g. Summer Camp 2018">
+                <form class="pt-1">
+                    <div class="row">
+                        <div class="col">
+                        <br>
+                            <button type="button" class="btn btn-primary btn-block sort" data-sort="date">Sort by date <span class="caret caret-up "><i class="fas fa-caret-up"></i></span><span class="caret caret-down"><i class="fas fa-caret-down"></i></span></button>
+                        </div>
+                        <div class="col">
+                        <br>
+                            <button type="button" class="btn btn-primary btn-block sort" data-sort="name">Sort by name <span class="caret caret-up "><i class="fas fa-caret-up"></i></span><span class="caret caret-down"><i class="fas fa-caret-down"></i></span></button>
+                        </div>
+                        <div class="col">
+                        <b>Show events in:</b>
+                            <select class="selectpicker form-control" multiple data-actions-box="true" id="event-filter">
+                                <option value="future" selected>the future</option>
+                                <option value="month" selected>last 30 days</option>
+                                <option data-divider="true"></option>
+                                <option value="2018">2018</option>
+                                <option value="2017">2017</option>
+                                <option value="2016">2016</option>
+                            </select>
+
+                        </div>
+                    </div>
+                </form>
+                <hr>
+                <ul class="list">
+                    <li><a href="">
+                        <span class="date">10/5/18</span>
+                        <span class="start-date hidden">10/5/18</span>
+                        <span class="end-date hidden">9/10/18</span>
+                        <span class="date-month hidden">September</span>
+                        <span class="date-year hidden">2018</span>
+                        - <span class="name">Bike Trail</span></a></li>
+                    <li><a href="">
+                        <span class="date">10/8/18 to 10/9/18</span>
+                        <span class="start-date hidden">10/8/18</span>
+                        <span class="end-date hidden">10/9/18</span>
+                        <span class="date-month hidden">September</span>
+                        <span class="date-year hidden">2018</span>
+                        - <span class="name">CASA</span></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="box w-100">
+        <div class="col-lg-12">
+            <h2 class="primary-heading">
+                Create an event page
+            </h2>
+            <div id="event-list">
+                <p>Creating event page as <b class="username">Loading...</b>. <a href="/account/logout/">Logout.</a></p>
+
+                <form class="pt-1">
+                    <div class="row">
+                        <div class="col col-lg-12">
+                            <label for="new-ep-name">Event Name:</label>
+                            <input type="text" class="form-control fuzzy-search" id="new-ep-name" placeholder="e.g. CASA Camporee">
+                        </div>
+                    </div>
+                    <div class="row">
+
+
+                        <div class="col-lg-12">
+                            <label for="date-select">Date:</label>
+                            <input id="date-select" class="form-control" placeholder="Click to open calendar.">
+                            <small class="form-text text-muted">Click the input to open a calendar. Click a number once to set start date. Click again to set single day event, or click the end date instead to set a muti day event.</small>
+
+                        </div>
+
+                    </div>
+                    <div class="row">
+
+
+                        <div class="col-lg-12">
+                            <button class="btn btn-block btn-primary" id="ep-create">Create new event page</button>
+                        </div>
+
+                    </div>
+                </form>
+
+            </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+		</div>
+	
+	
+		<div id="feedback-box">
+			<button class="btn" id="feedback-btn">Feedback</button>
+		</div>
+	
+	
+	<div class="container hidden" id="unexpectederror">
+
+		<div class="row">
+			<div class="box">
+				<div class="col-lg-12">
+					<h2 class="error">An Unexpected Error Occured</h2>
+
+
+					<p>Please report this bug or try again in a few minutes. <b>Code <span id="unexpectederror-code">UNKNOWN_ERR</span></b></p>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+
+		<footer class="footer text-faded text-center py-5">
+			<div class="container">
+				<p class="m-0 small">Copyright &copy; 2006-2018 Troop 485, Silicon Valley Monterey Bay Council,
+					Boy Scouts of America.</p>
+			</div>
+		</footer>
+	
+
+	 
+	
+	<!-- Modal -->
+	<div class="modal fade" id="feedback-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLongTitle">Feedback</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<h3>First things first</h3>
+					<div class="form-group">
+						<label for="name">Your Name:</label>
+						<input type="text" class="form-control" id="name">
+						<div class="invalid-feedback">
+							Your name is required.
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="email">Your Email:</label>
+						<input type="email" class="form-control" id="email">
+						<div class="invalid-feedback">
+							You must enter a valid email.
+						</div>
+					</div>
+
+					<label>Issue Type:</label>
+					<select class="custom-select mb-3" id="issueType">
+						<option value="bug" selected>I want to report a bug</option>
+						<option value="feature">I have a feature request</option>
+						<option value="other">Other - I want to send a message to the webmaster</option>
+					</select>
+					<div class="feedback-section feedback-bug collapse show">
+						<h3>Tell us more</h3>
+						<div class="form-group">
+							<label for="bug-title">Bug title:</label>
+							<input type="text" class="form-control" id="bug-title">
+							<small id="bug-title-help" class="form-text text-muted">Give a short description of the bug.</small>
+							<div class="invalid-feedback">
+								The bug title is required.
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="bug-description">Description (optional):</label>
+							<textarea class="form-control" id="bug-description"></textarea>
+							<small id="description-help" class="form-text text-muted">For some bugs, it's helpful to include steps for reproduction of the bug (what did you do to get the bug?)</small>
+
+						</div>
+						<div class="form-group">
+							<label for="bug-affected-pages">Affected Pages (optional):</label>
+							<textarea class="form-control" id="bug-affected-pages"></textarea>
+							<small id="bug-affected-pages-help" class="form-text text-muted">Enter the URL, the page name (e.g. directory), or <i>Whole Website</i></small>
+
+						</div>
+						<div class="form-group">
+							<label for="bug-file">Screenshot (optional):</label>
+							<div class="input-group mb-3">
+
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="bug-file-addon">Upload</span>
+								</div>
+								<div class="custom-file">
+									<input type="file" class="custom-file-input" id="bug-file" aria-describedby="inputGroupFileAddon01">
+									<label class="custom-file-label" for="bug-file">Choose file</label>
+								</div>
+							</div>
+							<small id="bug-file-htlp" class="form-text text-muted">Upload any file < 100MB</small>
+
+						</div>
+
+					</div>
+					<div class="feedback-section feedback-feature collapse">
+						<h3>Tell us more</h3>
+						<div class="form-group">
+							<label for="bug-title">Feature title:</label>
+							<input type="text" class="form-control" id="feat-title">
+							<small id="feat-title-help" class="form-text text-muted">Give a short description of the feature - a name is perfect.</small>
+							<div class="invalid-feedback">
+								The feature title is required.
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="bug-description">Description (optional):</label>
+							<textarea class="form-control" id="feat-description"></textarea>
+
+						</div>
+
+					</div>
+					<div class="feedback-section feedback-other collapse">
+						Please email the webmaster at <a href="mailto:webmaster@t485.org">webmaster@t485.org</a>.<br>
+						If you do not receive a response within 2-3 days, it's probably an issue with the email - please file a bug report.
+					</div>
+
+				</div>
+				<div class="modal-footer">
+					<small class="text-muted feedback-other-hide">We automatically include diagnostic data such as your browser type with your report.</small>
+					<button type="button" class="btn btn-primary feedback-other-hide">Submit</button>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	
+
+
+	
+		<script src="https://www.gstatic.com/firebasejs/5.5.3/firebase-app.js">
+		</script>
+		<script src="https://www.gstatic.com/firebasejs/5.5.3/firebase-auth.js">
+		</script>
+		<script src="https://www.gstatic.com/firebasejs/5.5.3/firebase-database.js">
+		</script>
+		<script src="https://www.gstatic.com/firebasejs/5.5.3/firebase-storage.js">
+		</script>
+		<!-- <script src="https://www.gstatic.com/firebasejs/5.5.3/firebase-firestore.js"></script> -->
+		<!-- <script src="https://www.gstatic.com/firebasejs/5.5.3/firebase-messaging.js"></script> -->
+		<!-- <script src="https://www.gstatic.com/firebasejs/5.5.3/firebase-functions.js"></script> -->
+
+		<script>
+			// Initialize Firebase
+			var config = {
+				apiKey: "AIzaSyB-ly8ax35aWTAGhX2UDVuYxPSDlAU8kMk",
+				authDomain: "t485-main.firebaseapp.com",
+				databaseURL: "https://t485-main.firebaseio.com",
+				projectId: "t485-main",
+				storageBucket: "t485-main.appspot.com",
+				messagingSenderId: "368513727602"
+			};
+			firebase.initializeApp(config);
+		</script>
+	
+	
+		<!-- Bootstrap core JavaScript -->
+
+		<script src="/js/jquery.min.js"></script>
+		<script src="/js/popper.min.js"></script>
+		<script src="/js/bootstrap.min.js"></script>
+		<script src="/js/dropzone.min.js"></script>
+		<script src="/js/logger.js"></script>
+		<script src="/js/t485.js"></script>
+
+	
+
+	
+<script src="/fonts/fontawesome/fontawesome.js"></script>
+<script src="/fonts/fontawesome/solid.js"></script>
+<script src="/js/list.min.js"></script>
+<script src="/js/bootstrap-select.min.js"></script>
+<script src="/js/flatpickr.js"></script>
+
+
+<script>
+var options = {
+  valueNames: ["name", "date", "date-month", "date-year", "start-date", "end-date"]
+};
+var list = new List('event-list', options);
+
+$(document).ready(function() {
+
+    //init the filtering
+    $("#event-filter").change(function() {
+        var selected = $(this).val();
+        list.filter(function(item) {
+            console.log(item.values());
+            console.log(selected);
+            if (selected.indexOf(item.values()["date-year"]) > -1) {
+                return true;
+            } else if (selected.indexOf("future") > -1 || selected.indexOf("month") > -1) {
+                //the future is selected and the item wouldn't have otherwise passed
+                // https://stackoverflow.com/a/8305306/5511561
+                var selectedDate = new Date(item.values()["end-date"]).getTime();
+                var now = new Date().setHours(0,0,0,0);//set it to the start of today, we only want to compare the date, not time.
+                console.log(selectedDate);
+                console.log(now);
+                if (selected.indexOf("future") > -1 && selectedDate >= now) {
+                    //event is today or in the future
+                    return true;//show it
+                }
+                //check the month too
+                var monthms = 30 * 24 * 60 * 60 * 1000;// the number of ms in a month
+                if (selected.indexOf("month") > -1 && selectedDate >= (now - (monthms)) && selectedDate <= now) {//the event is after/equal 30 days ago but before/equal today
+                        //event is between 30 days ago and today
+                        return true;//show it
+                    }
+            } else {
+                return false;
+            }
+        });
+    });
+    $("#event-filter").change();
+    //If on moible, tell seectpicker to default to system default select.
+    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
+        $(".selectpicker").selectpicker("mobile");
+    }
+    flatpickr("#date-select", {
+        dateFormat: "m/d/y",
+        mode: "range"
+    });
+
+});
+
+
+$("#ep-create").click(function() {
+    //new event page
+})
+</script>
+
+
+</body>
