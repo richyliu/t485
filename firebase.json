@@ -5,11 +5,14 @@
       "firebase.json",
       "**/.*",
       "**/node_modules/**",
+	  "app/**",
+	  "devserver/**"
+
     ],
-    "rewrites": [ {
+    "rewrites": [{
       "source": "/event/**",
       "destination": "/event.html"
-    } ],
+    }],
     "cleanUrls": true,
     "trailingSlash": true
   }
