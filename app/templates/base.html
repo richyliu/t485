@@ -23,6 +23,7 @@
 			rel="stylesheet">
 		<link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i" rel="stylesheet">
 		<!-- Custom styles for this template -->
+		<link href="/css/bootstrap-select.min.css" rel="stylesheet">
 		<link href="/css/theme.css" rel="stylesheet">
 		<link href="/css/t485.css" rel="stylesheet">
 	{% endblock %}
@@ -200,7 +201,7 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<div class="modal-body">
+				<div class="modal-body" id="feedback-main">
 					<h3>First things first</h3>
 					<div class="form-group">
 						<label for="name">Your Name:</label>
@@ -218,32 +219,44 @@
 					</div>
 
 					<label>Issue Type:</label>
-					<select class="custom-select mb-3" id="issueType">
-						<option value="bug" selected>I want to report a bug</option>
-						<option value="feature">I have a feature request</option>
-						<option value="other">Other - I want to send a message to the webmaster</option>
+					<select class="selectpicker mb-3 form-control" id="issueType">
+						<option value="bug" selected>I want to report a bug.</option>
+						<option value="feature">I have a feature request.</option>
+						<option value="other">I need help using the website.</option>
+						<option value="other">Other - I want to send a message to the webmaster.</option>
 					</select>
 					<div class="feedback-section feedback-bug collapse show">
 						<h3>Tell us more</h3>
 						<div class="form-group">
 							<label for="bug-title">Bug title:</label>
 							<input type="text" class="form-control" id="bug-title">
-							<small id="bug-title-help" class="form-text text-muted">Give a short description of the bug.</small>
+							<small id="bug-title-help" class="form-text text-muted">Give a short description of the bug.
+								<b class="float-right"><span id="bug-title-length">10</span><span id="bug-title-unit"> characters to go</span></b>
+							</small>
 							<div class="invalid-feedback">
-								The bug title is required.
+								You must enter a longer bug title.
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="bug-description">Description (optional):</label>
-							<textarea class="form-control" id="bug-description"></textarea>
-							<small id="description-help" class="form-text text-muted">For some bugs, it's helpful to include steps for reproduction of the bug (what did you do to get the bug?)</small>
+							<textarea class="form-control" id="bug-description" rows="5"></textarea>
+							<small id="description-help" class="form-text text-muted">For some bugs, it's helpful to include steps for reproduction of the bug (what did you do to get the bug?)
+								<b class="float-right"><span id="bug-description-length">0</span><span id="bug-description-unit"> / 5000</span></b>
+							</small>
+							<div class="invalid-feedback">
+								You must enter a description less than 5,000 characters.
+							</div>
 
 						</div>
 						<div class="form-group">
 							<label for="bug-affected-pages">Affected Pages (optional):</label>
-							<textarea class="form-control" id="bug-affected-pages"></textarea>
-							<small id="bug-affected-pages-help" class="form-text text-muted">Enter the URL, the page name (e.g. directory), or <i>Whole Website</i></small>
-
+							<textarea class="form-control" id="bug-affected-pages" rows="5"></textarea>
+							<small id="bug-affected-pages-help" class="form-text text-muted">Enter the URL, the page name (e.g. directory), or <i>Whole Website</i>
+								<b class="float-right"><span id="bug-affected-pages-length">0</span><span id="bug-affected-pages-unit"> / 500</span></b>
+							</small>
+							<div class="invalid-feedback">
+								You must enter a list of affected pages less than 500 characters.
+							</div>
 						</div>
 						<div class="form-group">
 							<label for="bug-file">Screenshot (optional):</label>
@@ -253,12 +266,14 @@
 									<span class="input-group-text" id="bug-file-addon">Upload</span>
 								</div>
 								<div class="custom-file">
-									<input type="file" class="custom-file-input" id="bug-file" aria-describedby="inputGroupFileAddon01">
+									<input type="file" class="custom-file-input" id="bug-file" aria-describedby="inputGroupFileAddon">
 									<label class="custom-file-label" for="bug-file">Choose file</label>
 								</div>
 							</div>
-							<small id="bug-file-help" class="form-text text-muted">Videos work too! Upload any image or video less than 100MB.</small>
-
+							<small id="bug-file-help" class="form-text text-muted">Videos work too! Upload any image or video less than 100MB, or <button id="bug-file-clear btn btn-link">clear the file input</button>.</small>
+							<div class="invalid-feedback">
+								Your file must be less than 100 MB.
+							</div>
 						</div>
 
 					</div>
@@ -269,7 +284,7 @@
 							<input type="text" class="form-control" id="feat-title">
 							<small id="feat-title-help" class="form-text text-muted">Give a short description of the feature - a name is perfect.</small>
 							<div class="invalid-feedback">
-								The feature title is required.
+								You must enter a feature title.
 							</div>
 						</div>
 						<div class="form-group">
@@ -281,13 +296,25 @@
 					</div>
 					<div class="feedback-section feedback-other collapse">
 						Please email the webmaster at <a href="mailto:webmaster@t485.org">webmaster@t485.org</a>.<br>
-						If you do not receive a response within 2-3 days, it's probably an issue with the email - please file a bug report.
+						If you do not receive a response within 2-3 days, you can also contact us at #website on slack.
 					</div>
 
 				</div>
+				<div class="modal-body hidden" id="feedback-loading">
+					<h3>Submitting your report</h3>
+					<p>Please do not reload this page.</p>
+					<div class="progress" id="feedback-progress">
+						<div class="progress-bar" id="feedback-progressbar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+					</div>
+				</div>
+				<div class="modal-body hidden" id="feedback-done">
+					<h3>Report submitted</h3>
+					<p>You should receive an response soon. You can also contact us on slack at <a href="https://t485.slack.com/messages/C94MDTWTH/">#website</a>.</p>
+
+				</div>
 				<div class="modal-footer">
-					<small class="text-muted feedback-other-hide">We automatically include diagnostic data such as your browser type with your report.</small>
-					<button type="button" class="btn btn-primary feedback-other-hide">Submit</button>
+					<small class="text-muted feedback-other-hide feedback-hide">We automatically include diagnostic data such as your browser type with your report.</small>
+					<button type="button" class="btn btn-primary feedback-other-hide feedback-hide" id="feedback-submit">Submit</button>
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 				</div>
 			</div>
@@ -330,6 +357,7 @@
 		<script src="/js/popper.min.js"></script>
 		<script src="/js/bootstrap.min.js"></script>
 		<script src="/js/dropzone.min.js"></script>
+		<script src="/js/bootstrap-select.min.js"></script>
 		<script src="/js/logger.js"></script>
 		<script src="/js/t485.js"></script>
 
