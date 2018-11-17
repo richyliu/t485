@@ -15,4 +15,4 @@ Here's how to get started:
 1. Install [node](https://nodejs.org/en/) and [npm](https://www.npmjs.com/) if you haven't already.
 2. Install the dependencies in the same directory as the project: `$ npm install`.
 3. Install the [Gulp](https://gulpjs.com/) CLI: `$ npm install gulp-cli -g` (`sudo` may be required on certain operating systems).
-4. Build a minified production build with `$ gulp build` or run a live dev server at localhost:3000 with `$ gulp watch`.
+4. Build a minified production build with `$ gulp build` or run a live dev server (usually at localhost:3000) with `$ gulp watch`.
