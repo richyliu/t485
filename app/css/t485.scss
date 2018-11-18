@@ -33,3 +33,18 @@ label:not(.custom-control-label) {
   	bottom: 10px;
 	right: 10px;
 }
+
+a.link {
+
+	color: #007bff !important;
+	text-decoration: none !important;
+	background-color: transparent !important;
+	-webkit-text-decoration-skip: objects !important;
+
+
+	&:hover {
+		color: #0056b3 !important;
+		text-decoration: underline !important;
+	}
+
+}

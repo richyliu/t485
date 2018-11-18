@@ -105,35 +105,46 @@
 		validation: /^.{0,500}$/,
 		maxLength: 500,
 		minLength: 0
+	},
+	{
+		name: "name",
+		validation: /^.{3,100}$/,
+		general:true
+	},
+	{
+		name: "email",
+		validation: /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/,
+		general:true
 	}];
 
 	for (let i = 0; i < bugFields.length; i ++) {
-		$("#bug-" + bugFields[i].name).on("change paste keyup", function() {
-			let text = $(this).val();
+
+		let onChange = function() {
+			let text = $("#" + (bugFields[i].general ? "" : "bug-") + bugFields[i].name).val();
 			let length = text.length;
 
-			let valid = length >= bugFields[i].minLength;
 
-			$("#bug-" + bugFields[i].name + "-unit").text(valid ? " / " + bugFields[i].maxLength : " characters to go");
-			$("#bug-" + bugFields[i].name + "-length").text(valid ? length : bugFields[i].minLength - length);
-
-			let regexValid = bugFields[i].validation.test(text);
-
-			if (regexValid === false) {
-				$("#bug-" + bugFields[i].name).addClass("is-invalid");
-			} else if ($("#bug-" + bugFields[i].name).hasClass("is-invalid")) {
-				$("#bug-" + bugFields[i].name).removeClass("is-invalid");
+			if (bugFields[i].maxLength && bugFields[i].minLength) {
+				let valid = length >= bugFields[i].minLength;
+				$("#" + (bugFields[i].general ? "" : "bug-") + bugFields[i].name + "-unit").text(valid ? " / " + bugFields[i].maxLength : " characters to go");
+				$("#" + (bugFields[i].general ? "" : "bug-") + bugFields[i].name + "-length").text(valid ? length : bugFields[i].minLength - length);
 			}
 
-		});
-		let text = $("#bug-" + bugFields[i].name).val();
-		let length = text.length;
+			let regexValid = bugFields[i].validation.test(text);
+			if (regexValid && bugFields[i].wasValid !== true) {
+				//we don't want to say a field is invalid while the user is still completing the field, so
+				bugFields[i].wasValid = true;
+			} else if (!regexValid && bugFields[i].wasValid === true) {
+				$("#" + (bugFields[i].general ? "" : "bug-") + bugFields[i].name).addClass("is-invalid");
+			} else if ($("#" + (bugFields[i].general ? "" : "bug-") + bugFields[i].name).hasClass("is-invalid")) {
+				$("#" + (bugFields[i].general ? "" : "bug-")  + bugFields[i].name).removeClass("is-invalid");
+			}
 
-		let valid = length >= bugFields[i].minLength;
+		}
 
-		$("#bug-" + bugFields[i].name + "-unit").text(valid ? " / " + bugFields[i].maxLength : " characters to go");
-		$("#bug-" + bugFields[i].name + "-length").text(valid ? length : bugFields[i].minLength - length);
 
+		$("#" + (bugFields[i].general ? "" : "bug-") + bugFields[i].name).on("change paste keyup", onChange);
+		onChange();
 
 	}
 
@@ -142,9 +153,12 @@
 			//validate
 			let invalid = false;
 			for (let i = 0; i < bugFields.length; i ++) {
+				let text = bugFields[i].general === true ? $("#" + bugFields[i].name).val() : $("#bug-" + bugFields[i].name).val();
+				console.log(bugFields[i].general, bugFields[i].name, text)
+
 				if (!(bugFields[i].validation.test(text))) {
 					invalid = true;
-					$("#bug-" + bugFields[i].name).addClass("is-invalid");
+					$((bugFields[i].general ? "#" : "#bug-") + bugFields[i].name).addClass("is-invalid");
 
 				}
 
@@ -180,16 +194,18 @@
 	});
 
 	$(".custom-file-input").on('change', function () {
+
 		//get the file name
 		var fileName = $(this).val();
-		fileName = fileName.substring(fileName.lastIndexOf("\\") + 1)
+		fileName = fileName.substring(fileName.lastIndexOf("\\") + 1);
+		console.log(fileName)
 		//replace the "Choose a file" label
 		$(this).next('.custom-file-label').css("white-space: nowrap;overflow:hidden;");
 		$(this).next('.custom-file-label').html(fileName);
 	});
 	$("#bug-file-clear").click(function() {
 		$("#bug-file").val(null);
-		$("#bug-file").next('.custom-file-label').html(null);
+		$("#bug-file").next('.custom-file-label').html("Choose File");
 
 	});
 
