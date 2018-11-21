@@ -148,13 +148,93 @@
 
 	}
 
+	let getExtensionFromFilename = function(filename) {
+		return filename.slice((Math.max(0, filename.lastIndexOf(".")) || Infinity) + 1);
+
+	}
+	let upload = function(file) {
+		console.log("Size", file.size);
+
+		// File or Blob named mountains.jpg
+		//var file = ...
+
+		// Create the file metadata
+		var metadata = {
+			contentType: file.type
+		};
+
+		var storageRef = firebase.storage().ref();
+
+		// Upload file and metadata
+		var uploadTask = storageRef.child("/feedback/bug/files/" + file.name).put(file, metadata);
+
+		$("#upload-control").removeClass("hidden");
+
+		// Listen for state changes, errors, and completion of the upload.
+		uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
+			function(snapshot) {
+				// Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+				var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+
+				progress = Math.round(progress * 100) / 100;
+
+				$("#feedback-progressbar").css("width", progress + "%");
+				$("#feedback-progressbar").html(progress + "%");
+				$("#feedback-progressbar").attr("aria-valuenow", progress + "%");
+
+				switch (snapshot.state) {
+					case firebase.storage.TaskState.PAUSED: // or 'paused'
+						$("#upload-control-play").addClass("hidden");
+						$("#upload-control-resume").removeClass("hidden");
+
+						console.log('Upload is paused');
+						break;
+					case firebase.storage.TaskState.RUNNING: // or 'running'
+						$("#upload-control-resume").addClass("hidden");
+						$("#upload-control-play").removeClass("hidden");
+
+						console.log('Upload is running');
+						break;
+				}
+			}, function(error) {
+
+				// A full list of error codes is available at
+				// https://firebase.google.com/docs/storage/web/handle-errors
+				switch (error.code) {
+
+					case 'storage/canceled':
+						// User canceled the upload
+						$("#feedback-modal .modal-body").addClass("hidden");
+						$("#feedback-cancelled").removeClass("hidden");
+						break;
+
+					case "storage/cannot-slice-blob":
+						$("#feedback-modal .modal-body").addClass("hidden");
+						$("#feedback-filechangederror").removeClass("hidden");
+						break;
+
+					default:
+						// Unknown error occurred, inspect error.serverResponse
+						$("#feedback-error-data").html(btoa(JSON.stringify(error)));
+
+						break;
+				}
+			}, function() {
+				// Upload completed successfully, now we can get the download URL
+				uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+					console.log('File available at', downloadURL);
+				});
+				$("#feedback-modal .modal-body").addClass("hidden");
+				$("#feedback-done").removeClass("hidden");
+			});
+	}
 	$("#feedback-submit").click(function () {
 		let sendBug = function () {
 			//validate
 			let invalid = false;
 			for (let i = 0; i < bugFields.length; i ++) {
 				let text = bugFields[i].general === true ? $("#" + bugFields[i].name).val() : $("#bug-" + bugFields[i].name).val();
-				console.log(bugFields[i].general, bugFields[i].name, text)
+				console.log(bugFields[i].general, bugFields[i].name, text);
 
 				if (!(bugFields[i].validation.test(text))) {
 					invalid = true;
@@ -163,9 +243,23 @@
 				}
 
 			}
+
+			//file
+			var file = $("#bug-file")[0].files[0];
+
+			const MEGABYTE = 1048576; // binary
+			if (file.size > MEGABYTE * 101) {//small buffer
+				$("#bug-file").addClass("is-invalid");
+				$("#bug-file-group invalid-feedback").removeClass("")
+				invalid = true;
+			}
+
 			if (invalid) {
 				return;
 			}
+
+
+
 			//show
 			$("#feedback-main").addClass("hidden");
 			$("#feedback-loading").removeClass("hidden");
@@ -174,11 +268,16 @@
 			$("#feedback-progressbar").css("width", "0%");
 			$("#feedback-progressbar").html("0%");
 			$("#feedback-progressbar").attr("aria-valuenow", "0%");
+
+			upload(file);
+
+
 		}
 		let sendFeature = function () {
 
 		}
-
+		$(".uploading-hide").addClass("hidden");
+		$(".uploading-show").removeClass("hidden");
 		let type = $("#issueType").val();
 		switch (type) {
 			case "bug":
@@ -198,7 +297,10 @@
 		//get the file name
 		var fileName = $(this).val();
 		fileName = fileName.substring(fileName.lastIndexOf("\\") + 1);
-		console.log(fileName)
+		console.log(fileName);
+
+		if ($("#bug-file").hasClass("is-invalid"))
+			$("#bug-file").removeClass("is-invalid");
 		//replace the "Choose a file" label
 		$(this).next('.custom-file-label').css("white-space: nowrap;overflow:hidden;");
 		$(this).next('.custom-file-label').html(fileName);
@@ -210,5 +312,8 @@
 	});
 
 	var Logger = {};
+	Logger.log = function() {
+
+	}
 // 	return Logger;
 // })();
