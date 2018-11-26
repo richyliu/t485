@@ -17,9 +17,14 @@
 	},
 	"homepage": "https://github.com/t485/t485#readme",
 	"devDependencies": {
+		"bootstrap": "^4.1.3",
+		"bootstrap-3-typeahead": "^4.0.2",
+		"bootstrap-select": "^1.13.2",
 		"browser-sync": "^2.26.3",
 		"del": "^3.0.0",
-		"gulp": "git+https://github.com/gulpjs/gulp.git#4.0",
+		"dropzone": "^5.5.1",
+		"flatpickr": "^4.5.2",
+		"gulp": "^4.0.0",
 		"gulp-changed": "^3.2.0",
 		"gulp-cssnano": "^2.1.3",
 		"gulp-htmlmin": "^5.0.1",
@@ -30,16 +35,10 @@
 		"gulp-plumber": "^1.2.0",
 		"gulp-sass": "^4.0.1",
 		"gulp-uglifyes": "^0.1.3",
+		"jquery": "^3.3.1",
+		"list.js": "^1.5.0",
 		"merge-stream": "^1.0.1",
 		"nunjucks": "^3.1.3",
-		"bootstrap": "^4.1.3",
-		"jquery": "^3.3.1",
-		"popper.js": "^1.14.4",
-		"bootstrap-3-typeahead": "^4.0.2",
-		"bootstrap-select": "^1.13.2",
-		"flatpickr": "^4.5.2",
-		"list.js": "^1.5.0"	,
-	  	"dropzone": "^5.5.1"
-
+		"popper.js": "^1.14.4"
 	}
 }

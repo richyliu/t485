@@ -17,13 +17,13 @@ const htmlMinOptions = {
 	collapseWhitespace: true,
 	removeComments:true
 };
-
-var nunjucksEnv = new nunjucksModule.Environment(new nunjucksModule.FileSystemLoader("app/templates"));
+const base = "./src"
+var nunjucksEnv = new nunjucksModule.Environment(new nunjucksModule.FileSystemLoader(base + "/templates"));
 let env = process.env.NODE_ENV || "development";
 let outdir = env == "production" ? "dist" : "devserver";
 
 gulp.task("sass", function () {
-    return gulp.src("./app/css/*.+(scss|sass)")
+    return gulp.src(base + "/css/*.+(scss|sass)")
         .pipe(plumber())
         .pipe(sass()) // Converts Sass to CSS with gulp-sass
 		.pipe(env === "production" ? cssnano() : noop())
@@ -33,7 +33,7 @@ gulp.task("sass", function () {
         }));
 });
 gulp.task("css", function () {
-    return gulp.src(["./app/css/*.css", "!./app/css/*.min.css"])
+    return gulp.src([base + "/css/*.css", "!" + base + "/css/*.min.css"])
         .pipe(plumber())
 		.pipe(env === "production" ? cssnano() : noop())
         .pipe(gulp.dest("./" + outdir + "/css/"))
@@ -46,7 +46,7 @@ gulp.task("styles", gulp.parallel("sass", "css"), function (callback) {
     callback();
 });
 gulp.task("scripts", function () {
-    return gulp.src(["./app/js/*.js", "!./app/js/*.min.js"])
+    return gulp.src([base + "/js/*.js", "!" + base + "/js/*.min.js"])
         .pipe(plumber())
 		.pipe(env === "production" ? uglify() : noop())
         .pipe(gulp.dest("./" + outdir + "/js/"))
@@ -59,7 +59,7 @@ gulp.task("clean:docs", function (callback) {
     callback();
 });
 gulp.task("html", function () {
-    return gulp.src("./app/**/*.html")
+    return gulp.src(base + "/**/*.html")
         .pipe(plumber())
         .pipe(nunjucks.compile(nunjucks_config, {
             env: nunjucksEnv
@@ -70,23 +70,23 @@ gulp.task("html", function () {
 });
 
 gulp.task("assets", function () {
-    var fonts = gulp.src("./app/fonts/**/*")
+    var fonts = gulp.src(base + "/fonts/**/*")
         .pipe(gulp.dest("./" + outdir + "/fonts/"));
-    var img = gulp.src("./app/img/**/*")
+    var img = gulp.src(base + "/img/**/*")
         .pipe(gulp.dest("./" + outdir + "/img/"));
-    var jsmap = gulp.src("./app/js/**/*.js.map")
+    var jsmap = gulp.src(base + "/js/**/*.js.map")
         .pipe(gulp.dest("./" + outdir + "/js/"));
-    var cssmap = gulp.src("./app/css/**/*.css.map")
+    var cssmap = gulp.src(base + "/css/**/*.css.map")
         .pipe(gulp.dest("./" + outdir + "/js/"));
-    var jsmin = gulp.src("./app/js/**/*.min.js")
+    var jsmin = gulp.src(base + "/js/**/*.min.js")
         .pipe(gulp.dest("./" + outdir + "/js/"));
-    var cssmin = gulp.src("./app/css/**/*.min.css")
+    var cssmin = gulp.src(base + "/css/**/*.min.css")
         .pipe(gulp.dest("./" + outdir + "/css/"));
-    var favicons = gulp.src("./app/favicons/**/*")
+    var favicons = gulp.src(base + "/favicons/**/*")
         .pipe(gulp.dest("./" + outdir + "/favicons/"));
-    var cname = gulp.src("./app/CNAME")
+    var cname = gulp.src(base + "/CNAME")
         .pipe(gulp.dest("./" + outdir));
-    var fonts = gulp.src("./app/fonts/**")
+    var fonts = gulp.src(base + "/fonts/**")
         .pipe(gulp.dest("./" + outdir + "/fonts/"));
 
 
@@ -156,17 +156,17 @@ gulp.task("browserSync", function () {
         server: {
             baseDir: "./" + outdir
 		},
-        files: ["app/css/*", "app/**/*.html", "app/js/*"],
+        files: [base + "/css/*", base + "/**/*.html", base + "/js/*"],
 		open:false
     });
 });
 
 gulp.task("watch", gulp.parallel("devbuild", "browserSync", function () {
 
-    gulp.watch("app/css/*.+(scss|sass)", gulp.parallel("sass"));
-    gulp.watch("app/css/*.css", gulp.parallel("css"));
-    gulp.watch(["app/js/*.js", "!app/js/*.min.js"], gulp.parallel("scripts"));
-    gulp.watch("app/**/*.html", gulp.parallel("html"));
-    gulp.watch(["app/fonts/**/*", "app/js/**/*.js", "app/css/**/*.css", "app/js/**/*.map", "app/css/**/*.map", "app/img/**/*"], gulp.parallel("assets"));
+    gulp.watch(base + "/css/*.+(scss|sass)", gulp.parallel("sass"));
+    gulp.watch(base + "/css/*.css", gulp.parallel("css"));
+    gulp.watch([base + "/js/*.js", "!" + base + "/js/*.min.js"], gulp.parallel("scripts"));
+    gulp.watch(base + "/**/*.html", gulp.parallel("html"));
+    gulp.watch([base + "/fonts/**/*", base + "/js/**/*.js", base + "/css/**/*.css", base + "/js/**/*.map", base + "/css/**/*.map", base + "/img/**/*"], gulp.parallel("assets"));
 
 }));
