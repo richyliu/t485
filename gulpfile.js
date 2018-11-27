@@ -158,7 +158,7 @@ gulp.task("browserSync", function () {
     });
 });
 
-gulp.task("watch", gulp.parallel("devbuild", "browserSync", function () {
+gulp.task("watch", gulp.parallel(function () {
 
     gulp.watch(base + "/css/*.+(scss|sass)", gulp.parallel("sass"));
     gulp.watch(base + "/css/*.css", gulp.parallel("css"));
@@ -166,4 +166,4 @@ gulp.task("watch", gulp.parallel("devbuild", "browserSync", function () {
     gulp.watch(base + "/**/*.html", gulp.parallel("html"));
     gulp.watch([base + "/fonts/**/*", base + "/js/**/*.js", base + "/css/**/*.css", base + "/js/**/*.map", base + "/css/**/*.map", base + "/img/**/*"], gulp.parallel("assets"));
 
-}));
+}, gulp.series("devbuild", "browserSync")));
