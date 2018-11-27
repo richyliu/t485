@@ -103,7 +103,6 @@ gulp.task("libraries", function () {
             "./node_modules/popper.js/dist/umd/popper.min.js.map",
             "./node_modules/bootstrap-select/dist/js/bootstrap-select.min.js",
             "./node_modules/list.js/dist/list.min.js",
-		    "./node_modules/dropzone/dist/min/dropzone.min.js",
 
 
         ])
@@ -126,7 +125,6 @@ gulp.task("libraries", function () {
             "./node_modules/bootstrap/dist/css/bootstrap.min.css",
             "./node_modules/bootstrap/dist/css/bootstrap.min.css.map",
             "./node_modules/bootstrap-select/dist/css/bootstrap-select.min.css",
-		    "./node_modules/dropzone/dist/min/dropzone.min.css",
 
         ])
         .pipe(gulp.dest("./" + outdir + "/css/"));
