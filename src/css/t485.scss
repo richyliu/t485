@@ -1,3 +1,12 @@
+@mixin transition($args...) {
+	-webkit-transition: $args;
+	-moz-transition: $args;
+	-ms-transition: $args;
+	-o-transition: $args;
+	transition: $args;
+}
+
+
 #header {
     display: block;
     margin-left: auto;
@@ -8,10 +17,10 @@
 }
 
 .hidden {
-    display:none !important;/* hidden and default are ALWAYS applied*/
+    display:none !important; /* hidden and invisible are ALWAYS applied*/
 }
 .invisible {
-    visibility:hidden !important;/* invisible and default are ALWAYS applied*/
+    visibility:hidden !important; /* hidden and invisible are ALWAYS applied*/
 }
 
 label:not(.custom-control-label) {
@@ -34,6 +43,14 @@ label:not(.custom-control-label) {
 	right: 10px;
 }
 
+nav#navbar {
+
+	@include transition(0.4s);
+
+}
+.sticky-top {
+	max-height: 40px;
+}
 a.link {
 
 	color: #007bff !important;

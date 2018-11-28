@@ -66,7 +66,6 @@ firebase.database().ref("/directory/keys/").once("value").then(function(snapshot
 				row ++;
 				$("#dir-body").append(line);
 			}
-			console.log(scouts);
 		}
 		$("#table").on("click", ".table-row", function (e) {
 			var id = $(e.target).attr("data-row");
@@ -165,30 +164,20 @@ function onhashchange(scouts, keys) {
 	// get the slack usernames for the scout and their parents
 	var relationshipKeymap = ["scout", "father", "mother"];
 	for (i = 0; i < 3; i ++) {
-		console.log(i);
-		console.log(".infoModal-" + relationshipKeymap[i] + "SlackDMLink")
-		console.log(scouts[id][relationshipKeymap[i]].slack);
-		console.log(JSON.parse(JSON.stringify(scouts[id][relationshipKeymap[i]])));
+
 		if (scouts[id][relationshipKeymap[i]].slack == "" || scouts[id][relationshipKeymap[i]].slack == undefined) {
-			console.log("HA107UNDEF" + relationshipKeymap[i]);
-			console.log(".infoModal-" + relationshipKeymap[i] + "SlackUsername");
 			$(".infoModal-" + relationshipKeymap[i] + "SlackDMLink").attr("href", null);
 			$(".infoModal-" + relationshipKeymap[i] + "SlackUsername").html("<i>Not listed in spreadsheet</i>");
 			$(".infoModal-" + relationshipKeymap[i] + "SlackDMLoadingText").text("");
 		} else if (scouts[id][relationshipKeymap[i]].slack.toLowerCase() == "none") {
-			console.log(".infoModal-" + relationshipKeymap[i] + "SlackUsername");
-			console.log("HA107NONE" + relationshipKeymap[i]);
 			$(".infoModal-" + relationshipKeymap[i] + "SlackDMLink").attr("href", null);
 			$(".infoModal-" + relationshipKeymap[i] + "SlackUsername").html("<i>None</i>");
 			$(".infoModal-" + relationshipKeymap[i] + "SlackDMLoadingText").text("");
 		} else {
-			console.log("HA107" + relationshipKeymap[i]);
 			$(".infoModal-" + relationshipKeymap[i] + "SlackUsername").text("@" + scouts[id][relationshipKeymap[i]].slack);
 			$(".infoModal-" + relationshipKeymap[i] + "SlackDMLoadingText").text("(profile loading...)");
 			getSlackLink(scouts[id][relationshipKeymap[i]].slack, keys.slackToken, function(id, username, slackApiCalled, i) {
-				console.log(id);
-				console.log(".infoModal-" + relationshipKeymap[i] + "SlackDMLink");
-				//NOTE: the /message/ in the slack link could be relaced with anything and still work. without /messages/message, it would open in the app.
+				//NOTE: the /message/ in the slack link could be replaced with anything and still work. without /messages/message, it would open in the app.
 				$(".infoModal-" + relationshipKeymap[i] + "SlackDMLink").attr("href", "https://t485.slack.com/messages/message/team/" + id);
 				$(".infoModal-" + relationshipKeymap[i] + "SlackDMLoadingText").text("");
 			}, i);
@@ -200,9 +189,6 @@ function onhashchange(scouts, keys) {
 
 	for (var trait = 0; trait < scoutArrayKeymap.length; trait ++) {
 
-		traitText = scouts[id][scoutArrayKeymap[trait][0]][scoutArrayKeymap[trait][1]];
-		console.log("TraitText:")
-		console.log(traitText);
 		console.log(scoutArrayKeymap[trait][1]);
 		$(".infoModal-" + scoutArrayKeymap[trait][0] +
 			scoutArrayKeymap[trait][1].substring(0,1).toUpperCase() + scoutArrayKeymap[trait][1].substring(1) + "Link")
@@ -221,14 +207,11 @@ function onhashchange(scouts, keys) {
 			$(".infoModal-" + scoutArrayKeymap[trait][0] +
 				scoutArrayKeymap[trait][1].substring(0,1).toUpperCase() + scoutArrayKeymap[trait][1].substring(1) + "Link")
 				.attr("href", (traitText.replace(/\D/g,"") == "" ? null : "tel:" + traitText.replace(/\D/g,"")));
-			console.log((traitText.replace(/\D/g,"") == "" ? null : "tel:" + traitText.replace(/\D/g,"")))
 			//remove all non-digit characters
 			//if it's not a phone number (e.g. "N/A" or "None"), don't link it or remove the characters.
 		}
 		//str for testing
 		var str = scoutArrayKeymap[trait][1];
-		console.log(".infoModal-" + scoutArrayKeymap[trait][0] +
-			scoutArrayKeymap[trait][1].substring(0,1).toUpperCase() + scoutArrayKeymap[trait][1].substring(1))
 		$(".infoModal-" + scoutArrayKeymap[trait][0] +
 			scoutArrayKeymap[trait][1].substring(0,1).toUpperCase() + scoutArrayKeymap[trait][1].substring(1))
 			.text(traitText);
@@ -332,17 +315,13 @@ function checkDefaultOptions() {
 		sortorder:options.sortorder == preset.sortorder || options.sortorder == "" || options.sortorder == null,
 		search: $("#search").val() == "" || $("#search").val() == null
 	}
-	//console.log(options.sortby);
-	//console.log(JSON.parse(JSON.stringify(match)));
 	if (match.filter && match.sortby && match.sortorder && match.search) {
-		//console.log("hidden");
 		//remove search
 		history.pushState("", document.title, window.location.pathname + window.location.hash);
 
 		$("#modified-settings").addClass("hidden");
 
 	} else {
-		//console.log("not hidden");
 		$("#modified-settings").removeClass("hidden");
 	}
 }
@@ -382,7 +361,6 @@ function setOptions(options) {
 		list.search($("#search").val());
 		list.sort("col" + $("#sortby-select").val(), { order: $("#sortorder-select").val() });
 	}
-	console.log("setOptions");
 	$("#search").val(getQuery("query"));
 	$("#search").trigger("keyup");
 
