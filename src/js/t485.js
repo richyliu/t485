@@ -44,6 +44,24 @@ function setQueryUrl(name, value, url) {
 	var hash = (url.indexOf("#") > -1 ? url.substring(url.indexOf("#")) : "");
 	return base + query + hash;
 }
+
+//https://stackoverflow.com/a/19279428/5511561
+function setURLQuery(fullQueryString) {
+
+	var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + fullQueryString + window.location.hash;
+	if (history.pushState) {
+		window.history.pushState({path:newurl},'',newurl);
+	} else {
+		//window.location.href = newurl;
+	}
+	checkDefaultOptions();
+}
+
+function removeHash () {
+	history.pushState("", document.title, window.location.pathname
+		+ window.location.search);
+}
+
 //http://stackoverflow.com/a/17606289/5511561s
 String.prototype.replaceAll = function(search, replacement) {
     var target = this;
@@ -75,16 +93,40 @@ ga('send', 'pageview');
 
 
 
-// show fixed navbar once user scrolls past regular navbar
+// show shrunken fixed navbar once user scrolls past regular navbar
+// https://stackoverflow.com/a/47945124/5511561
 $(document).ready(function () {
-    $(window).scroll(function () {
-        // set distance user needs to scroll before we fadeIn navbar
-        if ($(this).scrollTop() > 150) {
-            $('.navbar').addClass('sticky-top');
-        } else {
-            $('.navbar').removeClass('sticky-top');
-        }
-    });
+	let nav = $("#navbar");
+
+	let navFromTop = nav[0].offsetTop;
+
+	let navHeight = nav[0].offsetHeight;
+
+	let distanceScrolled = function() {
+		return $(window).scrollTop();
+	};
+
+	let isScrolledEnough = function() {
+		console.log(navFromTop + navHeight);
+		return (distanceScrolled() > navFromTop + navHeight);
+	};
+
+	let setShrink = (value) => {
+		console.log(value)
+		if (value && isScrolledEnough()) {
+			nav.addClass("shrink");
+		} else if (!value) {
+			nav.removeClass("shrink");
+		}
+	};
+
+	$(window).scroll(function() {
+		console.log(288901);
+		console.log(navHeight);
+		setShrink(distanceScrolled() > navHeight);
+	});
+
+
 });
 
 //preserve continue state
@@ -119,17 +161,7 @@ if (window.dontPreserveContinueState !== true) {
 if (window.dontPreserveCurrentPage !== true) {
 	preserveLinkStates();
 }
-//https://stackoverflow.com/a/19279428/5511561
-function setURLQuery(fullQueryString) {
 
-	var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + fullQueryString + window.location.hash;
-	if (history.pushState) {
-		window.history.pushState({path:newurl},'',newurl);
-	} else {
-		//window.location.href = newurl;
-	}
-	checkDefaultOptions();
-}
 
 
 //login status changes

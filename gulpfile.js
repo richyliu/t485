@@ -4,6 +4,7 @@ var browserSync = require("browser-sync").create();
 const plumber = require("gulp-plumber");
 const uglify = require("gulp-uglifyes"); //gulp-uglify-ecmascript/js6
 const cssnano = require("gulp-cssnano");
+
 const del = require("del");
 const nunjucks = require("gulp-nunjucks");
 const nunjucks_config = require("./nunjucks-data");
@@ -139,12 +140,14 @@ gulp.task("set-production", function(callback) {
 	callback();
 });
 gulp.task("build", gulp.series("set-production", "clean:docs",
-    gulp.parallel("styles", "html", "assets", "scripts", "libraries")
+    gulp.parallel("styles", "assets", "scripts", "libraries"),
+	"html"
 ), function (callback) {
     callback();
 });
 gulp.task("devbuild", gulp.series("clean:docs",
-	gulp.parallel("styles", "html", "assets", "scripts", "libraries")
+	gulp.parallel("styles",  "assets", "scripts", "libraries"),
+	"html"
 ), function (callback) {
 	callback();
 });

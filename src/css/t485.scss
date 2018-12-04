@@ -43,14 +43,11 @@ label:not(.custom-control-label) {
 	right: 10px;
 }
 
-nav#navbar {
 
-	@include transition(0.4s);
+.shrink {
+	max-height: 50px;
+}
 
-}
-.sticky-top {
-	max-height: 40px;
-}
 a.link {
 
 	color: #007bff !important;
@@ -64,4 +61,20 @@ a.link {
 		text-decoration: underline !important;
 	}
 
+}
+// fix for boxes floating left
+.container {
+	padding-left:0;
+	padding-right:0;
+}
+.row {
+	margin-left:0;
+	margin-right:0;
+}
+//sticky footer
+.content {
+	min-height: calc(100vh - 118px);
+}
+.footer {
+	height: 118px;
 }
