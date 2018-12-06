@@ -6,7 +6,9 @@
 
 
 	var Logger = {};
-
+	Logger.getDebugLog = function() {
+		return ["Debug log created", "Debug log sent"];
+	}
 	//Logger.initFeedback = function() {
 
 		$(document).ready(function() {
@@ -24,7 +26,7 @@
 		});
 
 		$("#feedback-modal").on("hidden.bs.modal", function() {
-			console.log(window.location.hash)
+			//console.log(window.location.hash)
 			if (window.location.hash == "#feedback") {
 				removeHash();
 			}
@@ -47,30 +49,30 @@
 				// UA can be easily spoofed, this is a secondary method
 
 				// Chrome 1+
-				if (!!window.chrome && !!window.chrome.webstore) return "chrome";
+				if (!!window.chrome && !!window.chrome.webstore) return "Google Chrome";
 
 				// Firefox 1.0+
-				if (typeof InstallTrigger !== 'undefined') return "firefox";
+				if (typeof InstallTrigger !== 'undefined') return "Mozilla Firefox";
 
 				// Safari 3.0+ "[object HTMLElementConstructor]"
 				if (/constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })
-				(!window['safari'] || (typeof safari !== 'undefined' && safari.pushNotification))) return "safari";
+				(!window['safari'] || (typeof safari !== 'undefined' && safari.pushNotification))) return "Safari";
 
 				// Opera 8.0+
-				if ((!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0) return "opera";
+				if ((!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0) return "Opera";
 
 
 				// Internet Explorer 6-11
-				if (/*@cc_on!@*/false || !!document.documentMode) return "ie";
+				if (/*@cc_on!@*/false || !!document.documentMode) return "Internet Explorer";
 
 				// Edge 20+
-				if (!isIE && !!window.StyleMedia) return "edge";
+				if (!isIE && !!window.StyleMedia) return "Edge";
 
 
 				// Blink engine detection
-				if ((isChrome || isOpera) && !!window.CSS) return "blink";
+				if ((isChrome || isOpera) && !!window.CSS) return "Blink";
 
-				return "unknown";
+				return "Unknown";
 			}
 			let getOS = function() {
 				var userAgent = window.navigator.userAgent,
@@ -188,19 +190,42 @@
 			return filename.slice((Math.max(0, filename.lastIndexOf(".")) || Infinity) + 1);
 
 		}
+
+		let roundTo = function(n, digits) {
+			if (digits === undefined) {
+				digits = 0;
+			}
+
+			let multiplicator = Math.pow(10, digits);
+			n = parseFloat((n * multiplicator).toFixed(11));
+			return Math.round(n) / multiplicator;
+		}
+
 		let setProgress = function(progress) {
+			progress = roundTo(progress, 2);
 			$("#feedback-progressbar").css("width", progress + "%");
 			$("#feedback-progressbar").html(progress + "%");
 			$("#feedback-progressbar").attr("aria-valuenow", progress + "%");
 		}
+
 		let upload = function(file, type, callback) {
-			console.log("Size", file.size);
+			//console.log("Size", file.size);
 
 			// File or Blob named mountains.jpg
 			//var file = ...
-
+			if (file == null) {
+				callback({
+					url:"",
+					name:"",
+					size:"",
+					type:"not uploaded",
+					storageRef:""
+				}, firebase.database().ref("/feedback/" + type + "/").push())
+				return;
+			}
 			// Create the file metadata
 			var metadata = {
+
 				contentType: file.type
 			};
 
@@ -243,13 +268,13 @@
 							$("#upload-control-play").addClass("hidden");
 							$("#upload-control-resume").removeClass("hidden");
 
-							console.log('Upload is paused');
+							//console.log('Upload is paused');
 							break;
 						case firebase.storage.TaskState.RUNNING: // or 'running'
 							$("#upload-control-resume").addClass("hidden");
 							$("#upload-control-play").removeClass("hidden");
 
-							console.log('Upload is running');
+							//console.log('Upload is running');
 							break;
 					}
 				}, function(error) {
@@ -278,11 +303,12 @@
 				}, function() {
 					// Upload completed successfully, now we can get the download URL
 					uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
-						console.log('File available at', downloadURL);
+						//console.log('File available at', downloadURL);
 						callback({
 							url:downloadURL,
 							name:file.name,
 							size:file.size,
+							type:file.type,
 							storageRef:"/feedback/" + type + "/files/" + push.key
 						}, push)
 
@@ -296,7 +322,7 @@
 				let invalid = false;
 				for (let i = 0; i < bugFields.length; i ++) {
 					let text = bugFields[i].general === true ? $("#" + bugFields[i].name).val() : $("#bug-" + bugFields[i].name).val();
-					console.log(bugFields[i].general, bugFields[i].name, text);
+					//console.log(bugFields[i].general, bugFields[i].name, text);
 
 					if (!(bugFields[i].validation.test(text))) {
 						invalid = true;
@@ -309,7 +335,7 @@
 				var file = $("#bug-file")[0].files[0];
 
 				const MEGABYTE = 1048576; // binary
-				if (file.size > MEGABYTE * 101) {//small buffer
+				if (file && file.size > MEGABYTE * 101) {//small buffer
 					$("#bug-file").addClass("is-invalid");
 					$("#bug-file-group invalid-feedback").removeClass("");
 					invalid = true;
@@ -335,25 +361,27 @@
 						name:$("#name").val(),
 						os:getInfo().detectedOS,
 						browser:getInfo().browserByDuckTyping,
-						pages:$("#" + type + "-pages").val(),
+						pages:$("#" + type + "-affected-pages").val(),
 						body:$("#" + type + "-description").val(),
 						title:$("#" + type + "-title").val(),
 						type:type,
-						fileUrl:data.url
-					}, function() {
-						setProgress(90);
+						fileUrl:data.url,
+						fileType:data.type
+					}, function(issueURL) {
+						setProgress(95);
 						let user = firebase.auth().currentUser;
 						let userData = {};
 						userData.loggedIn = user !== null;
 						if (userData.loggedIn) {
 							userData = {
-								loggedIn:loggedIn,
+								//loggedIn:loggedIn,
 								id:user.uid || "Not Logged In",
 								email:user.email,
 								displayName:user.displayName
 							}
 						}
-						firebase.database().ref("/feedback/" + type + "/" + push.key).push({
+						return console.log("/feedback/reports/" + type + "/" + push.key);
+						firebase.database().ref("/feedback/reports/" + type + "/" + push.key).push({
 							title:$("#" + type + "-title").val(),
 							filedata:data,
 							timestamp:{
@@ -369,11 +397,13 @@
 							requestData:{
 								title:$("#" + type + "-title").val(),
 								description:$("#" + type + "-description").val(),
-								pages:$("#" + type + "-pages").val()
+								pages:$("#" + type + "-affected-pages").val(),
+								github:{
+									issueurl:issueURL
+								}
 							},
-							diagnosticData:getInfo()
-							// ,log:Logger.getDebugLog();
-
+							diagnosticData:getInfo(),
+							log:Logger.getDebugLog()
 						}).then(function() {
 							setProgress(100);
 
@@ -381,9 +411,7 @@
 							$("#feedback-done").removeClass("hidden");
 							$('#feedback-modal').modal({backdrop: true, keyboard: true})
 
-							console.log("IN DONE")
 						});
-						console.log("OUT DONE")
 
 					});
 
@@ -393,25 +421,56 @@
 
 			}
 			let addIssueOnGithub = function(data, callback) {
-				firebase.database().ref("/feedback/keys/github/").once("value").then(function(snapshot) {
-					setProgress(95);
-					var ghToken = snapshot.val();
-					var body = "Data from bug report modal sumbitted by **" + data.name + "**:" +
-						"\n\n| Timestamp | Device | Browser | Type |" +
-						"\n|---|---|---|---|\n" +
-						"| "+ new Date() +" | "+ data.os +" | "+ data.browserByDuckTyping +" | "+ data.type +" | \n\n"
-						+ "**Affected page URL's**:\n```" + data.pages + "\n```\nFile URL: " + data.fileUrl + "\n\n ------- \n" + data.body;
+				firebase.database().ref("/feedback/keys/").once("value").then(function(snapshot) {
+					setProgress(90);
+					var ghToken = snapshot.val().github;
+					var slackUrl = snapshot.val().slack.webhookurl;
+					let fileText = "";
 
-					var labels = [(data.type == "bug" ? "bug" : "enhancement")];
-					var payload = {
-						"title": data.title,
-						"body": body,
-						"labels":labels
-					};
+					if (data.fileType.split("/")[0] == "image") {
+						fileText = `![User uploaded image: ${data.fileUrl}](${data.fileUrl}) "\\\\n\\\\n ------- \\\\n"`;
+					} else if (data.fileUrl != null) {
+						fileText = "User Uploaded File URL: " + data.fileUrl + "\\n\\n ------- \\n";
+					}
+					let affectedPages  = "";
+					if (data.pages) {
+						affectedPages = "**Affected pages**:\\n```" + data.pages + "\\n```\\n"
+					}
+
+					let bodyText = data.body != null ? data.body + "\\n ------- \\n": "";
+					var type = data.type == "bug" ? "bug report" : "feedback";
+
+					var body = "Data from " + type + " modal submitted by **" + data.name + "**:" +
+						"\\n\\n| Timestamp | Device | Browser | Type |" +
+						"\\n|---|---|---|---|\\n" +
+						"| "+ new Date() +" | "+ data.os +" | "+ data.browser +" | "+ data.type +" | \\n\\n"
+						+ affectedPages + fileText +
+						bodyText + "This report automatically created from the [t485.org](https://t485.org) feedback form.";
+
+					var payload = `{"title": "${data.title}", "body": "${body}", "labels":["${type == "feedback" ? "enhancement" : type}"] }`;
 
 
+					$.ajax({
+						accepts:{
+							json: "application/vnd.github.v3+json",
+							"*": "application/vnd.github.v3+json"
+						},
+						url: "https://api.github.com/repos/t485/t485/issues?access_token=" + ghToken,
+						data: payload,
+						type: "POST"
+					}).always(function( ghdata ) {
+						$.ajax({
+							url:slackUrl,
+							data:'payload=' + JSON.stringify({
+								text: `New ${type} filed: ` + ghdata.url
+							}),
+							type:"POST"
+						}).always(function(slackresponse) {
 
-					$.post("https://api.github.com/repos/t485/beta/issues?access_token="+ghToken, payload, callback);
+							callback(ghdata.url);
+						})
+
+					});
 				})
 
 
@@ -447,7 +506,6 @@
 			//get the file name
 			var fileName = $(this).val();
 			fileName = fileName.substring(fileName.lastIndexOf("\\") + 1);
-			console.log(fileName);
 
 			if ($("#bug-file").hasClass("is-invalid"))
 				$("#bug-file").removeClass("is-invalid");

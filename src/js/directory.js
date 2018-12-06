@@ -1,5 +1,5 @@
 var list = false;//false means uninitiated
-var scoutArrayKeymap = [["scout", "firstName"], ["scout", "lastName"], ["scout", "email"], ["scout", "homePhone"], ["scout", "slack"], ["scout", "joinDate"], ["scout", "active"], ["scout", "WFATrained"], ["scout", "school"], ["scout", "cellPhone"],
+var scoutArrayKeymap = [["scout", "firstName"], ["scout", "lastName"], ["scout", "email"], ["scout", "homePhone"], ["scout", "slack"], ["scout", "job"], ["scout", "joinDate"], ["scout", "active"], ["scout", "WFATrained"], ["scout", "school"], ["scout", "cellPhone"],
 	["father", "firstName"], ["father", "lastName"], ["father", "cellPhone"], ["father", "email"], ["father", "slack"],
 	["mother", "firstName"], ["mother", "lastName"], ["mother", "cellPhone"], ["mother", "email"], ["mother", "slack"]];
 
@@ -237,7 +237,7 @@ function getColVisibility(col) {
 function filterselectchange(){
 	var selected = $("#filter-select").val().map(str => parseInt(str, 10));
 	var show = [];
-	for (i = 0; i < 21; i ++) {
+	for (i = 0; i < 22; i ++) {
 		if (selected.indexOf(i) > -1) {
 			$(".col" + i).removeClass("hidden");
 			show.push(i);

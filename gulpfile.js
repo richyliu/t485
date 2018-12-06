@@ -151,6 +151,15 @@ gulp.task("devbuild", gulp.series("clean:docs",
 ), function (callback) {
 	callback();
 });
+gulp.task("serveBuild", function () {
+	browserSync.init({
+		server: {
+			baseDir: "./dist"
+		},
+		files: [base + "/css/*", base + "/**/*.html", base + "/js/*"],
+		open:false
+	});
+});
 gulp.task("browserSync", function () {
     browserSync.init({
         server: {
