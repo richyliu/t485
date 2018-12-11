@@ -154,8 +154,19 @@ gulp.task("devbuild", gulp.series("clean:docs",
 gulp.task("serveBuild", function () {
 	browserSync.init({
 		server: {
-			baseDir: "./dist"
+			baseDir: "./dist",
+			serveStaticOptions: {
+				extensions: ['html'] // This is the trick!
+			}
 		},
+		// middleware: function(req,res,next) {
+		// 	if (req.url.charAt(req.url.length - 1) === "/") {
+		// 		req.url = req.url.substring(0, req.url.length - 2) + '.html';
+		// 	} else if (req.url.indexOf(".") == -1) {
+		// 		req.url = req.url + ".html";
+		// 	}
+		// 	return next();
+		// },
 		files: [base + "/css/*", base + "/**/*.html", base + "/js/*"],
 		open:false
 	});
@@ -163,8 +174,23 @@ gulp.task("serveBuild", function () {
 gulp.task("browserSync", function () {
     browserSync.init({
         server: {
-            baseDir: "./" + outdir
+            baseDir: "./" + outdir,
+			serveStaticOptions: {
+				extensions: ['html'] // This is the trick!
+			}
 		},
+		// middleware: function(req,res,next) {
+        // 	console.log(req);
+		// 	console.log(213);
+		// 	if (req.url.charAt(req.url.length - 1) === "/") {
+		// 		console.log("OMG", req.url, req.url.substring(0, req.url.length - 1));
+		// 		req.url = req.url.substring(0, req.url.length - 1) + '.html';
+		// 	} else if (req.url.indexOf(".") == -1) {
+		// 		req.url = req.url + ".html";
+		// 	}
+		// 	console.log(req.file);
+		// 	return next();
+		// },
         files: [base + "/css/*", base + "/**/*.html", base + "/js/*"],
 		open:false
     });

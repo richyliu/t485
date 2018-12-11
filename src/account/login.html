@@ -1,4 +1,5 @@
 {% set page = "Login" %}
+{% set preserveState = true %}
 {% extends "base.html" %}
 
 {% block main %}
@@ -9,7 +10,7 @@
             <h2 class="primary-heading">Login</h2>
 
 
-            <div>
+            <form class="prevent-submit">
                 <div class="form-group">
                     <label for="email">Email address:</label>
                     <input type="email" class="form-control" id="email" placeholder="Enter your email...">
@@ -20,8 +21,8 @@
                 </div>
                 <button class="btn btn-primary btn-block" id="login">Login</button>
 				<p class="text-danger" id="error"></p>
-                <p id="account-tray" class="text-center"><a href="/account/create.html" id="create-link" class="preserve-state">Create an account</a> | <a href="/account/resetpassword.html" id="forgot-password-link" class="preserve-state">Forgot password</a></p>
-            </div>
+                <p id="account-tray" class="text-center"><a href="/account/create" id="create-link" class="preserve-state">Create an account</a> | <a href="/account/resetpassword.html" id="forgot-password-link" class="preserve-state">Forgot password</a></p>
+            </form>
         </div>
     </div>
 </div>
@@ -32,7 +33,19 @@
 
 
 			<div>
-				<p>Please <a href="/account/create.html?verifEmailOnly=true">verify your email</a> to finish setting up your account and use the website.</p>
+				<p>Please <a href="/account/create?verifEmailOnly=true">verify your email</a> to finish setting up your account and use the website.</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row col-lg-12 hidden" id="setup-box">
+	<div class="box w-100">
+		<div class="col-lg-12">
+			<h2 class="primary-heading">Setup your account</h2>
+
+
+			<div>
+				<p>Please <a href="/account/setup">setup your account</a> before you can login and use the website.</p>
 			</div>
 		</div>
 	</div>
@@ -53,17 +66,29 @@
 
 	firebase.auth().onAuthStateChanged(function(user) {
 		if (user) {
+			console.log(user)
 			if (!user.emailVerified) {
+				console.log(1)
 				$("#main-box").addClass("hidden");
 				$("#verify-box").removeClass("hidden");
             } else {
 				$("#error").html("");
+				console.log(2)
+				firebase.database().ref("/users/" + user.uid + "/setupComplete/").once("value").then(function(snapshot) {
+					console.log(snapshot.exists())
+					if (snapshot.exists()) {
+						if (getQuery("continue") == "" || getQuery("continue") == null) {
+							window.location.href = "/account/";
+						} else {
+							window.location.href = getQuery("continue");
+						}
+					} else {
 
-				if (getQuery("continue") == "" || getQuery("continue") == null) {
-					window.location.href = "/account/";
-				} else {
-					window.location.href = getQuery("continue");
-				}
+						$("#main-box").addClass("hidden");
+						$("#setup-box").removeClass("hidden");
+					}
+				})
+
 			}
 		}
 	});

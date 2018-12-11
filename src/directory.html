@@ -45,11 +45,15 @@
                 Directory
             </h2>
             <div id="directory-list">
-                <b>Search:</b>
-                <input type="text" class="form-control fuzzy-search" id="search" placeholder="Search by name, job, phone number, slack username, etc.">
                 <form class="pt-1">
                     <div class="row">
-                        <div class="col">
+                        <div class="col-md-12">
+                            <b>Search:</b>
+                            <input type="text" class="form-control fuzzy-search" id="search" placeholder="Search by name, job, phone number, slack username, etc.">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
                         <b>Sort by:</b>
                             <select class="selectpicker form-control" data-live-search="true" id="sortby-select">
                                 <optgroup label="Scout">
@@ -82,14 +86,14 @@
                                 </optgroup>
                             </select>
                         </div>
-                        <div class="col">
+                        <div class="col-md-4">
                             <b>Sort order:</b>
                             <select class="selectpicker form-control" id="sortorder-select">
                                 <option value="asc">Ascending</option>
                                 <option value="desc">Descending</option>
                             </select>
                         </div>
-                        <div class="col">
+                        <div class="col-md-4">
                         <b>Show:</b>
                             <select class="selectpicker form-control" multiple id="filter-select" data-live-search="true" data-actions-box="true">
                                 <optgroup label="Scout">

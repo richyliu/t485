@@ -49,7 +49,7 @@
 				// UA can be easily spoofed, this is a secondary method
 
 				// Chrome 1+
-				if (!!window.chrome && !!window.chrome.webstore) return "Google Chrome";
+				if (!!window.chrome) return "Google Chrome";
 
 				// Firefox 1.0+
 				if (typeof InstallTrigger !== 'undefined') return "Mozilla Firefox";
@@ -333,7 +333,7 @@
 				}
 				//file
 				var file = $("#bug-file")[0].files[0];
-
+				console.log(file);
 				const MEGABYTE = 1048576; // binary
 				if (file && file.size > MEGABYTE * 101) {//small buffer
 					$("#bug-file").addClass("is-invalid");
@@ -380,7 +380,6 @@
 								displayName:user.displayName
 							}
 						}
-						return console.log("/feedback/reports/" + type + "/" + push.key);
 						firebase.database().ref("/feedback/reports/" + type + "/" + push.key).push({
 							title:$("#" + type + "-title").val(),
 							filedata:data,
@@ -438,7 +437,7 @@
 					}
 
 					let bodyText = data.body != null ? data.body + "\\n ------- \\n": "";
-					var type = data.type == "bug" ? "bug report" : "feedback";
+					var type = data.type == "bug" ? "Bug Report" : "Feedback";
 
 					var body = "Data from " + type + " modal submitted by **" + data.name + "**:" +
 						"\\n\\n| Timestamp | Device | Browser | Type |" +
@@ -447,7 +446,7 @@
 						+ affectedPages + fileText +
 						bodyText + "This report automatically created from the [t485.org](https://t485.org) feedback form.";
 
-					var payload = `{"title": "${data.title}", "body": "${body}", "labels":["${type == "feedback" ? "enhancement" : type}"] }`;
+					var payload = `{"title": "${data.title}", "body": "${body}", "labels":["${type == "Feedback" ? "enhancement" : type}"] }`;
 
 
 					$.ajax({
@@ -462,12 +461,12 @@
 						$.ajax({
 							url:slackUrl,
 							data:'payload=' + JSON.stringify({
-								text: `New ${type} filed: ` + ghdata.url
+								text: `New ${type} Filed: ${data.title} - ` + ghdata.html_url
 							}),
 							type:"POST"
 						}).always(function(slackresponse) {
 
-							callback(ghdata.url);
+							callback(ghdata.html_url);
 						})
 
 					});

@@ -14,7 +14,13 @@
 			<title>Troop 485{%- if title %} - {% elif title == "" -%}{#If title is empty don't display dash, even if page is present#}{%- elif page %} - {% elif page == "" %} - {% endif -%}{%- if title -%}{{-title-}}{%- elif title == "" -%}{{-title-}}{% else -%}{{-page}}{%endif%}</title>
 		{% endblock %}
 	{% endblock %}
-
+	{% if preserveState %}
+		{% set preserveClass = "preserve-state" %}
+	{% elif dontPreservePage %}
+		{% set preserveClass = "" %}
+	{% else %}
+		{% set preserveClass = "preserve-page" %}
+	{% endif %}
 	<!-- Custom fonts for this template -->
 	<link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i"
 		  rel="stylesheet">
@@ -103,16 +109,16 @@
 						</li>
 
 						<li class="nav-item px-lg-3">
-							<a class="nav-link text-uppercase text-expanded" href="/calendar.html">Calendar</a>
+							<a class="nav-link text-uppercase text-expanded" href="/calendar">Calendar</a>
 						</li>
 						<li class="nav-item px-lg-3">
-							<a class="nav-link text-uppercase text-expanded" href="/directory.html">Directory</a>
+							<a class="nav-link text-uppercase text-expanded" href="/directory">Directory</a>
 						</li>
 						<li class="nav-item px-lg-3">
-							<a class="nav-link text-uppercase text-expanded" href="/event-pages.html">Event Pages</a>
+							<a class="nav-link text-uppercase text-expanded" href="/event-pages">Event Pages</a>
 						</li>
 						<li class="nav-item px-lg-3">
-							<a class="nav-link text-uppercase text-expanded" href="/pictures.html">Pictures</a>
+							<a class="nav-link text-uppercase text-expanded" href="/pictures">Pictures</a>
 						</li>
 
 						<li class="nav-item dropdown px-lg-4">
@@ -120,8 +126,8 @@
 							   data-toggle="dropdown" href="#" role="button">About</a>
 
 							<div class="dropdown-menu">
-								<a class="dropdown-item" href="/about/faq.html">FAQ</a>
-								<a class="dropdown-item" href="/about/merit-badges.html">Merit Badges</a>
+								<a class="dropdown-item" href="/about/faq">FAQ</a>
+								<a class="dropdown-item" href="/about/merit-badges">Merit Badges</a>
 							</div>
 						</li>
 						<li class="nav-item dropdown px-lg-4">
@@ -136,9 +142,9 @@
 								<h6 class="dropdown-header" id="acct-dd-status">
 									<span id="acct-dd-status-notloggedin" class="lo-show">You are not logged in.</span>
 									<span id="acct-dd-status-loggedin" class="li-show hidden">Logged in as <b id="acct-dd-status-loggedin-username" class="user-displayname">loading...</b>.</span></h6>
-								<a id="acct-dd-login-link" class="lo-show dropdown-item preserve-page" href="/account/login.html">Login</a>
-								<a id="acct-dd-logout-link" class="li-show dropdown-item preserve-page" href="/account/logout.html">Logout</a>
-								<a id="acct-dd-settings-link" class="li-show dropdown-item preserve-page" href="/account/settings.html">Account Settings</a>
+								<a id="acct-dd-login-link" class="lo-show dropdown-item {{preserveClass}}" href="/account/login">Login</a>
+								<a id="acct-dd-logout-link" class="li-show dropdown-item {{preserveClass}}" href="/account/logout">Logout</a>
+								<a id="acct-dd-settings-link" class="li-show dropdown-item {{preserveClass}}" href="/account/settings">Account Settings</a>
 							</div>
 						</li>
 					</ul>
@@ -171,6 +177,14 @@
 		<div id="feedback-box">
 			<button class="btn" id="feedback-btn">Feedback</button>
 		</div>
+	{% endblock %}
+	{% block toTopBtn %}
+
+		<a href="#" class="to-top-btn">
+
+			<svg class="to-top-svg" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path fill="currentColor" d="M8 256C8 119 119 8 256 8s248 111 248 248-111 248-248 248S8 393 8 256zm231-113.9L103.5 277.6c-9.4 9.4-9.4 24.6 0 33.9l17 17c9.4 9.4 24.6 9.4 33.9 0L256 226.9l101.6 101.6c9.4 9.4 24.6 9.4 33.9 0l17-17c9.4-9.4 9.4-24.6 0-33.9L273 142.1c-9.4-9.4-24.6-9.4-34 0z"></path></svg>
+
+		</a>
 	{% endblock %}
 	{% block unexpectederror %}
 	<div class="container hidden" id="unexpectederror">

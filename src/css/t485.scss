@@ -40,12 +40,36 @@ label:not(.custom-control-label) {
 #feedback-box {
 	position: fixed;
   	bottom: 10px;
+	left: 10px;
+}
+.to-top-btn {
+	position: fixed;
+	bottom: 10px;
 	right: 10px;
+	color:black;
+	z-index:500;
+
+}
+.to-top-svg {
+	height:32px;
+	width:32px;
+	z-index:500;
+
 }
 
 
-.shrink {
-	max-height: 50px;
+//.shrink {
+//	max-height: 50px;
+//}
+#navbar {
+
+}
+.sticky {
+	top:0;
+	left:0;
+	right:0;
+	position:sticky;
+	z-index:1000;
 }
 
 a.link {

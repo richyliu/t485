@@ -38,6 +38,7 @@ function setQuery(name, value, search) {
     return (query.length > 2 ? query + "&" : "?") + (value ? name + "=" + value : '');
 }
 
+//edits the query from a given url
 function setQueryUrl(name, value, url) {
 	var base = url.substring(0,(url.indexOf("?") > -1 ? url.indexOf("?") : undefined));
 	var query = setQuery(name, value, getQueryString(url));
@@ -54,7 +55,7 @@ function setURLQuery(fullQueryString) {
 	} else {
 		//window.location.href = newurl;
 	}
-	checkDefaultOptions();
+	//checkDefaultOptions();
 }
 
 function removeHash () {
@@ -72,10 +73,10 @@ String.prototype.replaceAll = function(search, replacement) {
 
 function escapeRegExp(str) {
     return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); // $& means the whole matched string
-  }
+}
+
 
 //google anylatics
-
 (function(i, s, o, g, r, a, m) {
     i['GoogleAnalyticsObject'] = r;
     i[r] = i[r] || function() {
@@ -96,54 +97,67 @@ ga('send', 'pageview');
 // show shrunken fixed navbar once user scrolls past regular navbar
 // https://stackoverflow.com/a/47945124/5511561
 $(document).ready(function () {
+
 	let nav = $("#navbar");
 
 	let navFromTop = nav[0].offsetTop;
 
 	let navHeight = nav[0].offsetHeight;
+	let normalNavHeight = 85;//nav height for normal navbar
 
 	let distanceScrolled = function() {
 		return $(window).scrollTop();
 	};
 
 	let isScrolledEnough = function() {
-		console.log(navFromTop + navHeight);
-		return (distanceScrolled() > navFromTop + navHeight);
+
+		return (distanceScrolled() > navFromTop);
 	};
 
 	let setShrink = (value) => {
-		console.log(value)
+
 		if (value && isScrolledEnough()) {
-			nav.addClass("shrink");
+			nav.addClass("sticky");//bootstrap sticky-top has a lot of weird stuff that we don't need
 		} else if (!value) {
-			nav.removeClass("shrink");
+			nav.removeClass("sticky");
 		}
 	};
 
 	$(window).scroll(function() {
-		console.log(288901);
-		console.log(navHeight);
+		if ($(".navbar-toggler").is(":visible")) {//showing collapsed navbar
+			nav.removeClass("sticky");
+			nav.addClass("sticky-top");
+			nav.css("height", "unset");
+			return;
+		}
 		setShrink(distanceScrolled() > navHeight);
-	});
+
+		let shrinkProgress = Math.max(Math.min(300 - distanceScrolled(), normalNavHeight), 40);
+		nav.css("height", shrinkProgress);
+	}).trigger("scroll");
 
 
 });
 
 //preserve continue state
 //this must not throw an exception if it fails because preserving the state is not strictly necessary for website use.
+
+//preserve link state keeps the continue URL.
 function preserveLinkStates() {
 	if (getQuery("continue") !== "" && getQuery("continue") != null) {
 
 		$(".attach-continue-url, .preserve-state, .keep-state").each(function() {
 			var href = $(this).attr("href");
 			var base = href.substring(0,(href.indexOf("?") > -1 ? href.indexOf("?") : undefined));
-			var query = setQuery("continue", getQuery("continue"), encodeURIComponent(getQueryString(href)));
+			var query = setQuery("continue", encodeURIComponent(getQuery("continue")), encodeURIComponent(getQueryString(href)));
 			var hash = (href.indexOf("#") > -1 ? href.substring(href.indexOf("#")) : "");
 
 			$(this).attr("href", base + query + hash);
 		});
 	}
 }
+
+//preserve current page changes the continue url to the current url.
 function preserveCurrentPage() {
 
 	$(".preserve-page, .keep-page").each(function() {
@@ -155,12 +169,19 @@ function preserveCurrentPage() {
 	});
 
 }
-if (window.dontPreserveContinueState !== true) {
-	preserveCurrentPage();
-}
-if (window.dontPreserveCurrentPage !== true) {
-	preserveLinkStates();
-}
+//wait until other code is run
+$(document).ready(function() {
+	if (window.preserveContinueState !== false) {
+		preserveCurrentPage();
+	}
+	if (window.preserveCurrentPage !== false) {
+		preserveLinkStates();
+	}
+
+});
+$(document.body).on("submit", ".prevent-submit", function() {
+	return false;
+})
 
 
 
