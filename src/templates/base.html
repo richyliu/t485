@@ -87,70 +87,70 @@
 		<div id="alertBox">
 		</div>
 	{% endblock %}
+	<div class="jeffreymeng">
 	{% block navbar %}
 		<!-- Navigation -->
 
+			<nav class="navbar navbar-expand-lg navbar-light py-lg-4" id="navbar">
+				<div class="container">
+					<a class="navbar-brand text-uppercase text-expanded font-weight-bold d-lg-none" href="/">Troop 485</a>
+					<button aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"
+							class="navbar-toggler"
+						data-target="#navbarResponsive" data-toggle="collapse" type="button">
+						<span class="navbar-toggler-icon"></span>
+					</button>
 
-		<nav class="navbar navbar-expand-lg navbar-light py-lg-4" id="navbar">
-			<div class="container">
-				<a class="navbar-brand text-uppercase text-expanded font-weight-bold d-lg-none" href="/">Troop 485</a>
-				<button aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"
-						class="navbar-toggler"
-					data-target="#navbarResponsive" data-toggle="collapse" type="button">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-
-				<div class="collapse navbar-collapse" id="navbarResponsive">
-					<ul class="navbar-nav mx-auto">
+					<div class="collapse navbar-collapse" id="navbarResponsive">
+						<ul class="navbar-nav mx-auto">
 
 
-						<li class="nav-item px-lg-3">
-							<a class="nav-link text-uppercase text-expanded" href="/">Home</a>
-						</li>
+							<li class="nav-item px-lg-3">
+								<a class="nav-link text-uppercase text-expanded" href="/">Home</a>
+							</li>
 
-						<li class="nav-item px-lg-3">
-							<a class="nav-link text-uppercase text-expanded" href="/calendar">Calendar</a>
-						</li>
-						<li class="nav-item px-lg-3">
-							<a class="nav-link text-uppercase text-expanded" href="/directory">Directory</a>
-						</li>
-						<li class="nav-item px-lg-3">
-							<a class="nav-link text-uppercase text-expanded" href="/event-pages">Event Pages</a>
-						</li>
-						<li class="nav-item px-lg-3">
-							<a class="nav-link text-uppercase text-expanded" href="/pictures">Pictures</a>
-						</li>
+							<li class="nav-item px-lg-3">
+								<a class="nav-link text-uppercase text-expanded" href="/calendar">Calendar</a>
+							</li>
+							<li class="nav-item px-lg-3">
+								<a class="nav-link text-uppercase text-expanded" href="/directory">Directory</a>
+							</li>
+							<li class="nav-item px-lg-3">
+								<a class="nav-link text-uppercase text-expanded" href="/event-pages">Event Pages</a>
+							</li>
+							<li class="nav-item px-lg-3">
+								<a class="nav-link text-uppercase text-expanded" href="/pictures">Pictures</a>
+							</li>
 
-						<li class="nav-item dropdown px-lg-4">
-							<a class="nav-link dropdown-toggle text-uppercase text-expanded"
-							   data-toggle="dropdown" href="#" role="button">About</a>
+							<li class="nav-item dropdown px-lg-4">
+								<a class="nav-link dropdown-toggle text-uppercase text-expanded"
+								   data-toggle="dropdown" href="#" role="button">About</a>
 
-							<div class="dropdown-menu">
-								<a class="dropdown-item" href="/about/faq">FAQ</a>
-								<a class="dropdown-item" href="/about/merit-badges">Merit Badges</a>
-							</div>
-						</li>
-						<li class="nav-item dropdown px-lg-4">
-							<a aria-expanded="false" aria-haspopup="true"
-							   class="nav-link dropdown-toggle text-uppercase text-expanded" data-toggle="dropdown"
-							   href="#" id="account-dropdown" role="button">Account</a>
+								<div class="dropdown-menu">
+									<a class="dropdown-item" href="/about/faq">FAQ</a>
+									<a class="dropdown-item" href="/about/merit-badges">Merit Badges</a>
+								</div>
+							</li>
+							<li class="nav-item dropdown px-lg-4">
+								<a aria-expanded="false" aria-haspopup="true"
+								   class="nav-link dropdown-toggle text-uppercase text-expanded" data-toggle="dropdown"
+								   href="#" id="account-dropdown" role="button">Account</a>
 
-							<div aria-labelledby="account-dropdown" class="dropdown-menu">
-								<!-- acct-dd-status = account dropdown status -->
-								<!-- lo-show = logged out show, li-show = logged in show.
-								lo-show is hidden when logged in, and vice versa --->
-								<h6 class="dropdown-header" id="acct-dd-status">
-									<span id="acct-dd-status-notloggedin" class="lo-show">You are not logged in.</span>
-									<span id="acct-dd-status-loggedin" class="li-show hidden">Logged in as <b id="acct-dd-status-loggedin-username" class="user-displayname">loading...</b>.</span></h6>
-								<a id="acct-dd-login-link" class="lo-show dropdown-item {{preserveClass}}" href="/account/login">Login</a>
-								<a id="acct-dd-logout-link" class="li-show dropdown-item {{preserveClass}}" href="/account/logout">Logout</a>
-								<a id="acct-dd-settings-link" class="li-show dropdown-item {{preserveClass}}" href="/account/settings">Account Settings</a>
-							</div>
-						</li>
-					</ul>
+								<div aria-labelledby="account-dropdown" class="dropdown-menu">
+									<!-- acct-dd-status = account dropdown status -->
+									<!-- lo-show = logged out show, li-show = logged in show.
+									lo-show is hidden when logged in, and vice versa --->
+									<h6 class="dropdown-header" id="acct-dd-status">
+										<span id="acct-dd-status-notloggedin" class="lo-show">You are not logged in.</span>
+										<span id="acct-dd-status-loggedin" class="li-show hidden">Logged in as <b id="acct-dd-status-loggedin-username" class="user-displayname">loading...</b>.</span></h6>
+									<a id="acct-dd-login-link" class="lo-show dropdown-item {{preserveClass}}" href="/account/login">Login</a>
+									<a id="acct-dd-logout-link" class="li-show dropdown-item {{preserveClass}}" href="/account/logout">Logout</a>
+									<a id="acct-dd-settings-link" class="li-show dropdown-item {{preserveClass}}" href="/account/settings">Account Settings</a>
+								</div>
+							</li>
+						</ul>
+					</div>
 				</div>
-			</div>
-		</nav>
+			</nav>
 	{% endblock %}
 	{% block mainOuter %}
 
@@ -173,6 +173,8 @@
 
 		</div>
 	{% endblock %}
+
+	</div>
 	{% block feedbackBtn %}
 		<div id="feedback-box">
 			<button class="btn" id="feedback-btn">Feedback</button>

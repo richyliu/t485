@@ -60,15 +60,28 @@ label:not(.custom-control-label) {
 
 //.shrink {
 //	max-height: 50px;
-//}
-#navbar {
+//
+.nav-container {
+	position:relative;
+}
+.navbar {
+	transition: height 0.2s;
+	height: 100px;
+	position:absolute;
+	left:0;
+	right:0;
+	top:0;
 
+}
+.nav--sticky {
+
+	height: 50px;
 }
 .sticky {
 	top:0;
 	left:0;
 	right:0;
-	position:sticky;
+	position:fixed;
 	z-index:1000;
 }
 

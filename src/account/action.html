@@ -338,6 +338,12 @@
 				default:
 					errortext = "An unknown error occurred. (Code: " + error.code + ")";
 			}
+			if (errortext != null && errortext !== "") {
+				$("#loading").addClass("hidden");
+				$("#error-box").removeClass("hidden");
+				$(".error-title").html("Error");
+				$(".error-text").html("Error: " + errortext);
+			}
 		});
 	}
 </script>

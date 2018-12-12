@@ -118,8 +118,10 @@ $(document).ready(function () {
 
 		if (value && isScrolledEnough()) {
 			nav.addClass("sticky");//bootstrap sticky-top has a lot of weird stuff that we don't need
+			nav.addClass("nav--sticky");
 		} else if (!value) {
 			nav.removeClass("sticky");
+			nav.removeClass("nav--sticky");
 		}
 	};
 
@@ -132,8 +134,8 @@ $(document).ready(function () {
 		}
 		setShrink(distanceScrolled() > navHeight);
 
-		let shrinkProgress = Math.max(Math.min(300 - distanceScrolled(), normalNavHeight), 40);
-		nav.css("height", shrinkProgress);
+		// let shrinkProgress = Math.max(Math.min(300 - distanceScrolled(), normalNavHeight), 40);
+		// nav.css("height", shrinkProgress);
 	}).trigger("scroll");
 
 
