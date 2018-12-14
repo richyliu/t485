@@ -74,7 +74,7 @@
             } else {
 				$("#error").html("");
 				console.log(2)
-				firebase.database().ref("/users/" + user.uid + "/setupComplete/").once("value").then(function(snapshot) {
+				firebase.database().ref("/users/" + user.uid + "/data/lastUpdated/").once("value").then(function(snapshot) {
 					console.log(snapshot.exists())
 					if (snapshot.exists()) {
 						if (getQuery("continue") == "" || getQuery("continue") == null) {
