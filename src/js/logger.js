@@ -462,7 +462,7 @@ var Logger = (function() {
 							filedata:data,
 							timestamp:{
 								utc:new Date().getTime(),
-								string:new Date()
+								string:new Date() + ""
 							},
 							type:type,
 							personalInfo:{
@@ -609,7 +609,7 @@ var Logger = (function() {
 						title:$("#" + type + "-title").val(),
 						timestamp:{
 							utc:new Date().getTime(),
-							string:new Date()
+							string:new Date() + ""
 						},
 						type:type,
 						personalInfo:{
