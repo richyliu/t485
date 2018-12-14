@@ -130,8 +130,24 @@ gulp.task("libraries", function () {
         ])
         .pipe(gulp.dest("./" + outdir + "/css/"));
 
+	var fontjs = gulp.src([
+		"./node_modules/@fortawesome/fontawesome-pro/js/all.min.js",
+		"./node_modules/@fortawesome/fontawesome-pro/js/brands.min.js",
+		"./node_modules/@fortawesome/fontawesome-pro/js/fontawesome.min.js",
+		"./node_modules/@fortawesome/fontawesome-pro/js/light.min.js",
+		"./node_modules/@fortawesome/fontawesome-pro/js/regular.min.js",
+		"./node_modules/@fortawesome/fontawesome-pro/js/solid.min.js"
 
-    return merge(scripts, unminifiedscripts, unminifiedstyles, styles);
+	])
+		.pipe(gulp.dest("./" + outdir + "/fontawesome/js/"));
+	var fontcss = gulp.src([
+		"./node_modules/@fortawesome/fontawesome-pro/css/svg-with-js.min.css"
+
+	])
+		.pipe(gulp.dest("./" + outdir + "/fontawesome/css/"));
+
+
+    return merge(scripts, unminifiedscripts, unminifiedstyles, styles, fontjs, fontcss);
 });
 gulp.task("set-production", function(callback) {
 
@@ -156,18 +172,9 @@ gulp.task("serveBuild", function () {
 		server: {
 			baseDir: "./dist",
 			serveStaticOptions: {
-				extensions: ['html'] // This is the trick!
+				extensions: ['html']
 			}
 		},
-		// middleware: function(req,res,next) {
-		// 	if (req.url.charAt(req.url.length - 1) === "/") {
-		// 		req.url = req.url.substring(0, req.url.length - 2) + '.html';
-		// 	} else if (req.url.indexOf(".") == -1) {
-		// 		req.url = req.url + ".html";
-		// 	}
-		// 	return next();
-		// },
-		files: [base + "/css/*", base + "/**/*.html", base + "/js/*"],
 		open:false
 	});
 });
@@ -176,22 +183,9 @@ gulp.task("browserSync", function () {
         server: {
             baseDir: "./" + outdir,
 			serveStaticOptions: {
-				extensions: ['html'] // This is the trick!
+				extensions: ['html']
 			}
 		},
-		// middleware: function(req,res,next) {
-        // 	console.log(req);
-		// 	console.log(213);
-		// 	if (req.url.charAt(req.url.length - 1) === "/") {
-		// 		console.log("OMG", req.url, req.url.substring(0, req.url.length - 1));
-		// 		req.url = req.url.substring(0, req.url.length - 1) + '.html';
-		// 	} else if (req.url.indexOf(".") == -1) {
-		// 		req.url = req.url + ".html";
-		// 	}
-		// 	console.log(req.file);
-		// 	return next();
-		// },
-        files: [base + "/css/*", base + "/**/*.html", base + "/js/*"],
 		open:false
     });
 });

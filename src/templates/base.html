@@ -21,11 +21,15 @@
 	{% else %}
 		{% set preserveClass = "preserve-page" %}
 	{% endif %}
+	{% block coreFonts %}
 	<!-- Custom fonts for this template -->
 	<link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i"
 		  rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i" rel="stylesheet">
-
+	<script defer async src="/fontawesome/js/fontawesome.min.js"></script>
+	<script defer async src="/fontawesome/js/regular.min.js"></script>
+	{% endblock %}
+	{% block fonts %}{% endblock %}
 
 	{% block favicons %}
 	<!-- Favicons -->
@@ -53,6 +57,23 @@
 
 
 	{% block head_scripts %}{% endblock %}
+	{% block noscriptStyles %}
+		<noscript>
+			<style>
+				.noscript {
+					display:block;
+				}
+				.script-required, .storage-required {
+					display:none;
+				}
+			</style>
+		</noscript>
+		<style>
+			.noscript,.nostorage {
+				display:none;
+			}
+		</style>
+	{% endblock %}
 	{% block firebaseErrorCheck %}
 		<script>
 			try {
@@ -63,147 +84,164 @@
 				if (e.message === 'The quota has been exceeded.') {
 					// using Safari(desktop & iOS) or Chrome(iOS) w/ private, localStorage not supported
 					// firebase will throw error, so better to alert user now
-					alert("Private browsing is not supported on Safari or the Chrome IOS app. " +
-					"Turn off private browsing or use a supported private browsing app.");
+					document.write(`
+					.nostorage {
+						display:block;
+					}
+					.storage-required {
+						display:none;
+					}`)
 				}
-				throw 'notEnoughLocalStorage';
+
 			}
 		</script>
 	{% endblock %}
 </head>
 
 <body>
-	{% block header %}
-		<div class="text-center">
-			<a href="/">
-				<img src="/img/header.png" alt="Boy Scout Troop 485" id="header">
-			</a>
-		</div>
-	{% endblock %}
-	{% block alertBox %}
-	{# note: when adding custom alerts to a page via template,
-	call super() first instead of overriding the alertbox block #}
+	<div class="content">
+		{% block header %}
+			<div class="text-center">
+				<a href="/">
+					<img src="/img/header.png" alt="Boy Scout Troop 485" id="header">
+				</a>
+			</div>
+		{% endblock %}
+		{% block alertBox %}
+		{# note: when adding custom alerts to a page via template,
+		call super() first instead of overriding the alertbox block #}
 
-		<div id="alertBox">
-		</div>
-	{% endblock %}
-	<div class="jeffreymeng">
-	{% block navbar %}
-		<!-- Navigation -->
+			<div id="alertBox">
+			</div>
+		{% endblock %}
+		{% block navbar %}
+			<!-- Navigation -->
 
-			<nav class="navbar navbar-expand-lg navbar-light py-lg-4" id="navbar">
-				<div class="container">
-					<a class="navbar-brand text-uppercase text-expanded font-weight-bold d-lg-none" href="/">Troop 485</a>
-					<button aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"
-							class="navbar-toggler"
-						data-target="#navbarResponsive" data-toggle="collapse" type="button">
-						<span class="navbar-toggler-icon"></span>
-					</button>
+				<nav class="navbar navbar-expand-lg navbar-light py-lg-4" id="navbar">
+					<div class="container">
+						<a class="navbar-brand text-uppercase text-expanded font-weight-bold d-lg-none" href="/">Troop 485</a>
+						<button aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"
+								class="navbar-toggler"
+							data-target="#navbarResponsive" data-toggle="collapse" type="button">
+							<span class="navbar-toggler-icon"></span>
+						</button>
 
-					<div class="collapse navbar-collapse" id="navbarResponsive">
-						<ul class="navbar-nav mx-auto">
-
-
-							<li class="nav-item px-lg-3">
-								<a class="nav-link text-uppercase text-expanded" href="/">Home</a>
-							</li>
-
-							<li class="nav-item px-lg-3">
-								<a class="nav-link text-uppercase text-expanded" href="/calendar">Calendar</a>
-							</li>
-							<li class="nav-item px-lg-3">
-								<a class="nav-link text-uppercase text-expanded" href="/directory">Directory</a>
-							</li>
-							<li class="nav-item px-lg-3">
-								<a class="nav-link text-uppercase text-expanded" href="/event-pages">Event Pages</a>
-							</li>
-							<li class="nav-item px-lg-3">
-								<a class="nav-link text-uppercase text-expanded" href="/pictures">Pictures</a>
-							</li>
-
-							<li class="nav-item dropdown px-lg-4">
-								<a class="nav-link dropdown-toggle text-uppercase text-expanded"
-								   data-toggle="dropdown" href="#" role="button">About</a>
-
-								<div class="dropdown-menu">
-									<a class="dropdown-item" href="/about/faq">FAQ</a>
-									<a class="dropdown-item" href="/about/merit-badges">Merit Badges</a>
-								</div>
-							</li>
-							<li class="nav-item dropdown px-lg-4">
-								<a aria-expanded="false" aria-haspopup="true"
-								   class="nav-link dropdown-toggle text-uppercase text-expanded" data-toggle="dropdown"
-								   href="#" id="account-dropdown" role="button">Account</a>
-
-								<div aria-labelledby="account-dropdown" class="dropdown-menu">
-									<!-- acct-dd-status = account dropdown status -->
-									<!-- lo-show = logged out show, li-show = logged in show.
-									lo-show is hidden when logged in, and vice versa --->
-									<h6 class="dropdown-header" id="acct-dd-status">
-										<span id="acct-dd-status-notloggedin" class="lo-show">You are not logged in.</span>
-										<span id="acct-dd-status-loggedin" class="li-show hidden">Logged in as <b id="acct-dd-status-loggedin-username" class="user-displayname">loading...</b>.</span></h6>
-									<a id="acct-dd-login-link" class="lo-show dropdown-item {{preserveClass}}" href="/account/login">Login</a>
-									<a id="acct-dd-logout-link" class="li-show dropdown-item {{preserveClass}}" href="/account/logout">Logout</a>
-									<a id="acct-dd-settings-link" class="li-show dropdown-item {{preserveClass}}" href="/account/settings">Account Settings</a>
-								</div>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</nav>
-	{% endblock %}
-	{% block mainOuter %}
-
-		<div class="container" id="mainContainer">
-			{% block main %}
-
-				<div class="row mx-0">
-					<div class="box">
-						<div class="col-lg-12">
-							<h2 class="primary-heading">Work in Progress</h2>
+						<div class="collapse navbar-collapse" id="navbarResponsive">
+							<ul class="navbar-nav mx-auto">
 
 
-							<p>This page is not done yet! We apologize for any inconvenience this may cause.
-								<br>Code BASE_404</p>
+								<li class="nav-item px-lg-3">
+									<a class="nav-link text-uppercase text-expanded" href="/">Home</a>
+								</li>
+
+								<li class="nav-item px-lg-3">
+									<a class="nav-link text-uppercase text-expanded" href="/calendar">Calendar</a>
+								</li>
+								<li class="nav-item px-lg-3">
+									<a class="nav-link text-uppercase text-expanded" href="/directory">Directory</a>
+								</li>
+								<li class="nav-item px-lg-3">
+									<a class="nav-link text-uppercase text-expanded" href="/event-pages">Event Pages</a>
+								</li>
+								<li class="nav-item px-lg-3">
+									<a class="nav-link text-uppercase text-expanded" href="/pictures">Pictures</a>
+								</li>
+
+								<li class="nav-item dropdown px-lg-4">
+									<a class="nav-link dropdown-toggle text-uppercase text-expanded"
+									   data-toggle="dropdown" href="#" role="button">About</a>
+
+									<div class="dropdown-menu">
+										<a class="dropdown-item" href="/about/faq">FAQ</a>
+										<a class="dropdown-item" href="/about/merit-badges">Merit Badges</a>
+									</div>
+								</li>
+								<li class="nav-item dropdown px-lg-4">
+									<a aria-expanded="false" aria-haspopup="true"
+									   class="nav-link dropdown-toggle text-uppercase text-expanded" data-toggle="dropdown"
+									   href="#" id="account-dropdown" role="button">Account</a>
+
+									<div aria-labelledby="account-dropdown" class="dropdown-menu">
+										<div class="nostorage">
+											<h6 class="dropdown-header">Accounts are not supported in private Safari or Chrome iOS.</h6>
+										</div>
+										<div class="noscript">
+											<h6 class="dropdown-header">Javascript is required for accounts.</h6>
+										</div>
+										<div class="storage-required">
+											<!-- acct-dd-status = account dropdown status -->
+											<!-- lo-show = logged out show, li-show = logged in show.
+											lo-show is hidden when logged in, and vice versa --->
+											<h6 class="dropdown-header" id="acct-dd-status">
+												<span id="acct-dd-status-notloggedin" class="lo-show">You are not logged in.</span>
+												<span id="acct-dd-status-loggedin" class="li-show hidden">Logged in as <b id="acct-dd-status-loggedin-username" class="user-displayname">loading...</b>.</span></h6>
+
+											<a class="li-show dropdown-item {{preserveClass}}" href="/account/">Profile</a>
+											<a class="lo-show dropdown-item {{preserveClass}}" href="/account/login">Login</a>
+											<a class="li-show dropdown-item {{preserveClass}}" href="/account/logout">Logout</a>
+
+										</div>
+									</div>
+								</li>
+							</ul>
 						</div>
 					</div>
-				</div>
+				</nav>
+		{% endblock %}
+		{% block mainOuter %}
 
-			{%endblock %}
+			<div class="container" id="mainContainer">
+				{% block main %}
 
-		</div>
-	{% endblock %}
+					<div class="row mx-0">
+						<div class="box">
+							<div class="col-lg-12">
+								<h2 class="primary-heading">Work in Progress</h2>
 
-	</div>
-	{% block feedbackBtn %}
-		<div id="feedback-box">
-			<button class="btn" id="feedback-btn">Feedback</button>
-		</div>
-	{% endblock %}
-	{% block toTopBtn %}
 
-		<a href="#" class="to-top-btn">
+								<p>This page is not done yet! We apologize for any inconvenience this may cause.
+									<br>Code BASE_404</p>
+							</div>
+						</div>
+					</div>
 
-			<svg class="to-top-svg" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path fill="currentColor" d="M8 256C8 119 119 8 256 8s248 111 248 248-111 248-248 248S8 393 8 256zm231-113.9L103.5 277.6c-9.4 9.4-9.4 24.6 0 33.9l17 17c9.4 9.4 24.6 9.4 33.9 0L256 226.9l101.6 101.6c9.4 9.4 24.6 9.4 33.9 0l17-17c9.4-9.4 9.4-24.6 0-33.9L273 142.1c-9.4-9.4-24.6-9.4-34 0z"></path></svg>
+				{%endblock %}
 
-		</a>
-	{% endblock %}
-	{% block unexpectederror %}
-	<div class="container hidden" id="unexpectederror">
+			</div>
+		{% endblock %}
 
-		<div class="row">
-			<div class="box">
-				<div class="col-lg-12">
-					<h2 class="error">An Unexpected Error Occured</h2>
 
-					<!-- DTNR: Defualt Text Not Replaced -->
-					<p>Please report this bug or try again in a few minutes. <b>Code <span id="unexpectederror-code">UNKNOWN_ERROR_DTNR</span></b></p>
+		{% block feedbackBtn %}
+			<div class="feedback-box script-required">
+				<button class="btn feedback-btn" id="feedback-btn">Feedback</button>
+			</div>
+			<div class="feedback-box noscript">
+				<a class="btn feedback-btn" id="feedback-btn-noscript" href="mailto:jeffmeng7@gmail.com?subject=T485.org%20-%20Feedback%20(noscript)">Feedback</a>
+			</div>
+		{% endblock %}
+		{% block toTopBtn %}
 
+			<a class="scroll-to-top to-top-btn" style="display:none;">
+				<i class="far fa-arrow-circle-up fa-2x"></i>
+			</a>
+		{% endblock %}
+		{% block unexpectederror %}
+		<div class="container hidden" id="unexpectederror">
+
+			<div class="row">
+				<div class="box">
+					<div class="col-lg-12">
+						<h2 class="error">An Unexpected Error Occured</h2>
+
+						<!-- DTNR: Defualt Text Not Replaced -->
+						<p>Please report this bug or try again in a few minutes. <b>Code <span id="unexpectederror-code">UNKNOWN_ERROR_DTNR</span></b></p>
+
+					</div>
 				</div>
 			</div>
 		</div>
+		{% endblock %}
 	</div>
-	{% endblock %}
 	{% block footer %}
 
 		<footer class="footer text-faded text-center py-5">
@@ -217,7 +255,7 @@
 	{% block modals %} {% endblock %}
 	{% block feedback %}
 	<!-- Modal -->
-	<div class="modal fade" id="feedback-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+	<div class="modal fade script-required" id="feedback-modal" tabindex="-1" role="dialog" aria-hidden="true">
 		<div class="modal-dialog modal-lg" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -229,15 +267,15 @@
 				<div class="modal-body" id="feedback-main">
 					<h3>First things first</h3>
 					<div class="form-group">
-						<label for="name">Your Name:</label>
-						<input type="text" class="form-control" id="name">
+						<label for="fb-name">Your Name:</label>
+						<input type="text" class="form-control" id="fb-name">
 						<div class="invalid-feedback">
 							Your name is required.
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="email">Your Email:</label>
-						<input type="email" class="form-control" id="email">
+						<label for="fb-email">Your Email:</label>
+						<input type="email" class="form-control" id="fb-email">
 						<div class="invalid-feedback">
 							You must enter a valid email.
 						</div>
@@ -310,16 +348,22 @@
 					<div class="feedback-section feedback-feature collapse">
 						<h3>Tell us more</h3>
 						<div class="form-group">
-							<label for="bug-title">Feature title:</label>
+							<label for="feat-title">Feature title:</label>
 							<input type="text" class="form-control" id="feat-title">
-							<small id="feat-title-help" class="form-text text-muted">Give a short description of the feature - a name is perfect.</small>
+							<small id="feat-title-help" class="form-text text-muted">Give a short description of the feature -- a name is perfect.
+								<b class="float-right"><span id="feat-title-length">10</span><span id="feat-title-unit"> characters to go</span></b>
+							</small>
 							<div class="invalid-feedback">
 								You must enter a feature title.
 							</div>
+
 						</div>
 						<div class="form-group">
 							<label for="bug-description">Description (optional):</label>
 							<textarea class="form-control" id="feat-description"></textarea>
+							<small id="feat-description-help" class="form-text text-muted">For some bugs, it's helpful to include steps for reproduction of the bug (what did you do to get the bug?)
+								<b class="float-right"><span id="feat-description-length">0</span><span id="feat-description-unit"> / 5000</span></b>
+							</small>
 
 						</div>
 
@@ -361,7 +405,7 @@
 				<div class="modal-body hidden" id="feedback-done">
 					<h3>Report submitted</h3>
 					<p>You should receive an response soon. You can also contact us on slack at <a href="https://t485.slack.com/messages/C94MDTWTH/">#website</a>.</p>
-					<a href="../.#feedback">New report</a>
+					<a onclick="window.location.reload();" class="link">New report</a>
 				</div>
 				<div class="modal-footer">
 					<div class="uploading-hide">

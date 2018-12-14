@@ -1,16 +1,34 @@
-//var Logger = (function() {
+var Logger = (function() {
 
 
 	"use strict";
 	//handles logging and the feedback button
 
-
-	var Logger = {};
+	let toJSONSafe = function(str) {
+		return str.replace(/\n/g, "\\n")
+			.replace(/\'/g, "\\'")
+			.replace(/\"/g, '\\"');
+	};
+	var Logger = {
+		_log:[]
+	};
 	Logger.getDebugLog = function() {
-		return ["Debug log created", "Debug log sent"];
+		return Logger._log;
 	}
-	//Logger.initFeedback = function() {
+	Logger.log = function(message, options) {
+		var logMessage = {
+			message:message
+		}
+		if (options) {
+			logMessage.data = options.data;
+		}
+		Logger._log.push(logMessage);
+		console.log(logMessage);
+	}
 
+
+
+	Logger.initFeedback = function() {
 		$(document).ready(function() {
 			$(window).on("hashchange", function () {
 				if (window.location.hash == "#feedback") {
@@ -45,7 +63,9 @@
 		});
 
 		let getInfo = function() {
+			Logger.log("Getting All Info")
 			let getBrowser = function() {
+				Logger.log("Getting browser by duck typing")
 				// UA can be easily spoofed, this is a secondary method
 
 				// Chrome 1+
@@ -75,6 +95,7 @@
 				return "Unknown";
 			}
 			let getOS = function() {
+				Logger.log("Getting OS")
 				var userAgent = window.navigator.userAgent,
 					platform = window.navigator.platform,
 					macosPlatforms = ['Macintosh', 'MacIntel', 'MacPPC', 'Mac68K'],
@@ -97,6 +118,7 @@
 				return os;
 			};
 			let getNavigator = function() {
+				Logger.log("Getting Navigator");
 				// let _navigator = {};
 				// for (let i in navigator) _navigator[i] = navigator[i];
 				//
@@ -117,7 +139,7 @@
 					vendor:navigator.vendor
 				}
 			}
-
+			Logger.log("Returned all info")
 			return {
 				userAgent:window.navigator.userAgent,
 				browserByDuckTyping: getBrowser(),
@@ -144,16 +166,36 @@
 			minLength: 0
 		},
 			{
-				name: "name",
+				name: "fb-name",
 				validation: /^(.|\n){3,100}$/,
 				general:true
 			},
 			{
-				name: "email",
+				name: "fb-email",
 				validation: /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/,
 				general:true
 			}];
-
+		let featFields = [{
+			name: "title",
+			validation: /^(.|\n){10,150}$/,
+			maxLength: 150,
+			minLength: 10
+		}, {
+			name: "description",
+			validation: /^(.|\n){0,5000}$/,
+			maxLength: 5000,
+			minLength: 0
+		},
+			{
+				name: "fb-name",
+				validation: /^(.|\n){3,100}$/,
+				general:true
+			},
+			{
+				name: "fb-email",
+				validation: /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/,
+				general:true
+			}];
 		for (let i = 0; i < bugFields.length; i ++) {
 
 			let onChange = function() {
@@ -178,10 +220,46 @@
 					$("#" + (bugFields[i].general ? "" : "bug-")  + bugFields[i].name).removeClass("is-invalid");
 				}
 
+
+
 			}
 
 
 			$("#" + (bugFields[i].general ? "" : "bug-") + bugFields[i].name).on("change paste keyup", onChange);
+			onChange();
+
+		}
+
+		for (let i = 0; i < featFields.length; i ++) {
+
+			let onChange = function() {
+				let text = $("#" + (featFields[i].general ? "" : "feat-") + featFields[i].name).val();
+				let length = text.length;
+
+
+				if (featFields[i].maxLength !== undefined && featFields[i].minLength !== undefined) {
+					let valid = length >= featFields[i].minLength;
+
+					$("#" + (featFields[i].general ? "" : "feat-") + featFields[i].name + "-unit").text(valid ? " / " + featFields[i].maxLength : " characters to go");
+					$("#" + (featFields[i].general ? "" : "feat-") + featFields[i].name + "-length").text(valid ? length : featFields[i].minLength - length);
+				}
+
+				let regexValid = featFields[i].validation.test(text);
+				if (regexValid && featFields[i].wasValid !== true) {
+					//we don't want to say a field is invalid while the user is still completing the field, so
+					featFields[i].wasValid = true;
+				} else if (!regexValid && featFields[i].wasValid === true) {
+					$("#" + (featFields[i].general ? "" : "feat-") + featFields[i].name).addClass("is-invalid");
+				} else if ($("#" + (featFields[i].general ? "" : "feat-") + featFields[i].name).hasClass("is-invalid")) {
+					$("#" + (featFields[i].general ? "" : "feat-")  + featFields[i].name).removeClass("is-invalid");
+				}
+
+
+
+			}
+
+
+			$("#" + (featFields[i].general ? "" : "feat-") + featFields[i].name).on("change paste keyup", onChange);
 			onChange();
 
 		}
@@ -344,7 +422,6 @@
 				if (invalid) {
 					return;
 				}
-
 				afterValidation();
 
 				//show
@@ -358,7 +435,7 @@
 
 				upload(file, "bug", function(data, push) {
 					addIssueOnGithub({
-						name:$("#name").val(),
+						name:$("#fb-name").val(),
 						os:getInfo().detectedOS,
 						browser:getInfo().browserByDuckTyping,
 						pages:$("#" + type + "-affected-pages").val(),
@@ -380,7 +457,7 @@
 								displayName:user.displayName
 							}
 						}
-						firebase.database().ref("/feedback/reports/" + type + "/" + push.key).push({
+						firebase.database().ref("/feedback/reports/" + type + "/" + push.key).set({
 							title:$("#" + type + "-title").val(),
 							filedata:data,
 							timestamp:{
@@ -389,8 +466,8 @@
 							},
 							type:type,
 							personalInfo:{
-								name:$("#name").val(),
-								email:$("#email").val(),
+								name:$("#fb-name").val(),
+								email:$("#fb-email").val(),
 								user:userData
 							},
 							requestData:{
@@ -408,8 +485,6 @@
 
 							$("#feedback-modal .modal-body").addClass("hidden");
 							$("#feedback-done").removeClass("hidden");
-							$('#feedback-modal').modal({backdrop: true, keyboard: true})
-
 						});
 
 					});
@@ -426,27 +501,29 @@
 					var slackUrl = snapshot.val().slack.webhookurl;
 					let fileText = "";
 
-					if (data.fileType.split("/")[0] == "image") {
-						fileText = `![User uploaded image: ${data.fileUrl}](${data.fileUrl}) "\\\\n\\\\n ------- \\\\n"`;
-					} else if (data.fileUrl != null) {
-						fileText = "User Uploaded File URL: " + data.fileUrl + "\\n\\n ------- \\n";
+					if (data.fileType && data.fileType.split("/")[0] == "image") {
+						fileText = `![User uploaded image: ${data.fileUrl}](${data.fileUrl}) \n\n ------- \n`;
+					} else if (data.fileUrl && data.fileUrl != null) {
+						fileText = "User Uploaded File URL: " + data.fileUrl + "\n\n ------- \n";
 					}
 					let affectedPages  = "";
 					if (data.pages) {
-						affectedPages = "**Affected pages**:\\n```" + data.pages + "\\n```\\n"
+						affectedPages = "**Affected pages**:\n```" + data.pages + "\n```\n"
 					}
 
-					let bodyText = data.body != null ? data.body + "\\n ------- \\n": "";
+					let bodyText = data.body != null ? data.body + "\n\n ------- \n": "";
 					var type = data.type == "bug" ? "Bug Report" : "Feedback";
 
 					var body = "Data from " + type + " modal submitted by **" + data.name + "**:" +
-						"\\n\\n| Timestamp | Device | Browser | Type |" +
-						"\\n|---|---|---|---|\\n" +
-						"| "+ new Date() +" | "+ data.os +" | "+ data.browser +" | "+ data.type +" | \\n\\n"
+						"\n\n| Timestamp | Device | Browser | Type |" +
+						"\n|---|---|---|---|\n" +
+						"| "+ new Date() +" | "+ data.os +" | "+ data.browser +" | "+ data.type +" | \n\n"
 						+ affectedPages + fileText +
 						bodyText + "This report automatically created from the [t485.org](https://t485.org) feedback form.";
 
-					var payload = `{"title": "${data.title}", "body": "${body}", "labels":["${type == "Feedback" ? "enhancement" : type}"] }`;
+					Logger.log(body);
+					console.log(toJSONSafe(body));
+					var payload = `{"title": "${toJSONSafe(data.title)}", "body": "${toJSONSafe(body)}", "labels":["${type == "Feedback" ? "enhancement" : type}"] }`;
 
 
 					$.ajax({
@@ -457,15 +534,21 @@
 						url: "https://api.github.com/repos/t485/t485/issues?access_token=" + ghToken,
 						data: payload,
 						type: "POST"
-					}).always(function( ghdata ) {
+					}).always(function(ghdata) {
+						Logger.log("Github API Complete:" + {
+							data:ghdata
+						})
 						$.ajax({
 							url:slackUrl,
 							data:'payload=' + JSON.stringify({
 								text: `New ${type} Filed: ${data.title} - ` + ghdata.html_url
 							}),
 							type:"POST"
-						}).always(function(slackresponse) {
-
+						})
+							.always(function(slackresponse) {
+							Logger.log("Slack API push complete (ajax.always):", {
+								data:slackresponse
+							})
 							callback(ghdata.html_url);
 						})
 
@@ -475,6 +558,82 @@
 
 			}
 			let sendFeature = function () {
+				const type="feat";
+
+				let invalid = false;
+				for (let i = 0; i < featFields.length; i ++) {
+					let text = featFields[i].general === true ? $("#" + featFields[i].name).val() : $("#feat-" + featFields[i].name).val();
+					//console.log(bugFields[i].general, bugFields[i].name, text);
+
+					if (!(featFields[i].validation.test(text))) {
+						invalid = true;
+						$((featFields[i].general ? "#" : "#feat-") + featFields[i].name).addClass("is-invalid");
+
+					}
+
+				}
+				if (invalid) {
+					return;
+				}
+				afterValidation();
+
+				var push = firebase.database().ref("/feedback/" + type + "/").push();
+
+				//show
+				$("#feedback-main").addClass("hidden");
+				$("#feedback-loading").removeClass("hidden");
+
+				addIssueOnGithub({
+					name:$("#fb-name").val(),
+					os:getInfo().detectedOS,
+					browser:getInfo().browserByDuckTyping,
+					pages:null,
+					body:$("#" + type + "-description").val(),
+					title:$("#" + type + "-title").val(),
+					type:type,
+					fileUrl:null,
+					fileType:null
+				}, function(issueURL) {
+					let user = firebase.auth().currentUser;
+					let userData = {};
+					userData.loggedIn = user !== null;
+					if (userData.loggedIn) {
+						userData = {
+							//loggedIn:loggedIn,
+							id:user.uid || "Not Logged In",
+							email:user.email,
+							displayName:user.displayName
+						}
+					}
+					firebase.database().ref("/feedback/reports/" + type + "/" + push.key).set({
+						title:$("#" + type + "-title").val(),
+						timestamp:{
+							utc:new Date().getTime(),
+							string:new Date()
+						},
+						type:type,
+						personalInfo:{
+							name:$("#fb-name").val(),
+							email:$("#fb-email").val(),
+							user:userData
+						},
+						requestData:{
+							title:$("#" + type + "-title").val(),
+							description:$("#" + type + "-description").val(),
+							github:{
+								issueurl:issueURL
+							}
+						},
+						diagnosticData:getInfo(),
+						log:Logger.getDebugLog()
+					}).then(function() {
+
+						$("#feedback-modal .modal-body").addClass("hidden");
+						$("#feedback-done").removeClass("hidden");
+					});
+
+				});
+
 				//validate
 				afterValidation();
 				//submit
@@ -517,10 +676,7 @@
 			$("#bug-file").next('.custom-file-label').html("Choose File");
 
 		});
-	//}
-
-	Logger.log = function() {
-
 	}
-// 	return Logger;
-// })();
+ 	return Logger;
+ })();
+Logger.initFeedback();

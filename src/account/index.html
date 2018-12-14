@@ -1,5 +1,5 @@
 {% set title = "Your Account" %}
-{% set page = "Login" %}<
+{% set page = "Account" %}
 {% extends "base.html" %}
 
 {% block main %}
@@ -13,21 +13,13 @@
                 You are logged in as <span class="user-displayname">Loading...</span>.
             </p>
 
+				<ul class="list-group">
+					<li class="list-group-item">
+						<a href="settings">Settings</a>
+					</li>
+				</ul>
         </div>
     </div>
 </div>
 
-{% endblock %}
-
-{% block scripts %}
-<script>
-
-    firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {
-
-            $(".username").text(user.username);
-        }
-    });
-    
-</script>
 {% endblock %}
