@@ -16,3 +16,6 @@ Here's how to get started:
 2. Install the dependencies in the same directory as the project: `$ npm install`.
 3. Install the [Gulp](https://gulpjs.com/) CLI: `$ npm install gulp-cli -g` (`sudo` may be required on certain operating systems).
 4. Build a minified production build with `$ gulp build` or run a live dev server (usually at localhost:3000) with `$ gulp watch`.
+
+
+There is also an internal documentation available [here](https://beta.t485.org/docs).

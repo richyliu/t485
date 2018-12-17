@@ -26,6 +26,7 @@ const tsify = require("tsify");
 const rename = require("gulp-rename");
 const glob = require("glob");
 const es = require("event-stream");
+const typedoc = require("gulp-typedoc");
 
 const nunjucks = require("gulp-nunjucks");
 const nunjucks_config = require("./nunjucks-data");
@@ -84,13 +85,13 @@ gulp.task("typescript", function (done) {
 				.pipe(source(entry))
 				.pipe(rename(function(path){
 					//get rid of /js/pages/ but preserve any further directories.
-					console.log(path.dirname);
-					console.log(path.dirname.split("/").slice(3));
+
 					path.dirname = path.dirname.split("/").slice(3).join("/");
 
 					//change the extension
 					path.extname = ".bundle.js";
 				}))
+				.pipe(env === "production" ? uglify() : noop())
 				.pipe(gulp.dest("./" + outdir + "/js/"));
 		});
 		es.merge(tasks).on("end", done);
@@ -99,8 +100,38 @@ gulp.task("typescript", function (done) {
 });
 
 
+// Typedoc is a documentation generator for typescript
+gulp.task("docs", function() {
 
-gulp.task("clean:docs", function (callback) {
+
+	return gulp
+		.src([base + "/js/**/*.ts", "!./node_modules/**"])
+		.pipe(typedoc({
+			// TypeScript options (see typescript docs)
+			module: "browser",
+			target: "es5",
+			includeDeclarations: true,
+
+			// Output options (see typedoc docs)
+			out: "./" + outdir + "/docs",
+			//json: "./" + outdir + "/docs/docs.json",
+
+			//exclude node_modules
+			exclude: '**/node_modules/**',
+			ignore: '**/node_modules/**',
+			excludeExternals: true,
+
+
+			// TypeDoc options (see typedoc docs)
+			name: "T485 v2 Internal Docs",
+			theme: "default",
+			plugins: [],
+			ignoreCompilerErrors: false,
+			version: true,
+		}));
+});
+
+gulp.task("clean", function (callback) {
 	del.sync("./" + outdir, callback);
 	callback();
 });
@@ -200,16 +231,14 @@ gulp.task("set-production", function(callback) {
 	outdir = "dist";
 	callback();
 });
-gulp.task("build", gulp.series("set-production", "clean:docs",
-	gulp.parallel("styles", "assets", "scripts", "typescript", "libraries"),
+
+gulp.task("devbuild", gulp.series("clean",
+	gulp.parallel("styles", "docs", "assets", "scripts", "typescript", "libraries"),
 	"html"
 ), function (callback) {
 	callback();
 });
-gulp.task("devbuild", gulp.series("clean:docs",
-	gulp.parallel("styles",  "assets", "scripts", "typescript", "libraries"),
-	"html"
-), function (callback) {
+gulp.task("build", gulp.series("set-production", "devbuild"), function (callback) {
 	callback();
 });
 gulp.task("serveBuild", function () {
@@ -240,7 +269,7 @@ gulp.task("watch", gulp.parallel(function () {
 	gulp.watch(base + "/css/**/*.+(scss|sass)", gulp.parallel("sass"));
 	gulp.watch(base + "/css/**/*.css", gulp.parallel("css"));
 	gulp.watch([base + "/js/**/*.js", "!" + base + "/js/*.min.js"], gulp.parallel("scripts"));
-	gulp.watch([base + "/js/**/*.ts"], gulp.parallel("typescript"));
+	gulp.watch([base + "/js/**/*.ts"], gulp.parallel("typescript", "docs"));
 	gulp.watch(base + "/**/*.html", gulp.parallel("html"));
 	gulp.watch([base + "/fonts/**/*", base + "/js/**/*.js", base + "/css/**/*.css", base + "/js/**/*.map", base + "/css/**/*.map", base + "/img/**/*"], gulp.parallel("assets"));
 
