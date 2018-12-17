@@ -94,8 +94,8 @@ firebase.database().ref("/directory/keys/").once("value").then(function(snapshot
 		list.sort("col" + $("#sortby-select").val(), { order: $("#sortorder-select").val() });
 		$("#sortby-select, #sortorder-select").change(function() {
 			list.sort("col" + $("#sortby-select").val(), { order: $("#sortorder-select").val() });
-			setURLQuery(setQuery("sortby", $("#sortby-select").val()));
-			setURLQuery(setQuery("sortorder", $("#sortorder-select").val()));
+			setQueryString(setQuery("sortby", $("#sortby-select").val()));
+			setQueryString(setQuery("sortorder", $("#sortorder-select").val()));
 		});
 	});
 
@@ -266,10 +266,10 @@ function filterselectchange(){
 	}
 
 	if (!usingPreset) {
-		setURLQuery(setQuery("filter", show.join(",")));
+		setQueryString(setQuery("filter", show.join(",")));
 	} else {
 
-		setURLQuery(setQuery("filter", null));
+		setQueryString(setQuery("filter", null));
 	}
 
 }
@@ -332,7 +332,7 @@ function merge(old, newobj) {
 	return old;
 }
 $("#search").keyup(function() {
-	setURLQuery(setQuery("query", encodeURIComponent($("#search").val())));
+	setQueryString(setQuery("query", encodeURIComponent($("#search").val())));
 });
 function setOptions(options) {
 	for (i = 0; i <= 20; i ++) {

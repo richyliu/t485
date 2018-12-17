@@ -87,7 +87,7 @@
 <script id="scripts">
 
 	$(".restart").click(function() {
-		setURLQuery(setQueryUrl("changeEmail", true, setQueryUrl("verifEmailOnly", null, window.location.search)));
+		setQueryString(modifyQueryFromURL("changeEmail", true, modifyQueryFromURL("verifEmailOnly", null, window.location.search)));
 		firebase.auth().signOut().then(function() {
 			window.location.reload();
 		}).catch(function(error) {
@@ -175,7 +175,7 @@
             })
         } else {
 			 if ((getQuery("verifEmailOnly") == "true" || getQuery("verifEmailOnly"))) {
-				window.location.href = setQueryUrl("continue", encodeURIComponent(window.location.href), "/account/login.html");
+				window.location.href = modifyQueryFromURL("continue", encodeURIComponent(window.location.href), "/account/login.html");
 				//login, then redirect back here with same verifEmailOnly query
 			} else if (getQuery("key") !== "test") {
 			 	if (getQuery("changeEmail")) {

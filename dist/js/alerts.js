@@ -1,0 +1,1 @@
+window.alerts=void window;
