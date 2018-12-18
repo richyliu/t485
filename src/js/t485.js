@@ -1,5 +1,11 @@
 //T485.js
 
+//http://stackoverflow.com/a/17606289/5511561s
+String.prototype.replaceAll = function(search, replacement) {
+	var target = this;
+	return target.replace(new RegExp(escapeRegExp(search), 'g'), replacement);
+};
+
 // Fix dropdown menu bug on iOS
 $('.dropdown a').click(function() {
     if ($(this).parent().hasClass('open')) {
