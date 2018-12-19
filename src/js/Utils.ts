@@ -107,7 +107,7 @@ class URL {
 	 * with a method that may cause scrolling. To prevent fallbacks use the `setHash(hash, fallback)` signature
 	 * with hash set to an empty string (`""`).
 	 *
-	 * @returns `true` only if the hash was changed _without_ using the fallback. This means that if the fallback is used, or the hash is not
+	 * @return - Returns `true` only if the hash was changed _without_ using the fallback. This means that if the fallback is used, or the hash is not
 	 * changed at all because the fallback was not enabled, `false` will be returned.
 	 */
 	static setHash():boolean;
@@ -118,7 +118,7 @@ class URL {
 	 * @param fallback{default=false} - Set to true to fallback to a conventional method that may cause scrolling if the browser does not support
 	 * methods that do not cause scrolling.
 	 *
-	 * @returns `true` only if the hash was changed _without_ using the fallback. This means that if the fallback is used, or the hash is not
+	 * @return - Returns `true` only if the hash was changed _without_ using the fallback. This means that if the fallback is used, or the hash is not
 	 * changed at all because the fallback was not enabled, `false` will be returned.
 	 */
 	static setHash(hash:string, fallback:boolean):boolean;
