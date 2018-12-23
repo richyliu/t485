@@ -22,6 +22,7 @@ const base = "./src";
 
 const browserify = require("browserify");
 const source = require("vinyl-source-stream");
+const buffer = require('vinyl-buffer')
 const tsify = require("tsify");
 const rename = require("gulp-rename");
 const glob = require("glob");
@@ -79,7 +80,10 @@ gulp.task("typescript", function (done) {
 		if(err) done(err);
 
 		let tasks = files.map(function(entry) {
-			return browserify({ entries: [entry] })
+			return browserify({
+				entries: [entry],
+				debug:(env !== "production")
+			})
 				.plugin(tsify)
 				.bundle()
 				.pipe(source(entry))
@@ -91,6 +95,7 @@ gulp.task("typescript", function (done) {
 					//change the extension
 					path.extname = ".bundle.js";
 				}))
+				.pipe(buffer())
 				.pipe(env === "production" ? uglify() : noop())
 				.pipe(gulp.dest("./" + outdir + "/js/"));
 		});

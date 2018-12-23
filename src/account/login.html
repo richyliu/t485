@@ -10,17 +10,18 @@
             <h2 class="primary-heading">Login</h2>
 
 
-            <form class="prevent-submit">
+            <form class="prevent-submit" novalidate>
+				<div id="alerts"></div>
                 <div class="form-group">
                     <label for="email">Email address:</label>
-                    <input type="email" class="form-control" id="email" placeholder="Enter your email...">
+                    <input type="email" class="form-control" id="email" autocomplete="email" placeholder="Enter your email...">
                 </div>
                 <div class="form-group">
                     <label for="password">Password:</label>
-                    <input type="password" class="form-control" id="password" placeholder="Enter your password...">
+                    <input type="password" class="form-control" id="password" autocomplete="password" placeholder="Enter your password...">
                 </div>
                 <button class="btn btn-primary btn-block" id="login">Login</button>
-				<p class="text-danger" id="error"></p>
+
                 <p id="account-tray" class="text-center"><a href="/account/create" id="create-link" class="preserve-state">Create an account</a> | <a href="/account/resetpassword.html" id="forgot-password-link" class="preserve-state">Forgot password</a></p>
             </form>
         </div>
@@ -53,54 +54,5 @@
 {% endblock %}
 
 {% block scripts %}
-<script>
-	$("#main-box").on("keyup", function(event) {
-		// Cancel the default action, if needed
-		//event.preventDefault();
-		// Number 13 is the "Enter" key on the keyboard
-		if (event.keyCode === 13) {
-			// Trigger the button element with a click
-			$("#login").click();
-		}
-	});
-
-	firebase.auth().onAuthStateChanged(function(user) {
-		if (user) {
-			console.log(user)
-			if (!user.emailVerified) {
-				console.log(1)
-				$("#main-box").addClass("hidden");
-				$("#verify-box").removeClass("hidden");
-            } else {
-				$("#error").html("");
-				console.log(2)
-				firebase.database().ref("/users/" + user.uid + "/data/lastUpdated/").once("value").then(function(snapshot) {
-					console.log(snapshot.exists())
-					if (snapshot.exists()) {
-						if (getQuery("continue") == "" || getQuery("continue") == null) {
-							window.location.href = "/account/";
-						} else {
-							window.location.href = getQuery("continue");
-						}
-					} else {
-
-						$("#main-box").addClass("hidden");
-						$("#setup-box").removeClass("hidden");
-					}
-				})
-
-			}
-		}
-	});
-$("#login").click(function() {
-	var email = $("#email").val();
-	var password = $("#password").val();
-	$("#error").html("");
-    firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
-		$("#error").html("Error: Email/Password incorrect.");
-
-    })
-
-});
-</script>
+<script src="/js/account/login.bundle.js"></script>
 {% endblock %}
