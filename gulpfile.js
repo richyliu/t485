@@ -86,6 +86,7 @@ gulp.task("typescript", function (done) {
 			})
 				.plugin(tsify)
 				.bundle()
+				.pipe(plumber())
 				.pipe(source(entry))
 				.pipe(rename(function(path){
 					//get rid of /js/pages/ but preserve any further directories.
@@ -111,6 +112,7 @@ gulp.task("docs", function() {
 
 	return gulp
 		.src([base + "/js/**/*.ts", "!./node_modules/**"])
+		.pipe(plumber())
 		.pipe(typedoc({
 			// TypeScript options (see typescript docs)
 			module: "browser",

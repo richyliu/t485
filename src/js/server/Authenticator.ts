@@ -1,8 +1,15 @@
-import { Server } from "./server";
+import { Server, ServerError } from "./server";
 import "firebase/auth";
+import {User as FirebaseUser} from "firebase";
 /**
  * Authentication Server
  */
+interface AuthError extends ServerError {
+
+}
+interface User extends FirebaseUser {
+
+}
 class Authenticator extends Server {
 
 	constructor() {
@@ -16,7 +23,7 @@ class Authenticator extends Server {
 	 *
 	 * @param callback - A function which accepts a single parameter, user. User contains a firebase user object when the user is logged in, and null when logged out.
 	 */
-	public onAuthStateChanged(callback:((user:string) => void)) {
+	public onAuthStateChanged(callback:((user:User) => void)) {
 		return this.server.auth().onAuthStateChanged(callback);
 	}
 
@@ -32,5 +39,12 @@ class Authenticator extends Server {
 		return this.server.auth().signInWithEmailAndPassword(email, password);
 	}
 
+	/**
+	 * Logs out the current user. If the user logged in with an external Auth provider, they will have to log in again with that provider, but will not be logged out of that provider.
+	 */
+	public logout() {
+		return this.server.auth().signOut();
+	}
 }
 export default Authenticator;
+export {Authenticator, AuthError, User};

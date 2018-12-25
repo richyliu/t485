@@ -111,13 +111,22 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/t485/t485/blob/3abf9c4/src/js/Utils.ts#L13">Utils.ts:13</a></li>
+									<li>Defined in <a href="https://github.com/t485/t485/blob/1cbe3b5/src/js/Utils.ts#L23">Utils.ts:23</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Gets a parameter <code>name</code> from the current query string.</p>
 								</div>
+								<dl class="tsd-comment-tags">
+									<dt>example</dt>
+									<dd><pre><code class="language-javascript"><span class="hljs-comment">// query string: ?foo=Hello%20World&amp;bar=&amp;baz</span>
+<span class="hljs-keyword">let</span> foo = Query.get(<span class="hljs-string">'foo'</span>); <span class="hljs-comment">// "Hello World" (URL Component decoded)</span>
+<span class="hljs-keyword">let</span> bar = Query.get(<span class="hljs-string">'bar'</span>); <span class="hljs-comment">// "" (present with empty value)</span>
+<span class="hljs-keyword">let</span> baz = Query.get(<span class="hljs-string">'baz'</span>); <span class="hljs-comment">// "" (present with no value)</span>
+<span class="hljs-keyword">let</span> qux = Query.get(<span class="hljs-string">'qux'</span>); <span class="hljs-comment">// null (absent)</span></code></pre>
+									</dd>
+								</dl>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -129,18 +138,27 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
-							<p>The requested element</p>
+							<p>The requested element from the query URL, URL component decoded.</p>
 						</li>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/t485/t485/blob/3abf9c4/src/js/Utils.ts#L22">Utils.ts:22</a></li>
+									<li>Defined in <a href="https://github.com/t485/t485/blob/1cbe3b5/src/js/Utils.ts#L41">Utils.ts:41</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Gets a parameter <code>name</code> from the query string of <code>url</code>.</p>
 								</div>
+								<dl class="tsd-comment-tags">
+									<dt>example</dt>
+									<dd><pre><code class="language-javascript"><span class="hljs-keyword">let</span> url = <span class="hljs-string">"https://example.com/example?foo=Hello%20World&amp;bar=&amp;baz"</span>;
+<span class="hljs-keyword">let</span> foo = Query.get(<span class="hljs-string">'foo'</span>, url); <span class="hljs-comment">// "Hello World" (URL Component decoded)</span>
+<span class="hljs-keyword">let</span> bar = Query.get(<span class="hljs-string">'bar'</span>, url); <span class="hljs-comment">// "" (present with empty value)</span>
+<span class="hljs-keyword">let</span> baz = Query.get(<span class="hljs-string">'baz'</span>, url); <span class="hljs-comment">// "" (present with no value)</span>
+<span class="hljs-keyword">let</span> qux = Query.get(<span class="hljs-string">'qux'</span>, url); <span class="hljs-comment">// null (absent)</span></code></pre>
+									</dd>
+								</dl>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -173,26 +191,48 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/t485/t485/blob/3abf9c4/src/js/Utils.ts#L54">Utils.ts:54</a></li>
+									<li>Defined in <a href="https://github.com/t485/t485/blob/1cbe3b5/src/js/Utils.ts#L95">Utils.ts:95</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Returns all the query parameters from the current URL as an object.</p>
 								</div>
+								<dl class="tsd-comment-tags">
+									<dt>example</dt>
+									<dd><pre><code class="language-javascript"><span class="hljs-comment">// Current URL is https://example.com/example?foo=Hello%20World&amp;bar=&amp;baz</span>
+<span class="hljs-keyword">let</span> params = Query.getAll();
+<span class="hljs-comment">// params == {</span>
+<span class="hljs-comment">//     foo:"Hello World",</span>
+<span class="hljs-comment">//     bar:"",</span>
+<span class="hljs-comment">//     baz:"",</span>
+<span class="hljs-comment">// }</span></code></pre>
+									</dd>
+								</dl>
 							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
 						</li>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/t485/t485/blob/3abf9c4/src/js/Utils.ts#L59">Utils.ts:59</a></li>
+									<li>Defined in <a href="https://github.com/t485/t485/blob/1cbe3b5/src/js/Utils.ts#L111">Utils.ts:111</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Returns all the query parameters from <code>url</code> as an object</p>
 								</div>
+								<dl class="tsd-comment-tags">
+									<dt>example</dt>
+									<dd><pre><code class="language-javascript"><span class="hljs-keyword">let</span> url = <span class="hljs-string">"https://example.com/example?foo=Hello%20World&amp;bar=&amp;baz"</span>;
+<span class="hljs-keyword">let</span> params = Query.getAll(url);
+<span class="hljs-comment">// params == {</span>
+<span class="hljs-comment">//     foo:"Hello World",</span>
+<span class="hljs-comment">//     bar:"",</span>
+<span class="hljs-comment">//     baz:"",</span>
+<span class="hljs-comment">// }</span></code></pre>
+									</dd>
+								</dl>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -215,26 +255,38 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/t485/t485/blob/3abf9c4/src/js/Utils.ts#L38">Utils.ts:38</a></li>
+									<li>Defined in <a href="https://github.com/t485/t485/blob/1cbe3b5/src/js/Utils.ts#L62">Utils.ts:62</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Get the query string from the current URL.</p>
 								</div>
+								<dl class="tsd-comment-tags">
+									<dt>example</dt>
+									<dd><pre><code class="language-javascript"><span class="hljs-comment">// URL is https://example.com/example?foo=Hello%20World&amp;bar=baz#anchor</span>
+<span class="hljs-keyword">let</span> queryString = getString(); <span class="hljs-comment">// "?foo=Hello%20World&amp;bar=baz"</span></code></pre>
+									</dd>
+								</dl>
 							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
 						</li>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/t485/t485/blob/3abf9c4/src/js/Utils.ts#L44">Utils.ts:44</a></li>
+									<li>Defined in <a href="https://github.com/t485/t485/blob/1cbe3b5/src/js/Utils.ts#L74">Utils.ts:74</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Gets the query string (including <code>?</code>, up to but not including the hash if included).</p>
 								</div>
+								<dl class="tsd-comment-tags">
+									<dt>example</dt>
+									<dd><pre><code class="language-javascript"><span class="hljs-keyword">let</span> url = <span class="hljs-string">"https://example.com/example?foo=Hello%20World&amp;bar=baz#anchor"</span>;
+<span class="hljs-keyword">let</span> queryString = getString(url); <span class="hljs-comment">// "?foo=Hello%20World&amp;bar=baz"</span></code></pre>
+									</dd>
+								</dl>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -260,13 +312,21 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/t485/t485/blob/3abf9c4/src/js/Utils.ts#L74">Utils.ts:74</a></li>
+									<li>Defined in <a href="https://github.com/t485/t485/blob/1cbe3b5/src/js/Utils.ts#L133">Utils.ts:133</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Returns a string containing the current query string with the name set to value. If name already exists, it is overwritten.</p>
 								</div>
+								<dl class="tsd-comment-tags">
+									<dt>example</dt>
+									<dd><pre><code class="language-javascript"><span class="hljs-comment">// Current URL is https://example.com/example?continue=foo&amp;hello=world</span>
+<span class="hljs-keyword">let</span> str1 = Query.set(<span class="hljs-string">"continue"</span>, <span class="hljs-string">"bar"</span>); <span class="hljs-comment">// "?continue=bar&amp;hello=world"</span>
+<span class="hljs-keyword">let</span> str2 = Query.set(<span class="hljs-string">"quo"</span>, <span class="hljs-string">"baz"</span>); <span class="hljs-comment">// "?continue=foo&amp;hello=world&amp;quo=baz"</span>
+<span class="hljs-keyword">let</span> str3 = Query.set(<span class="hljs-string">"continue"</span>, <span class="hljs-literal">null</span>); <span class="hljs-comment">// "?hello=world"</span></code></pre>
+									</dd>
+								</dl>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -279,7 +339,7 @@
 								<li>
 									<h5>value: <span class="tsd-signature-type">string</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>The value to set the parameter to. Passing <code>false</code> removes the parameter.</p>
+										<p>The value to set the parameter to. Passing <code>null</code> removes the parameter.</p>
 									</div>
 								</li>
 							</ul>
@@ -289,13 +349,21 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/t485/t485/blob/3abf9c4/src/js/Utils.ts#L84">Utils.ts:84</a></li>
+									<li>Defined in <a href="https://github.com/t485/t485/blob/1cbe3b5/src/js/Utils.ts#L151">Utils.ts:151</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Returns a string containing the provided query string with the name set to value. If name already exists, it is overwritten.</p>
 								</div>
+								<dl class="tsd-comment-tags">
+									<dt>example</dt>
+									<dd><pre><code class="language-javascript"><span class="hljs-keyword">let</span> queryString = <span class="hljs-string">"?continue=foo&amp;hello=world"</span>;
+<span class="hljs-keyword">let</span> str1 = Query.set(<span class="hljs-string">"continue"</span>, <span class="hljs-string">"bar"</span>, queryString); <span class="hljs-comment">// "?continue=bar&amp;hello=world"</span>
+<span class="hljs-keyword">let</span> str2 = Query.set(<span class="hljs-string">"quo"</span>, <span class="hljs-string">"baz"</span>, queryString); <span class="hljs-comment">// "?continue=foo&amp;hello=world&amp;quo=baz"</span>
+<span class="hljs-keyword">let</span> str3 = Query.set(<span class="hljs-string">"continue"</span>, <span class="hljs-literal">null</span>, queryString); <span class="hljs-comment">// "?hello=world"</span></code></pre>
+									</dd>
+								</dl>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -308,7 +376,7 @@
 								<li>
 									<h5>value: <span class="tsd-signature-type">string</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>The value to set the parameter to. Passing <code>false</code> removes the parameter.</p>
+										<p>The value to set the parameter to. Passing <code>null</code> removes the parameter.</p>
 									</div>
 								</li>
 								<li>
@@ -332,7 +400,7 @@
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_authenticator_.html">"<wbr>Authenticator"</a>
+						<a href="../modules/_element_.html">"<wbr>Element"</a>
 					</li>
 					<li class="current tsd-kind-external-module">
 						<a href="../modules/_utils_.html">"<wbr>Utils"</a>
@@ -341,18 +409,30 @@
 						<a href="../modules/_alertbox_.html">"alert<wbr>Box"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_config_.html">"config"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
 						<a href="../modules/_pages_account_login_.html">"pages/account/login"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_server_.html">"server"</a>
+						<a href="../modules/_pages_account_logout_.html">"pages/account/logout"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_server_authenticator_.html">"server/<wbr>Authenticator"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_server_database_.html">"server/<wbr>Database"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_server_config_.html">"server/config"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_server_server_.html">"server/server"</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+					<li class=" tsd-kind-class tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="_utils_.linkstate.html" class="tsd-kind-icon">Link<wbr>State</a>
+					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class tsd-parent-kind-external-module tsd-is-not-exported">

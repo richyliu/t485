@@ -67,6 +67,13 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Contextual alert for warnings.</p>
+					</div>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
@@ -96,6 +103,7 @@
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-not-exported"><a href="_alertbox_.warningalert.html#context" class="tsd-kind-icon">context</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-not-exported"><a href="_alertbox_.warningalert.html#dismissible" class="tsd-kind-icon">dismissible</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-not-exported"><a href="_alertbox_.warningalert.html#group" class="tsd-kind-icon">group</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported"><a href="_alertbox_.warningalert.html#html" class="tsd-kind-icon">html</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-not-exported"><a href="_alertbox_.warningalert.html#strongtext" class="tsd-kind-icon">strong<wbr>Text</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-not-exported"><a href="_alertbox_.warningalert.html#text" class="tsd-kind-icon">text</a></li>
 							</ul>
@@ -103,7 +111,7 @@
 						<section class="tsd-index-section tsd-is-inherited tsd-is-not-exported">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-not-exported"><a href="_alertbox_.warningalert.html#gethtml" class="tsd-kind-icon">getHTML</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-not-exported"><a href="_alertbox_.warningalert.html#gethtml" class="tsd-kind-icon">getHTML</a></li>
 							</ul>
 						</section>
 					</div>
@@ -115,26 +123,128 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Warning<wbr>Alert<span class="tsd-signature-symbol">(</span>text<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, group<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span>, dismissible<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_alertbox_.warningalert.html" class="tsd-signature-type">WarningAlert</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Warning<wbr>Alert<span class="tsd-signature-symbol">(</span>text<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_alertbox_.warningalert.html" class="tsd-signature-type">WarningAlert</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Warning<wbr>Alert<span class="tsd-signature-symbol">(</span>text<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, dismissible<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_alertbox_.warningalert.html" class="tsd-signature-type">WarningAlert</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Warning<wbr>Alert<span class="tsd-signature-symbol">(</span>text<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, group<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_alertbox_.warningalert.html" class="tsd-signature-type">WarningAlert</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Warning<wbr>Alert<span class="tsd-signature-symbol">(</span>text<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, group<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, dismissible<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_alertbox_.warningalert.html" class="tsd-signature-type">WarningAlert</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Overrides <a href="_alertbox_.alert.html">Alert</a>.<a href="_alertbox_.alert.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/t485/t485/blob/3abf9c4/src/js/alertBox.ts#L53">alertBox.ts:53</a></li>
+									<li>Defined in <a href="https://github.com/t485/t485/blob/1cbe3b5/src/js/alertBox.ts#L159">alertBox.ts:159</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>text: <span class="tsd-signature-type">any</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>The text of the alert. HTML in this field will be rendered.</p>
+										</div>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="_alertbox_.warningalert.html" class="tsd-signature-type">WarningAlert</a></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Overrides <a href="_alertbox_.alert.html">Alert</a>.<a href="_alertbox_.alert.html#constructor">constructor</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/t485/t485/blob/1cbe3b5/src/js/alertBox.ts#L165">alertBox.ts:165</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>text: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>The text of the alert. HTML in this field will be rendered.</p>
+										</div>
+									</div>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> group: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;warning&quot;</span></h5>
+									<h5>dismissible: <span class="tsd-signature-type">boolean</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>Whether the alert should be dismissible.</p>
+										</div>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="_alertbox_.warningalert.html" class="tsd-signature-type">WarningAlert</a></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Overrides <a href="_alertbox_.alert.html">Alert</a>.<a href="_alertbox_.alert.html#constructor">constructor</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/t485/t485/blob/1cbe3b5/src/js/alertBox.ts#L172">alertBox.ts:172</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>text: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>The text of the alert. HTML in this field will be rendered.</p>
+										</div>
+									</div>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> dismissible: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> =&nbsp;true</span></h5>
+									<h5>group: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>The group/type of alert. An alert of the same group will overwrite all previous alerts of that group. Alerts with &quot;&quot; or null as a group are never overwritten.</p>
+										</div>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="_alertbox_.warningalert.html" class="tsd-signature-type">WarningAlert</a></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Overrides <a href="_alertbox_.alert.html">Alert</a>.<a href="_alertbox_.alert.html#constructor">constructor</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/t485/t485/blob/1cbe3b5/src/js/alertBox.ts#L179">alertBox.ts:179</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>text: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>The text of the alert. HTML in this field will be rendered.</p>
+										</div>
+									</div>
+								</li>
+								<li>
+									<h5>group: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>The group/type of alert. An alert of the same group will overwrite all previous alerts of that group. Alerts with &quot;&quot; or null as a group are never overwritten.</p>
+										</div>
+									</div>
+								</li>
+								<li>
+									<h5>dismissible: <span class="tsd-signature-type">boolean</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>Whether the alert should be dismissible.</p>
+										</div>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="_alertbox_.warningalert.html" class="tsd-signature-type">WarningAlert</a></h4>
@@ -151,9 +261,14 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_alertbox_.alert.html">Alert</a>.<a href="_alertbox_.alert.html#context">context</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/t485/t485/blob/3abf9c4/src/js/alertBox.ts#L7">alertBox.ts:7</a></li>
+							<li>Defined in <a href="https://github.com/t485/t485/blob/1cbe3b5/src/js/alertBox.ts#L51">alertBox.ts:51</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>A contextual class for the alert. Should be a string: primary, secondary, success, danger, warning, info, or dark.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-not-exported">
 					<a name="dismissible" class="tsd-anchor"></a>
@@ -162,9 +277,14 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_alertbox_.alert.html">Alert</a>.<a href="_alertbox_.alert.html#dismissible">dismissible</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/t485/t485/blob/3abf9c4/src/js/alertBox.ts#L11">alertBox.ts:11</a></li>
+							<li>Defined in <a href="https://github.com/t485/t485/blob/1cbe3b5/src/js/alertBox.ts#L71">alertBox.ts:71</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Whether the alert should be dismissible by the user.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-not-exported">
 					<a name="group" class="tsd-anchor"></a>
@@ -173,9 +293,30 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_alertbox_.alert.html">Alert</a>.<a href="_alertbox_.alert.html#group">group</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/t485/t485/blob/3abf9c4/src/js/alertBox.ts#L10">alertBox.ts:10</a></li>
+							<li>Defined in <a href="https://github.com/t485/t485/blob/1cbe3b5/src/js/alertBox.ts#L66">alertBox.ts:66</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The group/type of alert. An alert of the same group will overwrite all previous alerts with the same group. Alerts with &quot;&quot; or null as their group are never overwritten.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported">
+					<a name="html" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> html</h3>
+					<div class="tsd-signature tsd-kind-icon">html<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_element_.element.html">Element</a>.<a href="_element_.element.html#html">html</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/t485/t485/blob/1cbe3b5/src/js/Element.ts#L9">Element.ts:9</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The HTML for the Element.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-not-exported">
 					<a name="strongtext" class="tsd-anchor"></a>
@@ -184,9 +325,14 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_alertbox_.alert.html">Alert</a>.<a href="_alertbox_.alert.html#strongtext">strongText</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/t485/t485/blob/3abf9c4/src/js/alertBox.ts#L9">alertBox.ts:9</a></li>
+							<li>Defined in <a href="https://github.com/t485/t485/blob/1cbe3b5/src/js/alertBox.ts#L61">alertBox.ts:61</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Strong Text for the alert.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-not-exported">
 					<a name="text" class="tsd-anchor"></a>
@@ -195,28 +341,37 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_alertbox_.alert.html">Alert</a>.<a href="_alertbox_.alert.html#text">text</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/t485/t485/blob/3abf9c4/src/js/alertBox.ts#L8">alertBox.ts:8</a></li>
+							<li>Defined in <a href="https://github.com/t485/t485/blob/1cbe3b5/src/js/alertBox.ts#L56">alertBox.ts:56</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The text inside the alert. HTML will be displayed as HTML.</p>
+						</div>
+					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group tsd-is-inherited tsd-is-not-exported">
 				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-not-exported">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-not-exported">
 					<a name="gethtml" class="tsd-anchor"></a>
 					<h3>getHTML</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-not-exported">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-not-exported">
 						<li class="tsd-signature tsd-kind-icon">getHTML<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_alertbox_.alert.html">Alert</a>.<a href="_alertbox_.alert.html#gethtml">getHTML</a></p>
+								<p>Overrides <a href="_element_.element.html">Element</a>.<a href="_element_.element.html#gethtml">getHTML</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/t485/t485/blob/3abf9c4/src/js/alertBox.ts#L29">alertBox.ts:29</a></li>
+									<li>Defined in <a href="https://github.com/t485/t485/blob/1cbe3b5/src/js/alertBox.ts#L93">alertBox.ts:93</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+							<p>Returns DOM-ready HTML of the alert.</p>
 						</li>
 					</ul>
 				</section>
@@ -229,7 +384,7 @@
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_authenticator_.html">"<wbr>Authenticator"</a>
+						<a href="../modules/_element_.html">"<wbr>Element"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/_utils_.html">"<wbr>Utils"</a>
@@ -238,13 +393,22 @@
 						<a href="../modules/_alertbox_.html">"alert<wbr>Box"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_config_.html">"config"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
 						<a href="../modules/_pages_account_login_.html">"pages/account/login"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_server_.html">"server"</a>
+						<a href="../modules/_pages_account_logout_.html">"pages/account/logout"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_server_authenticator_.html">"server/<wbr>Authenticator"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_server_database_.html">"server/<wbr>Database"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_server_config_.html">"server/config"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_server_server_.html">"server/server"</a>
 					</li>
 				</ul>
 			</nav>
@@ -279,13 +443,16 @@
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-not-exported">
 								<a href="_alertbox_.warningalert.html#group" class="tsd-kind-icon">group</a>
 							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported">
+								<a href="_alertbox_.warningalert.html#html" class="tsd-kind-icon">html</a>
+							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-not-exported">
 								<a href="_alertbox_.warningalert.html#strongtext" class="tsd-kind-icon">strong<wbr>Text</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-not-exported">
 								<a href="_alertbox_.warningalert.html#text" class="tsd-kind-icon">text</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-not-exported">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-not-exported">
 								<a href="_alertbox_.warningalert.html#gethtml" class="tsd-kind-icon">getHTML</a>
 							</li>
 						</ul>
