@@ -1,7 +1,7 @@
 import { Query } from './foo';
 
 it('basic', () => {
-	expect(Query.get("q", "?q=0")).toBe("0");
+	expect(Query.get("q","?q=0")).toBe("0");
 });
 
 // it('basic again', () => {
