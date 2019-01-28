@@ -1,7 +1,7 @@
 import { Authenticator, AuthError, User }  from "../../server/Authenticator";
 import { Database } from "../../server/Database";
 import { AlertBox, ErrorAlert } from "../../AlertBox";
-import { Query } from "../../Utils";
+import Query from "../../utils/Query";
 import * as $ from "jQuery";
 
 let authenticator = new Authenticator();
@@ -22,8 +22,8 @@ function init() {
 	});
 
 	$("#login").click(function() {
-		var email = $("#email").val();
-		var password = $("#password").val();
+		let email = $("#email").val() + "";
+		let password = $("#password").val() + "";
 		$("#error").html("");
 		authenticator.emailLogin(email, password).catch(function(error:AuthError) {
 

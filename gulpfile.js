@@ -18,11 +18,14 @@ const htmlMinOptions = {
 
 let env = process.env.NODE_ENV || "development";
 let outdir = env == "production" ? "dist" : "devserver";
+let silentDocs = false;
 const base = "./src";
 
 const browserify = require("browserify");
+const babelify = require("babelify");
+
 const source = require("vinyl-source-stream");
-const buffer = require('vinyl-buffer')
+const buffer = require('vinyl-buffer');
 const tsify = require("tsify");
 const rename = require("gulp-rename");
 const glob = require("glob");
@@ -85,6 +88,7 @@ gulp.task("typescript", function (done) {
 				debug:(env !== "production")
 			})
 				.plugin(tsify)
+				//.transform(babelify, { extensions: [ '.tsx', '.ts' ] })
 				.bundle()
 				.pipe(plumber())
 				.pipe(source(entry))
@@ -105,6 +109,10 @@ gulp.task("typescript", function (done) {
 
 });
 
+gulp.task("developer", function() {
+	return gulp.src(base + "/developer/**")
+		.pipe(outdir + "/developer/");
+});
 
 // Typedoc is a documentation generator for typescript
 gulp.task("docs", function() {
@@ -116,25 +124,32 @@ gulp.task("docs", function() {
 		.pipe(typedoc({
 			// TypeScript options (see typescript docs)
 			module: "browser",
-			target: "es5",
+			target: "es6",
+			//lib:["es6", "dom"],
 			includeDeclarations: true,
+			// compilerOptions: {
+			// 	module: "browser",
+			// 	target: "es6",
+			// 	lib:["es6", "dom"]
+			// },
 
 			// Output options (see typedoc docs)
-			out: "./" + outdir + "/docs",
-			//json: "./" + outdir + "/docs/docs.json",
+			out: "./" + outdir + "/developer/docs/",
+			//json: "./" + outdir + "/developer/docs/docs.json",
 
-			//exclude node_modules
-			exclude: '**/node_modules/**',
-			ignore: '**/node_modules/**',
+			// Exclude node_modules
+			exclude: "**/node_modules/**",
+			//ignore: "**/node_modules/**",
 			excludeExternals: true,
 
 
 			// TypeDoc options (see typedoc docs)
 			name: "T485 v2 Internal Docs",
-			theme: "default",
+			theme: "typedoc_theme",
 			plugins: [],
-			ignoreCompilerErrors: false,
+			ignoreCompilerErrors: true,
 			version: true,
+			logger:silentDocs ? "none" : undefined
 		}));
 });
 
@@ -238,9 +253,13 @@ gulp.task("set-production", function(callback) {
 	outdir = "dist";
 	callback();
 });
+gulp.task("set-silentDocs", function(callback) {
+	silentDocs = true;
+	callback();
+});
 
-gulp.task("devbuild", gulp.series("clean",
-	gulp.parallel("styles", "docs", "assets", "scripts", "typescript", "libraries"),
+gulp.task("devbuild", gulp.series("set-silentDocs", "clean",
+	gulp.parallel("styles", "assets", "scripts", "typescript", "libraries", "docs"),
 	"html"
 ), function (callback) {
 	callback();
@@ -252,6 +271,17 @@ gulp.task("serveBuild", function () {
 	browserSync.init({
 		server: {
 			baseDir: "./dist",
+			serveStaticOptions: {
+				extensions: ["html"]
+			}
+		},
+		open:false
+	});
+});
+gulp.task("serveDev", function () {
+	browserSync.init({
+		server: {
+			baseDir: "./devserver",
 			serveStaticOptions: {
 				extensions: ["html"]
 			}

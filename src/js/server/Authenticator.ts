@@ -1,6 +1,6 @@
-import { Server, ServerError } from "./server";
+import { ServerConnection, ServerError } from "./ServerConnection";
 import "firebase/auth";
-import {User as FirebaseUser} from "firebase";
+import { User as FirebaseUser } from "firebase";
 /**
  * Authentication Server
  */
@@ -10,7 +10,7 @@ interface AuthError extends ServerError {
 interface User extends FirebaseUser {
 
 }
-class Authenticator extends Server {
+class Authenticator extends ServerConnection {
 
 	constructor() {
 		super();

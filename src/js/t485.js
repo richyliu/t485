@@ -180,9 +180,10 @@ $(document.body).on("submit", ".prevent-submit", function() {
 firebase.auth().onAuthStateChanged( function (user) {
 	if (user) {
 		var email = user.email;
-		var displayname = user.displayname || email;
+		var displayname = user.displayName || email;
 		$(".user-email").text(email);
 		$(".user-displayname").text(displayname);
+		$(".user-displayname-force").text(user.displayName);
 
 		$(".lo-show").addClass("hidden");
 		$(".li-show").removeClass("hidden");

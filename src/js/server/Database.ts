@@ -1,10 +1,10 @@
-import { Server } from "./server";
+import { ServerConnection } from "./ServerConnection";
 import "firebase/database";
 /**
  * A interface for connecting to the Database.
  */
 
-class Database extends Server {
+class Database extends ServerConnection {
 
 	/**
 	 * Create a new Database connection.
