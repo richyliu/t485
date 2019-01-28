@@ -21,6 +21,6 @@ db.ref("/directory/keys").once("value").then(function(snapshot) {
 
 	let directory = new Directory(keys, []);
 	directory.update().then(function() {
-		console.log(directory.scouts);
+		console.log(directory.rawData);
 	});
 });

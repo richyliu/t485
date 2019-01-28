@@ -1,7 +1,7 @@
-// @ts-ignore
-import * as firebase from "firebase";
-// @ts-ignore
-import { FirebaseError} from "firebase";
+//@ts-ignore
+import * as firebase from "firebase/app";
+//@ts-ignore
+import { FirebaseError } from "firebase";
 
 import { firebaseConfig } from "./config";
 
@@ -16,7 +16,7 @@ class ServerConnection {
 	 * The firebase instance.
 	 */
 	protected server:firebase.app.App;
-
+g
 	/**
 	 * Create a new server connection.
 	 */
