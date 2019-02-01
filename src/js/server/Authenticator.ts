@@ -8,7 +8,8 @@ interface AuthError extends ServerError {
 
 }
 interface User extends FirebaseUser {
-
+	emailVerified:boolean;
+	uid:string;
 }
 class Authenticator extends ServerConnection {
 

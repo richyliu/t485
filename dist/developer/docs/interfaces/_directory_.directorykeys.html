@@ -73,7 +73,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Loads a directory from a given spreadsheet URL.</p>
+						<p>The Directory Keys are an interface to pass the sheets for each patrol and the range that the directory is in.</p>
 					</div>
 				</div>
 			</section>
@@ -115,7 +115,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_spreadsheet_.spreadsheetkeys.html">SpreadsheetKeys</a>.<a href="_spreadsheet_.spreadsheetkeys.html#api">api</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/t485/t485/blob/71091ce/src/js/Spreadsheet.ts#L20">Spreadsheet.ts:20</a></li>
+							<li>Defined in <a href="https://github.com/t485/t485/blob/4988725/src/js/Spreadsheet.ts#L20">Spreadsheet.ts:20</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -131,7 +131,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_spreadsheet_.spreadsheetkeys.html">SpreadsheetKeys</a>.<a href="_spreadsheet_.spreadsheetkeys.html#id">id</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/t485/t485/blob/71091ce/src/js/Spreadsheet.ts#L15">Spreadsheet.ts:15</a></li>
+							<li>Defined in <a href="https://github.com/t485/t485/blob/4988725/src/js/Spreadsheet.ts#L15">Spreadsheet.ts:15</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -146,9 +146,14 @@
 					<div class="tsd-signature tsd-kind-icon">range<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/t485/t485/blob/71091ce/src/js/Directory.ts#L11">Directory.ts:11</a></li>
+							<li>Defined in <a href="https://github.com/t485/t485/blob/4988725/src/js/Directory.ts#L24">Directory.ts:24</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The range from which to consider data within each sheet. The range must be a string without a sheet.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
 					<a name="sheets" class="tsd-anchor"></a>
@@ -156,9 +161,14 @@
 					<div class="tsd-signature tsd-kind-icon">sheets<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/t485/t485/blob/71091ce/src/js/Directory.ts#L10">Directory.ts:10</a></li>
+							<li>Defined in <a href="https://github.com/t485/t485/blob/4988725/src/js/Directory.ts#L19">Directory.ts:19</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>An array of sheet names. Each name should be a string that exactly matches a sheet name within the Google Spreadsheet.</p>
+						</div>
+					</div>
 				</section>
 			</section>
 		</div>
@@ -187,7 +197,13 @@
 						<a href="../modules/_contact_phonenumber_.html">"contact/<wbr>Phone<wbr>Number"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
+						<a href="../modules/_contact_phonenumber_test_.html">"contact/<wbr>Phone<wbr>Number.test"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
 						<a href="../modules/_contact_scout_.html">"contact/<wbr>Scout"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_pages_404_.html">"pages/404"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/_pages_account_login_.html">"pages/account/login"</a>
@@ -229,6 +245,9 @@
 					<li class=" tsd-kind-class tsd-parent-kind-external-module">
 						<a href="../classes/_directory_.directory.html" class="tsd-kind-icon">Directory</a>
 					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="_directory_.directorydata.html" class="tsd-kind-icon">Directory<wbr>Data</a>
+					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface tsd-parent-kind-external-module tsd-is-not-exported">
@@ -250,6 +269,9 @@
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="_directory_.directorysheet.html" class="tsd-kind-icon">Directory<wbr>Sheet</a>
+					</li>
 				</ul>
 			</nav>
 		</div>
