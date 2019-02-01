@@ -10,6 +10,8 @@ You can view it at [beta.t485.org](https://beta.t485.org).
 
 The T485 Website uses [gulp](https://gulpjs.com/) and [nunjucks](https://mozilla.github.io/nunjucks/) to build and host a live development server. 
 
+There is a developer guide avaliable [here](https://beta.t485.org/developer/).
+
 Here's how to get started:
 
 1. Install [node](https://nodejs.org/en/) and [npm](https://www.npmjs.com/) if you haven't already.
@@ -18,4 +20,4 @@ Here's how to get started:
 4. Build a minified production build with `$ gulp build` or run a live dev server (usually at localhost:3000) with `$ gulp watch`.
 
 
-There is also an internal documentation available [here](https://beta.t485.org/docs).
+We also have a [internal documentation](https://beta.t485.org/developer/docs/) avaliable.

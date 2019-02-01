@@ -2,7 +2,7 @@ import {Spreadsheet, SpreadsheetKeys} from "./Spreadsheet";
 // import {isNumber} from "util";
 import Person  from "./contact/Person";
 import PhoneNumber  from "./contact/PhoneNumber";
-import Scout  from "./contact/Scout";
+import {Scout, Patrol, patrolMap}  from "./contact/Scout";
 
 /**
  * Loads a directory from a given spreadsheet URL.
@@ -13,12 +13,19 @@ import Scout  from "./contact/Scout";
  */
 interface DirectoryKeys extends SpreadsheetKeys {
 
-	sheets:string[],
-	range:string
+	/**
+	 * An array of sheet names. Each name should be a string that exactly matches a sheet name within the Google Spreadsheet.
+	 */
+	sheets:string[];
+
+	/**
+	 * The range from which to consider data within each sheet. The range must be a string without a sheet.
+	 */
+	range:string;
 }
 
 /**
- * Raw Data returned b the google sheets API
+ * Raw Data returned by the google sheets API
  */
 interface DirectoryData {
 	spreadsheetId:string,
@@ -28,7 +35,7 @@ interface DirectoryData {
 /**
  * Raw data for a single sheet from the google sheets API.
  */
-interface DirectorySheet{
+interface DirectorySheet {
 	majorDimension:string,
 	range:string,
 	values:string[]
@@ -38,7 +45,7 @@ class Directory extends Spreadsheet {
 	protected keys: DirectoryKeys;
 	protected keymap: string[][];
 	public rawData: DirectoryData;
-	public scouts: Scout[];
+	protected scouts: Scout[];
 
 	/**
 	 * Create a new instance of the directory viewer.
@@ -48,26 +55,32 @@ class Directory extends Spreadsheet {
 	constructor(keys:DirectoryKeys, keymap:string[][]) {
 		super(keys);
 
-		this.keys = keys;
 		this.keymap = keymap;
 		this.update();
 	}
 
 	/**
 	 * Update the local data with the latest data from the spreadsheet.
+	 * @param forEach - An optional callback that is called once for each scout. This function may optionally return a boolean, which if false will prevent the Scout from being added to the local data.
 	 * @return Returns a promise.
 	 */
-	public update() {
+	public update(forEach?: ((scout:Scout) => void|boolean)) {
 
 		return this.getSheets(this.keys.sheets, this.keys.range).then((data:DirectoryData) => {
 			this.rawData = data;
-			this.scouts = this.processRawData(data);
+			this.scouts = this.processRawData(data, forEach);
 			return data;
 		});
 
 	}
 
-	protected processRawData(data:DirectoryData) {
+	/**
+	 * Processes an object containing raw data from the google sheets api with multiple sheets and transforms it into an array of scouts.
+	 * @param data - The raw data to process.
+	 * @param forEach - An optional callback that is called once for each scout. This function may optionally return a boolean, which if false will prevent the Scout from being added to the array.
+	 */
+	protected processRawData(data:DirectoryData, forEach?: ((scout:Scout) => void|boolean)):Scout[] {
+		let result = [];
 
 		// For each patrol
 		for (let i = 0; i < data.valueRanges.length; i ++) {
@@ -75,33 +88,48 @@ class Directory extends Spreadsheet {
 			for (let j = 0; j < data.valueRanges[i].values.length; j ++) {
 				// For each property of a scout
 				let currentScout = data.valueRanges[i].values[j];
-				let currentScoutData = {};
+				let currentScoutData:any = {};
 				for (let k = 0; k < this.keymap.length; k ++) {
 					// Map each trait to an object.
 					// Initialize the object.
 					if (!currentScoutData[this.keymap[k][0]]) {
-						currentScoutData[k][0] = {};
+						currentScoutData[this.keymap[k][0]] = {};
 					}
 					// Set the value
-					currentScoutData[this.keymap[k][0]][this.keymap[k][1]] = currentScout[k];
+					currentScoutData[this.keymap[k][0]][this.keymap[k][1]] = currentScout[k] || "";
 				}
-
+				if (!currentScoutData.scout.firstName && !currentScoutData.scout.lastName) {
+					continue;
+				}
 				// Change the object into a new Scout().
 				let parents = ["mother", "father"];
-				let transformedParents :Person[];
+				let transformedParents:Person[] = [];
 				for (let k = 0; k < parents.length; k ++) {
-					transformedParents[k] = new Person(currentScoutData[parents[k]].firstName, currentScoutData[parents[k]].lastName, new PhoneNumber(currentScoutData[parents[k]].cellPhone), currentScoutData[parents[k]].email, currentScoutData[parents[k]].slack);
+					if (!currentScoutData[parents[k]].firstName && !currentScoutData[parents[k]].lastName) {
+						transformedParents.push(null);
+					}
+					transformedParents.push(new Person(currentScoutData[parents[k]].firstName, currentScoutData[parents[k]].lastName, new PhoneNumber(currentScoutData[parents[k]].cellPhone), currentScoutData[parents[k]].email, currentScoutData[parents[k]].slack));
 
 				}
 
-				this.scouts.push(
-					new Scout(currentScoutData["scout"].firstName, currentScoutData["scout"].lastName, new PhoneNumber(currentScoutData["scout"].cellPhone), currentScoutData["scout"].email, currentScoutData["scout"].slack, new PhoneNumber(currentScoutData["scout"].homePhone), transformedParents[0], transformedParents[1])
-				)
+				let scout = new Scout(currentScoutData["scout"].firstName, currentScoutData["scout"].lastName, Patrol[patrolMap[i]], new PhoneNumber(currentScoutData["scout"].cellPhone), currentScoutData["scout"].email, currentScoutData["scout"].slack, new PhoneNumber(currentScoutData["scout"].homePhone), transformedParents[0], transformedParents[1]);
+
+				if (forEach && forEach(scout) !== false) {
+					result.push(scout);
+				}
+
 			}
 		}
 
 
-		return [][""];
+		return result;
+	}
+
+	/**
+	 * Get a list of all scouts in the directory that have not been excluded during processing (see update).
+	 */
+	public getScouts():Scout[] {
+		return this.scouts;
 	}
 
 

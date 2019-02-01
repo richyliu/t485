@@ -1,8 +1,9 @@
 {
-  "compilerOptions": {
-	"module": "browser",
-	"target": "es6",
-	"lib":["es6", "dom"],
-	"sourceMap": true
-  }
+	"compilerOptions": {
+		"module": "umd",
+		"target": "es6",
+		"lib":["es6", "dom"],
+		"sourceMap": true,
+		"moduleResolution": "node"
+	}
 }

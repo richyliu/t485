@@ -1,4 +1,5 @@
 {% set page = "Directory" %}
+{% set path = "directory" %}
 {% extends "base.html" %}
 {% block styles %}
 <style>
@@ -172,6 +173,7 @@
                     </table>
                 </div>
             </div>
+			<p><span class="directoryLoaded-show hidden"><span class="directoryScoutSize"></span> scouts loaded in <span class="directoryLoadTime"></span></span></p>
             <p>View/Edit the troop directory spreadsheet on <a target="_blank" class="link-google-sheet-dir">Google Sheets</a>.</p>
         </div>
     </div>
@@ -181,7 +183,6 @@
 <script src="/fonts/fontawesome/fontawesome.js"></script>
 <script src="/fonts/fontawesome/solid.js"></script>
 <script src="/js/list.min.js"></script>
-<script src="/js/directory.bundle.js"></script>
 <script src="/js/directory.js"></script>
 {% endblock %}
 {% block modals %}

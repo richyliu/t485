@@ -6,6 +6,7 @@ let config = {
 	"globals": {
 		"ts-jest": {
 			tsConfig: {
+				module:"es6",
 				allowSyntheticDefaultImports: true,
 				esModuleInterop: true
 			}

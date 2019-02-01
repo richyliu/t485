@@ -1,6 +1,4 @@
-//@ts-ignore
 import * as firebase from "firebase/app";
-//@ts-ignore
 import { FirebaseError } from "firebase";
 
 import { firebaseConfig } from "./config";
