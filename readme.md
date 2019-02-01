@@ -1,4 +1,5 @@
 # T485 Beta
+[![Build Status](https://travis-ci.com/t485/t485.svg?branch=master)](https://travis-ci.com/t485/t485)
 
 The official Boy Scout Troop 485 website, version 2.0.0-beta.
 
