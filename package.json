@@ -64,5 +64,7 @@
 		"vinyl-source-stream": "^2.0.0",
 		"watchify": "^3.11.0"
 	},
-	"dependencies": {}
+	"dependencies": {
+		"@types/list.js": "^1.5.0"
+	}
 }

@@ -9,14 +9,14 @@ class Person {
 	public lastName: string;
 	public cellPhone: PhoneNumber;
 	public email: string;
-	public slackUsername: string;
+	public slack: string;
 
-	constructor(firstName: string, lastName: string, cellPhone: PhoneNumber, email: string, slackUsername: string) {
+	constructor(firstName: string, lastName: string, cellPhone: PhoneNumber, email: string, slack: string) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.cellPhone = cellPhone;
 		this.email = email;
-		this.slackUsername = slackUsername;
+		this.slack = slack;
 	}
 }
 
