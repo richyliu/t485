@@ -80,6 +80,16 @@ class Directory extends Spreadsheet {
 	 * @param forEach - An optional callback that is called once for each scout. This function may optionally return a boolean, which if false will prevent the Scout from being added to the array.
 	 */
 	protected processRawData(data:DirectoryData, forEach?: ((scout:Scout) => void|boolean)):Scout[] {
+		let createPhoneNumber = (phoneNumber:string):PhoneNumber|null|undefined => {
+			if (phoneNumber === "") {
+				return undefined;
+			} else if (phoneNumber.replace(/\D/g, "") === "") {
+				return null;
+			} else {
+				return new PhoneNumber(phoneNumber);
+			}
+		};
+
 		let result = [];
 
 		// For each patrol
@@ -108,11 +118,18 @@ class Directory extends Spreadsheet {
 					if (!currentScoutData[parents[k]].firstName && !currentScoutData[parents[k]].lastName) {
 						transformedParents.push(null);
 					}
-					transformedParents.push(new Person(currentScoutData[parents[k]].firstName, currentScoutData[parents[k]].lastName, new PhoneNumber(currentScoutData[parents[k]].cellPhone), currentScoutData[parents[k]].email, currentScoutData[parents[k]].slack));
+					transformedParents.push(new Person(
+						currentScoutData[parents[k]].firstName, currentScoutData[parents[k]].lastName,
+						createPhoneNumber(currentScoutData[parents[k]].cellPhone),
+						currentScoutData[parents[k]].email, currentScoutData[parents[k]].slack));
 
 				}
-
-				let scout = new Scout(currentScoutData["scout"].firstName, currentScoutData["scout"].lastName, Patrol[patrolMap[i]], new PhoneNumber(currentScoutData["scout"].cellPhone), currentScoutData["scout"].email, currentScoutData["scout"].slack, new PhoneNumber(currentScoutData["scout"].homePhone), transformedParents[0], transformedParents[1]);
+				let scout = new Scout(currentScoutData["scout"].firstName, currentScoutData["scout"].lastName,
+					Patrol[patrolMap[i]],
+					createPhoneNumber(currentScoutData["scout"].cellPhone),
+					currentScoutData["scout"].email, currentScoutData["scout"].slack,
+					createPhoneNumber(currentScoutData["scout"].homePhone),
+					transformedParents[0], transformedParents[1]);
 
 				if (forEach && forEach(scout) !== false) {
 					result.push(scout);

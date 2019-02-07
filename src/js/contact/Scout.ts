@@ -15,7 +15,7 @@ class Scout extends Person{
 	public mother: Person;
 	public father: Person;
 	public homePhone: PhoneNumber;
-	public patrol:Patrol
+	public patrol:Patrol;
 
 	constructor(firstName:string, lastName:string, patrol:Patrol, cellPhone:PhoneNumber, email:string, slack:string, homePhone:PhoneNumber, mother:Person, father:Person) {
 		super(firstName, lastName, cellPhone, email, slack);

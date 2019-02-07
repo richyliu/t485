@@ -109,6 +109,7 @@
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_contact_phonenumber_.phonenumber.html#getformattednumber" class="tsd-kind-icon">get<wbr>Formatted<wbr>Number</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_contact_phonenumber_.phonenumber.html#tostring" class="tsd-kind-icon">to<wbr>String</a></li>
 							</ul>
 						</section>
 					</div>
@@ -126,7 +127,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/t485/t485/blob/65ebd1f/src/js/contact/PhoneNumber.ts#L28">contact/PhoneNumber.ts:28</a></li>
+									<li>Defined in <a href="https://github.com/t485/t485/blob/e5094b7/src/js/contact/PhoneNumber.ts#L30">contact/PhoneNumber.ts:30</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -140,7 +141,7 @@
 									<h5>phoneNumber: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<div class="lead">
-											<p>Either a string or a number. They will be formatted such that they have at least 10 digits, with zeros filling from the left until there are 10 digits.</p>
+											<p>Either a string or a number. They will be formatted such that they have at least 10 digits, with zeros filling from the left until there are 10 digits as long as the string isn&#39;t empty at initalization.</p>
 										</div>
 									</div>
 								</li>
@@ -158,7 +159,7 @@
 					<div class="tsd-signature tsd-kind-icon">area<wbr>Code<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/t485/t485/blob/65ebd1f/src/js/contact/PhoneNumber.ts#L18">contact/PhoneNumber.ts:18</a></li>
+							<li>Defined in <a href="https://github.com/t485/t485/blob/e5094b7/src/js/contact/PhoneNumber.ts#L20">contact/PhoneNumber.ts:20</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -173,7 +174,7 @@
 					<div class="tsd-signature tsd-kind-icon">country<wbr>Code<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/t485/t485/blob/65ebd1f/src/js/contact/PhoneNumber.ts#L13">contact/PhoneNumber.ts:13</a></li>
+							<li>Defined in <a href="https://github.com/t485/t485/blob/e5094b7/src/js/contact/PhoneNumber.ts#L15">contact/PhoneNumber.ts:15</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -188,7 +189,7 @@
 					<div class="tsd-signature tsd-kind-icon">line<wbr>Number<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/t485/t485/blob/65ebd1f/src/js/contact/PhoneNumber.ts#L28">contact/PhoneNumber.ts:28</a></li>
+							<li>Defined in <a href="https://github.com/t485/t485/blob/e5094b7/src/js/contact/PhoneNumber.ts#L30">contact/PhoneNumber.ts:30</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -203,7 +204,7 @@
 					<div class="tsd-signature tsd-kind-icon">number<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/t485/t485/blob/65ebd1f/src/js/contact/PhoneNumber.ts#L8">contact/PhoneNumber.ts:8</a></li>
+							<li>Defined in <a href="https://github.com/t485/t485/blob/e5094b7/src/js/contact/PhoneNumber.ts#L10">contact/PhoneNumber.ts:10</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -218,7 +219,7 @@
 					<div class="tsd-signature tsd-kind-icon">prefix<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/t485/t485/blob/65ebd1f/src/js/contact/PhoneNumber.ts#L23">contact/PhoneNumber.ts:23</a></li>
+							<li>Defined in <a href="https://github.com/t485/t485/blob/e5094b7/src/js/contact/PhoneNumber.ts#L25">contact/PhoneNumber.ts:25</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -240,7 +241,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/t485/t485/blob/65ebd1f/src/js/contact/PhoneNumber.ts#L54">contact/PhoneNumber.ts:54</a></li>
+									<li>Defined in <a href="https://github.com/t485/t485/blob/e5094b7/src/js/contact/PhoneNumber.ts#L66">contact/PhoneNumber.ts:66</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -254,6 +255,43 @@
 									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> intl: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> =&nbsp;false</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Whether to include the country code when the country code is +1 (USA). Area codes are always returned for non-us numbers.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="tostring" class="tsd-anchor"></a>
+					<h3>to<wbr>String</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">to<wbr>String<span class="tsd-signature-symbol">(</span>format<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span>, intl<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/t485/t485/blob/e5094b7/src/js/contact/PhoneNumber.ts#L76">contact/PhoneNumber.ts:76</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns the full phone number as a string.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> format: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> =&nbsp;true</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Whether to format the phone number.</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> intl: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> =&nbsp;false</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Whether to force a country code. If true, the returned phone number will always have the country code. If false, the returned phone number will only have the code for non-us numbers.</p>
 									</div>
 								</li>
 							</ul>
@@ -301,6 +339,9 @@
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/_pages_account_logout_.html">"pages/account/logout"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_pages_directory_2_.html">"pages/directory 2"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/_pages_directory_.html">"pages/directory"</a>
@@ -358,6 +399,9 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="_contact_phonenumber_.phonenumber.html#getformattednumber" class="tsd-kind-icon">get<wbr>Formatted<wbr>Number</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_contact_phonenumber_.phonenumber.html#tostring" class="tsd-kind-icon">to<wbr>String</a>
 							</li>
 						</ul>
 					</li>

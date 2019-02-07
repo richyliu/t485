@@ -23,6 +23,7 @@
 		"@fortawesome/fontawesome-pro": "^5.6.0",
 		"@types/jest": "^23.3.10",
 		"@types/jquery": "^3.3.29",
+		"@types/list.js": "^1.5.0",
 		"babelify": "^10.0.0",
 		"bootstrap": "^4.1.3",
 		"bootstrap-3-typeahead": "^4.0.2",
@@ -63,8 +64,5 @@
 		"vinyl-buffer": "^1.0.1",
 		"vinyl-source-stream": "^2.0.0",
 		"watchify": "^3.11.0"
-	},
-	"dependencies": {
-		"@types/list.js": "^1.5.0"
 	}
 }

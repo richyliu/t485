@@ -2,7 +2,7 @@ import { Authenticator, AuthError, User }  from "../../server/Authenticator";
 import { Database } from "../../server/Database";
 import { AlertBox, ErrorAlert } from "../../AlertBox";
 import Query from "../../utils/Query";
-import * as $ from "jQuery";
+import $ from "jQuery";
 
 let authenticator = new Authenticator();
 let database = new Database();

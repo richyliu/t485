@@ -2,7 +2,6 @@ import Database from "../server/Database";
 import Authenticator from "../server/Authenticator";
 import { Directory, DirectoryKeys } from "../Directory";
 import Scout from "../contact/Scout";
-import PhoneNumber from "../contact/PhoneNumber";
 import $ from "jQuery";
 import List from "list.js";
 
@@ -20,8 +19,6 @@ const columnKeymap = [
 	["Father's First Name", "Father's Last Name", "Father's Cell Phone", "Father's E-mail", "Father's Slack Username or None"],
 	["Mother's First Name", "Mother's Last Name", "Mother's Cell Phone", "Mother's E-mail", "Mother's Slack Username or None"]
 ];
-const unknownText = `<i>Unknown</i>`;
-const noneText = `<i>None</i>`;
 
 let db = new Database();
 let start = new Date().getTime();
@@ -30,10 +27,7 @@ console.log(list);
 function init() {
 	loadHeaders();
 	loadData();
-
 }
-
-
 
 function loadHeaders() {
 	let colNum = 0;
@@ -45,33 +39,6 @@ function loadHeaders() {
 				<th scope="col" class="col-${colNum} header">${columnKeymap[i][j]}</th>
 			`)
 		}
-	}
-}
-
-function toString(obj:any) {
-	// Alternative to if/else
-	switch (true) {
-		// We treat "" as undefined
-		case obj === "":
-		case typeof obj === "undefined":
-			return unknownText;
-			break;
-		case obj === null:
-			return noneText;
-			break;
-		case typeof obj === "string":
-			return obj;
-			break;
-		case typeof obj === "number":
-		case obj instanceof PhoneNumber: // Explicitly type it out for clarity and in the method changes.
-			return obj.toString();
-			break;
-		default:
-			try {
-				return obj.toString();
-			} catch (e) {
-				return unknownText;
-			}
 	}
 }
 
@@ -92,56 +59,34 @@ function loadData() {
 
 		let directory = new Directory(keys, directoryKeymap);
 		directory.update(function(scout:Scout) {
+			console.log(scout);
 			let row = [];
-			// We use one less then the length because at the end, we will have modified the index by -1 + 2, which means at the end
-			// The index will be one more than what it should be at.
-			for (let i = 0; i < directoryKeymap.length - 1; i ++) {
+			for (let i = 0; i < directoryKeymap.length + 1; i ++) {
 				let index = i;
 				let value = "";
 				if (i > 2) {
-					// We add the patrol, but it's not in the keymap
 					index --;
-				}
-				if (i > 5) {
-					// In the slot that would contain jobA, we list both jobs, so we skip the jobB.
-					index ++;
-				}
-				if (i > 10) {
-					// We don't display the fixedGrade.
-					index ++;
 				}
 				if (i == 2) {
 					value = ["Dragons", "Serpents", "Blobfish", "Hawks", "Wildcats", "Cacti"][scout.patrol];
-				} else if (directoryKeymap[index][1] === "jobA") {
-					value = scout["jobs"].join(", ");
 				} else if (directoryKeymap[index][0] == "scout") {
-					value = toString(scout[directoryKeymap[index][1]]);
+					console.log(directoryKeymap[index], index);
+					value = scout[directoryKeymap[index][1]];
 				} else {
-					value = scout[directoryKeymap[index][0]] ? toString(scout[directoryKeymap[index][0]][directoryKeymap[index][1]]) : unknownText;
+					console.log(directoryKeymap[index], index);
+					value = scout[directoryKeymap[index][0]][directoryKeymap[index][1]];
 				}
+
 
 				row.push(`<td class="col-${index}">${value}</td>`);
 
 			}
 
+
+
 			$("#dir-body").append(`<tr>${row.join("")}</tr>`);
 		}).then(function() {
-			$("#loading-text").addClass("hidden");
-			loadDoubleScrollbar();
-			let valueNames = [];
-			let count = 0;
-			for (let i = 0; i < columnKeymap.length; i ++) {
-				for (let j = 0; j < columnKeymap[i].length; j++, count++) {
-					valueNames.push("col-" + count);
-				}
-
-			}
-			console.log(valueNames);
-			const options = {
-				valueNames: valueNames
-			};
-			list = new List("directory-list", options);
-			console.log("LIST", List, list);
+			list = new List("#directory-list");
 
 			let end = new Date().getTime();
 			$(".directoryScoutSize").text(directory.getScouts().length + "");
@@ -153,19 +98,4 @@ function loadData() {
 		});
 	});
 }
-function loadDoubleScrollbar() {
-	$("#table-doublescrollbar").width($("#dir-body").innerWidth());
-
-	// TODO: Link scrollbars
-	$("#table").on("resize",function(e) {
-		$("#table").on("scroll",function(e) {
-			$("#table-doublescrollbar").scrollLeft($("#table").scrollLeft());
-		});
-		$("#table-doublescrollbar").on("scroll", function(e) {
-			$("#table").scrollLeft($("#table-doublescrollbar").scrollLeft());
-		});
-	}).trigger("scroll");
-
-}
 init();
-

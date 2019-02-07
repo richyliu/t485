@@ -71,48 +71,7 @@ a.link {
 	}
 
 }
-//sticky footer
-//html,
-//body {
-//	margin: 0px;
-//	padding: 0px;
-//	min-height: 100%;
-//	height: 100%;
-//}
-//#mainContainer {
-//	min-height: 100%;
-//	height: auto !important;
-//	margin-bottom: -118px;
-//	/* the bottom margin is the negative value of the footer's total height */
-//
-//	&:after {
-//		content: "";
-//		display: block;
-//		height: 118px;
-//		/* the footer's total height */
-//	}
-//}
-//
-//.footer {
-//	height: 118px;
-//	/* the footer's total height */
-//}
-//.footer .container p {
-//	height: 22px;
-//	/* height + top/bottom paddding + top/bottom border must add up to footer height */
-//
-//}
-//
-//// fix for boxes floating left
-//.container {
-//	padding-left:0;
-//	padding-right:0;
-//}
-//.row {
-//	margin-left:0;
-//	margin-right:0;
-//}
-//sticky footer
+
 $footerHeight: 118px;
 .content {
 	min-height: calc(100vh - 118px);

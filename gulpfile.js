@@ -45,7 +45,7 @@ var nunjucksEnv = new nunjucksModule.Environment(new nunjucksModule.FileSystemLo
 
 
 gulp.task("sass", function () {
-	return gulp.src(base + "/css/*.+(scss|sass)")
+	return gulp.src(base + "/css/**/*.+(scss|sass)")
 		.pipe(plumber())
 		.pipe(env === "production" ? noop() : cache("sass"))
 		.pipe(sass()) // Converts Sass to CSS with gulp-sass
@@ -56,7 +56,7 @@ gulp.task("sass", function () {
 		}));
 });
 gulp.task("css", function () {
-	return gulp.src([base + "/css/*.css", "!" + base + "/css/*.min.css"])
+	return gulp.src([base + "/css/**/*.css", "!" + base + "/css/*.min.css"])
 		.pipe(plumber())
 		.pipe(env === "production" ? noop() : cache("css"))
 		.pipe(env === "production" ? cssnano() : noop())
@@ -352,7 +352,7 @@ gulp.task("watch", gulp.parallel(function () {
 	gulp.watch(base + "/css/**/*.+(scss|sass)", gulp.parallel("sass"));
 	gulp.watch(base + "/css/**/*.css", gulp.parallel("css"));
 	gulp.watch([base + "/js/**/*.js", "!" + base + "/js/*.min.js"], gulp.parallel("scripts"));
-	gulp.watch([base + "/js/**/*.ts"], gulp.parallel("docs", "typescript"));
+	gulp.watch([base + "/js/**/*.ts"], gulp.series("typescript", "docs"));
 	gulp.watch("readme.md", gulp.parallel("docs"));
 	gulp.watch(base + "/**/*.html", gulp.parallel("html"));
 	gulp.watch([base + "/fonts/**/*", base + "/js/**/*.js", base + "/css/**/*.css", base + "/js/**/*.map", base + "/css/**/*.map", base + "/img/**/*"], gulp.parallel("assets"));

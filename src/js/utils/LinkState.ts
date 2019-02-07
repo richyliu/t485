@@ -1,4 +1,4 @@
-import * as $ from "jQuery";
+import $ from "jQuery";
 import Query from "./Query";
 
 class LinkState {

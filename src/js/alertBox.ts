@@ -1,4 +1,4 @@
-import * as $ from "jQuery";
+import $ from "jQuery";
 import Element from "./Element";
 
 /**

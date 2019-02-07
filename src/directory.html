@@ -2,6 +2,7 @@
 {% set path = "directory" %}
 {% extends "base.html" %}
 {% block styles %}
+<link type="text/css" rel="stylesheet" href="/css/pages/{{path}}.css">
 <style>
 .table-wrapper,
 .row,
@@ -16,26 +17,6 @@
     overflow:auto;
     
 }
-/* always show scroll bar 
-
-#table::-webkit-scrollbar {
-    -webkit-appearance: none;
-}
-
-#table::-webkit-scrollbar:vertical {
-    width: 11px;
-}
-
-#table::-webkit-scrollbar:horizontal {
-    height: 11px;
-}
-
-#table::-webkit-scrollbar-thumb {
-    border-radius: 8px;
-    border: 2px solid white; 
-    background-color: rgba(0, 0, 0, .5);
-}
-*/
 </style>
 {% endblock %}
 {% block main %}
@@ -80,11 +61,13 @@
                 
                 <br>
                 <p id="modified-settings" class="hidden"> Modified search/sort settings saved in URL. <a href="?#">Reset to default settings</a>. </p>
-                <p>Select a row to view all information about that scout:</p>
-                <div id="table-secondscrollbar-wrapper">
-                    <div class="table-secondscrollbar-div"></div>
-                </div>
+                <p>Select a row to view all information about that scout.</p>
                 <div id="table-wrapper">
+					<div id="table-doublescrollbar-wrapper" class="doublescroll-wrapper doublescroll-x">
+						<div id="table-doublescrollbar" class="doublescroll doublescroll-x">
+							&nbsp;
+						</div>
+					</div>
                     <table class="table table-hover" id="table">
                         <thead id="dir-head">
                             <tr id="dir-head-inner">
