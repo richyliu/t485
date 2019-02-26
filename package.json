@@ -19,7 +19,7 @@
 	},
 	"homepage": "https://github.com/t485/t485#readme",
 	"devDependencies": {
-		"@babel/core": "^7.2.2",
+		"@babel/core": "^7.3.3",
 		"@fortawesome/fontawesome-pro": "^5.6.0",
 		"@types/jest": "^23.3.10",
 		"@types/jquery": "^3.3.29",
@@ -58,11 +58,11 @@
 		"tsify": "^4.0.1",
 		"tslint": "^5.12.1",
 		"tslint-consistent-codestyle": "^1.15.0",
-		"typedoc": "^0.13.0",
+		"typedoc": "^0.14.2",
 		"typedoc-clarity-theme": "^1.1.0",
 		"typescript": "^3.3.1",
 		"vinyl-buffer": "^1.0.1",
 		"vinyl-source-stream": "^2.0.0",
-		"watchify": "^3.11.0"
+		"watchify": "^3.11.1"
 	}
 }

@@ -117,7 +117,7 @@ function loadData() {
 				} else if (directoryKeymap[index][0] == "scout") {
 					value = toString(scout[directoryKeymap[index][1]]);
 				} else {
-					value = scout[directoryKeymap[index][0]] ? toString(scout[directoryKeymap[index][0]][directoryKeymap[index][1]]) : unknownText;
+					value = (directoryKeymap[index][0] == "scout" || scout[directoryKeymap[index][0]]) ? toString(directoryKeymap[index][0] == "scout" ? scout[directoryKeymap[index][1]] : scout[directoryKeymap[index][0]][directoryKeymap[index][1]]) : unknownText;
 				}
 
 				row.push(`<td class="col-${index}">${value}</td>`);
