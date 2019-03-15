@@ -1,6 +1,7 @@
 import { ServerConnection, ServerError } from "./ServerConnection";
+import * as firebase from "firebase/app";
 import "firebase/auth";
-import { User as FirebaseUser } from "firebase/auth";
+import { User as FirebaseUser } from "firebase";
 /**
  * Authentication Server
  */

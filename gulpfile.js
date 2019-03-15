@@ -2,7 +2,7 @@ const gulp = require("gulp");
 const sass = require("gulp-sass");
 var browserSync = require("browser-sync").create();
 const plumber = require("gulp-plumber");
-const uglify = require("gulp-uglifyes"); //gulp-uglify-ecmascript/js6
+const terser = require("gulp-terser"); //gulp-uglify-ecmascript/js6
 const cssnano = require("gulp-cssnano");
 const del = require("del");
 const merge = require("merge-stream");
@@ -73,7 +73,7 @@ gulp.task("scripts", function () {
 	return gulp.src([base + "/js/*.js", "!" + base + "/js/*.min.js"])
 		.pipe(plumber())
 		.pipe(env === "production" ? noop() : cache("scripts"))
-		.pipe(env === "production" ? uglify() : noop())
+		.pipe(env === "production" ? terser() : noop())
 		.pipe(gulp.dest("./" + outdir + "/js/"))
 		.pipe(browserSync.reload({
 			stream: true
@@ -111,7 +111,7 @@ gulp.task("typescript", function (done) {
 					path.extname = ".bundle.js";
 				}))
 				.pipe(buffer())
-				.pipe(env === "production" ? uglify() : noop())
+				.pipe(env === "production" ? terser() : noop())
 				.pipe(gulp.dest("./" + outdir + "/js/"));
 
 			b.on("update", function (ids) {
@@ -250,7 +250,7 @@ gulp.task("libraries", function () {
 	])
 		.pipe(plumber())
 		.pipe(env === "production" ? noop() : cache("libraries-unminifiedscripts"))
-		.pipe(env === "production" ? uglify() : noop())
+		.pipe(env === "production" ? terser() : noop())
 		.pipe(gulp.dest("./" + outdir + "/js/"));
 	var unminifiedstyles = gulp.src([
 		"./node_modules/flatpickr/dist/flatpickr.css",
