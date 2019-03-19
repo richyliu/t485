@@ -9,13 +9,16 @@ enum Patrol{
 	Dragon, Serpent, Blobfish,
 	Hawk, Wildcat, Cacti
 }
-const patrolMap = ["Dragon", "Serpent", "Blobfish", "Hawk", "Wildcat", "Cacti"]
-class Scout extends Person{
+const patrolMap = ["Dragon", "Serpent", "Blobfish", "Hawk", "Wildcat", "Cacti"];
+class Scout extends Person {
 
 	public mother: Person;
 	public father: Person;
 	public homePhone: PhoneNumber;
 	public patrol:Patrol;
+	public jobs: string[] = [];
+	public WFATrained: string;
+    [index:string] : any;
 
 	constructor(firstName:string, lastName:string, patrol:Patrol, cellPhone:PhoneNumber, email:string, slack:string, homePhone:PhoneNumber, mother:Person, father:Person) {
 		super(firstName, lastName, cellPhone, email, slack);
