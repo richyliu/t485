@@ -19,10 +19,10 @@ class LinkState {
 	static preservePage() {
 		$(".preserve-page").each(function() {
 
-			var href = $(this).attr("href");
-			var base = href.substring(0,(href.indexOf("?") > -1 ? href.indexOf("?") : undefined));
-			var query = Query.set("continue", encodeURIComponent(window.location.href), Query.getString(href));
-			var hash = (href.indexOf("#") > -1 ? href.substring(href.indexOf("#")) : "");
+			let href = $(this).attr("href");
+			let base = href.substring(0,(href.indexOf("?") > -1 ? href.indexOf("?") : undefined));
+			let query = Query.set("continue", encodeURIComponent(window.location.href), Query.getString(href));
+			let hash = (href.indexOf("#") > -1 ? href.substring(href.indexOf("#")) : "");
 			$(this).attr("href", base + query + hash);
 		});
 	}
@@ -49,10 +49,10 @@ class LinkState {
 			$(".preserve-state").each(function() {
 
 
-				var href = $(this).attr("href");
-				var base = href.substring(0,(href.indexOf("?") > -1 ? href.indexOf("?") : undefined));
-				var query = Query.set("continue", encodeURIComponent(Query.get("continue")), encodeURIComponent(Query.getString(href)));
-				var hash = (href.indexOf("#") > -1 ? href.substring(href.indexOf("#")) : "");
+				let href = $(this).attr("href");
+				let base = href.substring(0,(href.indexOf("?") > -1 ? href.indexOf("?") : undefined));
+				let query = Query.set("continue", encodeURIComponent(Query.get("continue")), encodeURIComponent(Query.getString(href)));
+				let hash = (href.indexOf("#") > -1 ? href.substring(href.indexOf("#")) : "");
 
 				$(this).attr("href", base + query + hash);
 			});

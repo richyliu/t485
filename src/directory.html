@@ -26,61 +26,69 @@
             <h2 class="primary-heading">
                 Directory
             </h2>
-            <div id="directory-list">
-                <form class="pt-1">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <b>Search:</b>
-                            <input type="text" class="form-control fuzzy-search" id="search" placeholder="Search by name, job, phone number, slack username, etc.">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">
-                        <b>Sort by:</b>
-                            <select class="selectpicker form-control" data-live-search="true" id="sortby-select">
-
-                            </select>
-                        </div>
-                        <div class="col-md-4">
-                            <b>Sort order:</b>
-                            <select class="selectpicker form-control" id="sortorder-select">
-                                <option value="asc">Ascending</option>
-                                <option value="desc">Descending</option>
-                            </select>
-                        </div>
-                        <div class="col-md-4">
-                        <b>Show:</b>
-                            <select class="selectpicker form-control" multiple id="filter-select" data-live-search="true" data-actions-box="true">
-
-                            </select>
-                            
-                        </div>
-                    </div>
-                    
-                    </form>
-                
-                <br>
-                <p id="modified-settings" class="hidden"> Modified search/sort settings saved in URL. <a href="?#">Reset to default settings</a>. </p>
-                <p>Select a row to view all information about that scout.</p>
-                <div id="table-wrapper">
-					<div id="table-doublescrollbar-wrapper" class="doublescroll-wrapper doublescroll-x">
-						<div id="table-doublescrollbar" class="doublescroll doublescroll-x">
-							&nbsp;
-						</div>
-					</div>
-                    <table class="table table-hover" id="table">
-                        <thead id="dir-head">
-                            <tr id="dir-head-inner">
-                            </tr>
-                        </thead>
-                        <tbody id="dir-body" class="list">
-                            <tr id="loading-text"><td colspan="100" id="loading-text-inner">Loading...</td></tr>
-                        </tbody>
-                    </table>
-                </div>
+            <div id="loading">
+                <p>Loading...</p>
             </div>
-			<p><span class="directoryLoaded-show hidden"><span class="directoryScoutSize"></span> scouts loaded in <span class="directoryLoadTime"></span></span></p>
-            <p>View/Edit the troop directory spreadsheet on <a target="_blank" class="link-google-sheet-dir">Google Sheets</a>.</p>
+            <div id="auth" class="hidden">
+                <a class="btn btn-block btn-primary preserve-page" href="/account/login?">Login to continue</a>
+            </div>
+            <div id="directory" class="hidden">
+                <div id="directory-list">
+                    <form class="pt-1">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <b>Search:</b>
+                                <input type="text" class="form-control fuzzy-search" id="search" placeholder="Search by name, job, phone number, slack username, etc.">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                            <b>Sort by:</b>
+                                <select class="selectpicker form-control" data-live-search="true" id="sortby-select">
+
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <b>Sort order:</b>
+                                <select class="selectpicker form-control" id="sortorder-select">
+                                    <option value="asc">Ascending</option>
+                                    <option value="desc">Descending</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                            <b>Show:</b>
+                                <select class="selectpicker form-control" multiple id="filter-select" data-live-search="true" data-actions-box="true">
+
+                                </select>
+
+                            </div>
+                        </div>
+
+                        </form>
+
+                    <br>
+                    <p id="modified-settings" class="hidden"> Modified search/sort settings saved in URL. <a href="?#">Reset to default settings</a>. </p>
+                    <p>Select a row to view all information about that scout.</p>
+                    <div id="table-wrapper">
+                        <div id="table-doublescrollbar-wrapper" class="doublescroll-wrapper doublescroll-x">
+                            <div id="table-doublescrollbar" class="doublescroll doublescroll-x">
+                                &nbsp;
+                            </div>
+                        </div>
+                        <table class="table table-hover" id="table">
+                            <thead id="dir-head">
+                                <tr id="dir-head-inner">
+                                </tr>
+                            </thead>
+                            <tbody id="dir-body" class="list">
+                                <tr id="loading-text"><td colspan="100" id="loading-text-inner">Loading...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <p><span class="directoryLoaded-show hidden"><span class="directoryScoutSize"></span> scouts loaded in <span class="directoryLoadTime"></span></span></p>
+                <p>View/Edit the troop directory spreadsheet on <a target="_blank" class="link-google-sheet-dir">Google Sheets</a>.</p>
+            </div>
         </div>
     </div>
 </div>
