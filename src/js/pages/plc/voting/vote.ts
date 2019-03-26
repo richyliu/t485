@@ -53,13 +53,14 @@ function loadData(campaignName: string, onReady: () => void) {
             if (campaign.categories.hasOwnProperty(key)) {
                 let checkboxText = "";
                 for (let i = 0; i < campaign.categories[key].options.length; i ++) {
-                    console.log(key, i)
+                    console.log(key, i);
                     checkboxText += getCheckboxHTML(campaign.categories[key].options[i].name, key, i);
                 }
 
                 $("#options").append(`
                     <div id="vote-option-${key}">
                     <h3>${campaign.categories[key].name}</h3>
+                    <p>Vote up to <b>${campaign.categories[key].maxVotes}</b> times.</p>
                         ${checkboxText}
                         <hr>
                     </div>
@@ -86,7 +87,7 @@ function loadData(campaignName: string, onReady: () => void) {
                 $("#portal-vote").addClass("hidden");
                 $("#portal-done").removeClass("hidden");
             } else {
-                $("#error-text").text("You voted more than " + campaign.data.maxVotes + " times in each category.")
+                $("#error-text").text("You voted more than the max times in each category.")
             }
         });
 
@@ -96,6 +97,7 @@ function loadData(campaignName: string, onReady: () => void) {
 function validateVotes(campaign:any, maxCount:number):boolean {
     for (let key in campaign.categories) {
         if (campaign.categories.hasOwnProperty(key)) {
+            maxCount = campaign.categories[key].maxVotes;
             let count = 0;
             for (let i = 0; i < campaign.categories[key].options.length; i ++) {
                 count += $(`#vote-checkbox-${key}-${i}`).prop("checked") ? 1 : 0;

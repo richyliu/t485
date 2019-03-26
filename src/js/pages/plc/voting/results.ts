@@ -45,10 +45,11 @@ function render(data:any) {
             }
         }
     }
-    let voters = "";
+    let voters = [];
     for (let key in campaign.submissions) {
-        voters += campaign.submissions[key] + ", "
+        voters.push(campaign.submissions[key]);
     }
-    $("#voters").text(voters);
+    $("#voters").text(voters.join(","));
+    $("#length").text(voters.length);
 }
 dbRef.child("campaigns").child(campaignName).on("value", render)
