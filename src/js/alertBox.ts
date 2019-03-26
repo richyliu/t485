@@ -117,7 +117,7 @@ class ErrorAlert extends Alert {
 	 *
 	 * @param text - The text of the alert. HTML in this field will be rendered.
 	 */
-	constructor(text: string);
+	constructor(text);
 
 	/**
 	 *
@@ -162,7 +162,7 @@ class WarningAlert extends Alert {
 	 *
 	 * @param text - The text of the alert. HTML in this field will be rendered.
 	 */
-	constructor(text: string);
+	constructor(text);
 
 	/**
 	 *
@@ -206,7 +206,7 @@ class SuccessAlert extends Alert {
 	 *
 	 * @param text - The text of the alert. HTML in this field will be rendered.
 	 */
-	constructor(text: string);
+	constructor(text);
 
 	/**
 	 *

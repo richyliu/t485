@@ -1,5 +1,5 @@
 import $ from "jQuery";
-import Query from "../utils/Query";
+import Query from "./Query";
 
 class LinkState {
 

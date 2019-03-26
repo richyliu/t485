@@ -1,0 +1,32 @@
+{% set page = "PLC Voting Portal" %}
+{% set path = "plc/voting/admin" %}
+{% extends "base.html" %}
+{% block main %}
+<div class="row">
+    <div class="box">
+        <div class="col-lg-12">
+            <h2 class="primary-heading">
+                PLC Voting Admin Portal
+            </h2>
+
+            <hr>
+            <div id="portal-admin">
+               <h2>Add teaching</h2>
+                <div>
+                    <label for="category">Teaching Category</label>
+                    <select class="custom-select" id="category">
+                        <option value="scoutSkill">Scout Skill</option>
+                        <option value="anythingGoes">Anything Goes</option>
+                        <option value="game">Game</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="name">Teaching name:</label>
+                    <input type="text" class="form-control" id="name">
+                </div>
+                <button id="add-submit" class="btn btn-block btn-primary mt-3">Add</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

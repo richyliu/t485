@@ -32,7 +32,7 @@ describe("Phone Number from zero-filled 6-digit number", () => {
 	});
 	test("Country Code", () => {
 		expect(number.countryCode)
-			.toBe("1");
+			.toBe("");
 	});
 	test("Area Code", () => {
 		expect(number.areaCode)
