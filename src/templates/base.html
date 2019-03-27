@@ -452,14 +452,16 @@
 	{% endblock %}
 
 	{% block coreScripts %}
-		{% if path %}<script src="/js/{{path}}.bundle.js"></script>{% endif %}
-		<script src="/js/jquery.min.js"></script>
-		<script src="/js/popper.min.js"></script>
-		<script src="/js/bootstrap.min.js"></script>
-		<script src="/js/bootstrap-select.min.js"></script>
-		<script src="/js/utils.js"></script>
-		<script src="/js/logger.js"></script>
-		<script src="/js/t485.js"></script>
+		{% if path %}<script src="/js/{{path}}.bundle.js"></script>
+		{% else %}
+			<script src="/js/jquery.min.js"></script>
+			<script src="/js/popper.min.js"></script>
+			<script src="/js/bootstrap.min.js"></script>
+			<script src="/js/bootstrap-select.min.js"></script>
+			<script src="/js/utils.js"></script>
+			<script src="/js/logger.js"></script>
+			<script src="/js/t485.js"></script>
+		{% endif %}
 
 
 	{% endblock %}

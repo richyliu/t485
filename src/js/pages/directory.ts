@@ -1,14 +1,14 @@
-import Database from "../server/Database";
+import Database from '../server/Database';
 // import Authenticator from "../server/Authenticator';
-import { Directory, DirectoryKeys } from "../Directory";
-import Scout from "../contact/Scout";
-import PhoneNumber from "../contact/PhoneNumber";
-import $ from "jQuery";
-import "bootstrap";
-import "bootstrap-select";
-import List from "list.js";
-import LinkState from "../utils/LinkState";
+import { Directory, DirectoryKeys } from '../Directory';
+import Scout from '../contact/Scout';
+import PhoneNumber from '../contact/PhoneNumber';
+import $ from 'jquery';
+import List from 'list.js';
+import LinkState from '../utils/LinkState';
 import Authenticator from '../server/Authenticator';
+import 'bootstrap';
+import 'bootstrap-select';
 
 
 const directoryKeymap = [
@@ -40,17 +40,20 @@ auth.onAuthStateChanged(function(user) {
     if (user) {
         init();
     } else {
-        $("#loading").addClass("hidden");
-        $("#auth").removeClass("hidden");
+        $('#loading').addClass('hidden');
+        $('#auth').removeClass('hidden');
     }
 });
 
 function init() {
-    $("#loading").addClass("hidden");
-    $("#directory").removeClass("hidden");
+    $('#loading').addClass('hidden');
+    $('#directory').removeClass('hidden');
     loadHeaders();
-    loadData();
-    loadFilterSelects();
+    loadData(function(list: List) {
+        loadFilterSelects(list);
+    });
+
+
 }
 
 
@@ -93,7 +96,7 @@ function toString(obj: any) {
     }
 }
 
-function loadData() {
+function loadData(callback: (list:List)=>void) {
     db.ref('/directory/keys').once('value').then(function(snapshot) {
         let data = snapshot.val();
         let keys: DirectoryKeys;
@@ -131,13 +134,14 @@ function loadData() {
 
                 if (i == 2) {
 
-                    value = ['Dragons', 'Serpents', 'Blobfish', 'Hawks', 'Wildcats', 'Cacti'][scout.patrol];
+                    value = ['Dragons', 'Serpents', 'Blobfish', 'Hawks', 'Wildcats', 'Cacti']
+                            [["DRAGON", "SERPENT", "BLOBFISH", "HAWK", "WILDCAT", "CACTI"].indexOf(scout.patrol)];
                 } else if (directoryKeymap[index][1] === 'jobA') {
-                    if (!(scout.jobs) || scout.jobs[0] == ""){
+                    if (!(scout.jobs) || scout.jobs[0] == '') {
                         value = unknownText;
-                    } else if (scout.jobs[0] == "N/A") {
-                        value = "N/A";
-                    } else if (scout.jobs.length > 1 && (scout.jobs[1] == "N/A" || scout.jobs[1] == "")) {
+                    } else if (scout.jobs[0] == 'N/A') {
+                        value = 'N/A';
+                    } else if (scout.jobs.length > 1 && (scout.jobs[1] == 'N/A' || scout.jobs[1] == '')) {
                         value = scout.jobs[0];
                     } else {
                         value = scout['jobs'].join(', ');
@@ -161,7 +165,6 @@ function loadData() {
             $('#dir-body').append(`<tr>${row.join('')}</tr>`);
         }).then(function() {
             $('#loading-text').addClass('hidden');
-            loadDoubleScrollbar();
             let valueNames = [];
             let count = 0;
             for (let i = 0; i < columnKeymap.length; i++) {
@@ -173,7 +176,8 @@ function loadData() {
             const options = {
                 valueNames: valueNames,
             };
-            list = new List('directory-list', options);
+
+            let list = new List('directory-list', options);
 
             let end = new Date().getTime();
             $('.directoryScoutSize').text(directory.getScouts().length + '');
@@ -182,54 +186,39 @@ function loadData() {
             console.log('Done in ' + (end - start) + 'ms');
             console.log(directory);
 
+            callback(list);
         });
     });
 }
 
-function loadDoubleScrollbar() {
-    $('#table-doublescrollbar').width($('#dir-body').innerWidth() || "");
 
-    // TODO: Link scrollbars
-    $('#table').on('resize', function(e) {
-        $('#table').on('scroll', function(e) {
-            $('#table-doublescrollbar').scrollLeft($('#table').scrollLeft() || 0);
-        });
-        $('#table-doublescrollbar').on('scroll', function(e) {
-            $('#table').scrollLeft($('#table-doublescrollbar').scrollLeft() || 0);
-        });
-    }).trigger('scroll');
-
-}
-
-function loadFilterSelects() {
+function loadFilterSelects(list: List) {
     let index = 0;
-    for (let i = 0; i < columnKeymap.length; i ++) {
-        let opts = "";
+    for (let i = 0; i < columnKeymap.length; i++) {
+        let opts = '';
 
         for (let j = 0; j < columnKeymap[i].length; j++) {
             opts += `<option value="${index}">${columnKeymap[i][j]}</option>`;
             index++;
         }
 
-        $("#filter-select").append(`<optgroup label="${["Scout", "Father", "Mother"][i]}">
+        $('#filter-select').append(`<optgroup label="${['Scout', 'Father', 'Mother'][i]}">
             ${opts}
         </optgroup>`);
-        $("#sortby-select").append(`<optgroup label="${["Scout", "Father", "Mother"][i]}">
+        $('#sortby-select').append(`<optgroup label="${['Scout', 'Father', 'Mother'][i]}">
             ${opts}
         </optgroup>`);
     }
-    $(function() {
-        console.log($.fn.selectpicker);
-        console.log($.fn.alert);
-        if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
-            $('.selectpicker').selectpicker('mobile');
-        }
-        $("#filter-select, #sortby-select").selectpicker("render");
 
-    });
+    $('#filter-select, #sortby-select, #sortorder-select').selectpicker("refresh");
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
+        $('#filter-select, #sortby-select, #sortorder-select').selectpicker('mobile');
+    }
+    console.log(list);
+    list.sort("col-" + 2, { order: "desc" });
+
+
+
 
 }
-
-init();
-
 
