@@ -44,21 +44,22 @@
                         <div class="row">
                             <div class="col-md-4">
                             <b>Sort by:</b>
-                                <select class="form-control selectpicker" data-live-search="true" id="sortby-select">
-
+                                <select class="form-control selectpicker" data-live-search="true" id="sortby-select" disabled>
+                                    <option value="LOADING" class="select-loading" selected>Loading...</option>
                                 </select>
                             </div>
                             <div class="col-md-4">
                                 <b>Sort order:</b>
-                                <select class="form-control selectpicker" id="sortorder-select">
+                                <select class="form-control selectpicker" id="sortorder-select" disabled>
+                                    <option value="LOADING" class="select-loading" selected>Loading...</option>
                                     <option value="asc">Ascending</option>
                                     <option value="desc">Descending</option>
                                 </select>
                             </div>
                             <div class="col-md-4">
                             <b>Show:</b>
-                                <select class="form-control selectpicker" multiple id="filter-select" data-live-search="true" data-actions-box="true">
-
+                                <select class="form-control selectpicker" multiple id="filter-select" data-live-search="true" data-actions-box="true" disabled>
+                                    <option value="LOADING" class="select-loading" selected>Loading...</option>
                                 </select>
 
                             </div>
