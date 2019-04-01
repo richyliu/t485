@@ -3,7 +3,8 @@ const sass = require("gulp-sass");
 var browserSync = require("browser-sync").create();
 const plumber = require("gulp-plumber");
 const terser = require("gulp-terser"); //gulp-uglify-ecmascript/js6
-const cssnano = require("gulp-cssnano");
+const cssnano = require("cssnano");
+const postcss = require("gulp-postcss");
 const del = require("del");
 const merge = require("merge-stream");
 const htmlmin = require("gulp-htmlmin");
@@ -49,7 +50,7 @@ gulp.task("sass", function () {
 		.pipe(plumber())
 		.pipe(env === "production" ? noop() : cache("sass"))
 		.pipe(sass()) // Converts Sass to CSS with gulp-sass
-		.pipe(env === "production" ? cssnano() : noop())
+		.pipe(env === "production" ? postcss([cssnano()]) : noop())
 		.pipe(gulp.dest("./" + outdir + "/css/"))
 		.pipe(browserSync.reload({
 			stream: true
@@ -59,7 +60,7 @@ gulp.task("css", function () {
 	return gulp.src([base + "/css/**/*.css", "!" + base + "/css/*.min.css"])
 		.pipe(plumber())
 		.pipe(env === "production" ? noop() : cache("css"))
-		.pipe(env === "production" ? cssnano() : noop())
+		.pipe(env === "production" ? postcss([cssnano()]) : noop())
 		.pipe(gulp.dest("./" + outdir + "/css/"))
 		.pipe(browserSync.reload({
 			stream: true
@@ -258,7 +259,7 @@ gulp.task("libraries", function () {
 	])
 		.pipe(plumber())
 		.pipe(env === "production" ? noop() : cache("libraries-unminifiedstyles"))
-		.pipe(env === "production" ? cssnano() : noop())
+		.pipe(env === "production" ? postcss([cssnano()]) : noop())
 		.pipe(gulp.dest("./" + outdir + "/css/"));
 	var styles = gulp.src([
 		"./node_modules/bootstrap/dist/css/bootstrap.min.css",
