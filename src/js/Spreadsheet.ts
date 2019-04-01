@@ -1,4 +1,4 @@
-import $ from "jQuery";
+import $ from "jquery";
 /**
  * Provides a way to query the Google Sheet API to get data from a spreadsheet.
  */
