@@ -77,6 +77,7 @@
 								<li class="tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported"><a href="_pages_directory_.html#auth" class="tsd-kind-icon">auth</a></li>
 								<li class="tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported"><a href="_pages_directory_.html#columnkeymap" class="tsd-kind-icon">column<wbr>Keymap</a></li>
 								<li class="tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported"><a href="_pages_directory_.html#db" class="tsd-kind-icon">db</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported"><a href="_pages_directory_.html#defaultshown" class="tsd-kind-icon">default<wbr>Shown</a></li>
 								<li class="tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported"><a href="_pages_directory_.html#directorykeymap" class="tsd-kind-icon">directory<wbr>Keymap</a></li>
 								<li class="tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported"><a href="_pages_directory_.html#list" class="tsd-kind-icon">list</a></li>
 								<li class="tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported"><a href="_pages_directory_.html#nonetext" class="tsd-kind-icon">none<wbr>Text</a></li>
@@ -89,7 +90,7 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_pages_directory_.html#init" class="tsd-kind-icon">init</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_pages_directory_.html#loaddata" class="tsd-kind-icon">load<wbr>Data</a></li>
-								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_pages_directory_.html#loaddoublescrollbar" class="tsd-kind-icon">load<wbr>Double<wbr>Scrollbar</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_pages_directory_.html#loadfilterselects" class="tsd-kind-icon">load<wbr>Filter<wbr>Selects</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_pages_directory_.html#loadheaders" class="tsd-kind-icon">load<wbr>Headers</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_pages_directory_.html#tostring" class="tsd-kind-icon">to<wbr>String</a></li>
 							</ul>
@@ -105,17 +106,17 @@
 					<div class="tsd-signature tsd-kind-icon">auth<span class="tsd-signature-symbol">:</span> <a href="../classes/_server_authenticator_.authenticator.html" class="tsd-signature-type">Authenticator</a><span class="tsd-signature-symbol"> =&nbsp;new Authenticator()</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/t485/t485/blob/6627ac0/src/js/pages/directory.ts#L34">pages/directory.ts:34</a></li>
+							<li>Defined in <a href="https://github.com/t485/t485/blob/08660f3/src/js/pages/directory.ts#L38">pages/directory.ts:38</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
 					<a name="columnkeymap" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> column<wbr>Keymap</h3>
-					<div class="tsd-signature tsd-kind-icon">column<wbr>Keymap<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> =&nbsp;[[&quot;Scout&#x27;s First Name&quot;, &quot;Scout&#x27;s Last Name&quot;, &quot;Patrol&quot;, &quot;Scout&#x27;s E-mail&quot;, &quot;Scout&#x27;s Home Phone&quot;, &quot;Slack Username&quot;,&quot;Troop Jobs&quot;, &quot;Date Joined Troop 485&quot;, &quot;Active (Y)es/ (R)arely/ (N)o&quot;, &quot;Wilderness First Aid Trained&quot;,&quot;School Attending&quot;, &quot;Scout&#x27;s Current Grade&quot;,  &quot;Scout&#x27;s Cell Phone&quot;],[&quot;Father&#x27;s First Name&quot;, &quot;Father&#x27;s Last Name&quot;, &quot;Father&#x27;s Cell Phone&quot;, &quot;Father&#x27;s E-mail&quot;, &quot;Father&#x27;s Slack Username or None&quot;],[&quot;Mother&#x27;s First Name&quot;, &quot;Mother&#x27;s Last Name&quot;, &quot;Mother&#x27;s Cell Phone&quot;, &quot;Mother&#x27;s E-mail&quot;, &quot;Mother&#x27;s Slack Username or None&quot;]]</span></div>
+					<div class="tsd-signature tsd-kind-icon">column<wbr>Keymap<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> =&nbsp;[[&quot;Scout\&#x27;s First Name&quot;, &quot;Scout\&#x27;s Last Name&quot;, &quot;Patrol&quot;, &quot;Scout\&#x27;s E-mail&quot;, &quot;Scout\&#x27;s Home Phone&quot;, &quot;Slack Username&quot;,&quot;Troop Jobs&quot;, &quot;Date Joined Troop 485&quot;, &quot;Active (Y)es/ (R)arely/ (A)ged Out/ (N)o&quot;, &quot;Wilderness First Aid Trained&quot;,&quot;School Attending&quot;, &quot;Scout\&#x27;s Current Grade&quot;, &quot;Scout\&#x27;s Cell Phone&quot;],[&quot;Father\&#x27;s First Name&quot;, &quot;Father\&#x27;s Last Name&quot;, &quot;Father\&#x27;s Cell Phone&quot;, &quot;Father\&#x27;s E-mail&quot;, &quot;Father\&#x27;s Slack Username or None&quot;],[&quot;Mother\&#x27;s First Name&quot;, &quot;Mother\&#x27;s Last Name&quot;, &quot;Mother\&#x27;s Cell Phone&quot;, &quot;Mother\&#x27;s E-mail&quot;, &quot;Mother\&#x27;s Slack Username or None&quot;],]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/t485/t485/blob/6627ac0/src/js/pages/directory.ts#L17">pages/directory.ts:17</a></li>
+							<li>Defined in <a href="https://github.com/t485/t485/blob/08660f3/src/js/pages/directory.ts#L21">pages/directory.ts:21</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -125,17 +126,27 @@
 					<div class="tsd-signature tsd-kind-icon">db<span class="tsd-signature-symbol">:</span> <a href="../classes/_server_database_.database.html" class="tsd-signature-type">Database</a><span class="tsd-signature-symbol"> =&nbsp;new Database()</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/t485/t485/blob/6627ac0/src/js/pages/directory.ts#L27">pages/directory.ts:27</a></li>
+							<li>Defined in <a href="https://github.com/t485/t485/blob/08660f3/src/js/pages/directory.ts#L32">pages/directory.ts:32</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+					<a name="defaultshown" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> default<wbr>Shown</h3>
+					<div class="tsd-signature tsd-kind-icon">default<wbr>Shown<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> =&nbsp;[[0, 1, 2, 3, 4], [0, 1, 3], [0, 1, 3]]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/t485/t485/blob/08660f3/src/js/pages/directory.ts#L28">pages/directory.ts:28</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
 					<a name="directorykeymap" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> directory<wbr>Keymap</h3>
-					<div class="tsd-signature tsd-kind-icon">directory<wbr>Keymap<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> =&nbsp;[[&quot;scout&quot;, &quot;firstName&quot;], [&quot;scout&quot;, &quot;lastName&quot;], [&quot;scout&quot;, &quot;email&quot;], [&quot;scout&quot;, &quot;homePhone&quot;], [&quot;scout&quot;, &quot;slack&quot;],[&quot;scout&quot;, &quot;jobA&quot;], [&quot;scout&quot;, &quot;jobB&quot;], [&quot;scout&quot;, &quot;joinDate&quot;], [&quot;scout&quot;, &quot;active&quot;], [&quot;scout&quot;, &quot;WFATrained&quot;],[&quot;scout&quot;, &quot;school&quot;], [&quot;scout&quot;, &quot;fixedGrade&quot;], [&quot;scout&quot;, &quot;currentGrade&quot;], [&quot;scout&quot;, &quot;cellPhone&quot;],[&quot;father&quot;, &quot;firstName&quot;], [&quot;father&quot;, &quot;lastName&quot;], [&quot;father&quot;, &quot;cellPhone&quot;], [&quot;father&quot;, &quot;email&quot;], [&quot;father&quot;, &quot;slack&quot;],[&quot;mother&quot;, &quot;firstName&quot;], [&quot;mother&quot;, &quot;lastName&quot;], [&quot;mother&quot;, &quot;cellPhone&quot;], [&quot;mother&quot;, &quot;email&quot;], [&quot;mother&quot;, &quot;slack&quot;]]</span></div>
+					<div class="tsd-signature tsd-kind-icon">directory<wbr>Keymap<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> =&nbsp;[[&quot;scout&quot;, &quot;firstName&quot;], [&quot;scout&quot;, &quot;lastName&quot;], [&quot;scout&quot;, &quot;email&quot;], [&quot;scout&quot;, &quot;homePhone&quot;], [&quot;scout&quot;, &quot;slack&quot;],[&quot;scout&quot;, &quot;jobA&quot;], [&quot;scout&quot;, &quot;jobB&quot;], [&quot;scout&quot;, &quot;joinDate&quot;], [&quot;scout&quot;, &quot;active&quot;], [&quot;scout&quot;, &quot;WFATrained&quot;],[&quot;scout&quot;, &quot;school&quot;], [&quot;scout&quot;, &quot;fixedGrade&quot;], [&quot;scout&quot;, &quot;currentGrade&quot;], [&quot;scout&quot;, &quot;cellPhone&quot;],[&quot;father&quot;, &quot;firstName&quot;], [&quot;father&quot;, &quot;lastName&quot;], [&quot;father&quot;, &quot;cellPhone&quot;], [&quot;father&quot;, &quot;email&quot;], [&quot;father&quot;, &quot;slack&quot;],[&quot;mother&quot;, &quot;firstName&quot;], [&quot;mother&quot;, &quot;lastName&quot;], [&quot;mother&quot;, &quot;cellPhone&quot;], [&quot;mother&quot;, &quot;email&quot;], [&quot;mother&quot;, &quot;slack&quot;],]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/t485/t485/blob/6627ac0/src/js/pages/directory.ts#L10">pages/directory.ts:10</a></li>
+							<li>Defined in <a href="https://github.com/t485/t485/blob/08660f3/src/js/pages/directory.ts#L14">pages/directory.ts:14</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -145,7 +156,7 @@
 					<div class="tsd-signature tsd-kind-icon">list<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/t485/t485/blob/6627ac0/src/js/pages/directory.ts#L29">pages/directory.ts:29</a></li>
+							<li>Defined in <a href="https://github.com/t485/t485/blob/08660f3/src/js/pages/directory.ts#L34">pages/directory.ts:34</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -155,7 +166,7 @@
 					<div class="tsd-signature tsd-kind-icon">none<wbr>Text<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"&lt;i&gt;None&lt;/i&gt;"</span><span class="tsd-signature-symbol"> =&nbsp;&#x60;&lt;i&gt;None&lt;/i&gt;&#x60;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/t485/t485/blob/6627ac0/src/js/pages/directory.ts#L25">pages/directory.ts:25</a></li>
+							<li>Defined in <a href="https://github.com/t485/t485/blob/08660f3/src/js/pages/directory.ts#L30">pages/directory.ts:30</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -165,7 +176,7 @@
 					<div class="tsd-signature tsd-kind-icon">start<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;new Date().getTime()</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/t485/t485/blob/6627ac0/src/js/pages/directory.ts#L28">pages/directory.ts:28</a></li>
+							<li>Defined in <a href="https://github.com/t485/t485/blob/08660f3/src/js/pages/directory.ts#L33">pages/directory.ts:33</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -175,7 +186,7 @@
 					<div class="tsd-signature tsd-kind-icon">unknown<wbr>Text<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"&lt;i&gt;Unknown&lt;/i&gt;"</span><span class="tsd-signature-symbol"> =&nbsp;&#x60;&lt;i&gt;Unknown&lt;/i&gt;&#x60;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/t485/t485/blob/6627ac0/src/js/pages/directory.ts#L24">pages/directory.ts:24</a></li>
+							<li>Defined in <a href="https://github.com/t485/t485/blob/08660f3/src/js/pages/directory.ts#L29">pages/directory.ts:29</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -192,7 +203,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/t485/t485/blob/6627ac0/src/js/pages/directory.ts#L44">pages/directory.ts:44</a></li>
+									<li>Defined in <a href="https://github.com/t485/t485/blob/08660f3/src/js/pages/directory.ts#L48">pages/directory.ts:48</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -203,32 +214,62 @@
 					<a name="loaddata" class="tsd-anchor"></a>
 					<h3>load<wbr>Data</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">load<wbr>Data<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">load<wbr>Data<span class="tsd-signature-symbol">(</span>callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/t485/t485/blob/6627ac0/src/js/pages/directory.ts#L94">pages/directory.ts:94</a></li>
+									<li>Defined in <a href="https://github.com/t485/t485/blob/08660f3/src/js/pages/directory.ts#L99">pages/directory.ts:99</a></li>
 								</ul>
 							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>callback: <span class="tsd-signature-type">function</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-siganture">
+											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>list<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">List</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>list: <span class="tsd-signature-type">List</span></h5>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
-					<a name="loaddoublescrollbar" class="tsd-anchor"></a>
-					<h3>load<wbr>Double<wbr>Scrollbar</h3>
+					<a name="loadfilterselects" class="tsd-anchor"></a>
+					<h3>load<wbr>Filter<wbr>Selects</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">load<wbr>Double<wbr>Scrollbar<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">load<wbr>Filter<wbr>Selects<span class="tsd-signature-symbol">(</span>list<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">List</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/t485/t485/blob/6627ac0/src/js/pages/directory.ts#L172">pages/directory.ts:172</a></li>
+									<li>Defined in <a href="https://github.com/t485/t485/blob/08660f3/src/js/pages/directory.ts#L195">pages/directory.ts:195</a></li>
 								</ul>
 							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>list: <span class="tsd-signature-type">List</span></h5>
+								</li>
+							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
@@ -243,7 +284,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/t485/t485/blob/6627ac0/src/js/pages/directory.ts#L54">pages/directory.ts:54</a></li>
+									<li>Defined in <a href="https://github.com/t485/t485/blob/08660f3/src/js/pages/directory.ts#L60">pages/directory.ts:60</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -260,7 +301,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/t485/t485/blob/6627ac0/src/js/pages/directory.ts#L67">pages/directory.ts:67</a></li>
+									<li>Defined in <a href="https://github.com/t485/t485/blob/08660f3/src/js/pages/directory.ts#L72">pages/directory.ts:72</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -364,6 +405,9 @@
 						<a href="_pages_directory_.html#db" class="tsd-kind-icon">db</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="_pages_directory_.html#defaultshown" class="tsd-kind-icon">default<wbr>Shown</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
 						<a href="_pages_directory_.html#directorykeymap" class="tsd-kind-icon">directory<wbr>Keymap</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
@@ -385,7 +429,7 @@
 						<a href="_pages_directory_.html#loaddata" class="tsd-kind-icon">load<wbr>Data</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="_pages_directory_.html#loaddoublescrollbar" class="tsd-kind-icon">load<wbr>Double<wbr>Scrollbar</a>
+						<a href="_pages_directory_.html#loadfilterselects" class="tsd-kind-icon">load<wbr>Filter<wbr>Selects</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
 						<a href="_pages_directory_.html#loadheaders" class="tsd-kind-icon">load<wbr>Headers</a>
