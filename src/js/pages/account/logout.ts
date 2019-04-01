@@ -1,6 +1,6 @@
 import { Authenticator, AuthError } from "../../server/Authenticator";
 import { AlertBox, ErrorAlert, SuccessAlert } from "../../AlertBox";
-import { LinkState } from "../../Utils/LinkState"
+import { LinkState } from "../../utils/LinkState"
 
 let authenticator = new Authenticator();
 let alertBox = new AlertBox("#alerts");

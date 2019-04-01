@@ -138,7 +138,7 @@ gulp.task("docs", function() {
 
 
 	return gulp
-		.src([base + "/js/**/*.ts", "!./node_modules/**"])
+		.src([base + "/js/**/*.ts", "!" + base + "/js/pages/**/*", "!./node_modules/**"])
 		.pipe(plumber())
 		.pipe(env === "production" ? noop() : cache("docs"))
 		.pipe(typedoc({

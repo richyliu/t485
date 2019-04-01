@@ -1,7 +1,5 @@
 import $ from "jquery";
-import { Database } from "../../../server/database";
-
-let db = new Database();
+import { Database } from "../../../server/Database";let db = new Database();
 let dbRef = db.ref("plcvoting");
 
 function init() {
