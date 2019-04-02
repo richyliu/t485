@@ -161,6 +161,11 @@ function loadData(callback: (list:List)=>void) {
                 row.push(`<td class="col-${i}">${value}</td>`);
 
             }
+            if (scout.firstName == "Richard" && scout.email == "richy.liu.2002@gmail.com") {
+                console.log(scout.export());
+                download("Richard Liu.vcf", scout.export());
+
+            }
 
             $("#dir-body").append(`<tr>${row.join("")}</tr>`);
         }).then(function() {
@@ -240,9 +245,21 @@ function loadFilterSelects(list: List) {
 
         }
     }).trigger("change");
-//TODO: no wrap on phones
 
+$("#infoModal").modal("show");
 
 
 }
 
+function download(filename, text) {
+    var element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+    element.setAttribute('download', filename);
+
+    element.style.display = 'none';
+    document.body.appendChild(element);
+
+    element.click();
+
+    document.body.removeChild(element);
+}

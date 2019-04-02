@@ -1,5 +1,5 @@
 import PhoneNumber from "./PhoneNumber";
-
+import vCard from "vCards-js";
 /**
  * A person has a name and different contact methods.
  */
@@ -17,6 +17,21 @@ class Person {
 		this.cellPhone = cellPhone;
 		this.email = email;
 		this.slack = slack;
+	}
+	protected getExportObj() {
+		let card = vCard();
+
+		card.firstName = this.firstName;
+		card.lastName = this.lastName;
+		card.cellPhone = this.cellPhone.toString();
+		card.email = this.email;
+		card.organization = "BSA T485";
+
+		return card;
+	}
+	public export() {
+
+		return this.getExportObj().getFormattedString();
 	}
 }
 

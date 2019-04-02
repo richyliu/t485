@@ -1,5 +1,6 @@
 import Person from "./Person";
 import PhoneNumber from "./PhoneNumber";
+import vCard from "vCards-js";
 
 
 /**
@@ -32,6 +33,14 @@ class Scout extends Person {
         this.homePhone = homePhone;
         this.patrol = patrol;
     }
+
+    public getExportObj() {
+        let card = super.getExportObj();
+        card.homePhone = this.homePhone.toString();
+
+        return card;
+    }
+
 }
 
 export default Scout;
