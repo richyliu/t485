@@ -1,6 +1,7 @@
 #gulp
 node_modules/
 devserver/
+**/*.icloud
 
 # Other
 yarn.lock
