@@ -1,5 +1,5 @@
 import PhoneNumber from "./PhoneNumber";
-import vCard from "vCards-js";
+import vCard from "vcards-js";
 /**
  * A person has a name and different contact methods.
  */
