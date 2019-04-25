@@ -1,6 +1,6 @@
 import Person from "./Person";
 import PhoneNumber from "./PhoneNumber";
-import vCard from "vCards-js";
+import vCard from "vcards-js";
 
 
 /**
