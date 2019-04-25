@@ -163,7 +163,7 @@ function loadData(callback: (list:List)=>void) {
             }
             if (scout.firstName == "Richard" && scout.email == "richy.liu.2002@gmail.com") {
                 console.log(scout.export());
-                download("Richard Liu.vcf", scout.export());
+                //download("Richard Liu.vcf", scout.export());
 
             }
 
@@ -246,7 +246,6 @@ function loadFilterSelects(list: List) {
         }
     }).trigger("change");
 
-$("#infoModal").modal("show");
 
 
 }

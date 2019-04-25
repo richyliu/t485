@@ -6,7 +6,6 @@
 		"sourceMap": true,
 		"moduleResolution": "node",
 		"esModuleInterop": true,
-		"allowSyntheticDefaultImports": true,
-		"forceConsistentCasingInFileNames": true
+		"allowSyntheticDefaultImports": true
 	}
 }

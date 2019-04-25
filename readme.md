@@ -21,4 +21,4 @@ Here's how to get started:
 4. Build a minified production build with `$ gulp build` or run a live dev server (usually at localhost:3000) with `$ gulp watch`.
 
 
-We also have a [internal documentation](https://beta.t485.org/developer/docs/) avaliable.
+We also have an [internal documentation](https://beta.t485.org/developer/docs/) avaliable.
