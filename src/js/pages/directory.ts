@@ -5,12 +5,11 @@ import Scout from "../contact/Scout";
 import PhoneNumber from "../contact/PhoneNumber";
 import $ from "jquery";
 import List from "list.js";
-import PageState from "../utils/PageState";
+import LinkState from "../utils/LinkState";
 import Authenticator from "../server/Authenticator";
 import "bootstrap";
 import "bootstrap-select";
 
-PageState.init();
 
 const directoryKeymap = [
     ["scout", "firstName"], ["scout", "lastName"], ["scout", "email"], ["scout", "homePhone"], ["scout", "slack"],
@@ -32,7 +31,9 @@ const noneText = `<i>None</i>`;
 
 let db = new Database();
 let start = new Date().getTime();
+let list;
 
+LinkState.preservePage();
 
 let auth = new Authenticator();
 auth.onAuthStateChanged(function(user) {
@@ -245,7 +246,6 @@ function loadFilterSelects(list: List) {
         }
     }).trigger("change");
 
-    $("#infoModal").modal("show");
 
 
 }
