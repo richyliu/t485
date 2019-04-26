@@ -3,6 +3,9 @@ import { Database } from "../../server/Database";
 import { AlertBox, ErrorAlert } from "../../AlertBox";
 import Query from "../../utils/Query";
 import $ from "jquery";
+import PageState from "../../utils/PageState";
+
+PageState.init(false);
 
 let authenticator = new Authenticator();
 let database = new Database();

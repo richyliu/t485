@@ -36,7 +36,7 @@ class Scout extends Person {
 
     public getExportObj() {
         let card = super.getExportObj();
-        card.homePhone = this.homePhone.toString();
+        card.homePhone = (this.homePhone || "").toString();
 
         return card;
     }

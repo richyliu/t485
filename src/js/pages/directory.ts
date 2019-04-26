@@ -5,11 +5,12 @@ import Scout from "../contact/Scout";
 import PhoneNumber from "../contact/PhoneNumber";
 import $ from "jquery";
 import List from "list.js";
-import LinkState from "../utils/LinkState";
+import PageState from "../utils/PageState";
 import Authenticator from "../server/Authenticator";
 import "bootstrap";
 import "bootstrap-select";
 
+PageState.init();
 
 const directoryKeymap = [
     ["scout", "firstName"], ["scout", "lastName"], ["scout", "email"], ["scout", "homePhone"], ["scout", "slack"],
@@ -31,9 +32,7 @@ const noneText = `<i>None</i>`;
 
 let db = new Database();
 let start = new Date().getTime();
-let list;
 
-LinkState.preservePage();
 
 let auth = new Authenticator();
 auth.onAuthStateChanged(function(user) {
@@ -163,7 +162,7 @@ function loadData(callback: (list:List)=>void) {
             }
             if (scout.firstName == "Richard" && scout.email == "richy.liu.2002@gmail.com") {
                 console.log(scout.export());
-                download("Richard Liu.vcf", scout.export());
+                //download("Richard Liu.vcf", scout.export());
 
             }
 
@@ -246,7 +245,7 @@ function loadFilterSelects(list: List) {
         }
     }).trigger("change");
 
-$("#infoModal").modal("show");
+    $("#infoModal").modal("show");
 
 
 }
