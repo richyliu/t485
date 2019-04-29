@@ -176,7 +176,7 @@ class Query {
 
 	/**
 	 * Returns a string containing the provided query string with the name set to value. If name already exists, it is overwritten.
-	 * @param name - The name of the parameter to set.
+	 * @param name - The name of the parameter to set. It will be URI encoded before it is added to the url.
 	 * @param value - The value to set the parameter to. Passing `null` removes the parameter.
 	 * @param queryString - The query string to modify.
 	 *
@@ -197,7 +197,7 @@ class Query {
 
 		//we want falsey values to be used literally, as a string (e.g. 0 -> "0", false -> "false"):
 		if (value !== null && value !== undefined) value = "" + value;
-
+		value = encodeURIComponent(value);
 		let regex = new RegExp("([?;&])" + name + "[^&;]*[;&]?");
 		let query = queryString.replace(regex, "$1").replace(/&$/, '');
 		return (query.length > 2 ? query + "&" : "?") + (value ? name + "=" + value : '');

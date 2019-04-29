@@ -5,11 +5,15 @@ import Scout from "../contact/Scout";
 import PhoneNumber from "../contact/PhoneNumber";
 import $ from "jquery";
 import List from "list.js";
-import LinkState from "../utils/LinkState";
+import PageState from "../utils/PageState";
+import Query from "../utils/Query";
+import URL from "../utils/URL";
 import Authenticator from "../server/Authenticator";
 import "bootstrap";
 import "bootstrap-select";
 
+
+PageState.init();
 
 const directoryKeymap = [
     ["scout", "firstName"], ["scout", "lastName"], ["scout", "email"], ["scout", "homePhone"], ["scout", "slack"],
@@ -28,15 +32,13 @@ const columnKeymap = [
     [["Father\'s First Name"], ["Father\'s Last Name"], ["Father\'s Cell Phone"], ["Father\'s E-mail"], ["Father\'s Slack Username or None"]],
     [["Mother\'s First Name"], ["Mother\'s Last Name"], ["Mother\'s Cell Phone"], ["Mother\'s E-mail"], ["Mother\'s Slack Username or None"]],
 ];
-const defaultShown = [[0, 1, 2, 3, 4, 10]];
+const defaultShown = [[0, 1, 2, 3, 4, 10],[],[]];
 const unknownText = `<i>Unknown</i>`;
 const noneText = `<i>None</i>`;
 
 let db = new Database();
 let start = new Date().getTime();
 let list;
-
-LinkState.preservePage();
 
 let auth = new Authenticator();
 auth.onAuthStateChanged(function(user) {
@@ -213,6 +215,8 @@ function loadFilterSelects(list: List) {
         $("#filter-select").append(`<optgroup label="${["Scout", "Father", "Mother"][i]}">
             ${filterOpts}
         </optgroup>`);
+
+        URL.setQueryString(Query.set("sortBy", sortOpts, Query.set("filterBy", filterOpts)))
 
     }
     $(".select-loading").remove();
