@@ -14,18 +14,21 @@ import "bootstrap-select";
 const directoryKeymap = [
     ["scout", "firstName"], ["scout", "lastName"], ["scout", "email"], ["scout", "homePhone"], ["scout", "slack"],
     ["scout", "jobA"], ["scout", "jobB"], ["scout", "joinDate"], ["scout", "active"], ["scout", "WFATrained"],
-    ["scout", "school"], ["scout", "fixedGrade"], ["scout", "currentGrade"], ["scout", "cellPhone"],
+    ["scout", "cellPhone"],
     ["father", "firstName"], ["father", "lastName"], ["father", "cellPhone"], ["father", "email"], ["father", "slack"],
     ["mother", "firstName"], ["mother", "lastName"], ["mother", "cellPhone"], ["mother", "email"], ["mother", "slack"],
 ];
+/**
+ * First string in each element is the full name, the last (which can also be the first) string is the short version.
+ */
 const columnKeymap = [
-    ["Scout\'s First Name", "Scout\'s Last Name", "Patrol", "Scout\'s E-mail", "Scout\'s Home Phone", "Slack Username",
-        "Troop Jobs", "Date Joined Troop 485", "Active (Y)es/ (R)arely/ (A)ged Out/ (N)o", "Wilderness First Aid Trained",
-        "School Attending", "Scout\'s Current Grade", "Scout\'s Cell Phone"],
-    ["Father\'s First Name", "Father\'s Last Name", "Father\'s Cell Phone", "Father\'s E-mail", "Father\'s Slack Username or None"],
-    ["Mother\'s First Name", "Mother\'s Last Name", "Mother\'s Cell Phone", "Mother\'s E-mail", "Mother\'s Slack Username or None"],
+    [["Scout\'s First Name"], ["Scout\'s Last Name"], ["Patrol"], ["Scout\'s E-mail"], ["Scout\'s Home Phone"], ["Slack Username"],
+        ["Troop Jobs"], ["Date Joined Troop 485", "Join Date"], ["Active (Y)es/ (R)arely/ (A)ged Out/ (N)o", "Active"], ["Wilderness First Aid Trained", "WFA Trained"],
+        ["Scout\'s Cell Phone"]],
+    [["Father\'s First Name"], ["Father\'s Last Name"], ["Father\'s Cell Phone"], ["Father\'s E-mail"], ["Father\'s Slack Username or None"]],
+    [["Mother\'s First Name"], ["Mother\'s Last Name"], ["Mother\'s Cell Phone"], ["Mother\'s E-mail"], ["Mother\'s Slack Username or None"]],
 ];
-const defaultShown = [[0, 1, 2, 3, 4], [0, 1, 3], [0, 1, 3]];
+const defaultShown = [[0, 1, 2, 3, 4, 10]];
 const unknownText = `<i>Unknown</i>`;
 const noneText = `<i>None</i>`;
 
@@ -63,7 +66,7 @@ function loadHeaders() {
     for (let i = 0; i < columnKeymap.length; i++) {
         for (let j = 0; j < columnKeymap[i].length; j++, colNum++) {
             $("#dir-head-inner").append(`
-				<th scope="col" class="col-${colNum} header">${columnKeymap[i][j]}</th>
+				<th scope="col" class="col-${colNum} header">${columnKeymap[i][j][columnKeymap[i][j].length - 1]}</th>
 			`);
         }
     }
@@ -114,24 +117,17 @@ function loadData(callback: (list:List)=>void) {
         let directory = new Directory(keys, directoryKeymap);
         directory.update(function(scout: Scout) {
             let row = [];
-            // We use one less then the length because at the end, we will have modified the index by -1 + 2, which means at the end
-            // The index will be one more than what it should be at.
-            for (let i = 0; i < directoryKeymap.length - 1; i++) {
+            for (let i = 0; i < directoryKeymap.length; i++) {
                 let index = i;
                 let value = "";
                 if (i > 2) {
-                    // We add the patrol, but it"s not in the keymap
+                    // We add the patrol, but it's not in the keymap
                     index--;
                 }
                 if (i > 6) {
                     // In the slot that would contain jobA, we list both jobs, so we skip the jobB.
                     index++;
                 }
-                if (i > 10) {
-                    // We don"t display the fixedGrade.
-                    index++;
-                }
-
                 if (i == 2) {
 
                     value = ["Dragons", "Serpents", "Blobfish", "Hawks", "Wildcats", "Cacti"]
@@ -158,7 +154,7 @@ function loadData(callback: (list:List)=>void) {
                             : unknownText;
                 }
 
-                row.push(`<td class="col-${i}">${value}</td>`);
+                row.push(`<td class="col-${i} nowrap">${value}</td>`);
 
             }
             if (scout.firstName == "Richard" && scout.email == "richy.liu.2002@gmail.com") {
@@ -204,8 +200,8 @@ function loadFilterSelects(list: List) {
         let filterOpts = "";
 
         for (let j = 0; j < columnKeymap[i].length; j++) {
-            sortOpts += `<option value="${index}">${columnKeymap[i][j]}</option>`;
-            filterOpts += `<option value="${index}" ${defaultShown[i].indexOf(j) > -1 ? "selected" : ""}>${columnKeymap[i][j]}</option>`;
+            sortOpts += `<option value="${index}">${columnKeymap[i][j][columnKeymap[i][j].length - 1]}</option>`;
+            filterOpts += `<option value="${index}" ${defaultShown[i].indexOf(j) > -1 ? "selected" : ""}>${columnKeymap[i][j][columnKeymap[i][j].length - 1]}</option>`;
             index ++;
         }
 

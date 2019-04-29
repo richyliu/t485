@@ -21,10 +21,8 @@ class Scout extends Person {
     public patrol:Patrol;
     public jobs: string[] = [];
     public WFATrained: string;
-    public school: string;
     public joinDate: string;
     public active: Active;
-    public currentGrade: number | string;
 
     constructor(firstName:string, lastName:string, patrol:Patrol, cellPhone:PhoneNumber, email:string, slack:string, homePhone:PhoneNumber, mother:Person, father:Person) {
         super(firstName, lastName, cellPhone, email, slack);

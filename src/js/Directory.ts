@@ -137,11 +137,8 @@ class Directory extends Spreadsheet {
                         transformedParents[0], transformedParents[1]);
                 scout.jobs = [currentScoutData.scout.jobA, currentScoutData.scout.jobB];
                 scout.WFATrained = currentScoutData.scout.WFATrained;
-                scout.school = currentScoutData.scout.school;
                 scout.joinDate = currentScoutData.scout.joinDate;
                 scout.active = currentScoutData.scout.active;
-                scout.currentGrade = currentScoutData.scout.currentGrade;
-                scout.currentGrade = isNaN(parseInt(scout.currentGrade + "", 10)) ? scout.currentGrade + "" : parseInt(scout.currentGrade + "", 10);
                 if (forEach && forEach(scout) !== false) {
                     result.push(scout);
                 }
