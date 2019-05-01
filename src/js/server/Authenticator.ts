@@ -11,6 +11,8 @@ interface AuthError extends ServerError {
 interface User extends FirebaseUser {
 	emailVerified:boolean;
 	uid:string;
+	email:string;
+	displayName:string|undefined;
 }
 class Authenticator extends ServerConnection {
 

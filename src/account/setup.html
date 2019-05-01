@@ -237,12 +237,12 @@
 						},
 						name:{
 							first:data[base],
-							last:data[base + 1]
-						},
-						email:data[base + 2],
-						type:type == 1 ? "Father" : "Mother",
-						spreadSheetData:data
 
+								last:data[base + 1]
+							},
+							email:data[base + 2],
+							type:type == 1 ? "Father" : "Mother",
+							spreadSheetData:data
 					}).then(function() {
 						$("#datareview-box").addClass("hidden");
 						$("#success-box").removeClass("hidden");

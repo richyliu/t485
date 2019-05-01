@@ -80,9 +80,9 @@ class PageState {
 		authenticator.onAuthStateChanged( function (user) {
 			if (user) {
 				let email = user.email;
-				let displayName = user.displayName || email;
-				if (email) $(".user-email").text(email);
-				if (displayName) $(".user-displayname").text(displayName);
+				let displayName = user.displayName;
+				$(".user-email").text(email || "An Error Occurred. Code account/emailNotSet");
+				$(".user-displayName").text(displayName || "An Error Occurred. Code account/displayNameNotSet");
 
 				$(".lo-show").addClass("hidden");
 				$(".li-show").removeClass("hidden");

@@ -35,8 +35,9 @@ function init() {
 			if (!error || normalErrors.indexOf(error.code) === -1) {
 				alertBox.push(new ErrorAlert(`An unknown error occurred. Code account/login.foreignLoginError(${error.code})`));
 
+			} else {
+				alertBox.push(new ErrorAlert(`Email/Password Incorrect. <a class="alert-link" href="/account/forgot">Forgot Password</a>?`));
 			}
-			alertBox.push(new ErrorAlert(`Email/Password Incorrect. <a class="alert-link" href="/account/forgot">Forgot Password</a>?`));
 			$("#password").val("");
 		});
 
