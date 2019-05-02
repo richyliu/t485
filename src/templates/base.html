@@ -424,7 +424,9 @@
 	{% endblock %}
 
 
-	{% block firebase %}
+	{% block coreScripts %}
+		{% if path %}<script src="/js/{{path}}.bundle.js"></script>
+		{% else %}
 		<script src="https://www.gstatic.com/firebasejs/5.5.3/firebase-app.js">
 		</script>
 		<script src="https://www.gstatic.com/firebasejs/5.5.3/firebase-auth.js">
@@ -449,11 +451,6 @@
 			};
 			firebase.initializeApp(config);
 		</script>
-	{% endblock %}
-
-	{% block coreScripts %}
-		{% if path %}<script src="/js/{{path}}.bundle.js"></script>
-		{% else %}
 			<script src="/js/jquery.min.js"></script>
 			<script src="/js/popper.min.js"></script>
 			<script src="/js/bootstrap.min.js"></script>
