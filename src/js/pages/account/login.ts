@@ -29,7 +29,6 @@ function init() {
 		let password = $("#password").val() + "";
 		$("#error").html("");
 		authenticator.emailLogin(email, password).catch(function(error:AuthError) {
-
 			const normalErrors = ["auth/invalid-email", "auth/user-disabled", "auth/user-not-found", "auth/wrong-password"];
 
 			if (!error || normalErrors.indexOf(error.code) === -1) {
@@ -45,7 +44,6 @@ function init() {
 
 	authenticator.onAuthStateChanged(function(user: User) {
 		if (user) {
-
 			if (!user.emailVerified) {
 
 				$("#main-box").addClass("hidden");

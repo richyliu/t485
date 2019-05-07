@@ -216,7 +216,6 @@ function loadFilterSelects(list: List) {
             ${filterOpts}
         </optgroup>`);
 
-        URL.setQueryString(Query.set("sortBy", sortOpts, Query.set("filterBy", filterOpts)))
 
     }
     $(".select-loading").remove();
@@ -228,6 +227,8 @@ function loadFilterSelects(list: List) {
 
     console.log(list);
     $("#sortby-select, #sortorder-select").change(function() {
+        URL.setQueryString(Query.set("sortBy", ""+$("#sortby-select").val(), Query.set("sortOrder", ""+ $("#sortorder-select").val(), )))
+
         list.sort("col-" + $("#sortby-select").val(), { order: $("#sortorder-select").val() + ""});
     });
     $("#filter-select").change(function() {
@@ -244,6 +245,8 @@ function loadFilterSelects(list: List) {
             }
 
         }
+        URL.setQueryString(Query.set("filterBy", JSON.stringify(selected.map(x=>parseInt(x, 10))).slice(1, -1)));
+
     }).trigger("change");
 
 

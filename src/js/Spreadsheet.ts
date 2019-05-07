@@ -47,7 +47,6 @@ class Spreadsheet {
 				method:"GET",
 				dataType:"json"
 			}).done(function(data:object){
-				//TODO: return promise
 				resolve(data);
 			}).fail(function(jqxhr: JQuery.jqXHR) {
 				reject({
