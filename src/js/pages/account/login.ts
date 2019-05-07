@@ -5,7 +5,7 @@ import Query from "../../utils/Query";
 import $ from "jquery";
 import PageState from "../../utils/PageState";
 
-PageState.init(false);
+PageState.init();
 
 let authenticator = new Authenticator();
 let database = new Database();

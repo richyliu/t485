@@ -117,14 +117,11 @@ class PageState {
 
     /**
      * Runs all three vital state preservation functions.
-     * @param preserveState - If true or omitted, preservePage will be run (see docs for options), if false, preserveState is run.
      */
-	static init(preservePage: boolean=true) {
-		if (preservePage) {
-			PageState.preservePage();
-		} else {
-			PageState.preserveState();
-		}
+	static init() {
+
+		PageState.preservePage();
+		PageState.preserveState();
 		PageState.preserveAuthState();
 		PageState.initAnalytics();
 	}

@@ -2,7 +2,7 @@ import { Authenticator, AuthError } from "../../server/Authenticator";
 import { AlertBox, ErrorAlert, SuccessAlert } from "../../AlertBox";
 import { PageState } from "../../utils/PageState"
 
-PageState.init(false);
+PageState.init();
 
 let authenticator = new Authenticator();
 let alertBox = new AlertBox("#alerts");

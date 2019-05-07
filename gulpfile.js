@@ -1,50 +1,56 @@
+
+// Gulp Core
 const gulp = require("gulp");
-const sass = require("gulp-sass");
-var browserSync = require("browser-sync").create();
+
+// Utilities
 const plumber = require("gulp-plumber");
-const terser = require("gulp-terser"); //gulp-uglify-ecmascript/js6
-const cssnano = require("cssnano");
-const postcss = require("gulp-postcss");
 const del = require("del");
 const merge = require("merge-stream");
-const htmlmin = require("gulp-htmlmin");
-const minifyInline = require("gulp-minify-inline");
 const noop = require("gulp-noop");
 const cache = require("gulp-cached");
-const htmlMinOptions = {
-	collapseWhitespace: true,
-	removeComments:true
-};
-
-
-
-let env = process.env.NODE_ENV || "development";
-let outdir = env == "production" ? "dist" : "devserver";
-let silentDocs = false;
-let devWatch = false;
-const base = "./src";
-
-const browserify = require("browserify");
-const tsify = require("tsify");
-//const watchify = require("watchify");
-
-//const babelify = require("babelify");
-
 const source = require("vinyl-source-stream");
 const buffer = require('vinyl-buffer');
 const rename = require("gulp-rename");
 const glob = require("glob");
 const es = require("event-stream");
-const typedoc = require("gulp-typedoc");
 
+// HTML
+const htmlMinOptions = {
+	collapseWhitespace: true,
+	removeComments:true
+};
+const htmlmin = require("gulp-htmlmin");
+const minifyInline = require("gulp-minify-inline");
 const nunjucks = require("gulp-nunjucks");
 const nunjucks_config = require("./nunjucks-data");
 const nunjucksModule = require("nunjucks");
+
+// Styles
+const sass = require("gulp-sass");
+const cssnano = require("cssnano");
+const postcss = require("gulp-postcss");
+
+// Scripts
+const browserify = require("browserify");
+const tsify = require("tsify");
+const terser = require("gulp-terser");
+const typedoc = require("gulp-typedoc");
+
+// Development
+var browserSync = require("browser-sync").create();
+
+// Environment
+let env = process.env.NODE_ENV || "development";
+let outdir = env == "production" ? "dist" : "devserver";
+let silentDocs = false;
+let devWatch = false;
+const base = "./src";
 var nunjucksEnv = new nunjucksModule.Environment(new nunjucksModule.FileSystemLoader(base + "/templates"));
 
 
-
-
+/**
+ * Sass => CSS => Minified CSS
+ */
 gulp.task("sass", function () {
 	return gulp.src(base + "/css/**/*.+(scss|sass)")
 		.pipe(plumber())
@@ -56,6 +62,10 @@ gulp.task("sass", function () {
 			stream: true
 		}));
 });
+
+/**
+ * CSS => Minified CSS
+ */
 gulp.task("css", function () {
 	return gulp.src([base + "/css/**/*.css", "!" + base + "/css/*.min.css"])
 		.pipe(plumber())
@@ -66,10 +76,18 @@ gulp.task("css", function () {
 			stream: true
 		}));
 });
+
+/**
+ * SASS + CSS
+ */
 gulp.task("styles", gulp.parallel("sass", "css"), function (callback) {
 
 	callback();
 });
+
+/**
+ * JS => Minified JS
+ */
 gulp.task("scripts", function () {
 	return gulp.src([base + "/js/*.js", "!" + base + "/js/*.min.js"])
 		.pipe(plumber())
@@ -81,8 +99,9 @@ gulp.task("scripts", function () {
 		}));
 });
 
-
-
+/**
+ * TS => JS => Minified JS
+ */
 gulp.task("typescript", function (done) {
 
 	// https://fettblog.eu/gulp-browserify-multiple-bundles/
@@ -126,14 +145,9 @@ gulp.task("typescript", function (done) {
 
 });
 
-// gulp.task("developer", function() {
-// 	return gulp.src(base + "/developer/**")
-// 		.pipe(plumber())
-// 		.pipe(env === "production" ? noop() : cache("developer"))
-// 		.pipe(outdir + "/developer/");
-// });
-
-// Typedoc is a documentation generator for typescript
+/**
+ * TS => Docs
+ */
 gulp.task("docs", function() {
 
 
@@ -173,10 +187,17 @@ gulp.task("docs", function() {
 		}));
 });
 
+/**
+ * Delete build directory
+ */
 gulp.task("clean", function (callback) {
 	del.sync("./" + outdir, callback);
 	callback();
 });
+
+/**
+ * Nunjucks => HTML => Minified HTML
+ */
 gulp.task("html", function () {
 	return gulp.src(base + "/**/*.html")
 		.pipe(plumber())
@@ -189,6 +210,9 @@ gulp.task("html", function () {
 		.pipe(gulp.dest("./" + outdir));
 });
 
+/**
+ * Copy misc. files.
+ */
 gulp.task("assets", function () {
 	let fonts = gulp.src(base + "/fonts/**/*")
 		.pipe(plumber())
@@ -227,6 +251,10 @@ gulp.task("assets", function () {
 
 	return merge(fonts, img, jsmap, cssmap, jsmin, jsmap, favicons, cname);
 });
+
+/**
+ * Copy js libraries, css libraries, and fonts
+ */
 gulp.task("libraries", function () {
 
 	// Bootstrap
@@ -287,33 +315,59 @@ gulp.task("libraries", function () {
 		"./node_modules/@fortawesome/fontawesome-pro/css/svg-with-js.min.css"
 
 	])
-		.pipe(plumber())
-		.pipe(env === "production" ? noop() : cache("libraries-fontcss"))
-		.pipe(gulp.dest("./" + outdir + "/fontawesome/css/"));
+			.pipe(plumber())
+			.pipe(env === "production" ? noop() : cache("libraries-fontcss"))
+			.pipe(gulp.dest("./" + outdir + "/fontawesome/css/"));
+	var fontfolder = gulp.src([
+		"./node_modules/typeface-lora/**",
+		"./node_modules/typeface-raleway/**"
+
+	], {base: './node_modules/'})
+			.pipe(plumber())
+			.pipe(gulp.dest("./" + outdir + "/fonts/"));
 
 
 	return merge(scripts, unminifiedscripts, unminifiedstyles, styles, fontjs, fontcss);
 });
+
+/**
+ * Set env var to production
+ */
 gulp.task("set-production", function(callback) {
 
 	env = "production";
 	outdir = "dist";
 	callback();
 });
+
+/**
+ * Set typedoc to use silent docs.
+ */
 gulp.task("set-silentDocs", function(callback) {
 	silentDocs = true;
 	callback();
 });
 
+/**
+ * Build to devserver.
+ */
 gulp.task("devBuild", gulp.series("set-silentDocs", "clean",
 	gulp.parallel("styles", "assets", "scripts", "typescript", "libraries", "docs"),
 	"html"
 ), function (callback) {
 	callback();
 });
+
+/**
+ * Build to dist dir.
+ */
 gulp.task("build", gulp.series("set-production", "devBuild"), function (callback) {
 	callback();
 });
+
+/**
+ * Start local server from dist dir.
+ */
 gulp.task("serveBuild", function () {
 	browserSync.init({
 		server: {
@@ -325,6 +379,10 @@ gulp.task("serveBuild", function () {
 		open:false
 	});
 });
+
+/**
+ * Start local server from devserver dir.
+ */
 gulp.task("serveDev", function () {
 	browserSync.init({
 		server: {
@@ -336,6 +394,10 @@ gulp.task("serveDev", function () {
 		open:false
 	});
 });
+
+/**
+ * Start live server.
+ */
 gulp.task("browserSync", function () {
 	browserSync.init({
 		server: {
@@ -348,6 +410,9 @@ gulp.task("browserSync", function () {
 	});
 });
 
+/**
+ * Start live dev server.
+ */
 gulp.task("watch", gulp.parallel(function () {
 	devWatch = true;
 	gulp.watch(base + "/css/**/*.+(scss|sass)", gulp.parallel("sass"));

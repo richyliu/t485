@@ -65,6 +65,8 @@
         "tslint-consistent-codestyle": "^1.15.1",
         "typedoc": "^0.14.2",
         "typedoc-clarity-theme": "^1.1.0",
+        "typeface-lora": "0.0.72",
+        "typeface-raleway": "0.0.54",
         "typescript": "^3.4.5",
         "vcards-js": "^2.10.0",
         "vinyl-buffer": "^1.0.1",
