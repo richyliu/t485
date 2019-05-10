@@ -21,10 +21,8 @@ g
 	constructor() {
 		if (firebase.apps.length == 0) {
 			firebase.initializeApp(firebaseConfig);
-			this.server = firebase.app();
-		} else {
-			this.server = firebase.app();
 		}
+		this.server = firebase.app();
 	}
 
 

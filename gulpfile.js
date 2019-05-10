@@ -310,14 +310,14 @@ gulp.task("libraries", function () {
 	])
 		.pipe(plumber())
 		.pipe(env === "production" ? noop() : cache("libraries-fontjs"))
-		.pipe(gulp.dest("./" + outdir + "/fontawesome/js/"));
+		.pipe(gulp.dest("./" + outdir + "/fonts/fontawesome/js/"));
 	var fontcss = gulp.src([
 		"./node_modules/@fortawesome/fontawesome-pro/css/svg-with-js.min.css"
 
 	])
 			.pipe(plumber())
 			.pipe(env === "production" ? noop() : cache("libraries-fontcss"))
-			.pipe(gulp.dest("./" + outdir + "/fontawesome/css/"));
+			.pipe(gulp.dest("./" + outdir + "/fonts/fontawesome/css/"));
 	var fontfolder = gulp.src([
 		"./node_modules/typeface-lora/**",
 		"./node_modules/typeface-raleway/**"

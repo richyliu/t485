@@ -39,11 +39,12 @@ function init() {
 			}
 			$("#password").val("");
 		});
-
 	});
 
 	authenticator.onAuthStateChanged(function(user: User) {
+
 		if (user) {
+			console.log(user);
 			if (!user.emailVerified) {
 
 				$("#main-box").addClass("hidden");
@@ -65,6 +66,10 @@ function init() {
 						$("#main-box").addClass("hidden");
 						$("#setup-box").removeClass("hidden");
 					}
+				}).catch(function(e) {
+					console.log(e);
+					alertBox.push(new ErrorAlert(`An unknown error occurred. Code account/login.foreignStateError(${e.code})`));
+
 				});
 
 			}

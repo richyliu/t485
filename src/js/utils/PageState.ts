@@ -17,7 +17,7 @@ class PageState {
 	 * <a href="page?continue=https%3A%2F%2Fexample.com%2F%3Fcontinue%3Dpage2">Link</a>
 	 * ```
 	 */
-	static preservePage() {
+	static initPreservePage() {
 		$(".preserve-page").each(function() {
 
 			let href = $(this).attr("href");
@@ -42,7 +42,7 @@ class PageState {
 	 * <a href="page?continue=page2">Link</a>
 	 * ```
 	 */
-	static preserveState() {
+	static initPreserveState() {
 
 
 		if (Query.get("continue") !== "" && Query.get("continue") != null) {
@@ -75,7 +75,7 @@ class PageState {
 	 * 		If no display name exists, then it is changed to the email.
 	 *
 	 */
-	static preserveAuthState() {
+	static initPreserveAuthState() {
 		let authenticator = new Authenticator();
 		authenticator.onAuthStateChanged( function (user) {
 			if (user) {
@@ -91,6 +91,16 @@ class PageState {
 				$(".lo-show").removeClass("hidden");
 			}
 		});
+	}
+
+	/**
+	 * Adds a handler on the .prevent-submit class, which prevents forms with this class from being submitted.
+	 */
+	static initPreventSubmit() {
+		$(document.body).on("submit", ".prevent-submit", function() {
+			return false;
+		})
+
 	}
 
     /**
@@ -120,9 +130,10 @@ class PageState {
      */
 	static init() {
 
-		PageState.preservePage();
-		PageState.preserveState();
-		PageState.preserveAuthState();
+		PageState.initPreservePage();
+		PageState.initPreserveState();
+		PageState.initPreventSubmit();
+		PageState.initPreserveAuthState();
 		PageState.initAnalytics();
 	}
 

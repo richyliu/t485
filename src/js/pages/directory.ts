@@ -245,7 +245,7 @@ function loadFilterSelects(list: List) {
             }
 
         }
-        URL.setQueryString(Query.set("filterBy", JSON.stringify(selected.map(x=>parseInt(x, 10))).slice(1, -1)));
+        URL.setQueryString(Query.set("filterBy", JSON.stringify(selected.map(x=>parseInt(x, 10))).slice(1, -1).replace(/,/g, "_")));
 
     }).trigger("change");
 
