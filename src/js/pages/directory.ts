@@ -32,7 +32,7 @@ const columnKeymap = [
     [["Father\'s First Name"], ["Father\'s Last Name"], ["Father\'s Cell Phone"], ["Father\'s E-mail"], ["Father\'s Slack Username or None"]],
     [["Mother\'s First Name"], ["Mother\'s Last Name"], ["Mother\'s Cell Phone"], ["Mother\'s E-mail"], ["Mother\'s Slack Username or None"]],
 ];
-const defaultShown = [[0, 1, 2, 3, 4, 10],[],[]];
+const defaultShown = [[0, 1, 2, 3, 4, 10], [], []];
 const unknownText = `<i>Unknown</i>`;
 const noneText = `<i>None</i>`;
 
@@ -101,7 +101,7 @@ function toString(obj: any) {
     }
 }
 
-function loadData(callback: (list:List)=>void) {
+function loadData(callback: (list: List) => void) {
     db.ref("/directory/keys").once("value").then(function(snapshot) {
         let data = snapshot.val();
         let keys: DirectoryKeys;
@@ -204,7 +204,7 @@ function loadFilterSelects(list: List) {
         for (let j = 0; j < columnKeymap[i].length; j++) {
             sortOpts += `<option value="${index}">${columnKeymap[i][j][columnKeymap[i][j].length - 1]}</option>`;
             filterOpts += `<option value="${index}" ${defaultShown[i].indexOf(j) > -1 ? "selected" : ""}>${columnKeymap[i][j][columnKeymap[i][j].length - 1]}</option>`;
-            index ++;
+            index++;
         }
 
         $("#sortby-select").append(`<optgroup label="${["Scout", "Father", "Mother"][i]}">
@@ -227,38 +227,37 @@ function loadFilterSelects(list: List) {
 
     console.log(list);
     $("#sortby-select, #sortorder-select").change(function() {
-        URL.setQueryString(Query.set("sortBy", ""+$("#sortby-select").val(), Query.set("sortOrder", ""+ $("#sortorder-select").val(), )))
+        URL.setQueryString(Query.set("sortBy", "" + $("#sortby-select").val(), Query.set("sortOrder", "" + $("#sortorder-select").val())));
 
-        list.sort("col-" + $("#sortby-select").val(), { order: $("#sortorder-select").val() + ""});
+        list.sort("col-" + $("#sortby-select").val(), { order: $("#sortorder-select").val() + "" });
     });
     $("#filter-select").change(function() {
         // @ts-ignore -- #filter-select will always be an array
-        let selected:string[] = $("#filter-select").val();
+        let selected: string[] = $("#filter-select").val();
         console.log(selected);
         let selectedIndex = 0;
-        for (let i = 0; i < directoryKeymap.length; i ++) {
+        for (let i = 0; i < directoryKeymap.length; i++) {
             if (selected[selectedIndex] === (i + "")) {
-                selectedIndex ++;
+                selectedIndex++;
                 $(".col-" + i).removeClass("hidden");
             } else {
                 $(".col-" + i).addClass("hidden");
             }
 
         }
-        URL.setQueryString(Query.set("filterBy", JSON.stringify(selected.map(x=>parseInt(x, 10))).slice(1, -1).replace(/,/g, "_")));
+        URL.setQueryString(Query.set("filterBy", JSON.stringify(selected.map(x => parseInt(x, 10))).slice(1, -1).replace(/,/g, "_")));
 
     }).trigger("change");
 
 
-
 }
 
-function download(filename, text) {
-    var element = document.createElement('a');
-    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
-    element.setAttribute('download', filename);
+function download(filename: string, text: any) {
+    var element = document.createElement("a");
+    element.setAttribute("href", "data:text/plain;charset=utf-8," + encodeURIComponent(text));
+    element.setAttribute("download", filename);
 
-    element.style.display = 'none';
+    element.style.display = "none";
     document.body.appendChild(element);
 
     element.click();

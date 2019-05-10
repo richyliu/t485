@@ -1,8 +1,11 @@
 import $ from "jquery";
-import { Database } from "../../../server/Database";let db = new Database();
+import { Database } from "../../../server/Database";
+
+let db = new Database();
 let dbRef = db.ref("plcvoting");
 let campaignName = "march2019";
-function render(data:any) {
+
+function render(data: any) {
     $("#results").html("");
     $("#voters").html("");
     let campaign = data.val();
@@ -10,10 +13,10 @@ function render(data:any) {
         if (campaign.categories.hasOwnProperty(key)) {
             let most = 0;
             let mostIds = [];
-            for (let i = 0; i < campaign.categories[key].options.length; i ++) {
+            for (let i = 0; i < campaign.categories[key].options.length; i++) {
                 if (campaign.categories[key].options[i].votes > most) {
                     most = campaign.categories[key].options[i].votes;
-                    mostIds = [i]
+                    mostIds = [i];
                 } else if (campaign.categories[key].options[i].votes == most) {
                     mostIds.push(i);
                 }
@@ -22,7 +25,7 @@ function render(data:any) {
             let secondMostIds = [];
             if (mostIds.length < 2) {
                 most = 0;
-                for (let i = 0; i < campaign.categories[key].options.length; i ++) {
+                for (let i = 0; i < campaign.categories[key].options.length; i++) {
                     if (mostIds.indexOf(i) > -1) {
                         continue;
                     }
@@ -37,9 +40,9 @@ function render(data:any) {
             mostIds = mostIds.concat(secondMostIds);
             console.log(mostIds);
             $("#results").append(`<h3>${campaign.categories[key].name}</h3>`);
-            for (let i = 0; i < campaign.categories[key].options.length; i ++) {
+            for (let i = 0; i < campaign.categories[key].options.length; i++) {
                 let type = mostIds.indexOf(i) > -1 ? "b" : "span";
-                $("#results").append(`<${type}>${campaign.categories[key].options[i].name}: ${campaign.categories[key].options[i].votes || 0}</${type}><br>`)
+                $("#results").append(`<${type}>${campaign.categories[key].options[i].name}: ${campaign.categories[key].options[i].votes || 0}</${type}><br>`);
             }
         }
     }
@@ -50,4 +53,5 @@ function render(data:any) {
     $("#voters").text(voters.join(","));
     $("#length").text(voters.length);
 }
-dbRef.child("campaigns").child(campaignName).on("value", render)
+
+dbRef.child("campaigns").child(campaignName).on("value", render);

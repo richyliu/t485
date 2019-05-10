@@ -12,44 +12,50 @@
 
 
             <form class="prevent-submit" novalidate>
-				<div id="alerts"></div>
+                <div id="alerts"></div>
                 <div class="form-group">
                     <label for="email">Email address:</label>
-                    <input type="email" class="form-control" id="email" autocomplete="email" placeholder="Enter your email...">
+                    <input type="email" class="form-control" id="email" autocomplete="email"
+                           placeholder="Enter your email...">
                 </div>
                 <div class="form-group">
                     <label for="password">Password:</label>
-                    <input type="password" class="form-control" id="password" autocomplete="password" placeholder="Enter your password...">
+                    <input type="password" class="form-control" id="password" autocomplete="password"
+                           placeholder="Enter your password...">
                 </div>
                 <button class="btn btn-primary btn-block" id="login">Login</button>
 
-                <p id="account-tray" class="text-center"><a href="/account/create" id="create-link" class="preserve-state">Create an account</a> | <a href="/account/resetpassword.html" id="forgot-password-link" class="preserve-state">Forgot password</a></p>
+                <p id="account-tray" class="text-center"><a href="/account/create" id="create-link"
+                                                            class="preserve-state">Create an account</a> | <a
+                        href="/account/resetpassword.html" id="forgot-password-link" class="preserve-state">Forgot
+                    password</a></p>
             </form>
         </div>
     </div>
 </div>
 <div class="row col-lg-12 hidden" id="verify-box">
-	<div class="box w-100">
-		<div class="col-lg-12">
-			<h2 class="primary-heading">Verify your email</h2>
+    <div class="box w-100">
+        <div class="col-lg-12">
+            <h2 class="primary-heading">Verify your email</h2>
 
 
-			<div>
-				<p>Please <a href="/account/create?verifEmailOnly=true">verify your email</a> to finish setting up your account and use the website.</p>
-			</div>
-		</div>
-	</div>
+            <div>
+                <p>Please <a href="/account/create?verifEmailOnly=true">verify your email</a> to finish setting up your
+                    account and use the website.</p>
+            </div>
+        </div>
+    </div>
 </div>
 <div class="row col-lg-12 hidden" id="setup-box">
-	<div class="box w-100">
-		<div class="col-lg-12">
-			<h2 class="primary-heading">Setup your account</h2>
+    <div class="box w-100">
+        <div class="col-lg-12">
+            <h2 class="primary-heading">Setup your account</h2>
 
 
-			<div>
-				<p>Please <a href="/account/setup">setup your account</a> before you can login and use the website.</p>
-			</div>
-		</div>
-	</div>
+            <div>
+                <p>Please <a href="/account/setup">setup your account</a> before you can login and use the website.</p>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}

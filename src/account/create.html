@@ -17,8 +17,9 @@
     <div class="box w-100">
         <div class="col-lg-12" id="nokey">
             <h2 class="primary-heading">Create Account</h2>
-			<p class="text-muted">Please contact the webmaster(<a class="webmaster-email">Jeffrey Meng</a>) to get a create link to <span id="create-link-action">create your account</span>.</p>
-			<p class="text-center"><a href="/account/login.html" class="preserve-state">Login instead</a></p>
+            <p class="text-muted">Please contact the webmaster(<a class="webmaster-email">Jeffrey Meng</a>) to get a
+                create link to <span id="create-link-action">create your account</span>.</p>
+            <p class="text-center"><a href="/account/login.html" class="preserve-state">Login instead</a></p>
 
         </div>
     </div>
@@ -35,7 +36,8 @@
                     Please enter a valid email.
                 </div>
                 <div class="invalid-feedback hidden" id="em-validation-inuse">
-                    The email provided is already used in an account. <a href="/account/login.html" class="preserve-state">Login</a> instead?
+                    The email provided is already used in an account. <a href="/account/login.html"
+                                                                         class="preserve-state">Login</a> instead?
                 </div>
             </div>
             <div class="form-group">
@@ -45,7 +47,8 @@
                     Please enter a password.
                 </div>
                 <div class="invalid-feedback pw-validation hidden" id="pw-validation-strength">
-                    Please enter a stronger password. Try adding numbers, uppercase and lowercase letters, and special characters.
+                    Please enter a stronger password. Try adding numbers, uppercase and lowercase letters, and special
+                    characters.
                 </div>
             </div>
             <div class="form-group">
@@ -57,24 +60,34 @@
             </div>
             <button class="btn btn-primary btn-block" id="next-btn">Next</button>
             <p class="text-danger" id="error"></p>
-			<p id="account-tray" class="text-center"><a href="/account/login.html" id="login-link" class="preserve-state">Login</a> | <a href="/account/resetpassword.html" id="forgot-password-link" class="preserve-state">Forgot password</a></p>
+            <p id="account-tray" class="text-center"><a href="/account/login.html" id="login-link"
+                                                        class="preserve-state">Login</a> | <a
+                    href="/account/resetpassword.html" id="forgot-password-link" class="preserve-state">Forgot
+                password</a></p>
         </form>
         <div class="col-lg-12 hidden" id="check-email">
             <h2 class="primary-heading">Check your email!</h2>
-            <p>We sent a verification email to <b class="orig-email">loading...</b> <span class="sent-date">loading...</span>. Follow the link on that email to finish setting up your account.</p>
+            <p>We sent a verification email to <b class="orig-email">loading...</b> <span
+                    class="sent-date">loading...</span>. Follow the link on that email to finish setting up your
+                account.</p>
             <p><a href="#" class="text-center resend" id="resend">Resend the verification email</a>
-                <span id="resend-countdown" class="resend hidden">You can resend the verification email in <b class="resend-time-remaining">Synchronizing...</b> second<span class="resend-plural">s</span>.</span>
-                <span id="resend-success" class="resend hidden">Email successfully resent. You can resend the verification email again in <b class="resend-time-remaining">60</b> second<span class="resend-plural">s</span>.</span>
-                <span id="error-resending" class="resend hidden">Error resending. <a href="/account/create.html" class="preserve-state">Please reload</a> to try again.</span>
+                <span id="resend-countdown" class="resend hidden">You can resend the verification email in <b
+                        class="resend-time-remaining">Synchronizing...</b> second<span
+                        class="resend-plural">s</span>.</span>
+                <span id="resend-success" class="resend hidden">Email successfully resent. You can resend the verification email again in <b
+                        class="resend-time-remaining">60</b> second<span class="resend-plural">s</span>.</span>
+                <span id="error-resending" class="resend hidden">Error resending. <a href="/account/create.html"
+                                                                                     class="preserve-state">Please reload</a> to try again.</span>
                 <span id="resend-loading" class="resend hidden">Resending email...</span>
             </p>
-			<p>
-				<a class="restart link">Use a different email.</a>
-			</p>
+            <p>
+                <a class="restart link">Use a different email.</a>
+            </p>
         </div>
         <div class="col-lg-12 hidden" id="unknown-error">
             <h2 class="primary-heading">An Error Occurred</h2>
-            <p>If this was unexpected, please contact the webmaster. Code: <span id="unknown-error-text">unknown-error</span></p>
+            <p>If this was unexpected, please contact the webmaster. Code: <span
+                    id="unknown-error-text">unknown-error</span></p>
 
         </div>
     </div>
@@ -86,25 +99,25 @@
 {% block scripts %}
 <script id="scripts">
 
-	$(".restart").click(function() {
-		setQueryString(modifyQueryFromURL("changeEmail", true, modifyQueryFromURL("verifEmailOnly", null, window.location.search)));
-		firebase.auth().signOut().then(function() {
-			window.location.reload();
-		}).catch(function(error) {
-			$("#loading").addClass("hidden");
-			$("#main-box").addClass("hidden");
-			$("#basic-data").addClass("hidden");
-			$("#check-email").addClass("hidden");
+    $(".restart").click(function() {
+        setQueryString(modifyQueryFromURL("changeEmail", true, modifyQueryFromURL("verifEmailOnly", null, window.location.search)));
+        firebase.auth().signOut().then(function() {
+            window.location.reload();
+        }).catch(function(error) {
+            $("#loading").addClass("hidden");
+            $("#main-box").addClass("hidden");
+            $("#basic-data").addClass("hidden");
+            $("#check-email").addClass("hidden");
 
-			
-			$("#unknown-error-text").text(error.code);
-			$("#unknown-error").removeClass("hidden");
 
-			// An error happened.
-			console.log(error);
-		});
-	})
-    firebase.auth().onAuthStateChanged(function (user) {
+            $("#unknown-error-text").text(error.code);
+            $("#unknown-error").removeClass("hidden");
+
+            // An error happened.
+            console.log(error);
+        });
+    });
+    firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
 
             console.log(user);
@@ -115,36 +128,36 @@
                 console.log(data);
 
                 if (data == null || new Date() - new Date(data.date) > 10 * 60 * 1000) {
-                	//if the data is nonexistent OR the the date stored in data was more than 10 minutes ago
+                    //if the data is nonexistent OR the the date stored in data was more than 10 minutes ago
                     //send a new link. Links expire in 10 minutes.
                     sendverificationemail(user, function(dateobj) {
 
                         if (dateobj === false || dateobj == null) {
 
                             //error
-							console.log(dateobj);
-							$("#loading").addClass("hidden");
-							$("#main-box").removeClass("hidden");
-							$("#unknown-error-text").text("VERIF_EMAIL_FAILED");
-							$("#basic-data").addClass("hidden");
-							$("#check-email").addClass("hidden");
-							$("#unknown-error").removeClass("hidden");
+                            console.log(dateobj);
+                            $("#loading").addClass("hidden");
+                            $("#main-box").removeClass("hidden");
+                            $("#unknown-error-text").text("VERIF_EMAIL_FAILED");
+                            $("#basic-data").addClass("hidden");
+                            $("#check-email").addClass("hidden");
+                            $("#unknown-error").removeClass("hidden");
                         } else {
 
                             $(".sent-date").text(getHumanDate(dateobj));
                             $(".orig-email").text(user.email);
-							startResendTimer(true);
+                            startResendTimer(true);
 
-						}
+                        }
 
                     });
-                }  else {
+                } else {
 
                     if (new Date() - new Date(data.date) < 60 * 1000) {//60 seconds ago
-						console.log(new Date() - new Date(data.date));
-						startResendTimer(true, 60 - (Math.round((new Date() - new Date(data.date)) / 1000)));
+                        console.log(new Date() - new Date(data.date));
+                        startResendTimer(true, 60 - (Math.round((new Date() - new Date(data.date)) / 1000)));
 
-					}
+                    }
                     console.log(data);
                     $(".sent-date").text(getHumanDate(data));
                     $(".orig-email").text(user.email);
@@ -156,31 +169,31 @@
             });
 
             $("#resend").click(function() {
-            	$(".resend").addClass("hidden");
-            	$("#resend-loading").removeClass("hidden");
+                $(".resend").addClass("hidden");
+                $("#resend-loading").removeClass("hidden");
                 sendverificationemail(user, function(dateobj) {
-					if (dateobj === false || dateobj == null) {
-						$("#resend").addClass("hidden");
-						$("#resend-error").removeClass("hidden");
-						//error
+                    if (dateobj === false || dateobj == null) {
+                        $("#resend").addClass("hidden");
+                        $("#resend-error").removeClass("hidden");
+                        //error
 
-					} else {
-						startResendTimer();
+                    } else {
+                        startResendTimer();
 
-						$(".sent-date").text(getHumanDate(dateobj));
-						$(".orig-email").text(user.email);
-					}
+                        $(".sent-date").text(getHumanDate(dateobj));
+                        $(".orig-email").text(user.email);
+                    }
                 });
 
-            })
+            });
         } else {
-			 if ((getQuery("verifEmailOnly") == "true" || getQuery("verifEmailOnly"))) {
-				window.location.href = modifyQueryFromURL("continue", encodeURIComponent(window.location.href), "/account/login.html");
-				//login, then redirect back here with same verifEmailOnly query
-			} else if (getQuery("key") !== "test") {
-			 	if (getQuery("changeEmail")) {
-					$("#create-link-action").text("create an account with a different email");
-				}
+            if ((getQuery("verifEmailOnly") == "true" || getQuery("verifEmailOnly"))) {
+                window.location.href = modifyQueryFromURL("continue", encodeURIComponent(window.location.href), "/account/login.html");
+                //login, then redirect back here with same verifEmailOnly query
+            } else if (getQuery("key") !== "test") {
+                if (getQuery("changeEmail")) {
+                    $("#create-link-action").text("create an account with a different email");
+                }
                 $("#main-box").remove();
                 $("#scripts").remove();
                 $("#loading").addClass("hidden");
@@ -193,45 +206,47 @@
         }
     });
     var resendInterval;
-    function startResendTimer(firstTime, secondsLeft) {
-		firstTime = firstTime || false;
-    	//if firstTime is true, we assume the verification email was sent but not resent(the account was just created),
-        //so we show a slightly different message.
-		secondsLeft = secondsLeft || 60;
-		$(".resend-time-remaining").text("Synchronizing...");
-		$(".resend-plural").removeClass("hidden");
-		$(".resend").addClass("hidden");
-		if (firstTime) {
-			$("#resend-countdown").removeClass("hidden");
-        } else {
-			$("#resend-success").removeClass("hidden");
-        }
-		clearInterval(resendInterval);
-		resendInterval = setInterval(function(){
-			if (secondsLeft == 1) {
-				$(".resend-plural").addClass("hidden");
-            } else if (secondsLeft == 0) {
-				$(".resend-plural").removeClass("hidden");
-            }
-			$(".resend-time-remaining").text(secondsLeft);
-			secondsLeft --;
-			if (secondsLeft < 0) {
-				clearInterval(resendInterval);
 
-				$(".resend").addClass("hidden");
-				$("#resend").removeClass("hidden");
-			}
-		}, 1000);
+    function startResendTimer(firstTime, secondsLeft) {
+        firstTime = firstTime || false;
+        //if firstTime is true, we assume the verification email was sent but not resent(the account was just created),
+        //so we show a slightly different message.
+        secondsLeft = secondsLeft || 60;
+        $(".resend-time-remaining").text("Synchronizing...");
+        $(".resend-plural").removeClass("hidden");
+        $(".resend").addClass("hidden");
+        if (firstTime) {
+            $("#resend-countdown").removeClass("hidden");
+        } else {
+            $("#resend-success").removeClass("hidden");
+        }
+        clearInterval(resendInterval);
+        resendInterval = setInterval(function() {
+            if (secondsLeft == 1) {
+                $(".resend-plural").addClass("hidden");
+            } else if (secondsLeft == 0) {
+                $(".resend-plural").removeClass("hidden");
+            }
+            $(".resend-time-remaining").text(secondsLeft);
+            secondsLeft--;
+            if (secondsLeft < 0) {
+                clearInterval(resendInterval);
+
+                $(".resend").addClass("hidden");
+                $("#resend").removeClass("hidden");
+            }
+        }, 1000);
     }
+
     function getHumanDate(dateobj) {
-    	var today = new Date();
+        var today = new Date();
         var date = dateobj.date;
         if (typeof date === "string") {
             date = new Date(date);
         }
         console.log(dateobj);
         var days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];//for clarity, use seperatly declared arrays.
-        var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+        var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         var day = days[date.getDay() - 1];
         var dayOfMonth = date.getDate();
         var month = months[date.getMonth()];
@@ -239,71 +254,73 @@
         var time = date.toLocaleTimeString("en-US");
         var timediffhour = "" + Math.floor(dateobj.timezone.offset / 60);
         if (timediffhour.length === 1) {
-			timediffhour = "0" + timediffhour;
+            timediffhour = "0" + timediffhour;
         }
-		var timediffminutes = "" + (dateobj.timezone.offset % 60);
-		if (timediffminutes.length === 1) {
-			timediffminutes = "0" + timediffminutes;
-		} else if (timediffminutes.length === 0) {
-			timediffminutes = "00" + timediffminutes;
-		}
-		var iata = dateobj.timezone.iata;
-		if (today.getDay() != date.getDay()) {
-			return "on " + day + ", " + month + " " + dayOfMonth + ", " + year + " at " + time + " UTC-" + timediffhour + timediffminutes + "(" + iata + ")";
-		} else {
-			return "at " + time /*+ " UTC-" + timediffhour + timediffminutes + "(" + iata + ")"*/;
+        var timediffminutes = "" + (dateobj.timezone.offset % 60);
+        if (timediffminutes.length === 1) {
+            timediffminutes = "0" + timediffminutes;
+        } else if (timediffminutes.length === 0) {
+            timediffminutes = "00" + timediffminutes;
+        }
+        var iata = dateobj.timezone.iata;
+        if (today.getDay() != date.getDay()) {
+            return "on " + day + ", " + month + " " + dayOfMonth + ", " + year + " at " + time + " UTC-" + timediffhour + timediffminutes + "(" + iata + ")";
+        } else {
+            return "at " + time /*+ " UTC-" + timediffhour + timediffminutes + "(" + iata + ")"*/;
 
-		}
+        }
 
     }
+
     function sendverificationemail(user, callback) {
-    	//continue url not supported because the user usually does not create an account spontaneously(in the middle of a session) due to create links.
+        //continue url not supported because the user usually does not create an account spontaneously(in the middle of a session) due to create links.
         /*var actionCodeSettings = {
             url: "https://www.t485.org/?email=" + firebase.auth().currentUser.email + ((getQuery("continue") != "" && getQuery("continue") != null) ? "&redir=" + getQuery("continue") : "")
 
         };*/
         user.sendEmailVerification(/*actionCodeSettings*/)
-            .then(function () {
-                console.log(user);
-                // Verification email sent.
+                .then(function() {
+                    console.log(user);
+                    // Verification email sent.
 
-                var date = new Date();
-                var dateobj = {
-                    date:date + "",// + "" is IMPORTANT!! otherwise date is pushed to
-					// Firebase as undefined even though console.log prints it as a string.
-					//we can't do date.get time because time zones are not preserved.
-                    timezone: {
-                        iata: Intl.DateTimeFormat().resolvedOptions().timeZone,//IANA time zone (e.g. America/Los_Angeles)
-                        offset: date.getTimezoneOffset()//in minutes
+                    var date = new Date();
+                    var dateobj = {
+                        date: date + "",// + "" is IMPORTANT!! otherwise date is pushed to
+                        // Firebase as undefined even though console.log prints it as a string.
+                        //we can't do date.get time because time zones are not preserved.
+                        timezone: {
+                            iata: Intl.DateTimeFormat().resolvedOptions().timeZone,//IANA time zone (e.g. America/Los_Angeles)
+                            offset: date.getTimezoneOffset(),//in minutes
+                        },
+                    };
+
+                    //console.log(firebase.database().ref("/users/" + user.uid + "/latestverificationemail/").set({date}));
+                    firebase.database().ref("/users/" + user.uid + "/latestverificationemail/").set(dateobj).catch(function(error) {
+                        console.log(error);
+
+                    });
+                    firebase.database().ref("/users/" + user.uid + "/verificationemailhistory/").push(dateobj).catch(function(error) {
+                        console.log(error);
+                    });
+                    if (callback) {
+                        callback(dateobj);
                     }
-                }
-
-                //console.log(firebase.database().ref("/users/" + user.uid + "/latestverificationemail/").set({date}));
-                firebase.database().ref("/users/" + user.uid + "/latestverificationemail/").set(dateobj).catch(function(error) {
-                    console.log(error);
-
-                });
-                firebase.database().ref("/users/" + user.uid + "/verificationemailhistory/").push(dateobj).catch(function(error) {
-                    console.log(error);
-                });
-                if (callback) {
-					callback(dateobj);
-				}
-            }).catch(function (error) {
-            	console.log(error);
-                $("#loading").addClass("hidden");
-                $("#main-box").removeClass("hidden");
-                $("#unknown-error-text").text(error.code);
-                $("#basic-data").addClass("hidden");
-                $("#check-email").addClass("hidden");
-                $("#unknown-error").removeClass("hidden");
-                callback(false);
+                }).catch(function(error) {
+            console.log(error);
+            $("#loading").addClass("hidden");
+            $("#main-box").removeClass("hidden");
+            $("#unknown-error-text").text(error.code);
+            $("#basic-data").addClass("hidden");
+            $("#check-email").addClass("hidden");
+            $("#unknown-error").removeClass("hidden");
+            callback(false);
 
         });
 
     }
-    $("#next-btn").click(function () {
-        $("#basic-data .form-control").removeClass("is-invalid")
+
+    $("#next-btn").click(function() {
+        $("#basic-data .form-control").removeClass("is-invalid");
         var email = $("#email").val();
         var password = $("#password").val();
         var confpassword = $("#confirm-password").val();
@@ -317,21 +334,21 @@
             invalid = true;
         }
         if (password.replaceAll(" ", "") == "" || password == null) {
-			$("#password").val("");
-			$("#confirm-password").val("");
+            $("#password").val("");
+            $("#confirm-password").val("");
             $("#pw-validation-strength").addClass("hidden");//message when weak password
             $("#pw-validation-none").removeClass("hidden");//validation message when no password
             $("#password").addClass("is-invalid");
             invalid = true;
         }
         if (password !== confpassword) {
-			$("#password").val("");
-			$("#confirm-password").val("");
-            $("#confirm-password").addClass("is-invalid")
+            $("#password").val("");
+            $("#confirm-password").val("");
+            $("#confirm-password").addClass("is-invalid");
             invalid = true;
         }
         if (!invalid) {
-            firebase.auth().createUserWithEmailAndPassword(email, password).catch(function (error) {
+            firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
                 var errortext = "";
                 switch (error.code) {
                     case "auth/email-already-in-use":
@@ -346,8 +363,8 @@
                         $("#email").addClass("is-invalid");
                         break;
                     case "auth/weak-password":
-						$("#password").val("");
-						$("#confirm-password").val("");
+                        $("#password").val("");
+                        $("#confirm-password").val("");
                         //errortext = "The password is not strong enough. Try adding uppercase and lowercase letters, numbers, and special symbols.";
                         $("#pw-validation-strength").removeClass("hidden");
                         $("#pw-validation-none").addClass("hidden");

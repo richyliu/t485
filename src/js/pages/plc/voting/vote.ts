@@ -1,5 +1,7 @@
 import $ from "jquery";
-import { Database } from "../../../server/Database";let db = new Database();
+import { Database } from "../../../server/Database";
+
+let db = new Database();
 let dbRef = db.ref("plcvoting");
 
 function init() {
@@ -7,7 +9,7 @@ function init() {
         console.log(data.val());
         let campaign = data.val();
         if (campaign != null && campaign !== "CLOSED") {
-            console.log($("#name").val())
+            console.log($("#name").val());
             loadData(campaign, function() {
 
                 $(".campaign-hide").addClass("hidden");
@@ -17,13 +19,13 @@ function init() {
                     if (e.which === 13) {
                         $("#portal-name-submit").click();
                     }
-                })
+                });
                 $("#portal-name-submit").click(function() {
                     if (validateName($("#name").val() + "")) {
                         $("#portal-name").addClass("hidden");
                         $("#portal-vote").removeClass("hidden");
                     } else {
-                        $("#name").addClass("is-invalid")
+                        $("#name").addClass("is-invalid");
                     }
                 });
             });
@@ -36,7 +38,7 @@ function init() {
     });
 }
 
-function validateName(name:string):boolean {
+function validateName(name: string): boolean {
     return name.replace(/\s/g, "").length > 0;
 }
 
@@ -50,7 +52,7 @@ function loadData(campaignName: string, onReady: () => void) {
         for (let key in campaign.categories) {
             if (campaign.categories.hasOwnProperty(key)) {
                 let checkboxText = "";
-                for (let i = 0; i < campaign.categories[key].options.length; i ++) {
+                for (let i = 0; i < campaign.categories[key].options.length; i++) {
                     console.log(key, i);
                     checkboxText += getCheckboxHTML(campaign.categories[key].options[i].name, key, i);
                 }
@@ -71,7 +73,7 @@ function loadData(campaignName: string, onReady: () => void) {
             if (validateVotes(campaign, campaign.data.maxVotes)) {
                 for (let key in campaign.categories) {
                     if (campaign.categories.hasOwnProperty(key)) {
-                        for (let i = 0; i < campaign.categories[key].options.length; i ++) {
+                        for (let i = 0; i < campaign.categories[key].options.length; i++) {
                             let vote = $(`#vote-checkbox-${key}-${i}`).prop("checked");
                             if (vote) {
                                 db.ref(`plcvoting/campaigns/${campaignName}/categories/${key}/options/${i}/votes`).transaction(function(count) {
@@ -81,23 +83,24 @@ function loadData(campaignName: string, onReady: () => void) {
                         }
                     }
                 }
-                db.ref(`plcvoting/campaigns/${campaignName}/submissions`).push( $("#name").val());
+                db.ref(`plcvoting/campaigns/${campaignName}/submissions`).push($("#name").val());
                 $("#portal-vote").addClass("hidden");
                 $("#portal-done").removeClass("hidden");
             } else {
-                $("#error-text").text("You voted more than the max times in each category.")
+                $("#error-text").text("You voted more than the max times in each category.");
             }
         });
 
         onReady();
     });
 }
-function validateVotes(campaign:any, maxCount:number):boolean {
+
+function validateVotes(campaign: any, maxCount: number): boolean {
     for (let key in campaign.categories) {
         if (campaign.categories.hasOwnProperty(key)) {
             maxCount = campaign.categories[key].maxVotes;
             let count = 0;
-            for (let i = 0; i < campaign.categories[key].options.length; i ++) {
+            for (let i = 0; i < campaign.categories[key].options.length; i++) {
                 count += $(`#vote-checkbox-${key}-${i}`).prop("checked") ? 1 : 0;
                 console.log(count, maxCount);
             }
@@ -110,7 +113,7 @@ function validateVotes(campaign:any, maxCount:number):boolean {
     return true;
 }
 
-function getCheckboxHTML(label:string, optionName:string, id:number) {
+function getCheckboxHTML(label: string, optionName: string, id: number) {
     return `<div class="custom-control custom-checkbox">
               <input type="checkbox" class="custom-control-input" id="vote-checkbox-${optionName}-${id}">
               <label class="custom-control-label" for="vote-checkbox-${optionName}-${id}">${label}</label>

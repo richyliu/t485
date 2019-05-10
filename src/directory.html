@@ -4,25 +4,25 @@
 {% block styles %}
 <link type="text/css" rel="stylesheet" href="/css/pages/{{path}}.css">
 <style>
-.table-wrapper,
-.row,
-.box {
-    width: 100%; 
-    height:100%;
-}
+    .table-wrapper,
+    .row,
+    .box {
+        width: 100%;
+        height: 100%;
+    }
 
-#table {
-    display: block !important;
-    width:100%;
-    overflow:auto;
-    
-}
+    #table {
+        display: block !important;
+        width: 100%;
+        overflow: auto;
+
+    }
 </style>
 {% endblock %}
 {% block main %}
 <div class="row">
     <div class="box">
-        <div class="col-lg-12 table-wrapper">	
+        <div class="col-lg-12 table-wrapper">
             <h2 class="primary-heading">
                 Directory
             </h2>
@@ -38,13 +38,15 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <b>Search:</b>
-                                <input type="text" class="form-control fuzzy-search" id="search" placeholder="Search by name, job, phone number, slack username, etc.">
+                                <input type="text" class="form-control fuzzy-search" id="search"
+                                       placeholder="Search by name, job, phone number, slack username, etc.">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-4">
-                            <b>Sort by:</b>
-                                <select class="form-control selectpicker" data-live-search="true" id="sortby-select" disabled>
+                                <b>Sort by:</b>
+                                <select class="form-control selectpicker" data-live-search="true" id="sortby-select"
+                                        disabled>
                                     <option value="LOADING" class="select-loading" selected>Loading...</option>
                                 </select>
                             </div>
@@ -57,18 +59,20 @@
                                 </select>
                             </div>
                             <div class="col-md-4">
-                            <b>Show:</b>
-                                <select class="form-control selectpicker" multiple id="filter-select" data-live-search="true" data-actions-box="true" disabled>
+                                <b>Show:</b>
+                                <select class="form-control selectpicker" multiple id="filter-select"
+                                        data-live-search="true" data-actions-box="true" disabled>
                                     <option value="LOADING" class="select-loading" selected>Loading...</option>
                                 </select>
 
                             </div>
                         </div>
 
-                        </form>
+                    </form>
 
                     <br>
-                    <p id="modified-settings" class="hidden"> Modified search/sort settings saved in URL. <a href="?#">Reset to default settings</a>. </p>
+                    <p id="modified-settings" class="hidden"> Modified search/sort settings saved in URL. <a href="?#">Reset
+                        to default settings</a>. </p>
                     <p>Select a row to view all information about that scout.</p>
                     <div id="table-wrapper">
                         <div id="table-doublescrollbar-wrapper" class="doublescroll-wrapper doublescroll-x">
@@ -78,17 +82,22 @@
                         </div>
                         <table class="table table-hover" id="table">
                             <thead id="dir-head">
-                                <tr id="dir-head-inner">
-                                </tr>
+                            <tr id="dir-head-inner">
+                            </tr>
                             </thead>
                             <tbody id="dir-body" class="list">
-                                <tr id="loading-text"><td colspan="100" id="loading-text-inner">Loading...</td></tr>
+                            <tr id="loading-text">
+                                <td colspan="100" id="loading-text-inner">Loading...</td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
-                <p><span class="directoryLoaded-show hidden"><span class="directoryScoutSize"></span> scouts loaded in <span class="directoryLoadTime"></span></span></p>
-                <p>View/Edit the troop directory spreadsheet on <a target="_blank" class="link-google-sheet-dir">Google Sheets</a>.</p>
+                <p><span class="directoryLoaded-show hidden"><span
+                        class="directoryScoutSize"></span> scouts loaded in <span
+                        class="directoryLoadTime"></span></span></p>
+                <p>View/Edit the troop directory spreadsheet on <a target="_blank" class="link-google-sheet-dir">Google
+                    Sheets</a>.</p>
             </div>
         </div>
     </div>

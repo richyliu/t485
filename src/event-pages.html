@@ -7,18 +7,20 @@
 
 <style>
     .caret {
-        display:none;
+        display: none;
     }
+
     .sort.asc .caret.caret-up {
-        display:inline;
+        display: inline;
     }
 
     .sort.desc .caret.caret-down {
-        display:inline;
+        display: inline;
     }
+
     #date-select[readonly] {
-        background-color:white;
-        color:black;
+        background-color: white;
+        color: black;
     }
 
     label {
@@ -36,20 +38,26 @@
             </h2>
             <div id="event-list">
                 <b for="event-list-search">Search Events:</b>
-                <input type="text" class="form-control fuzzy-search" id="event-list-search" placeholder="e.g. Summer Camp 2018">
+                <input type="text" class="form-control fuzzy-search" id="event-list-search"
+                       placeholder="e.g. Summer Camp 2018">
                 <form class="pt-1">
                     <div class="row">
                         <div class="col">
-                        <br>
-                            <button type="button" class="btn btn-primary btn-block sort" data-sort="date">Sort by date <span class="caret caret-up "><i class="fas fa-caret-up"></i></span><span class="caret caret-down"><i class="fas fa-caret-down"></i></span></button>
+                            <br>
+                            <button type="button" class="btn btn-primary btn-block sort" data-sort="date">Sort by date
+                                <span class="caret caret-up "><i class="fas fa-caret-up"></i></span><span
+                                        class="caret caret-down"><i class="fas fa-caret-down"></i></span></button>
                         </div>
                         <div class="col">
-                        <br>
-                            <button type="button" class="btn btn-primary btn-block sort" data-sort="name">Sort by name <span class="caret caret-up "><i class="fas fa-caret-up"></i></span><span class="caret caret-down"><i class="fas fa-caret-down"></i></span></button>
+                            <br>
+                            <button type="button" class="btn btn-primary btn-block sort" data-sort="name">Sort by name
+                                <span class="caret caret-up "><i class="fas fa-caret-up"></i></span><span
+                                        class="caret caret-down"><i class="fas fa-caret-down"></i></span></button>
                         </div>
                         <div class="col">
-                        <b>Show events in:</b>
-                            <select class="selectpicker form-control" multiple data-actions-box="true" id="event-filter">
+                            <b>Show events in:</b>
+                            <select class="selectpicker form-control" multiple data-actions-box="true"
+                                    id="event-filter">
                                 <option value="future" selected>the future</option>
                                 <option value="month" selected>last 30 days</option>
                                 <option data-divider="true"></option>
@@ -79,13 +87,13 @@
                         - <span class="name">CASA</span></a></li>
                 </ul>
                 <div class="not-found hidden">
-					<h3>No event pages found with selection</h3>
-					<p>Do you need to show past events? <a>Enable all filters</a>.</p>
-				</div>
-				<div class="not-found hidden">
-					<h3>No future events!</h3>
-					<p><a>Enable all filters</a> to show past events.</p>
-				</div>
+                    <h3>No event pages found with selection</h3>
+                    <p>Do you need to show past events? <a>Enable all filters</a>.</p>
+                </div>
+                <div class="not-found hidden">
+                    <h3>No future events!</h3>
+                    <p><a>Enable all filters</a> to show past events.</p>
+                </div>
 
 
             </div>
@@ -99,13 +107,16 @@
                 Create an event page
             </h2>
             <div>
-                <p>Creating event page as <b class="user-displayname">Loading...</b>. <a href="/account/logout" class="preserve-page">Logout.</a></p>
+                <p>Creating event page as <b class="user-displayname">Loading...</b>. <a href="/account/logout"
+                                                                                         class="preserve-page">Logout.</a>
+                </p>
 
                 <form class="pt-1">
                     <div class="row">
                         <div class="col col-lg-12">
                             <label for="new-ep-name">Event Name:</label>
-                            <input type="text" class="form-control fuzzy-search" id="new-ep-name" placeholder="e.g. CASA Camporee">
+                            <input type="text" class="form-control fuzzy-search" id="new-ep-name"
+                                   placeholder="e.g. CASA Camporee">
                         </div>
                     </div>
                     <div class="row">
@@ -114,7 +125,10 @@
                         <div class="col-lg-12">
                             <label for="date-select">Date:</label>
                             <input id="date-select" class="form-control" placeholder="Click to open calendar.">
-                            <small class="form-text text-muted">Click the input to open a calendar. Click a number once to set start date. Click again to set single day event, or click the end date instead to set a muti day event.</small>
+                            <small class="form-text text-muted">Click the input to open a calendar. Click a number once
+                                to set start date. Click again to set single day event, or click the end date instead to
+                                set a muti day event.
+                            </small>
 
                         </div>
 
@@ -131,9 +145,9 @@
 
             </div>
 
-            </div>
         </div>
     </div>
+</div>
 </div>
 {% endblock %}
 {% block scripts %}
@@ -145,63 +159,64 @@
 
 
 <script>
-	class EventPageDisplay {
-		constructor() {
+    class EventPageDisplay {
+        constructor() {
 
-		}
-	}
-var options = {
-  valueNames: ["name", "date", "date-month", "date-year", "start-date", "end-date"]
-};
-var list = new List('event-list', options);
+        }
+    }
 
-$(document).ready(function() {
+    var options = {
+        valueNames: ["name", "date", "date-month", "date-year", "start-date", "end-date"],
+    };
+    var list = new List("event-list", options);
 
-    //init the filtering
-    $("#event-filter").change(function() {
-        var selected = $(this).val();
-        list.filter(function(item) {
-            console.log(item.values());
-            console.log(selected);
-            if (selected.indexOf(item.values()["date-year"]) > -1) {
-                return true;
-            } else if (selected.indexOf("future") > -1 || selected.indexOf("month") > -1) {
-                //the future is selected and the item wouldn't have otherwise passed
-                // https://stackoverflow.com/a/8305306/5511561
-                var selectedDate = new Date(item.values()["end-date"]).getTime();
-                var now = new Date().setHours(0,0,0,0);//set it to the start of today, we only want to compare the date, not time.
-                console.log(selectedDate);
-                console.log(now);
-                if (selected.indexOf("future") > -1 && selectedDate >= now) {
-                    //event is today or in the future
-                    return true;//show it
-                }
-                //check the month too
-                var monthms = 30 * 24 * 60 * 60 * 1000;// the number of ms in a month
-                if (selected.indexOf("month") > -1 && selectedDate >= (now - (monthms)) && selectedDate <= now) {//the event is after/equal 30 days ago but before/equal today
+    $(document).ready(function() {
+
+        //init the filtering
+        $("#event-filter").change(function() {
+            var selected = $(this).val();
+            list.filter(function(item) {
+                console.log(item.values());
+                console.log(selected);
+                if (selected.indexOf(item.values()["date-year"]) > -1) {
+                    return true;
+                } else if (selected.indexOf("future") > -1 || selected.indexOf("month") > -1) {
+                    //the future is selected and the item wouldn't have otherwise passed
+                    // https://stackoverflow.com/a/8305306/5511561
+                    var selectedDate = new Date(item.values()["end-date"]).getTime();
+                    var now = new Date().setHours(0, 0, 0, 0);//set it to the start of today, we only want to compare the date, not time.
+                    console.log(selectedDate);
+                    console.log(now);
+                    if (selected.indexOf("future") > -1 && selectedDate >= now) {
+                        //event is today or in the future
+                        return true;//show it
+                    }
+                    //check the month too
+                    var monthms = 30 * 24 * 60 * 60 * 1000;// the number of ms in a month
+                    if (selected.indexOf("month") > -1 && selectedDate >= (now - (monthms)) && selectedDate <= now) {//the event is after/equal 30 days ago but before/equal today
                         //event is between 30 days ago and today
                         return true;//show it
                     }
-            } else {
-                return false;
-            }
+                } else {
+                    return false;
+                }
+            });
         });
+        $("#event-filter").change();
+        //If on moible, tell seectpicker to default to system default select.
+        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
+            $(".selectpicker").selectpicker("mobile");
+        }
+        flatpickr("#date-select", {
+            dateFormat: "m/d/y",
+            mode: "range",
+        });
+
     });
-    $("#event-filter").change();
-    //If on moible, tell seectpicker to default to system default select.
-    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
-        $(".selectpicker").selectpicker("mobile");
-    }
-    flatpickr("#date-select", {
-        dateFormat: "m/d/y",
-        mode: "range"
+
+
+    $("#ep-create").click(function() {
+        //new event page
     });
-
-});
-
-
-$("#ep-create").click(function() {
-    //new event page
-})
 </script>
 {% endblock %}

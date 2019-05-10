@@ -2,256 +2,261 @@
 {% extends "base.html" %}
 {% block styles %}
 <style>
-	.list-group-item {
-		background-color:transparent;
-		border:none;
-	}
+    .list-group-item {
+        background-color: transparent;
+        border: none;
+    }
 </style>
 {% endblock %}
 {% block main %}
 
 <div class="row col-lg-12 hidden" id="confirm-box">
-	<div class="box w-100">
-		<div class="col-lg-12">
-			<h2 class="primary-heading">Confirm Synchronization</h2>
+    <div class="box w-100">
+        <div class="col-lg-12">
+            <h2 class="primary-heading">Confirm Synchronization</h2>
 
-			<p>This action may take a few minutes and you will not be able to leave the page until it is done.</p>
-			<button class="btn btn-danger btn-block">Update Account Data</button>
+            <p>This action may take a few minutes and you will not be able to leave the page until it is done.</p>
+            <button class="btn btn-danger btn-block">Update Account Data</button>
 
-		</div>
-	</div>
+        </div>
+    </div>
 </div>
 <div class="row col-lg-12 hidden" id="datareview-box">
-	<div class="box w-100">
-		<div class="col-lg-12">
-			<h2 class="primary-heading">Hello, <span class="setup-user-firstName"></span></h2>
-			<p>Please confirm that this data is correct before proceeding.</p>
+    <div class="box w-100">
+        <div class="col-lg-12">
+            <h2 class="primary-heading">Hello, <span class="setup-user-firstName"></span></h2>
+            <p>Please confirm that this data is correct before proceeding.</p>
 
-			<ul class="list-group list-group-flush">
-				<li class="list-group-item"><b>Name:</b> <span class="setup-user-firstName"></span> <span class="setup-user-lastName"></span></li>
-				<li class="list-group-item hidden if-scout"><b>Patrol:</b> <span class="setup-scout-patrol"></span></li>
-				<li class="list-group-item"><b>Email:</b> <span class="setup-user-email"></span></li>
-				<li class="list-group-item hidden if-scout"><b>Jobs:</b> <ul class="setup-scout-job"></ul></li>
-			</ul>
-			<button class="btn btn-block btn-success" id="confirm">All Data is Correct</button>
-			<hr>
-			<p>If any part of the data is wrong, head to the <a class="link-google-sheet-dir" target="_blank">spreadsheet</a> and update your data. Then,
-				<a onclick="window.location.reload()" class="link">reload this page</a>.</p>
-		</div>
-	</div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><b>Name:</b> <span class="setup-user-firstName"></span> <span
+                        class="setup-user-lastName"></span></li>
+                <li class="list-group-item hidden if-scout"><b>Patrol:</b> <span class="setup-scout-patrol"></span></li>
+                <li class="list-group-item"><b>Email:</b> <span class="setup-user-email"></span></li>
+                <li class="list-group-item hidden if-scout"><b>Jobs:</b>
+                    <ul class="setup-scout-job"></ul>
+                </li>
+            </ul>
+            <button class="btn btn-block btn-success" id="confirm">All Data is Correct</button>
+            <hr>
+            <p>If any part of the data is wrong, head to the <a class="link-google-sheet-dir" target="_blank">spreadsheet</a>
+                and update your data. Then,
+                <a onclick="window.location.reload()" class="link">reload this page</a>.</p>
+        </div>
+    </div>
 </div>
 <div class="row col-lg-12 hidden" id="saving-box">
-	<div class="box w-100">
-		<div class="col-lg-12">
-			<h2 class="primary-heading">Saving Information</h2>
+    <div class="box w-100">
+        <div class="col-lg-12">
+            <h2 class="primary-heading">Saving Information</h2>
 
-			<p>Please do not reload or leave this page. This should take less than a minute.</p>
+            <p>Please do not reload or leave this page. This should take less than a minute.</p>
 
-		</div>
-	</div>
+        </div>
+    </div>
 </div>
 <div class="row col-lg-12 hidden" id="verify-box">
-	<div class="box w-100">
-		<div class="col-lg-12">
-			<h2 class="primary-heading">Verify Your Email First!</h2>
+    <div class="box w-100">
+        <div class="col-lg-12">
+            <h2 class="primary-heading">Verify Your Email First!</h2>
 
-			<p>Before you may synchronize your account you must verify your email.</p>
+            <p>Before you may synchronize your account you must verify your email.</p>
 
-		</div>
-	</div>
+        </div>
+    </div>
 </div>
 <div class="row col-lg-12 hidden" id="success-box">
-	<div class="box w-100">
-		<div class="col-lg-12">
-			<h2 class="primary-heading">Success!</h2>
+    <div class="box w-100">
+        <div class="col-lg-12">
+            <h2 class="primary-heading">Success!</h2>
 
-			<p>Your account has been fully set up.</p>
-			<a href="/">Return to the home page</a>
+            <p>Your account has been fully set up.</p>
+            <a href="/">Return to the home page</a>
 
-		</div>
-	</div>
+        </div>
+    </div>
 </div>
 <div class="row col-lg-12 hidden" id="notfound-box">
-	<div class="box w-100">
-		<div class="col-lg-12">
-			<h2 class="primary-heading">Email not found in directory!</h2>
+    <div class="box w-100">
+        <div class="col-lg-12">
+            <h2 class="primary-heading">Email not found in directory!</h2>
 
-			<p>Your account email was not found in the T485 Directory.
-				Please change your email on the directory (email the webmaster to get the link) or
-				<a href="/account/settings.html#changeemail">update your email for your account</a>.</p>
-			<br>
-			<p class="text-muted text-center">This extra security step is taken to ensure that accounts belong only to members of T485.
-				If you believe this was a mistake, please contact the webmaster.</p>
+            <p>Your account email was not found in the T485 Directory.
+                Please change your email on the directory (email the webmaster to get the link) or
+                <a href="/account/settings.html#changeemail">update your email for your account</a>.</p>
+            <br>
+            <p class="text-muted text-center">This extra security step is taken to ensure that accounts belong only to
+                members of T485.
+                If you believe this was a mistake, please contact the webmaster.</p>
 
-		</div>
-	</div>
+        </div>
+    </div>
 </div>
 <div class="row col-lg-12" id="loading-box">
-	<div class="box w-100">
-		<div class="col-lg-12">
-			<h2 class="primary-heading">Gathering account information</h2>
+    <div class="box w-100">
+        <div class="col-lg-12">
+            <h2 class="primary-heading">Gathering account information</h2>
 
-			<p>Please wait while we load your account information...</p>
+            <p>Please wait while we load your account information...</p>
 
-		</div>
-	</div>
+        </div>
+    </div>
 </div>
 
 {% endblock %}
 
 {% block scripts %}
 <script>
-	var scoutArrayKeymap = [["scout", "firstName"], ["scout", "lastName"], ["scout", "email"], ["scout", "homePhone"], ["scout", "slack"], ["scout", "job"], ["scout", "joinDate"], ["scout", "active"], ["scout", "WFATrained"], ["scout", "school"], ["scout", "cellPhone"],
-		["father", "firstName"], ["father", "lastName"], ["father", "cellPhone"], ["father", "email"], ["father", "slack"],
-		["mother", "firstName"], ["mother", "lastName"], ["mother", "cellPhone"], ["mother", "email"], ["mother", "slack"]];
-	var userKeymap = ["scout", "father", "mother"]
-	firebase.auth().onAuthStateChanged(function(user) {
-		if (user) {
-			if (!user.emailVerified) {
-				$("#loading-box").addClass("hidden");
-				$("#verify-box").removeClass("hidden");
-				//console.log("hi");
-			} else {
-				$("#error").html("");
-				firebase.database().ref("/directory/keys/").once("value").then(function(snapshot){
-					var keys = snapshot.val();
-					$(".link-google-sheet-dir").attr("href", `https://docs.google.com/spreadsheets/d/${keys.id}/edit`);
+    var scoutArrayKeymap = [["scout", "firstName"], ["scout", "lastName"], ["scout", "email"], ["scout", "homePhone"], ["scout", "slack"], ["scout", "job"], ["scout", "joinDate"], ["scout", "active"], ["scout", "WFATrained"], ["scout", "school"], ["scout", "cellPhone"],
+        ["father", "firstName"], ["father", "lastName"], ["father", "cellPhone"], ["father", "email"], ["father", "slack"],
+        ["mother", "firstName"], ["mother", "lastName"], ["mother", "cellPhone"], ["mother", "email"], ["mother", "slack"]];
+    var userKeymap = ["scout", "father", "mother"];
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+            if (!user.emailVerified) {
+                $("#loading-box").addClass("hidden");
+                $("#verify-box").removeClass("hidden");
+                //console.log("hi");
+            } else {
+                $("#error").html("");
+                firebase.database().ref("/directory/keys/").once("value").then(function(snapshot) {
+                    var keys = snapshot.val();
+                    $(".link-google-sheet-dir").attr("href", `https://docs.google.com/spreadsheets/d/${keys.id}/edit`);
 
-					rangeString = ``;
-					for (i = 0; i < keys.sheets.length; i ++) {
-						rangeString += `ranges=${keys.sheets[i]}!A2:U&`
-					}
+                    rangeString = ``;
+                    for (i = 0; i < keys.sheets.length; i++) {
+                        rangeString += `ranges=${keys.sheets[i]}!A2:U&`;
+                    }
 
-					var UserType = Object.freeze({"STUDENT":1, "FATHER":2, "MOTHER":3});
-					console.log(1)
-					$.ajax({
-						url:`https://sheets.googleapis.com/v4/spreadsheets/${keys.id}/values:batchGet/?${rangeString}majorDimension=ROWS&valueRenderOption=FORMATTED_VALUE&key=${keys.api}`,
-						method:"GET",
-						dataType:"json"
-					}).done(function(data){
-						$("#loading-text").addClass("hidden");
-						var ranges = data.valueRanges;
-						var scouts = [];
-						var row = 0;
-						//loop through patrols
-						var found = false;
-						for (let i = 0; i < ranges.length; i ++) {
-							var values = ranges[i].values;
-							var patrol = keys.sheets[i];
+                    var UserType = Object.freeze({ "STUDENT": 1, "FATHER": 2, "MOTHER": 3 });
+                    console.log(1);
+                    $.ajax({
+                        url: `https://sheets.googleapis.com/v4/spreadsheets/${keys.id}/values:batchGet/?${rangeString}majorDimension=ROWS&valueRenderOption=FORMATTED_VALUE&key=${keys.api}`,
+                        method: "GET",
+                        dataType: "json",
+                    }).done(function(data) {
+                        $("#loading-text").addClass("hidden");
+                        var ranges = data.valueRanges;
+                        var scouts = [];
+                        var row = 0;
+                        //loop through patrols
+                        var found = false;
+                        for (let i = 0; i < ranges.length; i++) {
+                            var values = ranges[i].values;
+                            var patrol = keys.sheets[i];
 
-							//loop within patrols
-							for (let j = 0; j < values.length; j ++) {
-								//console.log(values[j]);
+                            //loop within patrols
+                            for (let j = 0; j < values.length; j++) {
+                                //console.log(values[j]);
 
-								if (values[j][2] == user.email) {
-									handleUserData(values[j], user, patrol, 0);
-									found = true;
-								} else if (values[j][14] == user.email) {
+                                if (values[j][2] == user.email) {
+                                    handleUserData(values[j], user, patrol, 0);
+                                    found = true;
+                                } else if (values[j][14] == user.email) {
 
-									handleUserData(values[j], user, patrol, 1);
-									found = true;
-								} else if (values[j][19] == user.email) {
+                                    handleUserData(values[j], user, patrol, 1);
+                                    found = true;
+                                } else if (values[j][19] == user.email) {
 
-									handleUserData(values[j], user, patrol, 2);
-									found = true;
-								}
-							}
-
-
-
-						}
-						if (!found) {
-
-							$("#loading-box").addClass("hidden");
-							$("#notfound-box").removeClass("hidden");
-						}
+                                    handleUserData(values[j], user, patrol, 2);
+                                    found = true;
+                                }
+                            }
 
 
-					});
+                        }
+                        if (!found) {
 
-				});
-
-			}
-		} else {
-			window.location.href = "/account/login";
-		}
-	});
-	function handleUserData(data, user, patrol, type) {
-
-			console.log(data);
-			console.log(type);
-			var jobList = [];
-			for (let i = 0; i < userKeymap.length; i ++) {
-				$(".if-" + userKeymap[i]).removeClass("hidden");
-				$(".ifnot-" + userKeymap[i]).addClass("hidden");
-			}
-			$(".setup-scout-patrol").text(patrol);
-
-			for (i = 0; i < scoutArrayKeymap.length; i ++) {
-				if (scoutArrayKeymap[i][1] == "job") {
-					split = data[i].split(",");
-					console.log(100, split);
-					for (let j = 0; j < split.length; j ++) {
-						$(".setup-" + scoutArrayKeymap[i][0] + "-" + scoutArrayKeymap[i][1]).append(`<li>${split[j]}</li>`);
-						jobList.push(split[j].trim().toLowerCase());
-					}
-					continue;
-				}
-				$(".setup-" + scoutArrayKeymap[i][0] + "-" + scoutArrayKeymap[i][1]).text(data[i]);
-				if (scoutArrayKeymap[i][0] == userKeymap[type]) {
-
-					$(".setup-user-" + scoutArrayKeymap[i][1]).text(data[i]);
-
-				}
-			}
-
-			$("#loading-box").addClass("hidden");
-			$("#datareview-box").removeClass("hidden");
-
-			$("#confirm").click(function() {
-				if (type === 0) {
-					firebase.database().ref("/users/" + user.uid + "/data/").set({
-						lastUpdated:{
-							utc:new Date().getTime(),
-							string:Date() + ""
-						},
-						name:{
-							first:data[0],
-							last:data[1]
-						},
-						email:data[2],
-						jobs:jobList,
-						spreadSheetData:data,
-						type:"Scout"
-
-					}).then(function() {
-						$("#datareview-box").addClass("hidden");
-						$("#success-box").removeClass("hidden");
-					});
-				} else {
-					let base = 6 + (5 * type);
-					firebase.database().ref("/users/" + user.uid + "/data/").set({
-						lastUpdated:{
-							utc:new Date().getTime(),
-							string:Date() + ""
-						},
-						name:{
-							first:data[base],
-
-								last:data[base + 1]
-							},
-							email:data[base + 2],
-							type:type == 1 ? "Father" : "Mother",
-							spreadSheetData:data
-					}).then(function() {
-						$("#datareview-box").addClass("hidden");
-						$("#success-box").removeClass("hidden");
-					});
-				}
-			});
+                            $("#loading-box").addClass("hidden");
+                            $("#notfound-box").removeClass("hidden");
+                        }
 
 
-	}
+                    });
+
+                });
+
+            }
+        } else {
+            window.location.href = "/account/login";
+        }
+    });
+
+    function handleUserData(data, user, patrol, type) {
+
+        console.log(data);
+        console.log(type);
+        var jobList = [];
+        for (let i = 0; i < userKeymap.length; i++) {
+            $(".if-" + userKeymap[i]).removeClass("hidden");
+            $(".ifnot-" + userKeymap[i]).addClass("hidden");
+        }
+        $(".setup-scout-patrol").text(patrol);
+
+        for (i = 0; i < scoutArrayKeymap.length; i++) {
+            if (scoutArrayKeymap[i][1] == "job") {
+                split = data[i].split(",");
+                console.log(100, split);
+                for (let j = 0; j < split.length; j++) {
+                    $(".setup-" + scoutArrayKeymap[i][0] + "-" + scoutArrayKeymap[i][1]).append(`<li>${split[j]}</li>`);
+                    jobList.push(split[j].trim().toLowerCase());
+                }
+                continue;
+            }
+            $(".setup-" + scoutArrayKeymap[i][0] + "-" + scoutArrayKeymap[i][1]).text(data[i]);
+            if (scoutArrayKeymap[i][0] == userKeymap[type]) {
+
+                $(".setup-user-" + scoutArrayKeymap[i][1]).text(data[i]);
+
+            }
+        }
+
+        $("#loading-box").addClass("hidden");
+        $("#datareview-box").removeClass("hidden");
+
+        $("#confirm").click(function() {
+            if (type === 0) {
+                firebase.database().ref("/users/" + user.uid + "/data/").set({
+                    lastUpdated: {
+                        utc: new Date().getTime(),
+                        string: Date() + "",
+                    },
+                    name: {
+                        first: data[0],
+                        last: data[1],
+                    },
+                    email: data[2],
+                    jobs: jobList,
+                    spreadSheetData: data,
+                    type: "Scout",
+
+                }).then(function() {
+                    $("#datareview-box").addClass("hidden");
+                    $("#success-box").removeClass("hidden");
+                });
+            } else {
+                let base = 6 + (5 * type);
+                firebase.database().ref("/users/" + user.uid + "/data/").set({
+                    lastUpdated: {
+                        utc: new Date().getTime(),
+                        string: Date() + "",
+                    },
+                    name: {
+                        first: data[base],
+
+                        last: data[base + 1],
+                    },
+                    email: data[base + 2],
+                    type: type == 1 ? "Father" : "Mother",
+                    spreadSheetData: data,
+                }).then(function() {
+                    $("#datareview-box").addClass("hidden");
+                    $("#success-box").removeClass("hidden");
+                });
+            }
+        });
+
+
+    }
 
 </script>
 {% endblock %}

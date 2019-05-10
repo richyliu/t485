@@ -1,7 +1,7 @@
-import { Spreadsheet, SpreadsheetKeys } from './Spreadsheet';
-import Person from './contact/Person';
-import PhoneNumber from './contact/PhoneNumber';
-import { Scout, Patrol, Active } from './contact/Scout';
+import { Spreadsheet, SpreadsheetKeys } from "./Spreadsheet";
+import Person from "./contact/Person";
+import PhoneNumber from "./contact/PhoneNumber";
+import { Patrol, Scout } from "./contact/Scout";
 
 /**
  * Loads a directory from a given spreadsheet URL.
@@ -43,11 +43,11 @@ interface DirectorySheet {
 class Directory extends Spreadsheet {
     protected keys: DirectoryKeys;
     protected keymap: string[][] = [
-        ['scout', 'firstName'], ['scout', 'lastName'], ['scout', 'email'], ['scout', 'homePhone'], ['scout', 'slack'],
-        ['scout', 'jobA'], ['scout', 'jobB'], ['scout', 'joinDate'], ['scout', 'active'], ['scout', 'WFATrained'],
-        ['scout', 'school'], ['scout', 'fixedGrade'], ['scout', 'currentGrade'], ['scout', 'cellPhone'],
-        ['father', 'firstName'], ['father', 'lastName'], ['father', 'cellPhone'], ['father', 'email'], ['father', 'slack'],
-        ['mother', 'firstName'], ['mother', 'lastName'], ['mother', 'cellPhone'], ['mother', 'email'], ['mother', 'slack'],
+        ["scout", "firstName"], ["scout", "lastName"], ["scout", "email"], ["scout", "homePhone"], ["scout", "slack"],
+        ["scout", "jobA"], ["scout", "jobB"], ["scout", "joinDate"], ["scout", "active"], ["scout", "WFATrained"],
+        ["scout", "school"], ["scout", "fixedGrade"], ["scout", "currentGrade"], ["scout", "cellPhone"],
+        ["father", "firstName"], ["father", "lastName"], ["father", "cellPhone"], ["father", "email"], ["father", "slack"],
+        ["mother", "firstName"], ["mother", "lastName"], ["mother", "cellPhone"], ["mother", "email"], ["mother", "slack"],
     ];
     public rawData: DirectoryData;
     protected scouts: Scout[];
@@ -86,9 +86,9 @@ class Directory extends Spreadsheet {
      */
     protected processRawData(data: DirectoryData, forEach?: ((scout: Scout) => void | boolean)): Scout[] {
         let createPhoneNumber = (phoneNumber: string): PhoneNumber | null => {
-            if (phoneNumber === '') {
+            if (phoneNumber === "") {
                 return null;
-            } else if (phoneNumber.replace(/\D/g, '') === '') {
+            } else if (phoneNumber.replace(/\D/g, "") === "") {
                 return null;
             } else {
                 return new PhoneNumber(phoneNumber);
@@ -111,13 +111,13 @@ class Directory extends Spreadsheet {
                         currentScoutData[this.keymap[k][0]] = {};
                     }
                     // Set the value
-                    currentScoutData[this.keymap[k][0]][this.keymap[k][1]] = currentScout[k] || '';
+                    currentScoutData[this.keymap[k][0]][this.keymap[k][1]] = currentScout[k] || "";
                 }
                 if (!currentScoutData.scout.firstName && !currentScoutData.scout.lastName) {
                     continue;
                 }
                 // Change the object into a new Scout().
-                let parents = ['mother', 'father'];
+                let parents = ["mother", "father"];
                 let transformedParents: Person[] = [];
                 for (let k = 0; k < parents.length; k++) {
                     if (!currentScoutData[parents[k]].firstName && !currentScoutData[parents[k]].lastName) {
@@ -129,11 +129,11 @@ class Directory extends Spreadsheet {
                             currentScoutData[parents[k]].email, currentScoutData[parents[k]].slack));
 
                 }
-                let scout = new Scout(currentScoutData['scout'].firstName, currentScoutData['scout'].lastName,
+                let scout = new Scout(currentScoutData["scout"].firstName, currentScoutData["scout"].lastName,
                         Patrol[["Dragon", "Serpent", "Blobfish", "Hawk", "Wildcat", "Cacti"][i]],
-                        createPhoneNumber(currentScoutData['scout'].cellPhone),
-                        currentScoutData['scout'].email, currentScoutData['scout'].slack,
-                        createPhoneNumber(currentScoutData['scout'].homePhone),
+                        createPhoneNumber(currentScoutData["scout"].cellPhone),
+                        currentScoutData["scout"].email, currentScoutData["scout"].slack,
+                        createPhoneNumber(currentScoutData["scout"].homePhone),
                         transformedParents[0], transformedParents[1]);
                 scout.jobs = [currentScoutData.scout.jobA, currentScoutData.scout.jobB];
                 scout.WFATrained = currentScoutData.scout.WFATrained;
@@ -161,4 +161,4 @@ class Directory extends Spreadsheet {
 }
 
 export default Directory;
-export { Directory, DirectoryKeys};
+export { Directory, DirectoryKeys };
