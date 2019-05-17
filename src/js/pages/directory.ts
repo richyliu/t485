@@ -104,7 +104,10 @@ function toString(obj: any) {
 function loadData(callback: (list: List) => void) {
     db.ref("/directory/keys").once("value").then(function(snapshot) {
         let data = snapshot.val();
+        let editId = data.editId;
         let keys: DirectoryKeys;
+
+
         keys = {
             id: data.id,
             api: data.api,
@@ -112,86 +115,104 @@ function loadData(callback: (list: List) => void) {
             range: "A2:X",
 
         };
+        let load = (cache) => {
+            $(".link-google-sheet-dir").attr("href", `https://docs.google.com/spreadsheets/d/${editId}/edit`);
 
-        let url = `https://docs.google.com/spreadsheets/d/${keys.id}/edit`;
-        $(".link-google-sheet-dir").attr("href", url);
-
-        let directory = new Directory(keys, directoryKeymap);
-        directory.update(function(scout: Scout) {
-            let row = [];
-            for (let i = 0; i < directoryKeymap.length; i++) {
-                let index = i;
-                let value = "";
-                if (i > 2) {
-                    // We add the patrol, but it's not in the keymap
-                    index--;
-                }
-                if (i > 6) {
-                    // In the slot that would contain jobA, we list both jobs, so we skip the jobB.
-                    index++;
-                }
-                if (i == 2) {
-
-                    value = ["Dragons", "Serpents", "Blobfish", "Hawks", "Wildcats", "Cacti"]
-                            [["DRAGON", "SERPENT", "BLOBFISH", "HAWK", "WILDCAT", "CACTI"].indexOf(scout.patrol)];
-                } else if (directoryKeymap[index][1] === "jobA") {
-                    if (!(scout.jobs) || scout.jobs[0] == "") {
-                        value = unknownText;
-                    } else if (scout.jobs[0] == "N/A") {
-                        value = "N/A";
-                    } else if (scout.jobs.length > 1 && (scout.jobs[1] == "N/A" || scout.jobs[1] == "")) {
-                        value = scout.jobs[0];
-                    } else {
-                        value = scout["jobs"].join(", ");
+            let directory = new Directory(keys, directoryKeymap, cache);
+            directory.update(function(scout: Scout) {
+                let row = [];
+                for (let i = 0; i < directoryKeymap.length; i++) {
+                    let index = i;
+                    let value = "";
+                    if (i > 2) {
+                        // We add the patrol, but it's not in the keymap
+                        index--;
                     }
-                } else if (directoryKeymap[index][0] == "scout") {
-                    value = toString(scout[directoryKeymap[index][1]]);
-                } else {
-                    // If the property is of the scout, and not the parents, or the property is of a non-null parent
-                    // of the scout, then we convert it to a string.
-                    value = (directoryKeymap[index][0] == "scout" || scout[directoryKeymap[index][0]])
-                            ? toString(directoryKeymap[index][0] == "scout"
-                                    ? scout[directoryKeymap[index][1]]
-                                    : scout[directoryKeymap[index][0]][directoryKeymap[index][1]])
-                            : unknownText;
+                    if (i > 6) {
+                        // In the slot that would contain jobA, we list both jobs, so we skip the jobB.
+                        index++;
+                    }
+                    if (i == 2) {
+
+                        value = ["Dragons", "Serpents", "Blobfish", "Hawks", "Wildcats", "Cacti"]
+                                [["DRAGON", "SERPENT", "BLOBFISH", "HAWK", "WILDCAT", "CACTI"].indexOf(scout.patrol)];
+                    } else if (directoryKeymap[index][1] === "jobA") {
+                        if (!(scout.jobs) || scout.jobs[0] == "") {
+                            value = unknownText;
+                        } else if (scout.jobs[0] == "N/A") {
+                            value = "N/A";
+                        } else if (scout.jobs.length > 1 && (scout.jobs[1] == "N/A" || scout.jobs[1] == "")) {
+                            value = scout.jobs[0];
+                        } else {
+                            value = scout["jobs"].join(", ");
+                        }
+                    } else if (directoryKeymap[index][0] == "scout") {
+                        value = toString(scout[directoryKeymap[index][1]]);
+                    } else {
+                        // If the property is of the scout, and not the parents, or the property is of a non-null parent
+                        // of the scout, then we convert it to a string.
+                        value = (directoryKeymap[index][0] == "scout" || scout[directoryKeymap[index][0]])
+                                ? toString(directoryKeymap[index][0] == "scout"
+                                        ? scout[directoryKeymap[index][1]]
+                                        : scout[directoryKeymap[index][0]][directoryKeymap[index][1]])
+                                : unknownText;
+                    }
+
+                    row.push(`<td class="col-${i} nowrap">${value}</td>`);
+
+                }
+                if (scout.firstName == "Richard" && scout.email == "richy.liu.2002@gmail.com") {
+                    console.log(scout.export());
+                    //download("Richard Liu.vcf", scout.export());
+
                 }
 
-                row.push(`<td class="col-${i} nowrap">${value}</td>`);
+                $("#dir-body").append(`<tr>${row.join("")}</tr>`);
+            }).then(function(data) {
+                console.log(data);
+                $("#loading-text").addClass("hidden");
+                let valueNames = [];
+                let count = 0;
+                for (let i = 0; i < columnKeymap.length; i++) {
+                    for (let j = 0; j < columnKeymap[i].length; j++, count++) {
+                        valueNames.push("col-" + count);
+                    }
 
-            }
-            if (scout.firstName == "Richard" && scout.email == "richy.liu.2002@gmail.com") {
-                console.log(scout.export());
-                //download("Richard Liu.vcf", scout.export());
-
-            }
-
-            $("#dir-body").append(`<tr>${row.join("")}</tr>`);
-        }).then(function() {
-            $("#loading-text").addClass("hidden");
-            let valueNames = [];
-            let count = 0;
-            for (let i = 0; i < columnKeymap.length; i++) {
-                for (let j = 0; j < columnKeymap[i].length; j++, count++) {
-                    valueNames.push("col-" + count);
                 }
+                const options = {
+                    valueNames: valueNames,
+                };
 
-            }
-            const options = {
-                valueNames: valueNames,
-            };
+                let list = new List("directory-list", options);
 
-            let list = new List("directory-list", options);
+                let end = new Date().getTime();
+                $(".directoryScoutSize").text(directory.getScouts().length + "");
+                $(".directoryLoadTime").text((end - start) + "ms");
+                $(".directoryLoaded-show").removeClass("hidden");
+                console.log("Done in " + (end - start) + "ms");
 
-            let end = new Date().getTime();
-            $(".directoryScoutSize").text(directory.getScouts().length + "");
-            $(".directoryLoadTime").text((end - start) + "ms");
-            $(".directoryLoaded-show").removeClass("hidden");
-            console.log("Done in " + (end - start) + "ms");
-            console.log(directory);
+                db.ref("/directory/cache/").set(data);
+                localStorage.setItem("directoryCache", btoa(JSON.stringify(data)));
 
-            callback(list);
-        });
+                console.log(directory);
+
+                callback(list);
+            });
+        };
+
+
+        let cache = localStorage.getItem("directoryCache");
+        if (cache != null) {
+            cache = JSON.parse(atob(cache));
+            load(cache);
+        } else {
+            db.ref("/directory/cache/").once("value").then(function(snapshot) {
+                data = snapshot.val();
+                load(data);
+            });
+        }
     });
+
 }
 
 

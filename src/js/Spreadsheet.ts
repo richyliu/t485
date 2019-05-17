@@ -20,15 +20,30 @@ interface SpreadsheetKeys {
     api: string
 }
 
+/**
+ * A spreadsheet cache contains a copy of spreadsheet data that will be used if the spreadsheet has not been modified since the cache date.
+ */
+interface SpreadsheetCache {
+    timestamp:number;
+    data:object;
+}
+
 class Spreadsheet {
     protected keys: SpreadsheetKeys;
+    protected cache: SpreadsheetCache;
+    protected cacheUsed: boolean;
 
     /**
      * Create a new SpreadSheet instance
      * @param keys - The keys for the spreadsheet.
+     * @param cache - A optional spreadsheet cache can be specified, which will be used if the spreadsheet has been determined to not have been modified
+     * since the cache date.
      */
-    constructor(keys: SpreadsheetKeys) {
+    constructor(keys: SpreadsheetKeys, cache?: SpreadsheetCache) {
         this.keys = keys;
+        if (cache) {
+            this.cache = cache;
+        }
     }
 
     /**
@@ -38,12 +53,7 @@ class Spreadsheet {
      * @param callback - A function to call when the data has been retrieved asynchronously.
      */
     getSheets(sheets: string[], range: string) {
-        let keys = this.keys;
-        return new Promise(function(resolve, reject) {
-            let rangeString = ``;
-            for (let i = 0; i < sheets.length; i++) {
-                rangeString += `ranges=${sheets[i]}!${range}&`;
-            }
+        let getData = function(rangeString, resolve, reject) {
             $.ajax({
                 url: `https://sheets.googleapis.com/v4/spreadsheets/${keys.id}/values:batchGet/?${rangeString}majorDimension=ROWS&valueRenderOption=FORMATTED_VALUE&key=${keys.api}`,
                 method: "GET",
@@ -56,6 +66,38 @@ class Spreadsheet {
                     jqxhr: jqxhr,
                 });
             });
+        };
+        let keys = this.keys;
+        let _this = this;
+        return new Promise(function(resolve, reject) {
+            let rangeString = ``;
+            for (let i = 0; i < sheets.length; i++) {
+                rangeString += `ranges=${sheets[i]}!${range}&`;
+            }
+            _this.cacheUsed = false;
+            if (_this.cache) {
+                $.ajax({
+                    url: `https://www.googleapis.com/drive/v3/files/${keys.id}?fields=modifiedTime&key=${keys.api}`,
+                    method: "GET",
+                    dataType: "json"
+                }).done(function(data: { modifiedTime: string; }) {
+                    console.log(data);
+
+                    if (new Date(data.modifiedTime).getTime() != _this.cache.timestamp) {
+                        getData(rangeString, resolve, reject);
+                    } else {
+                        _this.cacheUsed = true;
+                        resolve(+this.cache.data);
+                    }
+                }).fail(function(jqxhr: JQuery.jqXHR) {
+                    reject({
+                        type: "cacheCheckAjax",
+                        jqxhr: jqxhr,
+                    });
+                });
+            } else {
+                getData(rangeString, resolve, reject);
+            }
         });
     }
 
@@ -63,4 +105,4 @@ class Spreadsheet {
 }
 
 export default Spreadsheet;
-export { Spreadsheet, SpreadsheetKeys };
+export { Spreadsheet, SpreadsheetKeys, SpreadsheetCache };

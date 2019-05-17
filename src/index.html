@@ -1,4 +1,5 @@
 {% set page = "Home" %}
+{% set path = "index" %}
 {% set title = "" %}
 {% extends "base.html" %}
 {% block mainOuter %}
@@ -30,4 +31,18 @@
         </div>
     </div>
 </section>
+{% endblock %}
+{% block scripts %}
+<script>
+    if ("serviceWorker" in navigator) {
+        navigator.serviceWorker
+                .register("/service-worker.js")
+                .then(function() {
+                    console.log("Service Worker Registered");
+                }).catch(function (e) {
+                    throw e;
+                });
+    }
+
+</script>
 {% endblock %}

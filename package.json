@@ -22,6 +22,7 @@
     "devDependencies": {
         "@babel/core": "^7.4.4",
         "@fortawesome/fontawesome-pro": "^5.8.2",
+        "@sentry/browser": "^5.2.1",
         "@types/bootstrap": "^4.3.0",
         "@types/bootstrap-select": "^1.11.1",
         "@types/google.analytics": "0.0.39",

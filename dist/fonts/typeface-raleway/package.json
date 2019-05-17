@@ -1,34 +1,37 @@
 {
-  "_from": "typeface-raleway",
+  "_args": [
+    [
+      "typeface-raleway@0.0.54",
+      "/Users/jmeng/Documents/code/t485"
+    ]
+  ],
+  "_development": true,
+  "_from": "typeface-raleway@0.0.54",
   "_id": "typeface-raleway@0.0.54",
   "_inBundle": false,
   "_integrity": "sha512-oilrvv0fV+z4eYvfTAl6t9Oq1mE/ZrLDPM71TrcAtqyVb0QzAJ6hQBS+FQcYdHxK2LGQE+gloQUPtwgY2I7WxA==",
   "_location": "/typeface-raleway",
   "_phantomChildren": {},
   "_requested": {
-    "type": "tag",
+    "type": "version",
     "registry": true,
-    "raw": "typeface-raleway",
+    "raw": "typeface-raleway@0.0.54",
     "name": "typeface-raleway",
     "escapedName": "typeface-raleway",
-    "rawSpec": "",
+    "rawSpec": "0.0.54",
     "saveSpec": null,
-    "fetchSpec": "latest"
+    "fetchSpec": "0.0.54"
   },
   "_requiredBy": [
-    "#DEV:/",
-    "#USER"
+    "#DEV:/"
   ],
   "_resolved": "https://registry.npmjs.org/typeface-raleway/-/typeface-raleway-0.0.54.tgz",
-  "_shasum": "f166c517becc81f34d14e72736d28b8923c79c65",
-  "_spec": "typeface-raleway",
+  "_spec": "0.0.54",
   "_where": "/Users/jmeng/Documents/code/t485",
   "author": {
     "name": "Kyle Mathews",
     "email": "mathews.kyle@gmail.com"
   },
-  "bundleDependencies": false,
-  "deprecated": false,
   "description": "Raleway typeface",
   "keywords": [
     "typeface",

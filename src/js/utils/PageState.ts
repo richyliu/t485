@@ -2,8 +2,21 @@ import $ from "jquery";
 
 import Query from "./Query";
 import Authenticator from "../server/Authenticator";
+import * as Sentry from '@sentry/browser';
+import { AlertBox, Alert } from "../AlertBox";
 
 class PageState {
+
+    static initOfflinePersistence() {
+
+        if (navigator.onLine) {
+            return;
+        }
+
+        let alertBox = new AlertBox("#alert-box");
+        //alertBox.push(new Alert())
+
+    }
 
     /**
      * For each element with the `.preserve-page` class, the element's href's continue URL parameter is changed to the current URL.
@@ -126,16 +139,23 @@ class PageState {
         ga("send", "pageview");
     }
 
+    static initSentry() {
+        Sentry.init({ dsn: 'https://8bb22b6591e2404c9827b7bc68958bc8@sentry.io/1456506' });
+
+    }
     /**
      * Runs all three vital state preservation functions.
      */
     static init() {
 
+        PageState.initOfflinePersistence();
         PageState.initPreservePage();
         PageState.initPreserveState();
         PageState.initPreventSubmit();
         PageState.initPreserveAuthState();
+        PageState.initSentry();
         PageState.initAnalytics();
+
     }
 
 

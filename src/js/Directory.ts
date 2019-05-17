@@ -1,7 +1,8 @@
-import { Spreadsheet, SpreadsheetKeys } from "./Spreadsheet";
+import { Spreadsheet, SpreadsheetKeys, SpreadsheetCache } from "./Spreadsheet";
 import Person from "./contact/Person";
 import PhoneNumber from "./contact/PhoneNumber";
 import { Patrol, Scout } from "./contact/Scout";
+
 
 /**
  * Loads a directory from a given spreadsheet URL.
@@ -21,6 +22,7 @@ interface DirectoryKeys extends SpreadsheetKeys {
      * The range from which to consider data within each sheet. The range must be a string without a sheet.
      */
     range: string;
+
 }
 
 /**
@@ -57,8 +59,8 @@ class Directory extends Spreadsheet {
      * @param keys
      * @param keymap
      */
-    constructor(keys: DirectoryKeys, keymap?: string[][]) {
-        super(keys);
+    constructor(keys: DirectoryKeys, keymap?: string[][], cache?: SpreadsheetCache) {
+        super(keys, cache);
 
         this.keymap = keymap || this.keymap;
         this.update();
@@ -74,7 +76,7 @@ class Directory extends Spreadsheet {
         return this.getSheets(this.keys.sheets, this.keys.range).then((data: DirectoryData) => {
             this.rawData = data;
             this.scouts = this.processRawData(data, forEach);
-            //return data;
+            return data;
         });
 
     }
@@ -83,6 +85,7 @@ class Directory extends Spreadsheet {
      * Processes an object containing raw data from the google sheets api with multiple sheets and transforms it into an array of scouts.
      * @param data - The raw data to process.
      * @param forEach - An optional callback that is called once for each scout. This function may optionally return a boolean, which if false will prevent the Scout from being added to the array.
+     * @data cache - If provided, cache data will be used when it is determined to be the latest version of the spreadsheet data.
      */
     protected processRawData(data: DirectoryData, forEach?: ((scout: Scout) => void | boolean)): Scout[] {
         let createPhoneNumber = (phoneNumber: string): PhoneNumber | null => {

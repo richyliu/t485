@@ -2,6 +2,8 @@
 {% set path = "directory" %}
 {% extends "base.html" %}
 {% block styles %}
+<!-- Custom styles for this template -->
+<link href="/css/bootstrap-select.min.css" rel="stylesheet">
 <link type="text/css" rel="stylesheet" href="/css/pages/{{path}}.css">
 <style>
     .table-wrapper,
@@ -94,8 +96,8 @@
                     </div>
                 </div>
                 <p><span class="directoryLoaded-show hidden"><span
-                        class="directoryScoutSize"></span> scouts loaded in <span
-                        class="directoryLoadTime"></span></span></p>
+                        class="directoryScoutSize"></span> scouts loaded <span class="directoryFromCache"from cache</span> in <span
+                        class="directoryLoadTime"></span></span> <span>(<a class="link directoryLoadSource">Load from source</a>)</span></p>
                 <p>View/Edit the troop directory spreadsheet on <a target="_blank" class="link-google-sheet-dir">Google
                     Sheets</a>.</p>
             </div>
