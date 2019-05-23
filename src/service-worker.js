@@ -20,7 +20,10 @@ self.addEventListener("install", function(e) {
                     "/js/offline.js",
                     "/img/header.png",
                     "/img/index/index_1.png",
-                    "/favicons/favicon-16x16.png"
+                    "/favicons/favicon-16x16.png",
+                    "/fonts/typeface-raleway/index.css",
+                    "/fonts/typeface-lora/index.css",
+
                 ]).catch(err => console.log("Service Worker: Error while fetching assets", err));
                 ;
             }),
