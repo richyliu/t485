@@ -41,6 +41,8 @@
 							</div>
 							<input type="checkbox" id="tsd-filter-inherited" checked />
 							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
 							<input type="checkbox" id="tsd-filter-only-exported" />
 							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
 						</div>
@@ -96,6 +98,8 @@
 						<section class="tsd-index-section tsd-is-private-protected">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="_spreadsheet_.spreadsheet.html#cache" class="tsd-kind-icon">cache</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="_spreadsheet_.spreadsheet.html#cacheused" class="tsd-kind-icon">cache<wbr>Used</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="_spreadsheet_.spreadsheet.html#keys" class="tsd-kind-icon">keys</a></li>
 							</ul>
 						</section>
@@ -114,13 +118,13 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Spreadsheet<span class="tsd-signature-symbol">(</span>keys<span class="tsd-signature-symbol">: </span><a href="../interfaces/_spreadsheet_.spreadsheetkeys.html" class="tsd-signature-type">SpreadsheetKeys</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_spreadsheet_.spreadsheet.html" class="tsd-signature-type">Spreadsheet</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Spreadsheet<span class="tsd-signature-symbol">(</span>keys<span class="tsd-signature-symbol">: </span><a href="../interfaces/_spreadsheet_.spreadsheetkeys.html" class="tsd-signature-type">SpreadsheetKeys</a>, cache<span class="tsd-signature-symbol">?: </span><a href="../interfaces/_spreadsheet_.spreadsheetcache.html" class="tsd-signature-type">SpreadsheetCache</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_spreadsheet_.spreadsheet.html" class="tsd-signature-type">Spreadsheet</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/t485/t485/blob/8744df2/src/js/Spreadsheet.ts#L24">Spreadsheet.ts:24</a></li>
+									<li>Defined in <a href="https://github.com/t485/t485/blob/3a273b8/src/js/Spreadsheet.ts#L34">Spreadsheet.ts:34</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -138,6 +142,15 @@
 										</div>
 									</div>
 								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> cache: <a href="../interfaces/_spreadsheet_.spreadsheetcache.html" class="tsd-signature-type">SpreadsheetCache</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>A optional spreadsheet cache can be specified, which will be used if the spreadsheet has been determined to not have been modified
+											since the cache date.</p>
+										</div>
+									</div>
+								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="_spreadsheet_.spreadsheet.html" class="tsd-signature-type">Spreadsheet</a></h4>
 						</li>
@@ -147,12 +160,32 @@
 			<section class="tsd-panel-group tsd-member-group tsd-is-private-protected">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected">
+					<a name="cache" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> cache</h3>
+					<div class="tsd-signature tsd-kind-icon">cache<span class="tsd-signature-symbol">:</span> <a href="../interfaces/_spreadsheet_.spreadsheetcache.html" class="tsd-signature-type">SpreadsheetCache</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/t485/t485/blob/3a273b8/src/js/Spreadsheet.ts#L33">Spreadsheet.ts:33</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected">
+					<a name="cacheused" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> cache<wbr>Used</h3>
+					<div class="tsd-signature tsd-kind-icon">cache<wbr>Used<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/t485/t485/blob/3a273b8/src/js/Spreadsheet.ts#L34">Spreadsheet.ts:34</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected">
 					<a name="keys" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> keys</h3>
 					<div class="tsd-signature tsd-kind-icon">keys<span class="tsd-signature-symbol">:</span> <a href="../interfaces/_spreadsheet_.spreadsheetkeys.html" class="tsd-signature-type">SpreadsheetKeys</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/t485/t485/blob/8744df2/src/js/Spreadsheet.ts#L24">Spreadsheet.ts:24</a></li>
+							<li>Defined in <a href="https://github.com/t485/t485/blob/3a273b8/src/js/Spreadsheet.ts#L32">Spreadsheet.ts:32</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -169,7 +202,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/t485/t485/blob/8744df2/src/js/Spreadsheet.ts#L40">Spreadsheet.ts:40</a></li>
+									<li>Defined in <a href="https://github.com/t485/t485/blob/3a273b8/src/js/Spreadsheet.ts#L55">Spreadsheet.ts:55</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -265,6 +298,12 @@
 								<a href="_spreadsheet_.spreadsheet.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-protected">
+								<a href="_spreadsheet_.spreadsheet.html#cache" class="tsd-kind-icon">cache</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-protected">
+								<a href="_spreadsheet_.spreadsheet.html#cacheused" class="tsd-kind-icon">cache<wbr>Used</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-protected">
 								<a href="_spreadsheet_.spreadsheet.html#keys" class="tsd-kind-icon">keys</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
@@ -274,6 +313,9 @@
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../interfaces/_spreadsheet_.spreadsheetcache.html" class="tsd-kind-icon">Spreadsheet<wbr>Cache</a>
+					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-is-not-exported">
 						<a href="../interfaces/_spreadsheet_.spreadsheetkeys.html" class="tsd-kind-icon">Spreadsheet<wbr>Keys</a>
 					</li>

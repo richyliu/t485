@@ -41,6 +41,8 @@
 							</div>
 							<input type="checkbox" id="tsd-filter-inherited" checked />
 							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
 							<input type="checkbox" id="tsd-filter-only-exported" />
 							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
 						</div>
@@ -96,6 +98,8 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="_directory_.directory.html#cache" class="tsd-kind-icon">cache</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="_directory_.directory.html#cacheused" class="tsd-kind-icon">cache<wbr>Used</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="_directory_.directory.html#keymap" class="tsd-kind-icon">keymap</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-protected"><a href="_directory_.directory.html#keys" class="tsd-kind-icon">keys</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_directory_.directory.html#rawdata" class="tsd-kind-icon">raw<wbr>Data</a></li>
@@ -120,14 +124,14 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Directory<span class="tsd-signature-symbol">(</span>keys<span class="tsd-signature-symbol">: </span><a href="../interfaces/_directory_.directorykeys.html" class="tsd-signature-type">DirectoryKeys</a>, keymap<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_directory_.directory.html" class="tsd-signature-type">Directory</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Directory<span class="tsd-signature-symbol">(</span>keys<span class="tsd-signature-symbol">: </span><a href="../interfaces/_directory_.directorykeys.html" class="tsd-signature-type">DirectoryKeys</a>, keymap<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">[]</span>, cache<span class="tsd-signature-symbol">?: </span><a href="../interfaces/_spreadsheet_.spreadsheetcache.html" class="tsd-signature-type">SpreadsheetCache</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_directory_.directory.html" class="tsd-signature-type">Directory</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Overrides <a href="_spreadsheet_.spreadsheet.html">Spreadsheet</a>.<a href="_spreadsheet_.spreadsheet.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/t485/t485/blob/8744df2/src/js/Directory.ts#L53">Directory.ts:53</a></li>
+									<li>Defined in <a href="https://github.com/t485/t485/blob/3a273b8/src/js/Directory.ts#L55">Directory.ts:55</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -147,6 +151,9 @@
 										</div>
 									</div>
 								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> cache: <a href="../interfaces/_spreadsheet_.spreadsheetcache.html" class="tsd-signature-type">SpreadsheetCache</a></h5>
+								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="_directory_.directory.html" class="tsd-signature-type">Directory</a></h4>
 						</li>
@@ -155,13 +162,35 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+					<a name="cache" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> cache</h3>
+					<div class="tsd-signature tsd-kind-icon">cache<span class="tsd-signature-symbol">:</span> <a href="../interfaces/_spreadsheet_.spreadsheetcache.html" class="tsd-signature-type">SpreadsheetCache</a></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_spreadsheet_.spreadsheet.html">Spreadsheet</a>.<a href="_spreadsheet_.spreadsheet.html#cache">cache</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/t485/t485/blob/3a273b8/src/js/Spreadsheet.ts#L33">Spreadsheet.ts:33</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+					<a name="cacheused" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> cache<wbr>Used</h3>
+					<div class="tsd-signature tsd-kind-icon">cache<wbr>Used<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_spreadsheet_.spreadsheet.html">Spreadsheet</a>.<a href="_spreadsheet_.spreadsheet.html#cacheused">cacheUsed</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/t485/t485/blob/3a273b8/src/js/Spreadsheet.ts#L34">Spreadsheet.ts:34</a></li>
+						</ul>
+					</aside>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected">
 					<a name="keymap" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> keymap</h3>
 					<div class="tsd-signature tsd-kind-icon">keymap<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> =&nbsp;[[&quot;scout&quot;, &quot;firstName&quot;], [&quot;scout&quot;, &quot;lastName&quot;], [&quot;scout&quot;, &quot;email&quot;], [&quot;scout&quot;, &quot;homePhone&quot;], [&quot;scout&quot;, &quot;slack&quot;],[&quot;scout&quot;, &quot;jobA&quot;], [&quot;scout&quot;, &quot;jobB&quot;], [&quot;scout&quot;, &quot;joinDate&quot;], [&quot;scout&quot;, &quot;active&quot;], [&quot;scout&quot;, &quot;WFATrained&quot;],[&quot;scout&quot;, &quot;school&quot;], [&quot;scout&quot;, &quot;fixedGrade&quot;], [&quot;scout&quot;, &quot;currentGrade&quot;], [&quot;scout&quot;, &quot;cellPhone&quot;],[&quot;father&quot;, &quot;firstName&quot;], [&quot;father&quot;, &quot;lastName&quot;], [&quot;father&quot;, &quot;cellPhone&quot;], [&quot;father&quot;, &quot;email&quot;], [&quot;father&quot;, &quot;slack&quot;],[&quot;mother&quot;, &quot;firstName&quot;], [&quot;mother&quot;, &quot;lastName&quot;], [&quot;mother&quot;, &quot;cellPhone&quot;], [&quot;mother&quot;, &quot;email&quot;], [&quot;mother&quot;, &quot;slack&quot;],]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/t485/t485/blob/8744df2/src/js/Directory.ts#L45">Directory.ts:45</a></li>
+							<li>Defined in <a href="https://github.com/t485/t485/blob/3a273b8/src/js/Directory.ts#L47">Directory.ts:47</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -172,7 +201,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides <a href="_spreadsheet_.spreadsheet.html">Spreadsheet</a>.<a href="_spreadsheet_.spreadsheet.html#keys">keys</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/t485/t485/blob/8744df2/src/js/Directory.ts#L44">Directory.ts:44</a></li>
+							<li>Defined in <a href="https://github.com/t485/t485/blob/3a273b8/src/js/Directory.ts#L46">Directory.ts:46</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -182,7 +211,7 @@
 					<div class="tsd-signature tsd-kind-icon">raw<wbr>Data<span class="tsd-signature-symbol">:</span> <a href="../interfaces/_directory_.directorydata.html" class="tsd-signature-type">DirectoryData</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/t485/t485/blob/8744df2/src/js/Directory.ts#L52">Directory.ts:52</a></li>
+							<li>Defined in <a href="https://github.com/t485/t485/blob/3a273b8/src/js/Directory.ts#L54">Directory.ts:54</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -192,7 +221,7 @@
 					<div class="tsd-signature tsd-kind-icon">scouts<span class="tsd-signature-symbol">:</span> <a href="_contact_scout_.scout.html" class="tsd-signature-type">Scout</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/t485/t485/blob/8744df2/src/js/Directory.ts#L53">Directory.ts:53</a></li>
+							<li>Defined in <a href="https://github.com/t485/t485/blob/3a273b8/src/js/Directory.ts#L55">Directory.ts:55</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -209,7 +238,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/t485/t485/blob/8744df2/src/js/Directory.ts#L156">Directory.ts:156</a></li>
+									<li>Defined in <a href="https://github.com/t485/t485/blob/3a273b8/src/js/Directory.ts#L159">Directory.ts:159</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -232,7 +261,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_spreadsheet_.spreadsheet.html">Spreadsheet</a>.<a href="_spreadsheet_.spreadsheet.html#getsheets">getSheets</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/t485/t485/blob/8744df2/src/js/Spreadsheet.ts#L40">Spreadsheet.ts:40</a></li>
+									<li>Defined in <a href="https://github.com/t485/t485/blob/3a273b8/src/js/Spreadsheet.ts#L55">Spreadsheet.ts:55</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -269,13 +298,18 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/t485/t485/blob/8744df2/src/js/Directory.ts#L87">Directory.ts:87</a></li>
+									<li>Defined in <a href="https://github.com/t485/t485/blob/3a273b8/src/js/Directory.ts#L90">Directory.ts:90</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Processes an object containing raw data from the google sheets api with multiple sheets and transforms it into an array of scouts.</p>
 								</div>
+								<dl class="tsd-comment-tags">
+									<dt>data</dt>
+									<dd><p>cache - If provided, cache data will be used when it is determined to be the latest version of the spreadsheet data.</p>
+									</dd>
+								</dl>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -321,13 +355,13 @@
 					<a name="update" class="tsd-anchor"></a>
 					<h3>update</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">update<span class="tsd-signature-symbol">(</span>forEach<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">update<span class="tsd-signature-symbol">(</span>forEach<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_directory_.directorydata.html" class="tsd-signature-type">DirectoryData</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/t485/t485/blob/8744df2/src/js/Directory.ts#L72">Directory.ts:72</a></li>
+									<li>Defined in <a href="https://github.com/t485/t485/blob/3a273b8/src/js/Directory.ts#L74">Directory.ts:74</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -365,7 +399,7 @@
 									</ul>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_directory_.directorydata.html" class="tsd-signature-type">DirectoryData</a><span class="tsd-signature-symbol">&gt;</span></h4>
 							<p>Returns a promise.</p>
 						</li>
 					</ul>
@@ -437,6 +471,12 @@
 						<ul>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
 								<a href="_directory_.directory.html#constructor" class="tsd-kind-icon">constructor</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+								<a href="_directory_.directory.html#cache" class="tsd-kind-icon">cache</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+								<a href="_directory_.directory.html#cacheused" class="tsd-kind-icon">cache<wbr>Used</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-protected">
 								<a href="_directory_.directory.html#keymap" class="tsd-kind-icon">keymap</a>
