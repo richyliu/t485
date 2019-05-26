@@ -185,6 +185,7 @@ function loadData(callback: (list: List) => void) {
 
                 let list = new List("directory-list", options);
 
+
                 let end = new Date().getTime();
                 $(".directoryScoutSize").text(directory.getScouts().length + "");
                 $(".directoryLoadTime").text((end - start) + "ms");
@@ -203,7 +204,7 @@ function loadData(callback: (list: List) => void) {
 
         let cache = localStorage.getItem("directoryCache");
         if (cache != null) {
-            cache = JSON.parse(atob(cache));
+                cache = JSON.parse(atob(cache));
             load(cache);
         } else {
             db.ref("/directory/cache/").once("value").then(function(snapshot) {
@@ -217,6 +218,8 @@ function loadData(callback: (list: List) => void) {
 
 
 function loadFilterSelects(list: List) {
+
+
     let index = 0;
     for (let i = 0; i < columnKeymap.length; i++) {
         let sortOpts = "";
@@ -255,7 +258,6 @@ function loadFilterSelects(list: List) {
     $("#filter-select").change(function() {
         // @ts-ignore -- #filter-select will always be an array
         let selected: string[] = $("#filter-select").val();
-        console.log(selected);
         let selectedIndex = 0;
         for (let i = 0; i < directoryKeymap.length; i++) {
             if (selected[selectedIndex] === (i + "")) {
@@ -270,7 +272,19 @@ function loadFilterSelects(list: List) {
 
     }).trigger("change");
 
+    //initalize options
+    list.sort("col-" + (Query.get("sortBy") || 2), { order: (Query.get("sortOrder") || "asc") + "" });
+    let selected: string[] = Query.get("filterBy").split("_");
+    let selectedIndex = 0;
+    for (let i = 0; i < directoryKeymap.length; i++) {
+        if (selected[selectedIndex] === (i + "")) {
+            selectedIndex++;
+            $(".col-" + i).removeClass("hidden");
+        } else {
+            $(".col-" + i).addClass("hidden");
+        }
 
+    }
 }
 
 function download(filename: string, text: any) {
