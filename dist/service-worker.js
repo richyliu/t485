@@ -17,7 +17,6 @@ self.addEventListener("install", function(e) {
                     "/js/utils.js",
                     "/js/logger.js",
                     "/js/t485.js",
-                    "/js/offline.js",
                     "/img/header.png",
                     "/img/index/index_1.png",
                     "/favicons/favicon-16x16.png",
@@ -25,7 +24,7 @@ self.addEventListener("install", function(e) {
                     "/fonts/typeface-lora/index.css",
 
                 ]).catch(err => console.log("Service Worker: Error while fetching assets", err));
-                ;
+
             }),
     );
 });
