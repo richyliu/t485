@@ -7,8 +7,8 @@ let dbRef = db.ref("plcvoting");
 function init() {
     dbRef.child("currentCampaign").once("value").then(function(data) {
         console.log(data.val());
-        let campaign = data.val();
-        if (campaign != null && campaign !== "CLOSED") {
+        let campaign = data.val().name;
+        if (campaign != null && data.val().open) {
             console.log($("#name").val());
             loadData(campaign, function() {
 
@@ -46,7 +46,7 @@ function loadData(campaignName: string, onReady: () => void) {
     dbRef.child("campaigns").child(campaignName).once("value").then(function(data) {
         console.log(data.val());
         let campaign = data.val();
-        $(".max-votes").text(campaign.data.maxVotes !== null ? campaign.data.maxVotes : 2);
+        $(".max-votes").text(campaign.data.maxVotes != null ? campaign.data.maxVotes : 2);
         $(".max-votes-plurality").text(campaign.data.maxVotes === 1 ? "" : "s");
 
         for (let key in campaign.categories) {
