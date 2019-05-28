@@ -13,6 +13,7 @@ yarn.lock
 *.DS_Store
 .DS_Store
 **/.DS_Store
+**/*.icloud
 .AppleDouble
 .LSOverride
 
