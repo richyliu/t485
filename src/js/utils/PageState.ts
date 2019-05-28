@@ -1,4 +1,5 @@
 import $ from "jquery";
+import 'bootstrap';
 
 import Query from "./Query";
 import Authenticator from "../server/Authenticator";
