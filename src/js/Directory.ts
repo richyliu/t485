@@ -71,7 +71,7 @@ class Directory extends Spreadsheet {
      * @param forEach - An optional callback that is called once for each scout. This function may optionally return a boolean, which if false will prevent the Scout from being added to the local data.
      * @return Returns a promise.
      */
-    public update(forEach?: ((scout: Scout) => void | boolean)) {
+    public update(forEach?: ((scout: Scout, id?: number) => void | boolean)) {
 
         return this.getSheets(this.keys.sheets, this.keys.range).then((data: DirectoryData) => {
             this.rawData = data;
@@ -87,7 +87,7 @@ class Directory extends Spreadsheet {
      * @param forEach - An optional callback that is called once for each scout. This function may optionally return a boolean, which if false will prevent the Scout from being added to the array.
      * @data cache - If provided, cache data will be used when it is determined to be the latest version of the spreadsheet data.
      */
-    protected processRawData(data: DirectoryData, forEach?: ((scout: Scout) => void | boolean)): Scout[] {
+    protected processRawData(data: DirectoryData, forEach?: ((scout: Scout, id?: number) => void | boolean)): Scout[] {
         let createPhoneNumber = (phoneNumber: string): PhoneNumber | null => {
             if (phoneNumber === "") {
                 return null;
@@ -99,6 +99,7 @@ class Directory extends Spreadsheet {
         };
 
         let result = [];
+        let id = 0;
 
         // For each patrol
         for (let i = 0; i < data.valueRanges.length; i++) {
@@ -142,7 +143,8 @@ class Directory extends Spreadsheet {
                 scout.WFATrained = currentScoutData.scout.WFATrained;
                 scout.joinDate = currentScoutData.scout.joinDate;
                 scout.active = currentScoutData.scout.active;
-                if (forEach && forEach(scout) !== false) {
+                if (forEach && forEach(scout, id) !== false) {
+                    id++;
                     result.push(scout);
                 }
 

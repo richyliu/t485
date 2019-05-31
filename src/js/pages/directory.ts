@@ -119,7 +119,7 @@ function loadData(callback: (list: List) => void) {
             $(".link-google-sheet-dir").attr("href", `https://docs.google.com/spreadsheets/d/${editId}/edit`);
 
             let directory = new Directory(keys, directoryKeymap, cache);
-            directory.update(function(scout: Scout) {
+            directory.update(function(scout: Scout, id: number) {
                 let row = [];
                 for (let i = 0; i < directoryKeymap.length; i++) {
                     let index = i;
@@ -167,7 +167,7 @@ function loadData(callback: (list: List) => void) {
 
                 }
 
-                $("#dir-body").append(`<tr>${row.join("")}</tr>`);
+                $("#dir-body").append(`<tr data-id="${id}">${row.join("")}</tr>`);
             }).then(function(data) {
                 console.log(data);
                 $("#loading-text").addClass("hidden");
@@ -204,7 +204,7 @@ function loadData(callback: (list: List) => void) {
 
         let cache = localStorage.getItem("directoryCache");
         if (cache != null) {
-                cache = JSON.parse(atob(cache));
+            cache = JSON.parse(atob(cache));
             load(cache);
         } else {
             db.ref("/directory/cache/").once("value").then(function(snapshot) {
@@ -285,6 +285,8 @@ function loadFilterSelects(list: List) {
         }
 
     }
+
+
 }
 
 function download(filename: string, text: any) {
