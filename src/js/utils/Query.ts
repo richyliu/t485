@@ -195,11 +195,28 @@ class Query {
         // https://stackoverflow.com/a/19472410/5511561
 
         //we want falsey values to be used literally, as a string (e.g. 0 -> "0", false -> "false"):
-        if (value !== null && value !== undefined) value = "" + value;
-        value = encodeURIComponent(value);
+        if (value !== null && value !== undefined) value = "" + encodeURIComponent(value);
         let regex = new RegExp("([?;&])" + name + "[^&;]*[;&]?");
         let query = queryString.replace(regex, "$1").replace(/&$/, "");
         return (query.length > 2 ? query + "&" : "?") + (value ? name + "=" + value : "");
+    }
+
+    /**
+     * Shorthand for Query.set(name, null, queryString)
+     * @param name - The name of the query to remove.
+     */
+    static remove(name: string);
+
+
+    /**
+     * Shorthand for Query.set(name, null, queryString)
+     * @param name - The name of the query to remove.
+     * @param queryString - The query string to modify.
+     */
+    static remove(name: string, queryString: string);
+
+    static remove(name: string, queryString: string = window.location.search) {
+        return Query.set(name, null, queryString);
     }
 
 

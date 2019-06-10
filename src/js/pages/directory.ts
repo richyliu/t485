@@ -9,6 +9,7 @@ import PageState from "../utils/PageState";
 import Query from "../utils/Query";
 import URL from "../utils/URL";
 import Authenticator from "../server/Authenticator";
+import HTML from "../utils/HTML";
 import "bootstrap";
 import "bootstrap-select";
 
@@ -32,9 +33,18 @@ const columnKeymap = [
     [["Father\'s First Name"], ["Father\'s Last Name"], ["Father\'s Cell Phone"], ["Father\'s E-mail"], ["Father\'s Slack Username or None"]],
     [["Mother\'s First Name"], ["Mother\'s Last Name"], ["Mother\'s Cell Phone"], ["Mother\'s E-mail"], ["Mother\'s Slack Username or None"]],
 ];
+
+const readablePatrolMap = {
+    DRAGON: "Dragons",
+    WILDCAT: "Wildcats",
+    SERPENT: "Serpents",
+    CACTI: "Cacti",
+    BLOBFISH: "Blobfish",
+    HAWK: "Hawks",
+};
 const defaultShown = [[0, 1, 2, 3, 4, 10], [], []];
 const unknownText = `<i>Unknown</i>`;
-const noneText = `<i>None</i>`;
+const noneText = `<i>N/A</i>`;
 
 let db = new Database();
 let start = new Date().getTime();
@@ -74,16 +84,17 @@ function loadHeaders() {
     }
 }
 
-function toString(obj: any) {
+function toString(obj: any, italciseUnknown: boolean = true) {
     // Alternative to if/else
     switch (true) {
             // We treat "" as undefined
         case obj === "":
         case typeof obj === "undefined":
-            return unknownText;
+
+            return italciseUnknown ? unknownText : "Unknown";
             break;
         case obj === null:
-            return noneText;
+            return italciseUnknown ? noneText : "None";
             break;
         case typeof obj === "string":
             return obj;
@@ -161,11 +172,7 @@ function loadData(callback: (list: List) => void) {
                     row.push(`<td class="col-${i} nowrap">${value}</td>`);
 
                 }
-                if (scout.firstName == "Richard" && scout.email == "richy.liu.2002@gmail.com") {
-                    console.log(scout.export());
-                    //download("Richard Liu.vcf", scout.export());
 
-                }
 
                 $("#dir-body").append(`<tr data-id="${id}">${row.join("")}</tr>`);
             }).then(function(data) {
@@ -196,8 +203,66 @@ function loadData(callback: (list: List) => void) {
                 localStorage.setItem("directoryCache", btoa(JSON.stringify(data)));
 
                 console.log(directory);
+                $("tr").click(function() {
+                    let id = $(this).attr("data-id");
+                    let scout = directory.getScouts()[id];
+                    console.log(scout);
+                    let val: string;
+                    console.log(id);
+                    for (let i = 0; i < directoryKeymap.length; i++) {
+                        if (directoryKeymap[i][0] === "scout") {
+                            val = HTML.escape(toString(scout[directoryKeymap[i][1]], false));
+                            if (scout[directoryKeymap[i][1]] == undefined) {
+                                val = "N/A";
+                            }
 
+                        } else if (scout[directoryKeymap[i][0]] == undefined || scout[directoryKeymap[i][0]][directoryKeymap[i][1]] == undefined) {
+                            val = "<i>N/A</i>";
+                        } else {
+                            val = HTML.escape(toString(scout[directoryKeymap[i][0]][directoryKeymap[i][1]], false));
+                        }
+                        if (directoryKeymap[i][1] === "email") {
+                            val = `<a href="mailto:${val}">${val}</a>`;
+
+                        } else if (directoryKeymap[i][1] === "cellPhone" || directoryKeymap[i][1] === "homePhone") {
+                            val = `<a href="tel:${val}">${val}</a>`;
+
+                        }
+                        $(".infoModal-" + directoryKeymap[i][0] + directoryKeymap[i][1].charAt(0).toUpperCase()
+                        + directoryKeymap[i][1].substring(1)).html(val);
+
+                    }
+
+                    $(".infoModal-scoutPatrol").text(readablePatrolMap[scout.patrol]);
+                    $(".infoModal-scoutFullName").text(scout.firstName + " " + scout.lastName);
+                    $(".infoModal-mother").addClass("hidden");
+                    $(".infoModal-father").addClass("hidden");
+                    if (scout.mother) {
+                        $(".infoModal-motherFullName").text(scout.mother.firstName + " " + scout.mother.lastName);
+                        $(".infoModal-motherDownload").click(function() {
+                            download(scout.mother.firstName + scout.mother.lastName + ".vcf", scout.mother.export());
+                        });
+                        $(".infoModal-mother").removeClass("hidden");
+                    }
+                    if (scout.father) {
+                        $(".infoModal-fatherFullName").text(scout.father.firstName + " " + scout.father.lastName);
+                        $(".infoModal-fatherDownload").click(function() {
+                            download(scout.father.firstName + scout.father.lastName + ".vcf", scout.father.export());
+                        });
+                        $(".infoModal-father").removeClass("hidden");
+                    }
+                    $(".infoModal-scoutDownload").click(function() {
+                        download(scout.firstName + scout.lastName + ".vcf", scout.export());
+                    });
+                    $("#infoModal").modal("show");
+
+                    URL.setQueryString(Query.set("id", id));
+                });
+                $("#infoModal").on("hide.bs.modal", function() {
+                    URL.setQueryString(Query.remove("id"));
+                });
                 callback(list);
+
             });
         };
 
@@ -234,7 +299,6 @@ function loadFilterSelects(list: List) {
         $("#sortby-select").append(`<optgroup label="${["Scout", "Father", "Mother"][i]}">
             ${sortOpts}
         </optgroup>`);
-
 
         $("#filter-select").append(`<optgroup label="${["Scout", "Father", "Mother"][i]}">
             ${filterOpts}
@@ -273,6 +337,8 @@ function loadFilterSelects(list: List) {
     }).trigger("change");
 
     //initalize options
+    console.log("col-" + (Query.get("sortBy") || 2), { order: (Query.get("sortOrder") || "asc") + "" });
+
     list.sort("col-" + (Query.get("sortBy") || 2), { order: (Query.get("sortOrder") || "asc") + "" });
     let selected: string[] = Query.get("filterBy").split("_");
     let selectedIndex = 0;

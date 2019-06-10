@@ -112,13 +112,7 @@
         </a>
     </div>
     {% endblock %}
-    {% block alertBox %}
-    {# note: when adding custom alerts to a page via template,
-    call super() first instead of overriding the alertbox block #}
 
-    <div id="alertBox">
-    </div>
-    {% endblock %}
     {% block navbar %}
     <!-- Navigation -->
 
@@ -196,6 +190,13 @@
             </div>
         </div>
     </nav>
+    {% endblock %}
+    {% block alertBox %}
+    {# note: when adding custom alerts to a page via template,
+    call super() first instead of overriding the alertbox block #}
+
+    <div id="alertBox">
+    </div>
     {% endblock %}
     {% block mainOuter %}
 

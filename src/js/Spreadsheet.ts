@@ -24,8 +24,8 @@ interface SpreadsheetKeys {
  * A spreadsheet cache contains a copy of spreadsheet data that will be used if the spreadsheet has not been modified since the cache date.
  */
 interface SpreadsheetCache {
-    timestamp:number;
-    data:object;
+    timestamp: number;
+    data: object;
 }
 
 class Spreadsheet {
@@ -53,13 +53,13 @@ class Spreadsheet {
      * @param callback - A function to call when the data has been retrieved asynchronously.
      */
     getSheets(sheets: string[], range: string) {
-        let getData = function(rangeString, resolve, reject) {
+        let getData = function(rangeString, timestamp, resolve, reject) {
             $.ajax({
                 url: `https://sheets.googleapis.com/v4/spreadsheets/${keys.id}/values:batchGet/?${rangeString}majorDimension=ROWS&valueRenderOption=FORMATTED_VALUE&key=${keys.api}`,
                 method: "GET",
                 dataType: "json",
             }).done(function(data: object) {
-                resolve(data);
+                resolve({ ...data, timestamp: timestamp });
             }).fail(function(jqxhr: JQuery.jqXHR) {
                 reject({
                     type: "ajax",
@@ -75,29 +75,28 @@ class Spreadsheet {
                 rangeString += `ranges=${sheets[i]}!${range}&`;
             }
             _this.cacheUsed = false;
-            if (_this.cache) {
-                $.ajax({
-                    url: `https://www.googleapis.com/drive/v3/files/${keys.id}?fields=modifiedTime&key=${keys.api}`,
-                    method: "GET",
-                    dataType: "json"
-                }).done(function(data: { modifiedTime: string; }) {
-                    console.log(data);
+            $.ajax({
+                url: `https://www.googleapis.com/drive/v3/files/${keys.id}?fields=modifiedTime&key=${keys.api}`,
+                method: "GET",
+                dataType: "json",
+            }).done(function(data: { modifiedTime: string; }) {
+                console.log(data, new Date(data.modifiedTime).getTime(), _this.cache.timestamp);
 
-                    if (new Date(data.modifiedTime).getTime() != _this.cache.timestamp) {
-                        getData(rangeString, resolve, reject);
-                    } else {
-                        _this.cacheUsed = true;
-                        resolve(+this.cache.data);
-                    }
-                }).fail(function(jqxhr: JQuery.jqXHR) {
-                    reject({
-                        type: "cacheCheckAjax",
-                        jqxhr: jqxhr,
-                    });
+                if (!_this.cache || new Date(data.modifiedTime).getTime() != _this.cache.timestamp) {
+                    console.log("DONT USE CACHE");
+                    getData(rangeString, new Date(data.modifiedTime).getTime(), resolve, reject);
+                } else {
+                    _this.cacheUsed = true;
+                    console.log("USE CACHE");
+                    resolve(_this.cache.data);
+                }
+            }).fail(function(jqxhr: JQuery.jqXHR) {
+                reject({
+                    type: "cacheCheckAjax",
+                    jqxhr: jqxhr,
                 });
-            } else {
-                getData(rangeString, resolve, reject);
-            }
+            });
+
         });
     }
 

@@ -31,10 +31,22 @@ class AlertBox {
     }
 
     /**
+     * Clear the AlertBox of all alerts in the given group.
+     */
+    clear(group);
+
+    /**
      * Clear the AlertBox of all alerts. If the AlertBox div contains elements other than Alerts, those are cleared as well.
      */
-    clear() {
-        $(this.selector).html("");
+    clear();
+
+    clear(group?: string) {
+        if (group) {
+            $(this.selector + " [data-alertGroup='" + group + "']").remove();
+
+        } else {
+            $(this.selector).html("");
+        }
     }
 
 
@@ -78,7 +90,7 @@ class Alert extends Element {
      * @param text - Text for the alert. This can contain HTML, which will be rendered.
      * @param dismissible - Whether the alert should be dismissible.
      */
-    constructor(text: string, group: string, context: string, strongText: string, dismissible: boolean = true) {
+    constructor(text: string, group: string, context: string, strongText: string = "", dismissible: boolean = true) {
         super();
         this.group = group;
         this.context = context;

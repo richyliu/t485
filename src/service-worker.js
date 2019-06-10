@@ -22,7 +22,7 @@ let cacheFiles = [
     "/fonts/typeface-raleway/index.css"
 ];
 
-for (let i = 100; i < 900; i += 100) {
+for (let i = 100; i <= 900; i += 100) {
     cacheFiles.push([
         `/fonts/typeface-raleway/files/raleway-latin-${i}.woff`,
         `/fonts/typeface-raleway/files/raleway-latin-${i}.woff2`,

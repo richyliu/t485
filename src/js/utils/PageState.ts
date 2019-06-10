@@ -4,18 +4,36 @@ import "bootstrap";
 import Query from "./Query";
 import Authenticator from "../server/Authenticator";
 import * as Sentry from "@sentry/browser";
-import { AlertBox, Alert } from "../AlertBox";
+import { Alert, AlertBox } from "../AlertBox";
+import WebFont from "webfontloader";
 
 class PageState {
 
+    static initFonts() {
+
+        WebFont.load({
+            custom: {
+                families: ["Lora", "Raleway"],
+                urls: ["/fonts/typeface-lora/index.css", "/fonts/typeface-raleway/index.css"],
+            },
+        });
+    }
+
     static initOfflinePersistence() {
+        let alertBox = new AlertBox("#alertBox");
 
-        if (navigator.onLine) {
-            return;
-        }
+        $(window).on("offline online", function() {
+            console.log(navigator.onLine);
 
-        let alertBox = new AlertBox("#alert-box");
-        //alertBox.push(new Alert())
+            if (navigator.onLine) {
+                alertBox.clear("connection");
+            } else {
+
+                alertBox.push(new Alert("Some functionality may not work.", "connection",
+                        "info", "You're Offline!", true));
+            }
+        }).trigger(navigator.onLine ? "online" : "offline");
+
 
     }
 
@@ -145,16 +163,17 @@ class PageState {
             dsn: "https://8bb22b6591e2404c9827b7bc68958bc8@sentry.io/1456506",
             integrations: function(integrations) {
                 return integrations.filter(integration => integration.name !== "Breadcrumbs");
-            }
+            },
         });
 
     }
 
     /**
-     * Runs all three vital state preservation functions.
+     * Runs all functions.
      */
     static init() {
 
+        PageState.initFonts();
         PageState.initOfflinePersistence();
         PageState.initPreservePage();
         PageState.initPreserveState();

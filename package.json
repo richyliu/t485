@@ -29,6 +29,7 @@
         "@types/jest": "^24.0.13",
         "@types/jquery": "^3.3.29",
         "@types/list.js": "^1.5.1",
+        "@types/webfontloader": "^1.6.29",
         "babelify": "^10.0.0",
         "bootstrap": "^4.3.1",
         "bootstrap-3-typeahead": "^4.0.2",
@@ -72,6 +73,7 @@
         "vcards-js": "^2.10.0",
         "vinyl-buffer": "^1.0.1",
         "vinyl-source-stream": "^2.0.0",
-        "watchify": "^3.11.1"
+        "watchify": "^3.11.1",
+        "webfontloader": "^1.6.28"
     }
 }

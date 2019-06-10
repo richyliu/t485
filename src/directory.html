@@ -96,8 +96,8 @@
                     </div>
                 </div>
                 <p><span class="directoryLoaded-show hidden"><span
-                        class="directoryScoutSize"></span> scouts loaded <span class="directoryFromCache">from cache</span> in <span
-                        class="directoryLoadTime"></span></span> <span>(<a class="link directoryLoadSource">Load from source</a>)</span></p>
+                        class="directoryScoutSize"></span> scouts loaded in <span
+                        class="directoryLoadTime"></span></span></p>
                 <p>View/Edit the troop directory spreadsheet on <a target="_blank" class="link-google-sheet-dir">Google
                     Sheets</a>.</p>
             </div>
@@ -116,7 +116,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title infoModal-scoutFullName">Richard Liu</h5>
+                <h5 class="modal-title infoModal-scoutFullName">Error</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -124,12 +124,25 @@
             <div class="modal-body">
 
                 <ul class="list-group list-group-flush" id="infoModal-infoList">
-                    <li class="list-group-item">Name: <span class="scoutFirstName"></span></li>
+                    <li class="list-group-item">Name: <span class="infoModal-scoutFullName">N/A</span></li>
+                    <li class="list-group-item">Patrol: <span class="infoModal-scoutPatrol">N/A</span></li>
+                    <li class="list-group-item">Cell Phone: <a class="infoModal-scoutCellPhone">N/A</a></li>
+                    <li class="list-group-item">Email: <a class="infoModal-scoutEmail">N/A</a></li>
                 </ul>
-                <h3>Father: Gang Liu</h3>
-                <ul class="list-group list-group-flush" id="infoModal-fatherInfoList">
-                    <li class="list-group-item">Name: Gang Liu</li>
-                </ul>
+                <a class="py-3 link infoModal-scoutDownload">Download Contact Card for <span class="infoModal-scoutFullName"></span>.</a>
+
+                <div class="infoModal-father">
+                    <h3>Father: <span class="infoModal-fatherFullName"></span></h3>
+                    <ul class="list-group list-group-flush" id="infoModal-fatherInfoList">
+                        <li class="list-group-item">Cell Phone: <a class="infoModal-fatherCellPhone">N/A</a></li>
+                    </ul>
+                </div>
+                <div class="infoModal-mother">
+                    <h3>Mother: <span class="infoModal-motherFullName"></span></h3>
+                    <ul class="list-group list-group-flush" id="infoModal-motherInfoList">
+                        <li class="list-group-item">Cell Phone: <a class="infoModal-motherCellPhone">N/A</a></li>
+                    </ul>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Edit in spreadsheet</button>
