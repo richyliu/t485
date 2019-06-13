@@ -23,19 +23,19 @@ let cacheFiles = [
 ];
 
 for (let i = 100; i <= 900; i += 100) {
-    cacheFiles.push([
+    cacheFiles.push(
         `/fonts/typeface-raleway/files/raleway-latin-${i}.woff`,
         `/fonts/typeface-raleway/files/raleway-latin-${i}.woff2`,
         `/fonts/typeface-raleway/files/raleway-latin-${i}italic.woff`,
         `/fonts/typeface-raleway/files/raleway-latin-${i}italic.woff2`
-    ]);
+    );
     if (i === 400 || i === 700) {
-        cacheFiles.push([
+        cacheFiles.push(
             `/fonts/typeface-lora/files/lora-latin-${i}.woff`,
             `/fonts/typeface-lora/files/lora-latin-${i}.woff2`,
             `/fonts/typeface-lora/files/lora-latin-${i}italic.woff`,
             `/fonts/typeface-lora/files/lora-latin-${i}italic.woff2`
-        ]);
+        );
     }
 }
 console.log(cacheFiles);

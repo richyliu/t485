@@ -122,30 +122,54 @@
                 </button>
             </div>
             <div class="modal-body">
-
-                <ul class="list-group list-group-flush" id="infoModal-infoList">
-                    <li class="list-group-item">Name: <span class="infoModal-scoutFullName">N/A</span></li>
-                    <li class="list-group-item">Patrol: <span class="infoModal-scoutPatrol">N/A</span></li>
-                    <li class="list-group-item">Cell Phone: <a class="infoModal-scoutCellPhone">N/A</a></li>
-                    <li class="list-group-item">Email: <a class="infoModal-scoutEmail">N/A</a></li>
-                </ul>
-                <a class="py-3 link infoModal-scoutDownload">Download Contact Card for <span class="infoModal-scoutFullName"></span>.</a>
-
-                <div class="infoModal-father">
-                    <h3>Father: <span class="infoModal-fatherFullName"></span></h3>
-                    <ul class="list-group list-group-flush" id="infoModal-fatherInfoList">
-                        <li class="list-group-item">Cell Phone: <a class="infoModal-fatherCellPhone">N/A</a></li>
+                <div class="infoModal-scout">
+                    <ul class="list-group list-group-flush" id="infoModal-infoList">
+                        <li class="list-group-item">Patrol: <span class="infoModal-scoutPatrol">N/A</span></li>
+                        <li class="list-group-item">Email: <span class="infoModal-scoutEmail">N/A</span></li>
+                        <li class="list-group-item">Cell Phone: <span class="infoModal-scoutCellPhone">N/A</span></li>
+                        <li class="list-group-item">Home Phone: <span class="infoModal-scoutHomePhone">N/A</span></li>
+                        <li class="list-group-item">Slack: <span class="infoModal-scoutSlack">N/A</span></li>
+                        <li class="list-group-item">Jobs: <span class="infoModal-scoutJobs">N/A</span></li>
+                        <li class="list-group-item">Join date: <span class="infoModal-scoutJoinDate">N/A</span></li>
+                        <li class="list-group-item">Active: <span class="infoModal-scoutActive">N/A</span></li>
+                        <li class="list-group-item">WFA Trained: <span class="infoModal-scoutWFATrained">N/A</span></li>
+                        <li class="list-group-item">
+                            <a class="link infoModal-scoutDownload">Download Contact Card for <span
+                                    class="infoModal-scoutFullName"></span>.</a>
+                        </li>
                     </ul>
                 </div>
+
+                <div class="infoModal-father">
+                    <hr>
+                    <h3>Father: <span class="infoModal-fatherFullName"></span></h3>
+                    <ul class="list-group list-group-flush" id="infoModal-fatherInfoList">
+                        <li class="list-group-item">Cell Phone: <span class="infoModal-fatherCellPhone">N/A</span></li>
+                        <li class="list-group-item">Email: <span class="infoModal-fatherEmail">N/A</span></li>
+                        <li class="list-group-item">Slack: <span class="infoModal-fatherSlack">N/A</span></li>
+                        <li class="list-group-item">
+                            <a class="link infoModal-fatherDownload">Download Contact Card for <span
+                                    class="infoModal-fatherFullName"></span>.</a>
+                        </li>
+                    </ul>
+                </div>
+
                 <div class="infoModal-mother">
+                    <hr>
                     <h3>Mother: <span class="infoModal-motherFullName"></span></h3>
                     <ul class="list-group list-group-flush" id="infoModal-motherInfoList">
-                        <li class="list-group-item">Cell Phone: <a class="infoModal-motherCellPhone">N/A</a></li>
+                        <li class="list-group-item">Cell Phone: <span class="infoModal-motherCellPhone">N/A</span></li>
+                        <li class="list-group-item">Email: <span class="infoModal-motherEmail">N/A</span></li>
+                        <li class="list-group-item">Slack: <span class="infoModal-motherSlack">N/A</span></li>
+                        <li class="list-group-item">
+                            <a class="link infoModal-motherDownload">Download Contact Card for <span
+                                    class="infoModal-motherFullName"></span>.</a>
+                        </li>
                     </ul>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Edit in spreadsheet</button>
+                <a type="button" class="btn btn-secondary" target="_blank" class="infoModal-editLink">Edit in spreadsheet</a>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>

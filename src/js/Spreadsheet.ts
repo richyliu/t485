@@ -88,7 +88,7 @@ class Spreadsheet {
                 } else {
                     _this.cacheUsed = true;
                     console.log("USE CACHE");
-                    resolve(_this.cache.data);
+                    resolve(_this.cache);
                 }
             }).fail(function(jqxhr: JQuery.jqXHR) {
                 reject({

@@ -43,6 +43,12 @@ const readablePatrolMap = {
     HAWK: "Hawks",
 };
 const defaultShown = [[0, 1, 2, 3, 4, 10], [], []];
+const defaults = {
+    search: "",
+    filter: "1",
+    sort: "asc",
+    shown: ["0", "1", "2", "3", "4", "10"],
+};
 const unknownText = `<i>Unknown</i>`;
 const noneText = `<i>N/A</i>`;
 
@@ -112,12 +118,63 @@ function toString(obj: any, italciseUnknown: boolean = true) {
     }
 }
 
+/**
+ * Queries the slack API and a cache in firebase about the Member Id for a given slack username.
+ * @param username - The username of the user to query.
+ * @param slackToken - An API Key for slack.
+ * @returns A promise containing the ID.
+ */
+function getSlackID(username: string, slackToken: string) {
+    return new Promise(function(resolve, reject) {
+        db.ref("/directory/slackUID/").once("value").then(function(snapshot) {
+            let data = snapshot.val();
+            //Also encodes period
+            let encodedUsername = encodeURIComponent(username).replace(/\./g, "%2E");
+
+            if (data != null && data[encodedUsername] != null && data[encodedUsername] != undefined) {
+                resolve(data[encodedUsername]);
+                return;
+            } else {
+                $.ajax({
+                    url: `https://slack.com/api/users.list?token=${slackToken}`,
+                    method: "GET",
+                    dataType: "json",
+                }).done(function(userlistdata) {
+                    let userlist = userlistdata.members;
+                    let updates = {};
+                    let displayName: string;
+                    for (let i = 0; i < userlist.length; i++) {
+                        if (userlist[i].deleted) {
+                            continue;
+                        }
+                        if (userlist[i].profile.display_name != "" && userlist[i].profile.display_name != undefined) {
+                            displayName = userlist[i].profile.display_name;
+                        } else {
+                            displayName = userlist[i].profile.real_name;
+                        }
+
+                        updates[encodeURIComponent(displayName).replace(/\./g, "%2E")] = userlist[i].id;
+                        if (displayName == username) {
+                            resolve(userlist[i].id);
+                        }
+                    }
+                    db.ref("/directory/slackUID/").update(updates);
+                }).fail(function(err) {
+                    reject("AJAX Error");
+                });
+            }
+        }).catch(function(err) {
+            reject("Firebase Error");
+        });
+    });
+}
+
 function loadData(callback: (list: List) => void) {
     db.ref("/directory/keys").once("value").then(function(snapshot) {
         let data = snapshot.val();
         let editId = data.editId;
         let keys: DirectoryKeys;
-
+        let slackKey = data.slackToken;
 
         keys = {
             id: data.id,
@@ -176,7 +233,6 @@ function loadData(callback: (list: List) => void) {
 
                 $("#dir-body").append(`<tr data-id="${id}">${row.join("")}</tr>`);
             }).then(function(data) {
-                console.log(data);
                 $("#loading-text").addClass("hidden");
                 let valueNames = [];
                 let count = 0;
@@ -197,43 +253,81 @@ function loadData(callback: (list: List) => void) {
                 $(".directoryScoutSize").text(directory.getScouts().length + "");
                 $(".directoryLoadTime").text((end - start) + "ms");
                 $(".directoryLoaded-show").removeClass("hidden");
-                console.log("Done in " + (end - start) + "ms");
 
                 db.ref("/directory/cache/").set(data);
                 localStorage.setItem("directoryCache", btoa(JSON.stringify(data)));
 
-                console.log(directory);
-                $("tr").click(function() {
+                $(".list tr").click(function() {
                     let id = $(this).attr("data-id");
                     let scout = directory.getScouts()[id];
-                    console.log(scout);
                     let val: string;
-                    console.log(id);
                     for (let i = 0; i < directoryKeymap.length; i++) {
                         if (directoryKeymap[i][0] === "scout") {
                             val = HTML.escape(toString(scout[directoryKeymap[i][1]], false));
-                            if (scout[directoryKeymap[i][1]] == undefined) {
-                                val = "N/A";
+                            if (scout[directoryKeymap[i][1]] == null) {
+                                val = "<i>N/A</i>";
                             }
 
-                        } else if (scout[directoryKeymap[i][0]] == undefined || scout[directoryKeymap[i][0]][directoryKeymap[i][1]] == undefined) {
+                        } else if (scout[directoryKeymap[i][0]] == null || scout[directoryKeymap[i][0]][directoryKeymap[i][1]] == null) {
                             val = "<i>N/A</i>";
                         } else {
+
                             val = HTML.escape(toString(scout[directoryKeymap[i][0]][directoryKeymap[i][1]], false));
                         }
                         if (directoryKeymap[i][1] === "email") {
-                            val = `<a href="mailto:${val}">${val}</a>`;
+                            val = `<a href="mailto:${val}" target="_blank">${val}</a>`;
 
                         } else if (directoryKeymap[i][1] === "cellPhone" || directoryKeymap[i][1] === "homePhone") {
-                            val = `<a href="tel:${val}">${val}</a>`;
+                            val = `<a href="tel:${val}" target="_blank">${val}</a>`;
 
+                        } else if (directoryKeymap[i][1] === "active" || directoryKeymap[i][1] === "WFATrained") {
+                            switch (val) {
+                                case "Y":
+                                    val = "Yes";
+                                    break;
+                                case "N":
+                                    val = "No";
+                                    break;
+                                case "A":
+                                    val = "Aged Out";
+                                    // This option is only applicable to active, so if we're processing
+                                    // a different field then it will be overwritten during the default case.
+                                    if (directoryKeymap[i][1] === "active")
+                                        break;
+                                case "R":
+                                    val = "Rarely";
+                                    // See above
+                                    if (directoryKeymap[i][1] === "active")
+                                        break;
+                                default:
+                                    val = "<i>Unknown</i>";
+                            }
+                        } else if (directoryKeymap[i][1] === "slack") {
+
+                            if (val !== "<i>N/A</i>" && val !== "None") {
+                                let username = val;
+                                val = `
+                                <a class="infoModal-${directoryKeymap[i][0] + directoryKeymap[i][1].charAt(0).toUpperCase()
+                                + directoryKeymap[i][1].substring(1)}Link" target="_blank">${val}</a>
+                                `;
+                                let selector = `.infoModal-${directoryKeymap[i][0] + directoryKeymap[i][1].charAt(0).toUpperCase()
+                                + directoryKeymap[i][1].substring(1)}Link`;
+                                getSlackID(username, slackKey).then(function(id) {
+                                    $(selector).attr("href", "https://t485.slack.com/messages/message/team/" + id);
+
+                                });
+                            } else {
+                                val = "<i>None</i>";
+                            }
                         }
                         $(".infoModal-" + directoryKeymap[i][0] + directoryKeymap[i][1].charAt(0).toUpperCase()
-                        + directoryKeymap[i][1].substring(1)).html(val);
+                                + directoryKeymap[i][1].substring(1)).html(val);
 
                     }
 
                     $(".infoModal-scoutPatrol").text(readablePatrolMap[scout.patrol]);
+
+                    $(".infoModal-scoutJobs").text((!!scout.jobs || scout.jobs.length < 1) ? scout.jobs.join(", ") : "<i>None</i>");
                     $(".infoModal-scoutFullName").text(scout.firstName + " " + scout.lastName);
                     $(".infoModal-mother").addClass("hidden");
                     $(".infoModal-father").addClass("hidden");
@@ -254,12 +348,13 @@ function loadData(callback: (list: List) => void) {
                     $(".infoModal-scoutDownload").click(function() {
                         download(scout.firstName + scout.lastName + ".vcf", scout.export());
                     });
+                    $(".infoModal-editLink").attr("href", `https://docs.google.com/spreadsheets/d/${editId}/edit`);
                     $("#infoModal").modal("show");
 
-                    URL.setQueryString(Query.set("id", id));
+                    window.location.hash = id;
                 });
                 $("#infoModal").on("hide.bs.modal", function() {
-                    URL.setQueryString(Query.remove("id"));
+                    window.location.hash = "#";
                 });
                 callback(list);
 
@@ -313,11 +408,27 @@ function loadFilterSelects(list: List) {
     }
     $("#filter-select, #sortby-select, #sortorder-select").selectpicker("refresh");
 
-    console.log(list);
+    let checkDefaults = function() {
+
+        if (
+                $("#sortby-select").val() === defaults.filter &&
+                $("#sortorder-select").val() === defaults.sort &&
+                $("#filter-select").val() + "" === defaults.shown.join(",") &&
+                $("#search").val() === defaults.search
+        ) {
+            URL.setQueryString("");
+            $("#modified-settings").addClass("hidden");
+        } else {
+            $("#modified-settings").removeClass("hidden");
+        }
+    };
+
     $("#sortby-select, #sortorder-select").change(function() {
         URL.setQueryString(Query.set("sortBy", "" + $("#sortby-select").val(), Query.set("sortOrder", "" + $("#sortorder-select").val())));
 
         list.sort("col-" + $("#sortby-select").val(), { order: $("#sortorder-select").val() + "" });
+
+        checkDefaults();
     });
     $("#filter-select").change(function() {
         // @ts-ignore -- #filter-select will always be an array
@@ -334,14 +445,26 @@ function loadFilterSelects(list: List) {
         }
         URL.setQueryString(Query.set("filterBy", JSON.stringify(selected.map(x => parseInt(x, 10))).slice(1, -1).replace(/,/g, "_")));
 
-    }).trigger("change");
+        checkDefaults();
+    });
 
-    //initalize options
-    console.log("col-" + (Query.get("sortBy") || 2), { order: (Query.get("sortOrder") || "asc") + "" });
+    $("#search").keyup(function() {
+        URL.setQueryString(Query.set("search", $("#search").val() + ""));
 
-    list.sort("col-" + (Query.get("sortBy") || 2), { order: (Query.get("sortOrder") || "asc") + "" });
-    let selected: string[] = Query.get("filterBy").split("_");
+        checkDefaults();
+    });
+
+    //initialize options
+    list.sort("col-" + (Query.get("sortBy") || 1), { order: (Query.get("sortOrder") || "asc") + "" });
+    $("#sortby-select").val(Query.get("sortBy") || 1).selectpicker("refresh");
+    $("#sortorder-select").val(Query.get("sortOrder") || "asc").selectpicker("refresh");
+
+    $("#search").val(Query.get("search"));
+    list.fuzzySearch(Query.get("search"));
+    let selected: string[] = Query.get("filterBy") ? Query.get("filterBy").split("_") : defaults.shown;
     let selectedIndex = 0;
+    $("#filter-select").val(selected);
+    $("#filter-select").selectpicker("refresh");
     for (let i = 0; i < directoryKeymap.length; i++) {
         if (selected[selectedIndex] === (i + "")) {
             selectedIndex++;
@@ -352,11 +475,15 @@ function loadFilterSelects(list: List) {
 
     }
 
+    if (window.location.hash.substring(1) != "") {
+        $(`.list tr[data-id="${window.location.hash.substring(1)}"]`).click();
+    }
+
 
 }
 
 function download(filename: string, text: any) {
-    var element = document.createElement("a");
+    let element = document.createElement("a");
     element.setAttribute("href", "data:text/plain;charset=utf-8," + encodeURIComponent(text));
     element.setAttribute("download", filename);
 
