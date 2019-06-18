@@ -54,6 +54,7 @@ class PageState {
         $(".preserve-page").each(function() {
 
             let href = $(this).attr("href");
+            console.log($(this), $(this).attr("href"));
             let base = href.substring(0, (href.indexOf("?") > -1 ? href.indexOf("?") : undefined));
             let query = Query.set("continue", encodeURIComponent(window.location.href), Query.getString(href));
             let hash = (href.indexOf("#") > -1 ? href.substring(href.indexOf("#")) : "");
@@ -115,7 +116,7 @@ class PageState {
                 let email = user.email;
                 let displayName = user.displayName;
                 $(".user-email").text(email || "An Error Occurred. Code account/emailNotSet");
-                $(".user-displayName").text(displayName || "An Error Occurred. Code account/displayNameNotSet");
+                $(".user-displayName").text(displayName || email || "An Error Occurred. Code account/displayNameNotSet");
 
                 $(".lo-show").addClass("hidden");
                 $(".li-show").removeClass("hidden");

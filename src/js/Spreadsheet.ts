@@ -80,14 +80,11 @@ class Spreadsheet {
                 method: "GET",
                 dataType: "json",
             }).done(function(data: { modifiedTime: string; }) {
-                console.log(data, new Date(data.modifiedTime).getTime(), _this.cache.timestamp);
 
                 if (!_this.cache || new Date(data.modifiedTime).getTime() != _this.cache.timestamp) {
-                    console.log("DONT USE CACHE");
                     getData(rangeString, new Date(data.modifiedTime).getTime(), resolve, reject);
                 } else {
                     _this.cacheUsed = true;
-                    console.log("USE CACHE");
                     resolve(_this.cache);
                 }
             }).fail(function(jqxhr: JQuery.jqXHR) {

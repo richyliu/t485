@@ -59,6 +59,7 @@ function init() {
                         if (Query.get("continue") == "" || Query.get("continue") == null) {
                             window.location.href = "/account/";
                         } else {
+                            console.log(Query.get("continue"));
                             window.location.href = Query.get("continue");
                         }
                     } else {
