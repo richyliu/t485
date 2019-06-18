@@ -56,7 +56,7 @@ class PageState {
             let href = $(this).attr("href");
             console.log($(this), $(this).attr("href"));
             let base = href.substring(0, (href.indexOf("?") > -1 ? href.indexOf("?") : undefined));
-            let query = Query.set("continue", encodeURIComponent(window.location.href), Query.getString(href));
+            let query = Query.set("continue", window.location.href, Query.getString(href));
             let hash = (href.indexOf("#") > -1 ? href.substring(href.indexOf("#")) : "");
             $(this).attr("href", base + query + hash);
         });
