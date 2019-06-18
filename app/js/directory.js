@@ -52,6 +52,16 @@ Tabletop.init({
 });
 
 
+// allow spreadsheet confirm button to work
+$('#spreadsheet-confirm-btn').click(() => {
+    $('#spreadsheet-confirm').hide();
+    $('#spreadsheet-content').html(`
+        <a href="https://docs.google.com/spreadsheets/d/15Z9AgrqGNprz2K8c032ZhJ7Wm5bTV-2fJfublK7L1L8/edit?usp=drive_web" target="_blank">Edit Spreadsheet</a>
+        <iframe src="https://docs.google.com/spreadsheets/d/15Z9AgrqGNprz2K8c032ZhJ7Wm5bTV-2fJfublK7L1L8/pubhtml?widget=true&amp;headers=false"></iframe>
+    `);
+    $('#spreadsheet').show();
+});
+
 /**
  * Checks if the user is logged in. If not, show the login div
  * @param  {Object[]} people Object of scouts and parents' names and emails
