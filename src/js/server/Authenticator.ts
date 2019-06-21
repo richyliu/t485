@@ -1,6 +1,6 @@
 import { ServerConnection, ServerError } from "./ServerConnection";
 import "firebase/auth";
-import { User as FirebaseUser } from "firebase";
+import { User as FirebaseUser} from "firebase";
 
 /**
  * Authentication Server
@@ -15,6 +15,8 @@ interface User extends FirebaseUser {
     email: string;
     displayName: string | undefined;
 }
+
+
 
 class Authenticator extends ServerConnection {
 
@@ -46,11 +48,26 @@ class Authenticator extends ServerConnection {
     }
 
     /**
+     * Returns a AuthCredential from the email and password.
+     * @param email - The email
+     * @param password - The password
+     */
+    public getEmailCredential(email: string, password: string) {
+        return this.staticServer.auth.EmailAuthProvider.credential(
+                email,
+                password
+        );
+
+    }
+
+    /**
      * Logs out the current user. If the user logged in with an external Auth provider, they will have to log in again with that provider, but will not be logged out of that provider.
      */
     public logout() {
         return this.server.auth().signOut();
     }
+
+
 }
 
 export default Authenticator;

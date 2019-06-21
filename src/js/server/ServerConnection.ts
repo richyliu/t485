@@ -15,7 +15,11 @@ class ServerConnection {
      * The firebase instance.
      */
     protected server: firebase.app.App;
-    g;
+
+    /**
+     * The firebase namespace, used for static functions.
+     */
+    protected staticServer = firebase;
 
     /**
      * Create a new server connection.

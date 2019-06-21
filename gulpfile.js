@@ -198,7 +198,7 @@ gulp.task("clean", function(callback) {
  * Nunjucks => HTML => Minified HTML
  */
 gulp.task("html", function() {
-    return gulp.src(base + "/**/*.html")
+    return gulp.src(base + "/**/*.+(html|njk)")
             .pipe(plumber())
             .pipe(env === "production" ? noop() : cache("html"))
             .pipe(nunjucks.compile(nunjucks_config, {
@@ -419,7 +419,7 @@ gulp.task("watch", gulp.parallel(function() {
     gulp.watch([base + "/js/**/*.js", "!" + base + "/js/*.min.js"], gulp.parallel("scripts"));
     gulp.watch([base + "/js/**/*.ts"], gulp.series("typescript", "docs"));
     gulp.watch("readme.md", gulp.parallel("docs"));
-    gulp.watch(base + "/**/*.html", gulp.parallel("html"));
+    gulp.watch(base + "/**/*.+(html|njk)", gulp.parallel("html"));
     gulp.watch([base + "/fonts/**/*", base + "/js/**/*.js", base + "/css/**/*.css", base + "/js/**/*.map", base + "/css/**/*.map", base + "/img/**/*", base + "/service-worker.js"], gulp.parallel("assets"));
 
 }, gulp.series("devBuild", "browserSync")));

@@ -54,13 +54,13 @@ class PageState {
         $(".preserve-page").each(function() {
 
             let href = $(this).attr("href");
-            console.log($(this), $(this).attr("href"));
             let base = href.substring(0, (href.indexOf("?") > -1 ? href.indexOf("?") : undefined));
             let query = Query.set("continue", window.location.href, Query.getString(href));
             let hash = (href.indexOf("#") > -1 ? href.substring(href.indexOf("#")) : "");
             $(this).attr("href", base + query + hash);
         });
     }
+
 
     /**
      * For each element with the `.preserve-state` class, the element's href's continue URL parameter is changed to the current continue URL parameter.
@@ -95,6 +95,7 @@ class PageState {
 
 
     }
+
 
     /**
      * Manages the state-specific html classes.

@@ -53,9 +53,8 @@ function init() {
 
                 $("#error").html("");
 
-                database.ref("/users/" + user.uid + "/data/lastUpdated/").once("value").then(function(snapshot) {
-                    console.log(snapshot.exists());
-                    if (snapshot.exists()) {
+                database.ref("/users/" + user.uid + "/data/setupComplete/").once("value").then(function(snapshot) {
+                    if (snapshot.val()) {
                         if (Query.get("continue") == "" || Query.get("continue") == null) {
                             window.location.href = "/account/";
                         } else {
@@ -72,6 +71,7 @@ function init() {
                     alertBox.push(new ErrorAlert(`An unknown error occurred. Code account/login.foreignStateError(${e.code})`));
 
                 });
+
 
             }
 

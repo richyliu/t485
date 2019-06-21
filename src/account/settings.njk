@@ -1,0 +1,94 @@
+{% set title = "Account Settings" %}
+{% set page = "Account Settings" %}
+{% set path = "account/settings" %}
+
+{% extends "base.html" %}
+
+{% block main %}
+
+	<div class="row col-lg-12">
+		<div class="box w-100">
+			<div class="col-lg-12">
+				<h2 class="primary-heading">Account Settings</h2>
+				<div id="loading">
+					<p>Loading...</p>
+				</div>
+				<div id="auth" class="hidden">
+					<a class="btn btn-block btn-primary preserve-page" href="/account/login">Login to continue</a>
+				</div>
+				<table class="table hidden" id="main">
+					<tbody>
+					<tr>
+						<td>Email</td>
+						<td><span class="user-email">Loading...</span><br><a data-toggle="collapse"
+						                                                     href="#emailUpdateForm" role="button"
+						                                                     aria-expanded="false"
+						                                                     aria-controls="emailUpdateForm"
+						                                                     id="emailUpdate-formTrigger">Change</a>
+							<form class="collapse prevent-submit" id="emailUpdateForm">
+								<p>You must change your email in the directory before you update your account email.</p>
+								<p><b>New Email:</b><span id="emailUpdate-newEmail">newemail@gmail.com</span></p>
+							</form>
+						</td>
+					</tr>
+					<tr>
+						<td>Password</td>
+						<td><a data-toggle="collapse" href="#passwordUpdateForm" role="button" aria-expanded="false"
+						       aria-controls="passwordUpdateForm" id="passwordUpdate-formTrigger">Change password</a>
+							<p id="passwordUpdate-success" class="hidden"><i>Password successfully changed.</i></p>
+							<form class="collapse prevent-submit" id="passwordUpdateForm">
+								<div class="form-group">
+									<label for="passwordUpdate-currentPassword">Current Password</label>
+									<input type="password" class="form-control has-validation passwordInput"
+									       id="passwordUpdate-currentPassword">
+									<small id="passwordUpdate-currentPasswordHelp" class="invalid-feedback">Password
+										Incorrect
+									</small>
+								</div>
+								<div class="form-group">
+									<label for="passwordUpdate-newPassword">New Password</label>
+									<input type="password" class="form-control" id="passwordUpdate-newPassword">
+									<small id="passwordUpdate-newPasswordHelp has-validation passwordInput"
+									       class="invalid-feedback">
+										Please make your
+										password more secure. Try adding capital/lowercase letters, numbers, and
+										symbols.
+									</small>
+								</div>
+								<div class="form-group">
+									<label for="passwordUpdate-confirmNewPassword">Confirm New Password</label>
+									<input type="password" class="form-control has-validation passwordInput"
+									       id="passwordUpdate-confirmNewPassword">
+									<small id="passwordUpdate-confirmNewPasswordHelp" class="invalid-feedback">New
+										Passwords
+										don't match!
+									</small>
+								</div>
+								<button class="btn btn-block btn-primary" id="passwordUpdate-submit">Change Password
+								</button>
+							</form>
+						</td>
+					</tr>
+					<tr>
+						<td>Account Information<br>
+							<i>Name, Jobs, and Patrol</i></td>
+						<td><a href="/account/setup">Update your account information from the directory</a></td>
+					</tr>
+					<tr>
+						<td>Delete Account</td>
+						<td>Please <a href="mailto:jeffkmeng@gmail.com?subject=Delete%20My%20T485.org%20Account">email
+								the
+								webmaster</a> if you would like to delete your account.
+						</td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}
+
+{% block scripts %}
+
+{% endblock %}

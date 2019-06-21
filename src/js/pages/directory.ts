@@ -1,5 +1,5 @@
 import Database from "../server/Database";
-// import Authenticator from "../server/Authenticator";
+import Authenticator from "../server/Authenticator";
 import { Directory, DirectoryKeys } from "../Directory";
 import Scout from "../contact/Scout";
 import PhoneNumber from "../contact/PhoneNumber";
@@ -8,7 +8,6 @@ import List from "list.js";
 import PageState from "../utils/PageState";
 import Query from "../utils/Query";
 import URL from "../utils/URL";
-import Authenticator from "../server/Authenticator";
 import HTML from "../utils/HTML";
 import "bootstrap";
 import "bootstrap-select";

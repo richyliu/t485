@@ -1,5 +1,30 @@
 {% set page = "Pictures" %}
 {% extends "base.html" %}
+{$ block styles %}
+<style>
+    .caret {
+        display: none;
+    }
+
+    .sort.asc .caret.caret-up {
+        display: inline;
+    }
+
+    .sort.desc .caret.caret-down {
+        display: inline;
+    }
+
+    #date-select[readonly] {
+        background-color: white;
+        color: black;
+    }
+
+    label {
+        font-weight: bold;
+
+    }
+</style>
+{% endblock %}
 {% block main %}
 <div class="row">
     <div class="box">
