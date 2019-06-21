@@ -23,12 +23,10 @@ class PageState {
         let alertBox = new AlertBox("#alertBox");
 
         $(window).on("offline online", function() {
-            console.log(navigator.onLine);
 
             if (navigator.onLine) {
                 alertBox.clear("connection");
             } else {
-
                 alertBox.push(new Alert("Some functionality may not work.", "connection",
                         "info", "You're Offline!", true));
             }
@@ -96,7 +94,6 @@ class PageState {
 
     }
 
-
     /**
      * Manages the state-specific html classes.
      *
@@ -128,6 +125,26 @@ class PageState {
         });
     }
 
+    /**
+     * Initiates the scroll to top button.
+     */
+    static initScrollToTop() {
+        $(window).scroll(function() {
+            if ($(this).scrollTop() > 100) {
+                $(".to-top-btn").fadeIn();
+            } else {
+                $(".to-top-btn").fadeOut();
+            }
+        });
+        $(document.body).on("click", ".scroll-to-top", function() {
+
+            $("body,html").animate({
+                scrollTop: 0,
+            }, 800);
+            return false;
+
+        });
+    }
     /**
      * Adds a handler on the .prevent-submit class, which prevents forms with this class from being submitted.
      */
@@ -181,6 +198,7 @@ class PageState {
         PageState.initPreserveState();
         PageState.initPreventSubmit();
         PageState.initPreserveAuthState();
+        PageState.initScrollToTop();
         PageState.initSentry();
         PageState.initAnalytics();
 
