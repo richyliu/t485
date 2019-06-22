@@ -200,12 +200,12 @@ gulp.task("clean", function(callback) {
 gulp.task("html", function() {
     return gulp.src(base + "/**/*.+(html|njk)")
             .pipe(plumber())
-            .pipe(rename({
-                extname:".html"
-            }))
             .pipe(env === "production" ? noop() : cache("html"))
             .pipe(nunjucks.compile(nunjucks_config, {
                 env: nunjucksEnv,
+            }))
+            .pipe(rename({
+                extname:".html"
             }))
             .pipe(env === "production" ? minifyInline() : noop())
             .pipe(env === "production" ? htmlmin(htmlMinOptions) : noop())

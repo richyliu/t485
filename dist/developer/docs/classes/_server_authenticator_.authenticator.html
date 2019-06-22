@@ -6,7 +6,7 @@
 	<title>Authenticator | T485 v2 Internal Docs</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="../assets/css/main.css">
+	<link rel="stylesheet" href="/developer/docs/assets/css/main.css">
 	<link rel="apple-touch-icon" sizes="152x152" href="/favicons/apple-touch-icon-152x152.png">
 	<link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon-180x180.png">
 	<link rel="icon" type="image/png" href="/favicons/favicon-16x16.png" sizes="16x16">
@@ -95,19 +95,21 @@
 								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite"><a href="_server_authenticator_.authenticator.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
-						<section class="tsd-index-section tsd-is-inherited">
+						<section class="tsd-index-section tsd-is-inherited tsd-is-private-protected">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_server_authenticator_.authenticator.html#g" class="tsd-kind-icon">g</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="_server_authenticator_.authenticator.html#server" class="tsd-kind-icon">server</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="_server_authenticator_.authenticator.html#staticserver" class="tsd-kind-icon">static<wbr>Server</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_server_authenticator_.authenticator.html#emaillogin" class="tsd-kind-icon">email<wbr>Login</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_server_authenticator_.authenticator.html#getemailcredential" class="tsd-kind-icon">get<wbr>Email<wbr>Credential</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_server_authenticator_.authenticator.html#logout" class="tsd-kind-icon">logout</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_server_authenticator_.authenticator.html#onauthstatechanged" class="tsd-kind-icon">on<wbr>Auth<wbr>State<wbr>Changed</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_server_authenticator_.authenticator.html#sendpasswordresetemail" class="tsd-kind-icon">send<wbr>Password<wbr>Reset<wbr>Email</a></li>
 							</ul>
 						</section>
 					</div>
@@ -126,7 +128,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="_server_serverconnection_.serverconnection.html">ServerConnection</a>.<a href="_server_serverconnection_.serverconnection.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/t485/t485/blob/d93a9b0/src/js/server/Authenticator.ts#L19">server/Authenticator.ts:19</a></li>
+									<li>Defined in <a href="https://github.com/t485/t485/blob/3fb66f4/src/js/server/Authenticator.ts#L23">server/Authenticator.ts:23</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="_server_authenticator_.authenticator.html" class="tsd-signature-type">Authenticator</a></h4>
@@ -134,19 +136,8 @@
 					</ul>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group tsd-is-inherited">
+			<section class="tsd-panel-group tsd-member-group tsd-is-inherited tsd-is-private-protected">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-					<a name="g" class="tsd-anchor"></a>
-					<h3>g</h3>
-					<div class="tsd-signature tsd-kind-icon">g<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
-					<aside class="tsd-sources">
-						<p>Inherited from <a href="_server_serverconnection_.serverconnection.html">ServerConnection</a>.<a href="_server_serverconnection_.serverconnection.html#g">g</a></p>
-						<ul>
-							<li>Defined in <a href="https://github.com/t485/t485/blob/d93a9b0/src/js/server/ServerConnection.ts#L18">server/ServerConnection.ts:18</a></li>
-						</ul>
-					</aside>
-				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
 					<a name="server" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> server</h3>
@@ -154,12 +145,28 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_server_serverconnection_.serverconnection.html">ServerConnection</a>.<a href="_server_serverconnection_.serverconnection.html#server">server</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/t485/t485/blob/d93a9b0/src/js/server/ServerConnection.ts#L17">server/ServerConnection.ts:17</a></li>
+							<li>Defined in <a href="https://github.com/t485/t485/blob/3fb66f4/src/js/server/ServerConnection.ts#L17">server/ServerConnection.ts:17</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
 							<p>The firebase instance.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+					<a name="staticserver" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> static<wbr>Server</h3>
+					<div class="tsd-signature tsd-kind-icon">static<wbr>Server<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> =&nbsp;firebase</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_server_serverconnection_.serverconnection.html">ServerConnection</a>.<a href="_server_serverconnection_.serverconnection.html#staticserver">staticServer</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/t485/t485/blob/3fb66f4/src/js/server/ServerConnection.ts#L22">server/ServerConnection.ts:22</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The firebase namespace, used for static functions.</p>
 						</div>
 					</div>
 				</section>
@@ -176,7 +183,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/t485/t485/blob/d93a9b0/src/js/server/Authenticator.ts#L44">server/Authenticator.ts:44</a></li>
+									<li>Defined in <a href="https://github.com/t485/t485/blob/3fb66f4/src/js/server/Authenticator.ts#L48">server/Authenticator.ts:48</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -205,6 +212,43 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getemailcredential" class="tsd-anchor"></a>
+					<h3>get<wbr>Email<wbr>Credential</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Email<wbr>Credential<span class="tsd-signature-symbol">(</span>email<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, password<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/t485/t485/blob/3fb66f4/src/js/server/Authenticator.ts#L57">server/Authenticator.ts:57</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns a AuthCredential from the email and password.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>email: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The email</p>
+									</div>
+								</li>
+								<li>
+									<h5>password: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The password</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="logout" class="tsd-anchor"></a>
 					<h3>logout</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -214,7 +258,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/t485/t485/blob/d93a9b0/src/js/server/Authenticator.ts#L51">server/Authenticator.ts:51</a></li>
+									<li>Defined in <a href="https://github.com/t485/t485/blob/3fb66f4/src/js/server/Authenticator.ts#L76">server/Authenticator.ts:76</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -236,7 +280,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/t485/t485/blob/d93a9b0/src/js/server/Authenticator.ts#L32">server/Authenticator.ts:32</a></li>
+									<li>Defined in <a href="https://github.com/t485/t485/blob/3fb66f4/src/js/server/Authenticator.ts#L36">server/Authenticator.ts:36</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -270,6 +314,40 @@
 											</ul>
 										</li>
 									</ul>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="sendpasswordresetemail" class="tsd-anchor"></a>
+					<h3>send<wbr>Password<wbr>Reset<wbr>Email</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">send<wbr>Password<wbr>Reset<wbr>Email<span class="tsd-signature-symbol">(</span>email<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, actionCodeSettings<span class="tsd-signature-symbol">: </span><a href="../interfaces/_server_authenticator_.actioncodesettings.html" class="tsd-signature-type">ActionCodeSettings</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/t485/t485/blob/3fb66f4/src/js/server/Authenticator.ts#L69">server/Authenticator.ts:69</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Sends a password reset email.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>email: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The email pertaining to the account of which the password should be reset. The request will be silently ignored if no account exists with that email.</p>
+									</div>
+								</li>
+								<li>
+									<h5>actionCodeSettings: <a href="../interfaces/_server_authenticator_.actioncodesettings.html" class="tsd-signature-type">ActionCodeSettings</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
@@ -350,14 +428,17 @@
 							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
 								<a href="_server_authenticator_.authenticator.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="_server_authenticator_.authenticator.html#g" class="tsd-kind-icon">g</a>
-							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
 								<a href="_server_authenticator_.authenticator.html#server" class="tsd-kind-icon">server</a>
 							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+								<a href="_server_authenticator_.authenticator.html#staticserver" class="tsd-kind-icon">static<wbr>Server</a>
+							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="_server_authenticator_.authenticator.html#emaillogin" class="tsd-kind-icon">email<wbr>Login</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_server_authenticator_.authenticator.html#getemailcredential" class="tsd-kind-icon">get<wbr>Email<wbr>Credential</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="_server_authenticator_.authenticator.html#logout" class="tsd-kind-icon">logout</a>
@@ -365,10 +446,16 @@
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="_server_authenticator_.authenticator.html#onauthstatechanged" class="tsd-kind-icon">on<wbr>Auth<wbr>State<wbr>Changed</a>
 							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_server_authenticator_.authenticator.html#sendpasswordresetemail" class="tsd-kind-icon">send<wbr>Password<wbr>Reset<wbr>Email</a>
+							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../interfaces/_server_authenticator_.actioncodesettings.html" class="tsd-kind-icon">Action<wbr>Code<wbr>Settings</a>
+					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-is-not-exported">
 						<a href="../interfaces/_server_authenticator_.autherror.html" class="tsd-kind-icon">Auth<wbr>Error</a>
 					</li>
@@ -443,7 +530,7 @@
 	<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
 </div>
 <div class="overlay"></div>
-<script src="../assets/js/main.js"></script>
+<script src="/developer/docs/assets/js/main.js"></script>
 <script>if (location.protocol == 'file:') document.write('<script src="../assets/js/search.js"><' + '/script>');</script>
 </body>
 </html>

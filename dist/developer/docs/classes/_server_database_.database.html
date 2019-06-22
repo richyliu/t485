@@ -6,7 +6,7 @@
 	<title>Database | T485 v2 Internal Docs</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="../assets/css/main.css">
+	<link rel="stylesheet" href="/developer/docs/assets/css/main.css">
 	<link rel="apple-touch-icon" sizes="152x152" href="/favicons/apple-touch-icon-152x152.png">
 	<link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon-180x180.png">
 	<link rel="icon" type="image/png" href="/favicons/favicon-16x16.png" sizes="16x16">
@@ -102,11 +102,11 @@
 								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite"><a href="_server_database_.database.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
-						<section class="tsd-index-section tsd-is-inherited">
+						<section class="tsd-index-section tsd-is-inherited tsd-is-private-protected">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_server_database_.database.html#g" class="tsd-kind-icon">g</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="_server_database_.database.html#server" class="tsd-kind-icon">server</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="_server_database_.database.html#staticserver" class="tsd-kind-icon">static<wbr>Server</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -131,7 +131,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="_server_serverconnection_.serverconnection.html">ServerConnection</a>.<a href="_server_serverconnection_.serverconnection.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/t485/t485/blob/d93a9b0/src/js/server/Database.ts#L8">server/Database.ts:8</a></li>
+									<li>Defined in <a href="https://github.com/t485/t485/blob/3fb66f4/src/js/server/Database.ts#L8">server/Database.ts:8</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -144,19 +144,8 @@
 					</ul>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group tsd-is-inherited">
+			<section class="tsd-panel-group tsd-member-group tsd-is-inherited tsd-is-private-protected">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-					<a name="g" class="tsd-anchor"></a>
-					<h3>g</h3>
-					<div class="tsd-signature tsd-kind-icon">g<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
-					<aside class="tsd-sources">
-						<p>Inherited from <a href="_server_serverconnection_.serverconnection.html">ServerConnection</a>.<a href="_server_serverconnection_.serverconnection.html#g">g</a></p>
-						<ul>
-							<li>Defined in <a href="https://github.com/t485/t485/blob/d93a9b0/src/js/server/ServerConnection.ts#L18">server/ServerConnection.ts:18</a></li>
-						</ul>
-					</aside>
-				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
 					<a name="server" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> server</h3>
@@ -164,12 +153,28 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_server_serverconnection_.serverconnection.html">ServerConnection</a>.<a href="_server_serverconnection_.serverconnection.html#server">server</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/t485/t485/blob/d93a9b0/src/js/server/ServerConnection.ts#L17">server/ServerConnection.ts:17</a></li>
+							<li>Defined in <a href="https://github.com/t485/t485/blob/3fb66f4/src/js/server/ServerConnection.ts#L17">server/ServerConnection.ts:17</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
 							<p>The firebase instance.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+					<a name="staticserver" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> static<wbr>Server</h3>
+					<div class="tsd-signature tsd-kind-icon">static<wbr>Server<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> =&nbsp;firebase</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_server_serverconnection_.serverconnection.html">ServerConnection</a>.<a href="_server_serverconnection_.serverconnection.html#staticserver">staticServer</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/t485/t485/blob/3fb66f4/src/js/server/ServerConnection.ts#L22">server/ServerConnection.ts:22</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The firebase namespace, used for static functions.</p>
 						</div>
 					</div>
 				</section>
@@ -186,7 +191,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/t485/t485/blob/d93a9b0/src/js/server/Database.ts#L22">server/Database.ts:22</a></li>
+									<li>Defined in <a href="https://github.com/t485/t485/blob/3fb66f4/src/js/server/Database.ts#L22">server/Database.ts:22</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -280,11 +285,11 @@
 							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
 								<a href="_server_database_.database.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="_server_database_.database.html#g" class="tsd-kind-icon">g</a>
-							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
 								<a href="_server_database_.database.html#server" class="tsd-kind-icon">server</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+								<a href="_server_database_.database.html#staticserver" class="tsd-kind-icon">static<wbr>Server</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="_server_database_.database.html#ref" class="tsd-kind-icon">ref</a>
@@ -361,7 +366,7 @@
 	<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
 </div>
 <div class="overlay"></div>
-<script src="../assets/js/main.js"></script>
+<script src="/developer/docs/assets/js/main.js"></script>
 <script>if (location.protocol == 'file:') document.write('<script src="../assets/js/search.js"><' + '/script>');</script>
 </body>
 </html>

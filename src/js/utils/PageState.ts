@@ -84,7 +84,7 @@ class PageState {
 
                 let href = $(this).attr("href");
                 let base = href.substring(0, (href.indexOf("?") > -1 ? href.indexOf("?") : undefined));
-                let query = Query.set("continue", encodeURIComponent(Query.get("continue")), encodeURIComponent(Query.getString(href)));
+                let query = Query.set("continue", Query.get("continue"), Query.getString(href));
                 let hash = (href.indexOf("#") > -1 ? href.substring(href.indexOf("#")) : "");
 
                 $(this).attr("href", base + query + hash);
@@ -131,12 +131,12 @@ class PageState {
     static initScrollToTop() {
         $(window).scroll(function() {
             if ($(this).scrollTop() > 100) {
-                $(".to-top-btn").fadeIn();
+                $("#to-top-btn").fadeIn();
             } else {
-                $(".to-top-btn").fadeOut();
+                $("#to-top-btn").fadeOut();
             }
         });
-        $(document.body).on("click", ".scroll-to-top", function() {
+        $(document.body).on("click", "#to-top-btn", function() {
 
             $("body,html").animate({
                 scrollTop: 0,

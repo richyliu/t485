@@ -1,6 +1,6 @@
 import { ServerConnection, ServerError } from "./ServerConnection";
 import "firebase/auth";
-import { User as FirebaseUser} from "firebase";
+import * as firebase from "firebase";
 
 /**
  * Authentication Server
@@ -9,14 +9,16 @@ interface AuthError extends ServerError {
 
 }
 
-interface User extends FirebaseUser {
+interface User extends firebase.User {
     emailVerified: boolean;
     uid: string;
     email: string;
     displayName: string | undefined;
 }
 
+interface ActionCodeSettings extends firebase.auth.ActionCodeSettings {
 
+}
 
 class Authenticator extends ServerConnection {
 
@@ -58,6 +60,14 @@ class Authenticator extends ServerConnection {
                 password
         );
 
+    }
+
+    /**
+     * Sends a password reset email.
+     * @param email - The email pertaining to the account of which the password should be reset. The request will be silently ignored if no account exists with that email.
+     */
+    public sendPasswordResetEmail(email: string, actionCodeSettings: ActionCodeSettings) {
+        return this.server.auth().sendPasswordResetEmail(email);
     }
 
     /**

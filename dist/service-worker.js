@@ -38,7 +38,6 @@ for (let i = 100; i <= 900; i += 100) {
         );
     }
 }
-console.log(cacheFiles);
 self.addEventListener("install", function(e) {
     e.waitUntil(
             caches.open("t485").then(function(cache) {
