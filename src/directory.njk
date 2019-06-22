@@ -2,177 +2,184 @@
 {% set path = "directory" %}
 {% extends "base.njk" %}
 {% block styles %}
-<!-- Custom styles for this template -->
-<link href="/css/bootstrap-select.min.css" rel="stylesheet">
-<link type="text/css" rel="stylesheet" href="/css/pages/{{path}}.css">
-<style>
-    .table-wrapper,
-    .row,
-    .box {
-        width: 100%;
-        height: 100%;
-    }
+	<!-- Custom styles for this template -->
+	<link href="/css/bootstrap-select.min.css" rel="stylesheet">
+	<link type="text/css" rel="stylesheet" href="/css/pages/{{ path }}.css">
+	<style>
+		.table-wrapper,
+		.row,
+		.box {
+			width: 100%;
+			height: 100%;
+		}
 
-    #table {
-        display: block !important;
-        width: 100%;
-        overflow: auto;
+		#table {
+			display: block !important;
+			width: 100%;
+			overflow: auto;
 
-    }
-</style>
+		}
+	</style>
 {% endblock %}
 {% block main %}
-<div class="row">
-    <div class="box">
-        <div class="col-lg-12 table-wrapper">
-            <h2 class="primary-heading">
-                Directory
-            </h2>
-            <div id="loading">
-                <p>Loading...</p>
-            </div>
-            <div id="auth" class="hidden">
-                <a class="btn btn-block btn-primary preserve-page" href="/account/login">Login to continue</a>
-            </div>
-            <div id="directory" class="hidden">
-                <div id="directory-list">
-                    <form class="pt-1">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <b>Search:</b>
-                                <input type="text" class="form-control fuzzy-search" id="search"
-                                       placeholder="Search by name, job, phone number, slack username, etc.">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <b>Sort by:</b>
-                                <select class="form-control selectpicker" data-live-search="true" id="sortby-select"
-                                        disabled>
-                                    <option value="LOADING" class="select-loading" selected>Loading...</option>
-                                </select>
-                            </div>
-                            <div class="col-md-4">
-                                <b>Sort order:</b>
-                                <select class="form-control selectpicker" id="sortorder-select" disabled>
-                                    <option value="LOADING" class="select-loading" selected>Loading...</option>
-                                    <option value="asc">Ascending</option>
-                                    <option value="desc">Descending</option>
-                                </select>
-                            </div>
-                            <div class="col-md-4">
-                                <b>Show:</b>
-                                <select class="form-control selectpicker" multiple id="filter-select"
-                                        data-live-search="true" data-actions-box="true" disabled>
-                                    <option value="LOADING" class="select-loading" selected>Loading...</option>
-                                </select>
+	<div class="row">
+		<div class="box">
+			<div class="col-lg-12 table-wrapper">
+				<h2 class="primary-heading">
+					Directory
+				</h2>
+				<div id="loading">
+					<p>Loading...</p>
+				</div>
+				<div id="auth" class="hidden">
+					<a class="btn btn-block btn-primary preserve-page" href="/account/login">Login to continue</a>
+				</div>
+				<div id="directory" class="hidden">
+					<div id="directory-list">
+						<form class="pt-1">
+							<div class="row">
+								<div class="col-md-12">
+									<b>Search:</b>
+									<input type="text" class="form-control fuzzy-search" id="search"
+									       placeholder="Search by name, job, phone number, slack username, etc.">
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-4">
+									<b>Sort by:</b>
+									<select class="form-control selectpicker" data-live-search="true" id="sortby-select"
+									        disabled>
+										<option value="LOADING" class="select-loading" selected>Loading...</option>
+									</select>
+								</div>
+								<div class="col-md-4">
+									<b>Sort order:</b>
+									<select class="form-control selectpicker" id="sortorder-select" disabled>
+										<option value="LOADING" class="select-loading" selected>Loading...</option>
+										<option value="asc">Ascending</option>
+										<option value="desc">Descending</option>
+									</select>
+								</div>
+								<div class="col-md-4">
+									<b>Show:</b>
+									<select class="form-control selectpicker" multiple id="filter-select"
+									        data-live-search="true" data-actions-box="true" disabled>
+										<option value="LOADING" class="select-loading" selected>Loading...</option>
+									</select>
 
-                            </div>
-                        </div>
+								</div>
+							</div>
 
-                    </form>
+						</form>
 
-                    <br>
-                    <p id="modified-settings" class="hidden"> Modified search/sort settings saved in URL. <a href="?#">Reset
-                        to default settings</a>. </p>
-                    <p>Select a row to view all information about that scout.</p>
-                    <div id="table-wrapper">
-                        <div id="table-doublescrollbar-wrapper" class="doublescroll-wrapper doublescroll-x">
-                            <div id="table-doublescrollbar" class="doublescroll doublescroll-x">
-                                &nbsp;
-                            </div>
-                        </div>
-                        <table class="table table-hover" id="table">
-                            <thead id="dir-head">
-                            <tr id="dir-head-inner">
-                            </tr>
-                            </thead>
-                            <tbody id="dir-body" class="list">
-                            <tr id="loading-text">
-                                <td colspan="100" id="loading-text-inner">Loading...</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <p><span class="directoryLoaded-show hidden"><span
-                        class="directoryScoutSize"></span> scouts loaded in <span
-                        class="directoryLoadTime"></span></span></p>
-                <p>View/Edit the troop directory spreadsheet on <a target="_blank" class="link-google-sheet-dir">Google
-                    Sheets</a>.</p>
-            </div>
-        </div>
-    </div>
-</div>
+						<br>
+						<p id="modified-settings" class="hidden"> Modified search/sort settings saved in URL. <a
+									href="?#">Reset
+								to default settings</a>. </p>
+						<p>Select a row to view all information about that scout.</p>
+						<div id="table-wrapper">
+							<div id="table-doublescrollbar-wrapper" class="doublescroll-wrapper doublescroll-x">
+								<div id="table-doublescrollbar" class="doublescroll doublescroll-x">
+									&nbsp;
+								</div>
+							</div>
+							<table class="table table-hover" id="table">
+								<thead id="dir-head">
+								<tr id="dir-head-inner">
+								</tr>
+								</thead>
+								<tbody id="dir-body" class="list">
+								<tr id="loading-text">
+									<td colspan="100" id="loading-text-inner">Loading...</td>
+								</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<p><span class="directoryLoaded-show hidden"><span
+									class="directoryScoutSize"></span> scouts loaded in <span
+									class="directoryLoadTime"></span></span></p>
+					<p>View/Edit the troop directory spreadsheet on <a target="_blank" class="link-google-sheet-dir">Google
+							Sheets</a>.</p>
+				</div>
+			</div>
+		</div>
+	</div>
 {% endblock %}
 {% block scripts %}
-<!--<script src="/fonts/fontawesome/js/fontawesome.js"></script>-->
-<!--<script src="/fonts/fontawesome/js/solid.js"></script>-->
-<!--<script src="/js/list.min.js"></script>-->
-<!--<script src="/js/directory.js"></script>-->
+	<!--<script src="/fonts/fontawesome/js/fontawesome.js"></script>-->
+	<!--<script src="/fonts/fontawesome/js/solid.js"></script>-->
+	<!--<script src="/js/list.min.js"></script>-->
+	<!--<script src="/js/directory.js"></script>-->
 {% endblock %}
 {% block modals %}
-<div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title infoModal-scoutFullName">Error</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="infoModal-scout">
-                    <ul class="list-group list-group-flush" id="infoModal-infoList">
-                        <li class="list-group-item">Patrol: <span class="infoModal-scoutPatrol">N/A</span></li>
-                        <li class="list-group-item">Email: <span class="infoModal-scoutEmail">N/A</span></li>
-                        <li class="list-group-item">Cell Phone: <span class="infoModal-scoutCellPhone">N/A</span></li>
-                        <li class="list-group-item">Home Phone: <span class="infoModal-scoutHomePhone">N/A</span></li>
-                        <li class="list-group-item">Slack: <span class="infoModal-scoutSlack">N/A</span></li>
-                        <li class="list-group-item">Jobs: <span class="infoModal-scoutJobs">N/A</span></li>
-                        <li class="list-group-item">Join date: <span class="infoModal-scoutJoinDate">N/A</span></li>
-                        <li class="list-group-item">Active: <span class="infoModal-scoutActive">N/A</span></li>
-                        <li class="list-group-item">WFA Trained: <span class="infoModal-scoutWFATrained">N/A</span></li>
-                        <li class="list-group-item">
-                            <a class="link infoModal-scoutDownload">Download Contact Card for <span
-                                    class="infoModal-scoutFullName"></span>.</a>
-                        </li>
-                    </ul>
-                </div>
+	<div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title infoModal-scoutFullName">Error</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="infoModal-scout">
+						<ul class="list-group list-group-flush" id="infoModal-infoList">
+							<li class="list-group-item">Patrol: <span class="infoModal-scoutPatrol">N/A</span></li>
+							<li class="list-group-item">Email: <span class="infoModal-scoutEmail">N/A</span></li>
+							<li class="list-group-item">Cell Phone: <span class="infoModal-scoutCellPhone">N/A</span>
+							</li>
+							<li class="list-group-item">Home Phone: <span class="infoModal-scoutHomePhone">N/A</span>
+							</li>
+							<li class="list-group-item">Slack: <span class="infoModal-scoutSlack">N/A</span></li>
+							<li class="list-group-item">Jobs: <span class="infoModal-scoutJobs">N/A</span></li>
+							<li class="list-group-item">Join date: <span class="infoModal-scoutJoinDate">N/A</span></li>
+							<li class="list-group-item">Active: <span class="infoModal-scoutActive">N/A</span></li>
+							<li class="list-group-item">WFA Trained: <span class="infoModal-scoutWFATrained">N/A</span>
+							</li>
+							<li class="list-group-item">
+								<a class="link infoModal-scoutDownload">Download Contact Card for <span
+											class="infoModal-scoutFullName"></span>.</a>
+							</li>
+						</ul>
+					</div>
 
-                <div class="infoModal-father">
-                    <hr>
-                    <h3>Father: <span class="infoModal-fatherFullName"></span></h3>
-                    <ul class="list-group list-group-flush" id="infoModal-fatherInfoList">
-                        <li class="list-group-item">Cell Phone: <span class="infoModal-fatherCellPhone">N/A</span></li>
-                        <li class="list-group-item">Email: <span class="infoModal-fatherEmail">N/A</span></li>
-                        <li class="list-group-item">Slack: <span class="infoModal-fatherSlack">N/A</span></li>
-                        <li class="list-group-item">
-                            <a class="link infoModal-fatherDownload">Download Contact Card for <span
-                                    class="infoModal-fatherFullName"></span>.</a>
-                        </li>
-                    </ul>
-                </div>
+					<div class="infoModal-father">
+						<hr>
+						<h3>Father: <span class="infoModal-fatherFullName"></span></h3>
+						<ul class="list-group list-group-flush" id="infoModal-fatherInfoList">
+							<li class="list-group-item">Cell Phone: <span class="infoModal-fatherCellPhone">N/A</span>
+							</li>
+							<li class="list-group-item">Email: <span class="infoModal-fatherEmail">N/A</span></li>
+							<li class="list-group-item">Slack: <span class="infoModal-fatherSlack">N/A</span></li>
+							<li class="list-group-item">
+								<a class="link infoModal-fatherDownload">Download Contact Card for <span
+											class="infoModal-fatherFullName"></span>.</a>
+							</li>
+						</ul>
+					</div>
 
-                <div class="infoModal-mother">
-                    <hr>
-                    <h3>Mother: <span class="infoModal-motherFullName"></span></h3>
-                    <ul class="list-group list-group-flush" id="infoModal-motherInfoList">
-                        <li class="list-group-item">Cell Phone: <span class="infoModal-motherCellPhone">N/A</span></li>
-                        <li class="list-group-item">Email: <span class="infoModal-motherEmail">N/A</span></li>
-                        <li class="list-group-item">Slack: <span class="infoModal-motherSlack">N/A</span></li>
-                        <li class="list-group-item">
-                            <a class="link infoModal-motherDownload">Download Contact Card for <span
-                                    class="infoModal-motherFullName"></span>.</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <a type="button" class="btn btn-secondary" target="_blank" class="infoModal-editLink">Edit in spreadsheet</a>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
+					<div class="infoModal-mother">
+						<hr>
+						<h3>Mother: <span class="infoModal-motherFullName"></span></h3>
+						<ul class="list-group list-group-flush" id="infoModal-motherInfoList">
+							<li class="list-group-item">Cell Phone: <span class="infoModal-motherCellPhone">N/A</span>
+							</li>
+							<li class="list-group-item">Email: <span class="infoModal-motherEmail">N/A</span></li>
+							<li class="list-group-item">Slack: <span class="infoModal-motherSlack">N/A</span></li>
+							<li class="list-group-item">
+								<a class="link infoModal-motherDownload">Download Contact Card for <span
+											class="infoModal-motherFullName"></span>.</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<a class="btn btn-secondary infoModal-editLink" target="_blank" role="button">Edit in
+						spreadsheet</a>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
 {% endblock %}
