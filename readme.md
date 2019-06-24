@@ -20,5 +20,6 @@ Here's how to get started:
 3. Install the [Gulp](https://gulpjs.com/) CLI: `$ npm install gulp-cli -g` (`sudo` may be required on certain operating systems).
 4. Build a minified production build with `$ gulp build` or run a live dev server (usually at localhost:3000) with `$ gulp watch`.
 
+If you encounter memory errors while building or watching, you may need to run `$ export NODE_OPTIONS=--max_old_space_size=4096` to increase the memory.
 
 We also have an [internal documentation](https://beta.t485.org/developer/docs/) avaliable.
