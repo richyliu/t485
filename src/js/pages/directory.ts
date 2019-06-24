@@ -209,9 +209,12 @@ function loadData(callback: (list: List) => void) {
                         } else if (scout.jobs[0] == "N/A") {
                             value = "N/A";
                         } else if (scout.jobs.length > 1 && (scout.jobs[1] == "N/A" || scout.jobs[1] == "")) {
+                            console.log(scout, 1, scout.jobs[1], scout.jobs[1] == "N/A", scout.jobs[1] == "", scout.jobs.length, (scout.jobs.length > 1 && (scout.jobs[1] == "N/A" || scout.jobs[1] == "")));
                             value = scout.jobs[0];
+                            console.log(value);
                         } else {
-                            value = scout["jobs"].join(", ");
+                            console.log(scout, 2);
+                            value = scout.jobs.join(", ");
                         }
                     } else if (directoryKeymap[index][0] == "scout") {
                         value = toString(scout[directoryKeymap[index][1]]);
@@ -325,8 +328,8 @@ function loadData(callback: (list: List) => void) {
                     }
 
                     $(".infoModal-scoutPatrol").text(readablePatrolMap[scout.patrol]);
-
-                    $(".infoModal-scoutJobs").text((!!scout.jobs || scout.jobs.length < 1) ? scout.jobs.join(", ") : "<i>None</i>");
+                    $(".infoModal-scoutJobsLabelPlural")[scout.jobs.filter(x => x != "N/A" && x != "").length === 1 ? "addClass" : "removeClass"]("hidden");
+                    $(".infoModal-scoutJobs").html(scout.jobs && scout.jobs.filter(x => x != "N/A" && x != "").length > 0 ? HTML.escape(scout.jobs.filter(x => x != "N/A" && x != "").join(", ")) : "<i>None</i>");
                     $(".infoModal-scoutFullName").text(scout.firstName + " " + scout.lastName);
                     $(".infoModal-mother").addClass("hidden");
                     $(".infoModal-father").addClass("hidden");
