@@ -112,6 +112,7 @@ gulp.task("typescript", function(done) {
             let b = browserify({
                 entries: [entry],
                 cache: {},
+                transform: ["babelify"],
                 packageCache: {},
                 ignoreWatch: ["**/node_modules/**"],
                 debug: (env !== "production"),
@@ -205,7 +206,7 @@ gulp.task("html", function() {
                 env: nunjucksEnv,
             }))
             .pipe(rename({
-                extname:".html"
+                extname: ".html",
             }))
             .pipe(env === "production" ? minifyInline() : noop())
             .pipe(env === "production" ? htmlmin(htmlMinOptions) : noop())
@@ -295,7 +296,7 @@ gulp.task("libraries", function() {
         "./node_modules/bootstrap/dist/css/bootstrap.min.css",
         "./node_modules/bootstrap/dist/css/bootstrap.min.css.map",
         "./node_modules/bootstrap-select/dist/css/bootstrap-select.min.css",
-
+        "./node_modules/tinymce/skins/**",
     ])
             .pipe(plumber())
             .pipe(env === "production" ? noop() : cache("libraries-styles"))
@@ -353,8 +354,9 @@ gulp.task("set-silentDocs", function(callback) {
 /**
  * Build to devserver.
  */
-gulp.task("devBuild", gulp.series("set-silentDocs", "clean",
-        gulp.parallel("styles", "assets", "scripts", "typescript", "libraries", "docs"),
+// Run typescript first to conserve memory
+gulp.task("devBuild", gulp.series("set-silentDocs", "clean", "typescript",
+        gulp.parallel("styles", "assets", "scripts", "libraries", "docs"),
         "html",
 ), function(callback) {
     callback();

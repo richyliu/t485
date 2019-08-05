@@ -1,44 +1,124 @@
-{% set page = "Template" %}
+{% set page = "View Event" %}
+{% set path = "event" %}
 {% extends "base.njk" %}
-{% block head_scripts %}
-<script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=1xgvcz8vbo0d8ph1az3aqt4l0ygp01yy831faeohcg0n0rc5"></script>
-<script>
-    tinymce.init({
-        selector: "#content",
-        inline: true,
-        browser_spellcheck: true,
-        plugins: "code",
-        theme: "modern",
-        plugins: ["advlist autolink lists link image charmap print preview", "searchreplace visualblocks fullscreen textcolor colorpicker", "insertdatetime media table contextmenu paste imagetools"],
-        toolbar: "insertfile undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | save",
-    });
-</script>
+{% block styles %}
+	<link href="/css/flatpickr.css" rel="stylesheet">
+	<style>
+		.flatpickr-input[readonly] {
+			background-color: white;
+			color: #495057;
+		}
+
+		.strikethrough {
+			text-decoration: line-through;
+		}
+
+		.spinner {
+			margin: 100px auto;
+			width: 50px;
+			height: 40px;
+			text-align: center;
+			font-size: 10px;
+		}
+
+		.wf-loading #loader {
+			display: block !important;
+		}
+
+		.wf-loading #main {
+			display: none !important;
+		}
+	</style>
 {% endblock %}
 {% block main %}
-<div class="row">
-    <div class="box">
-        <div class="col-lg-12">
-            <h2 class="primary-heading text-center">
-                Rim of the Bay
-            </h2>
-            <p class="text-center">12/18/19 - 12/19/19 &bullet; Pinnacles National Park</p>
-<!--            <p class="text-center"><a href="https://example.com">This event is now over! View photos on Google Photos</a></p>-->
-            <button class="btn btn-block btn-primary">Sign up here!</button>
-            <p class="text-muted text-center">Signups close <a>This Friday</a> (<a class="link">Check who's signed up</a>)</p>
-<!--            <p class="text-muted text-center">Signups open <a class="link" data-toggle="tooltip" title="11/14/18 6:00 AM PST">This Friday</a></p>-->
-            <hr>
-            <h4>Description</h4>
-            <div id="content">Rim of the bay is an annual hiking campout. Earn a patch!</div>
-            <h4>Files</h4>
-            <ul>
-                <li><a class="link">Headcounts</a></li>
-                <li><a class="link">Agenda</a></li>
-                <li><a class="link">Cheat Sheet</a></li>
-            </ul>
-        </div>
-    </div>
-</div>
-{% endblock %}
-{% block scripts %}
 
+	<div class="row">
+		<div class="box">
+			<div class="col-lg-12" id="loader">
+				<div class="spinner">
+					<div class="rect1"></div>
+					<div class="rect2"></div>
+					<div class="rect3"></div>
+					<div class="rect4"></div>
+					<div class="rect5"></div>
+				</div>
+			</div>
+			<div class="col-lg-12 hidden" id="main">
+				<h2 class="primary-heading text-center" id="title">
+
+				</h2>
+				<p class="text-center" id="description"><span id="date"></span> &bullet; <span id="location"></span></p>
+				<!--            <p class="text-center"><a href="https://example.com">This event is now over! View photos on Google Photos</a></p>-->
+				<button class="btn btn-block btn-primary">Sign up here!</button>
+				<p class="text-muted text-center">Signups close <a>This Friday</a> (<a class="link">Check who's signed
+						up</a>)</p>
+				<!--            <p class="text-muted text-center">Signups open <a class="link" data-toggle="tooltip" title="11/14/18 6:00 AM PST">This Friday</a></p>-->
+				<hr>
+				<h4>Description</h4>
+				<div id="content"></div>
+				<h4>Files</h4>
+				<ul id="files">
+
+					<li><span class="link strikethrough">Useless File</span> (Will be removed when published. <a
+								class="link">Undo</a>)
+					</li>
+					<li><a href="#addFileModal" data-toggle="modal">Add File</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+{% block modal %}
+	<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="editModalLabel">Edit title and date</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div>
+						<label for="editModal-title">Title:</label>
+						<input class="form-control" id="editModal-title" value="Rim of the Bay">
+					</div>
+					<div class="pt-3">
+						<label for="editModal-date">Date:</label>
+						<input class="form-control" id="editModal-date" value="12/18/19 to 12/19/19">
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="addFileModal" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="editModalLabel">Add File</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div>
+						<label for="editModal-title">File name:</label>
+						<input class="form-control" id="editModal-title" placeholder=""></div>
+					<div class="pt-3">
+						<label for="editModal-date">File link:</label>
+						<input class="form-control" id="addModal-link" placeholder="Include http:// or https://">
+					</div>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Add file</button>
+				</div>
+			</div>
+		</div>
+	</div>
 {% endblock %}

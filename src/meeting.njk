@@ -1,30 +1,34 @@
-{% set page = "Template" %}
+{% set page = "Meeting Viewer" %}
+{% set path = "meeting" %}
 {% extends "base.njk" %}
 {% block main %}
 	<div class="row">
 		<div class="box">
+
 			<div class="col-lg-12">
 				<h2 class="primary-heading text-center">
-					Troop Meeting: 12/1/19
+					Troop Meeting: 12/14/15
 				</h2>
 
 				<hr>
-				<h4>Quick Links</h4>
-				<ul>
-					<li><a class="link">Jump to Meeting Minutes</a> (<a class="link">View externally</a>)</li>
-					<li><a class="link">Jump to Agenda</a> (<a class="link">View externally</a>)</li>
-					<li><a class="link">Jump to Attendance</a> (<a class="link">View externally</a>)</li>
 
-				</ul>
-				<h4>Meeting Minutes</h4>
-				<p>
-					- heoa
-				</p>
-				<h4>Agenda</h4>
-				<p>
-					- Blax
-				</p>
-				<h4>Attendance</h4>
+				<div class="row">
+					<div class="col-3">
+						<div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+							<a class="nav-link active" id="v-pills-mm-tab" data-toggle="pill" href="#v-pills-mm" role="tab" aria-controls="v-pills-mm" aria-selected="true">Meeting Minutes</a>
+							<a class="nav-link" id="v-pills-hc-tab" data-toggle="pill" href="#v-pills-hc" role="tab" aria-controls="v-pills-hc" aria-selected="false">Attendance</a>
+							<a class="nav-link" id="v-pills-ag-tab" data-toggle="pill" href="#v-pills-ag" role="tab" aria-controls="v-pills-ag" aria-selected="false">Agenda</a>
+						</div>
+					</div>
+					<div class="col-9">
+						<div class="tab-content" id="v-pills-tabContent">
+							<div class="tab-pane fade show active" id="v-pills-mm" role="tabpanel" aria-labelledby="v-pills-mm-tab">MM</div>
+							<div class="tab-pane fade" id="v-pills-hc" role="tabpanel" aria-labelledby="v-pills-hc-tab">HC</div>
+							<div class="tab-pane fade" id="v-pills-ag" role="tabpanel" aria-labelledby="v-pills-ag-tab">AG</div>
+						</div>
+					</div>
+				</div>
+
 
 			</div>
 		</div>
