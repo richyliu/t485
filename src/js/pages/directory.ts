@@ -129,7 +129,7 @@ function getSlackID(username: string, slackToken: string) {
             let data = snapshot.val();
             //Also encodes period
             let encodedUsername = encodeURIComponent(username).replace(/\./g, "%2E");
-
+            console.log(encodedUsername, data);
             if (data != null && data[encodedUsername] != null && data[encodedUsername] != undefined) {
                 resolve(data[encodedUsername]);
                 return;
@@ -159,6 +159,7 @@ function getSlackID(username: string, slackToken: string) {
                     }
                     db.ref("/directory/slackUID/").update(updates);
                 }).fail(function(err) {
+                    console.log(err);
                     reject("AJAX Error");
                 });
             }
