@@ -11,12 +11,12 @@ class PageState {
 
     static initFonts() {
 
-        WebFont.load({
-            custom: {
-                families: ["Lora", "Raleway"],
-                urls: ["/fonts/typeface-lora/index.css", "/fonts/typeface-raleway/index.css"],
-            },
-        });
+        // WebFont.load({
+        //     custom: {
+        //         families: ["Lora", "Raleway"],
+        //         urls: ["/fonts/typeface-lora/index.css", "/fonts/typeface-raleway/index.css"],
+        //     },
+        // });
     }
 
     static initOfflinePersistence() {
