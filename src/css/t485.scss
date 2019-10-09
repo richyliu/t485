@@ -136,3 +136,19 @@ $footerHeight: 118px;
        -webkit-transform: scaleY(1.0);
      }
 }
+
+.wf-loading-show {
+  display:none;
+}
+.wf-loading-hide {
+  display:block;
+}
+
+.wf-loading  {
+  .wf-loading-show {
+    display:block;
+  }
+  .wf-loading-hide {
+    display:none;
+  }
+}
