@@ -5,66 +5,16 @@
 
 {% block main %}
 
-    <div class="container" id="loading-login">
-        <div class="row">
-            <div class="box col-xs-12">
-                <hr>
-                <h2 class="intro-text text-center">Loading...</h2>
-                <hr>
-                <p>Loading...</p>
-            </div>
+
+<div class="container" id="loading-login">
+    <div class="row">
+        <div class="box col-xs-12">
+            <hr>
+            <h2 class="intro-text text-center">Directory</h2>
+            <hr>
+            <a role="button" class="btn btn-block btn-primary" targer="_blank" href="https://directory.t485.org">Launch Directory</a>
         </div>
     </div>
-
-    <div class="container" id="content">
-        <div class="row" id="search">
-            <div class="box col-xs-12">
-                <hr>
-                <h2 class="intro-text text-center">Search Directory</h2>
-                <hr>
-                <p>Click on the name for more information.</p>
-                <div class="input-group col-xs-12">
-                    <input type="text" id="search-query" class="form-control" placeholder="Type a name...">
-                    <span class="input-group-btn" style="vertical-align: top">
-                        <button class="btn btn-default" type="button" id="search-btn">
-                            <i class="glyphicon glyphicon-search"></i>
-                        </button>
-                    </span>
-                </div>
-                <p style="display: none" class="loading">Loading...</p>
-                <table class="table" id="results" style="display: none;">
-                    <thead>
-                        <tr>
-                            <th class="col-xs-1">Name</th>
-                            <th class="col-xs-1">Cell Phone</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-                <p id="no-result" style="display: none;"></p>
-                <div id="detail" style="display: none;"></div>
-                <p class="loading" style="display: none;">Loading...</p>
-            </div>
-        </div>
-
-        <div class="row" id="spreadsheet-confirm">
-            <div class="box">
-                <button type="button" id="spreadsheet-confirm-btn" class="btn btn-default">Show patrol spreadsheets</button>
-            </div>
-        </div>
-
-        <div class="row" id="spreadsheet" style="display: none;">
-            <div class="box" id="spreadsheet-content">
-                
-            </div>
-        </div>
-</div>
 </div>
 
 {% endblock %}
-
- {% block js %}
-<script src="js/tabletop.min.js"></script>
-<script src="js/directory.js"></script>
-
- {% endblock %}   
