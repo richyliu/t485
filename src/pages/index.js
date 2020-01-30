@@ -28,6 +28,7 @@ const IndexPage = () => (
             </ListGroup.Item>
             <ListGroup.Item
               action
+
               href="https://react-bootstrap.github.io/"
               target="_blank"
             >
@@ -60,7 +61,79 @@ const IndexPage = () => (
           <p>
             For more documentation on these packages and how they work, please
             refer to the pages linked in the list above.
-          </p>
+            For more documentation on these packages and how they work, please
+            refer to the pages linked in the list above.
+          </p><p>
+          For more documentation on these packages and how they work, please
+          refer to the pages linked in the list above.
+          For more documentation on these packages and how they work, please
+          refer to the pages linked in the list above.
+        </p><p>
+          For more documentation on these packages and how they work, please
+          refer to the pages linked in the list above.
+          For more documentation on these packages and how they work, please
+          refer to the pages linked in the list above.
+        </p><p>
+          For more documentation on these packages and how they work, please
+          refer to the pages linked in the list above.
+          For more documentation on these packages and how they work, please
+          refer to the pages linked in the list above.
+        </p><p>
+          For more documentation on these packages and how they work, please
+          refer to the pages linked in the list above.
+          For more documentation on these packages and how they work, please
+          refer to the pages linked in the list above.
+        </p><p>
+          For more documentation on these packages and how they work, please
+          refer to the pages linked in the list above.
+          For more documentation on these packages and how they work, please
+          refer to the pages linked in the list above.
+        </p><p>
+          For more documentation on these packages and how they work, please
+          refer to the pages linked in the list above.
+          For more documentation on these packages and how they work, please
+          refer to the pages linked in the list above.
+        </p><p>
+          For more documentation on these packages and how they work, please
+          refer to the pages linked in the list above.
+          For more documentation on these packages and how they work, please
+          refer to the pages linked in the list above.
+        </p><p>
+          For more documentation on these packages and how they work, please
+          refer to the pages linked in the list above.
+          For more documentation on these packages and how they work, please
+          refer to the pages linked in the list above.
+        </p><p>
+          For more documentation on these packages and how they work, please
+          refer to the pages linked in the list above.
+          For more documentation on these packages and how they work, please
+          refer to the pages linked in the list above.
+        </p><p>
+          For more documentation on these packages and how they work, please
+          refer to the pages linked in the list above.
+          For more documentation on these packages and how they work, please
+          refer to the pages linked in the list above.
+        </p><p>
+          For more documentation on these packages and how they work, please
+          refer to the pages linked in the list above.
+          For more documentation on these packages and how they work, please
+          refer to the pages linked in the list above.
+        </p><p>
+          For more documentation on these packages and how they work, please
+          refer to the pages linked in the list above.
+          For more documentation on these packages and how they work, please
+          refer to the pages linked in the list above.
+        </p><p>
+          For more documentation on these packages and how they work, please
+          refer to the pages linked in the list above.
+          For more documentation on these packages and how they work, please
+          refer to the pages linked in the list above.
+        </p><p>
+          For more documentation on these packages and how they work, please
+          refer to the pages linked in the list above.
+          For more documentation on these packages and how they work, please
+          refer to the pages linked in the list above.
+        </p>
         </Col>
       </Row>
     </Container>

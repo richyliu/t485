@@ -7,10 +7,10 @@ const CustomNavbar = ({ pageInfo }) => {
   console.log(pageInfo)
   return (
     <>
-      <Navbar variant="dark" expand="lg" id="site-navbar">
+      <Navbar bg="light" expand="lg" id="site-navbar" style={{"box-shadow": "0 2px 2px -2px rgba(0,0,0,.2)"}}>
         {/* <Container> */}
         <Link to="/" className="link-no-style">
-          <Navbar.Brand as="span">Gatsby React Bootstrap</Navbar.Brand>
+          <Navbar.Brand as="span">BSA Troop 485</Navbar.Brand>
         </Link>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
