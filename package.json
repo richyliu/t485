@@ -36,8 +36,8 @@
   },
   "dependencies": {
     "gulp-cli": "^2.0.1",
-    "npm": "^6.6.0",
-    "snyk": "^1.230.5"
+    "npm": "^6.13.4",
+    "snyk": "^1.288.0"
   },
   "snyk": true
 }
