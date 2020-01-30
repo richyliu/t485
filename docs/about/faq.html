@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+
+
+    <title>Troop 485 | FAQ</title>
+    <meta name="google-site-verification" content="CSqeLDMZGRzv3kSsdNW-mMvhz91q5bcVRoWs_gcXnno" />  
+<script src="https://www.gstatic.com/firebasejs/4.10.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyB-ly8ax35aWTAGhX2UDVuYxPSDlAU8kMk",
+    authDomain: "t485-main.firebaseapp.com",
+    databaseURL: "https://t485-main.firebaseio.com",
+    projectId: "t485-main",
+    storageBucket: "t485-main.appspot.com",
+    messagingSenderId: "368513727602"
+  };
+  firebase.initializeApp(config);
+</script> 
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Josefin+Slab:100,300,400,600,700,100italic,300italic,400italic,600italic,700italic">
+    <link rel="stylesheet" href="/css/styles.min.css">
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Join Troop 485 in Cupertino to experience an excellent Scouting experience">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <meta name="google-signin-client_id" content="154157170484-81ud6v3rfber96pekq75q86igmf1fsif.apps.googleusercontent.com">
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="152x152" href="/favicons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicons/favicon-16x16.png" sizes="16x16">
+
+    <!--<link rel="manifest" href="/manifest.json">-->
+
+    <script>
+        try {
+            localStorage.setItem('foo', 'bar');
+        }
+        catch (e) {
+            if (e.message === 'The quota has been exceeded.') {
+                // using Safari(desktop & iOS) or Chrome(iOS) w/ private, localStorage not supported
+                // firebase will throw error, so better to alert user now
+                alert('Private browsing is not supported!');
+            }
+            throw '';
+        }
+    </script>
+    <style>
+        #index-img-1 {
+            width: 450px;
+        }
+
+        #index-img-3,
+        #index-img-4,
+        #index-img-5 {
+            width: 270px;
+            height: 120px;
+        }
+    </style>
+
+</head>
+
+<body>
+    
+    <img src="/img/header.gif" id="header" alt="Troop 485 banner" width="990" height="151">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <!-- navbar-brand is hidden on larger screens, but visible when the menu is collapsed -->
+                <a class="navbar-brand" href="/">T485</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    <li>
+                        <a href="/calendar.html">Calendar</a>
+                    </li>
+                    <li>
+                        <a href="/directory.html">Directory </a>
+                    </li>
+
+                    <li>
+                        <a href="/new-scout.html">New Scouts</a>
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="collapse" role="button" aria-haspopup="true" aria-expanded="false">
+                            Resources
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="/resources/files.html">Files</a>
+                            </li>
+                            <li>
+                                <a href="/resources/event-pages.html">Event Pages</a>
+                            </li>
+                            <li>
+                                <a href="/resources/meeting-minutes.html">Meeting Minutes/Reflections</a>
+                            </li>
+                            <li>
+                                <a href="/resources/pictures.html">Pictures</a>
+                            </li>
+                            <li>
+                                <a href="https://ls.t485.org/">Link Shortener</a>
+                            </li>
+                            <li>
+                                <a href="/resources/app-download.html">Download App</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="collapse" role="button" aria-haspopup="true" aria-expanded="false">
+                            About
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="/about/faq.html">FAQ</a>
+                            </li>
+                            <li>
+                                <a href="/about/merit-badges.html">Merit Badges</a>
+                            </li>
+                            <li>
+                                <a href="/about/eagle.html">Path to Eagle</a>
+                            </li>
+                            <li>
+                                <a href="/about/smc.html">SMC &amp; BOR</a>
+                            </li>
+                            <li>
+                                <a href="/about/plc.html">PLC</a>
+                            </li>
+                            <li>
+                                <a href="/about/troop-info.html">Troop Information</a>
+                            </li>
+                            <li>
+                                <a href="/about/troop-jobs.html">Troop Jobs</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li id="nav-user-status">
+                        <a onclick="window.location.href = '/logout.html?redir=' + encodeURIComponent(window.location.pathname + window.location.search + window.location.hash);">Logout</a>
+                    </li>
+
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+    
+    <div id="alertBox"></div>
+    <a class="toTop" href="#"></a>
+    
+<div class="container">
+        <div class="row">
+            <div class="box">
+                <h2>Faq</h2>
+
+                <div class="panel-group" id="accordion">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">1. How do I join?</a>
+                            </h4>
+                        </div>
+                        <div id="collapse1" class="panel-collapse collapse">
+                            <div class="panel-body">See the <a href="new-scout.html">New Scout</a> page of this website.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">2. How old (or young) can a boy be to join Troop 485?</a>
+                            </h4>
+                        </div>
+                        <div id="collapse2" class="panel-collapse collapse">
+                            <div class="panel-body">Boy Scouting is for boys 11 to 17 years of age. Boys also may become Boy Scouts if they have earned the Cub Scouting Arrow of Light Award and are at least 10 years old or have completed the fifth grade and are at least 10 years
+                                old.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">3. Must I be a U.S. citizen to join Troop 485?</a>
+                            </h4>
+                        </div>
+                        <div id="collapse3" class="panel-collapse collapse">
+                            <div class="panel-body">Citizenship is not required of youth or adult members of Troop 485.</div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">4. Where is the meeting location?</a>
+                            </h4>
+                        </div>
+                        <div id="collapse4" class="panel-collapse collapse">
+                            <div class="panel-body">Our regular meeting location is Home of Christ Church in Cupertino (<a href="https://www.google.com/maps?hl=en&q=HOC5" target="_blank">10340 Bubb Rd, Cupertino</a>)</div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse5">5. How often does the troop have an outing?</a>
+                            </h4>
+                        </div>
+                        <div id="collapse5" class="panel-collapse collapse">
+                            <div class="panel-body">We normally have 8-11 outings a year. Outings could be hiking, camping, rafting, archery, or training trip.</div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse6">6. Must parents attend meetings?</a>
+                            </h4>
+                        </div>
+                        <div id="collapse6" class="panel-collapse collapse">
+                            <div class="panel-body">Parental involvement is very important and all meetings should be open to your participation.</div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse7">7. What is a COH?</a>
+                            </h4>
+                        </div>
+                        <div id="collapse7" class="panel-collapse collapse">
+                            <div class="panel-body">A COH (Court of Honor) is Troop 485’s quarterly meeting to honor the achievements of our Scouts and adult leaders. During this meeting, Scouts are awarded rank advancement and merit badges. We encourage each Scout’s entire
+                                family to attend this meeting.</div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse8">8. What is the buddy system, and why is it necessary?</a>
+                            </h4>
+                        </div>
+                        <div id="collapse8" class="panel-collapse collapse">
+                            <div class="panel-body">The buddy system is a safety routine that calls for a Scout to be paired with a buddy whenever he participates in Scouting activities such as aquatics, cycling, or hiking, and when he meets with his merit badge counselor. It
+                                is a way for Scouts to look after one another, stay safe, and have more fun. During meetings with adult leaders, a Scout’s buddy can be another Scout or friend, or a relative.</div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse9">9. What is an SPL?</a>
+                            </h4>
+                        </div>
+                        <div id="collapse9" class="panel-collapse collapse">
+                            <div class="panel-body">The Senior Patrol Leader is the youth head of the troop. All other youth positions report to him, directly or indirectly. He is elected by the troop’s youth members as a whole, to serve a 6 month term.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse10">10. Where can I learn all the scout knots?</a>
+                            </h4>
+                        </div>
+                        <div id="collapse10" class="panel-collapse collapse">
+                            <div class="panel-body">You will learn all the scout knots as well as other scouting skills in our various training programs including the annual TLT (Troop Leader Training).</div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse11">11. Can adult women be Boy Scout leaders</a>
+                            </h4>
+                        </div>
+                        <div id="collapse11" class="panel-collapse collapse">
+                            <div class="panel-body">Yes. Every leadership position is open to adult women. In fact, more than one-third of Scout volunteers are women.</div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse12">12. How do I tie a square knot?</a>
+                            </h4>
+                        </div>
+                        <div id="collapse12" class="panel-collapse collapse">
+                            <div class="panel-body">To tie a square knot, take two ropes and cross them (A over B, where A is the end of one rope, and B is the end of another) to form a half knot. Cross them a second time (A over B again) and pull the ends tight to form the
+                                Square Knot. For more info on all scouting knots, see <a href="http://www.animatedknots.com/indexscouting.php" target="animatedknots">animated scouting knots - scounting section</a>, to see just the square knot, go to
+                                <a
+                                    href="http://www.animatedknots.com/reef/index.php?Categ=scouting" target="animatedknots">the animated knots page on the square knot</a>, to how to tie most of the knots needed for rank requirements or merit badges, go to the <a href="http://www.animatedknots.com/usesscouting.php?Categ=scouting" target="animatedknots">animated knots page for scouting requirements</a>.</div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse13">13. WHere can I get scouting supplies?</a>
+                            </h4>
+                        </div>
+                        <div id="collapse13" class="panel-collapse collapse">
+                            <div class="panel-body">You can buy them at the Silicon Valley Montery Bay Council Scout Shop at <a href="https://www.google.com/maps/dir/''/970+W+Julian+St,+San+Jose,+CA+95126/@37.3332331,-121.9795888,12z/data=!3m1!4b1!4m8!4m7!1m0!1m5!1m1!1s0x808fcb677d3701a5:0xb30b2e1b3cb65696!2m2!1d-121.9095488!2d37.3332537">970 West Julian Street, San Jose, CA 95126</a>.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="row">
+            <div class="box col-xs-12">
+                <hr>
+                <h2 class="intro-text text-center">Ask a question</h2>
+                <hr>
+                <form class="feedback-form" role="form">
+                    <div class="input-group">
+                        <label class="control-label" for="feedback-name">Name:</label>
+                        <input type="text" id="feedback-name" class="form-control" required pattern="[a-zA-Z]{2,20} [a-zA-Z]{2,20}" title="Please enter your first and last name">
+                    </div>
+                    <div class="input-group">
+                        <label class="control-label" for="feedback-email">Email:</label>
+                        <input type="email" id="feedback-email" class="form-control">
+                    </div>
+                    <div class="input-group">
+                        <label class="control-label" for="feedback-text">Question:</label>
+                        <textarea id="feedback-text" class="form-control" rows="3" required></textarea>
+                    </div>
+                    <br>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </form>
+                <div class="thank-you" style="display: none;">
+                    <p>Thank you for your question. We will try to get back to you as soon as possible</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    
+    <footer>
+        <div class="container">
+            <div class="box">
+                <div class="col-lg-12 text-center">
+                    <p>Copyright &copy; 2006-2019 Troop 485, Silicon Valley Monterey Bay Council, Boy Scouts of America.</p>
+
+                </div>
+            </div>
+        </div>
+    </footer>
+     
+    <script src="/js/scripts.min.js"></script>
+       
+<script>
+            /* global firebase $ */
+            // Initialize Firebase
+            let config = {
+                apiKey: "AIzaSyDVH7MsGKQ1i1oHF0oCN2-zL-R2qI4D3JA",
+                authDomain: "t485auth.firebaseapp.com",
+                databaseURL: "https://t485auth.firebaseio.com",
+                storageBucket: "t485auth.appspot.com",
+            };
+            firebase.initializeApp(config);
+
+            $("form").submit(() => {
+                firebase.database().ref().push({
+                    "name": $("#feedback-name").val(),
+                    "email": $("#feedback-email").val(),
+                    "text": $("#feedback-text").val()
+                });
+                $(".feedback-form").hide();
+                $(".thank-you").show();
+                return false;
+            });
+        </script> 
+
+
+</body>
+
+</html>

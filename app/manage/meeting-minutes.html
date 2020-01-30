@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+
+
+    <title>Manage Meeting Minutes - Troop 485</title>
+
+    <script src="/js/combined.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        let config = {
+            apiKey: "AIzaSyAvhRMDTAxHRqIM0-RpHxPjZtMn7S_H7K4",
+            authDomain: "t485.firebaseapp.com",
+            databaseURL: "https://t485.firebaseio.com",
+            storageBucket: "project-2556333409340273878.appspot.com",
+            messagingSenderId: "510743665020"
+        };
+        firebase.initializeApp(config);
+    </script>
+    <script src="/js/t485.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/t485.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Josefin+Slab:100,300,400,600,700,100italic,300italic,400italic,600italic,700italic">
+    <link rel="stylesheet" href="/css/bootstrap-datepicker.min.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Join Troop 485 in Cupertino to experience an excellent Scouting experience">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <meta name="google-signin-client_id" content="154157170484-81ud6v3rfber96pekq75q86igmf1fsif.apps.googleusercontent.com">
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="152x152" href="/favicons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicons/favicon-16x16.png" sizes="16x16">
+
+    <link rel="manifest" href="/manifest.json">
+    <style>
+        .hidden {
+            display: none;
+        }
+    </style>
+    <script>
+        try {
+            localStorage.setItem('foo', 'bar');
+        }
+        catch (e) {
+            if (e.message === 'The quota has been exceeded.') {
+                // using Safari(desktop & iOS) or Chrome(iOS) w/ private, localStorage not supported
+                // firebase will throw error, so better to alert user now
+                alert('Private browsing is not supported!');
+            }
+            throw '';
+        }
+    </script>
+
+</head>
+
+<body>
+    <img src="/img/header.gif" id="header" alt="Troop 485 banner" width="990" height="151">
+    <!-- Navigation -->
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+                <!-- navbar-brand is hidden on larger screens, but visible when the menu is collapsed -->
+                <a class="navbar-brand" href="/">T485</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    <li>
+                        <a href="/calendar.html">Calendar</a>
+                    </li>
+                    <li>
+                        <a href="/directory.html">Directory </a>
+                    </li>
+
+                    <li>
+                        <a href="/new-scout.html">New Scouts</a>
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        Resources <span class="caret"></span>
+                    </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/resources/files.html">Files</a></li>
+                            <li><a href="/resources/event-pages.html">Event Pages</a></li>
+                            <li><a href="/resources/meeting-minutes.html">Meeting Minutes/Reflections</a></li>
+                            <li><a href="/resources/pictures.html">Pictures</a></li>
+                            <li><a href="https://ls.t485.org/">Link Shortener</a></li>
+                            <li><a href="/resources/app-download.html">Download App</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        About <span class="caret"></span>
+                    </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/about/faq.html">FAQ</a></li>
+                            <li><a href="/about/merit-badges.html">Merit Badges</a></li>
+                            <li><a href="/about/eagle.html">Path to Eagle</a></li>
+                            <li><a href="/about/smc.html">SMC & BOR</a></li>
+                            <li><a href="/about/plc.html">PLC</a></li>
+                            <li><a href="/about/troop-info.html">Troop Information</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div id="alertBox"></div>
+    
+    <a class="toTop" href="#"></a>
+    
+    <div class="container" id="content">
+
+        <div class="row" id="authorizing-box">
+            <div class="box">
+                <div class="col-lg-12">
+                    <!-- WORK IN PROGRESS -->
+                    <hr>
+                    <h2 class="intro-text text-center">Manage Meeting Minutes</h2>
+                    <hr>
+                </div>
+                <div class="col-md-12">
+                    <p id="authorizing">Authorizing...</p>
+                    <p id="not-logged-in" class="hidden">Please <a href="/login.html?redir=%2Fmanage%2F">login</a> to continue.</p>
+                    <p id="not-approved" class="hidden">Sorry, but you are not authorized to view this page.</p>
+
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="row hidden" id="manage">
+            <div class="box">
+                <div class="col-lg-12">
+                    <hr>
+                    <h2 class="intro-text text-center">Manage Meeting Minutes</h2>
+                    <hr>
+                </div>
+                <div class="col-md-12">
+                    <button class="btn btn-default" onclick="window.location.href = 'logout.html?redir=files.html'">Log out</button>
+
+                    <b>Add Meeting Minutes:</b>
+                    <label for="date">Date:</label>
+                    <input type="text" id="date" class="form-control">
+                    <label for="tmm">Troop Meeting Minutes link:</label>
+                    <input id="tmm" type="text" class="form-control">
+                    <label for="plcmm">PLC Meeting Minutes link:</label>
+                    <input id="plcmm" type="text" class="form-control">
+                    <label for="hc">Headcounts link:</label>
+                    <input id="hc" type="text" class="form-control">
+                    <button id="add-mm-btn" class="btn btn-primary form-control">Add Meeting Minutes</button>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="row hidden" id="done">
+            <div class="box">
+                <div class="col-lg-12">
+                    <hr>
+                    <h2 class="intro-text text-center">Success!</h2>
+                    <hr>
+                </div>
+                <div class="col-md-12">
+                    <p>Your meeting minutes have been successfully added. <a onclick="window.location.href = window.location.href">Click here to add more meeting minutes</a></p>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+    <footer>
+        <div class="container">
+            <div class="box">
+                <div class="col-lg-12 text-center">
+                    <p>Copyright &copy; 2006-2018 Troop 485, Silicon Valley Monterey Bay Council, Boy Scouts of America.</p>
+
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="/js/bootstrap-datepicker.min.js"></script>
+    <script>
+        /* global firebase $ */
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                // User is signed in.
+                firebase.database().ref("/managers/meeting-minutes/").once("value").then((snapshot) => {
+                    let data = snapshot.val();
+                    for (let d of data) {
+                        if (user.uid === d) {
+                            $("#authorizing-box").addClass("hidden");
+                            $("#manage").removeClass("hidden");
+                            $('#date').datepicker();
+                            $("#add-mm-btn").click(() => {
+
+                                if ($("#tmm").val() !== "") {
+                                    firebase.database().ref("/meetingminutes/").push({
+                                        "date": $("#date").val(),
+                                        "year": $("#date").val().split("/")[2],
+                                        "month": ["January", "February", "March", "April", "May", "June",
+                                            "July", "August", "September", "October", "November", "December"
+                                        ][parseInt($("#date").val().split("/")[0], 10)],
+                                        "link": $("#tmm").val(),
+                                        "type": "Troop Meeting Minutes"
+                                    });
+                                }
+                                if ($("#plcmm").val() !== "") {
+                                    firebase.database().ref("/meetingminutes/").push({
+                                        "date": $("#date").val(),
+                                        "year": $("#date").val().split("/")[2],
+                                        "month": ["January", "February", "March", "April", "May", "June",
+                                            "July", "August", "September", "October", "November", "December"
+                                        ][parseInt($("#date").val().split("/")[0], 10)],
+                                        "link": $("#plcmm").val(),
+                                        "type": "PLC Meeting Minutes"
+                                    });
+                                }
+                                if ($("#hc").val() !== "") {
+                                    firebase.database().ref("/meetingminutes/").push({
+                                        "date": $("#date").val(),
+                                        "year": $("#date").val().split("/")[2],
+                                        "month": ["January", "February", "March", "April", "May", "June",
+                                            "July", "August", "September", "October", "November", "December"
+                                        ][parseInt($("#date").val().split("/")[0], 10)],
+                                        "link": $("#hc").val(),
+                                        "type": "Headcounts"
+                                    });
+                                }
+
+
+                            });
+
+                            return;
+                        }
+                    }
+                    $("#authorizing").addClass("hidden");
+                    $("#not-approved").removeClass("hidden");
+                });
+            }
+            else {
+                // No user is signed in.
+                $("#authorizing").addClass("hidden");
+                $("#not-logged-in").removeClass("hidden");
+            }
+        });
+    </script>
+
+</body>
+
+</html>

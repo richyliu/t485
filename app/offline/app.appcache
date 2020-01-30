@@ -1,0 +1,18 @@
+CACHE MANIFEST
+# 2017-12-23:v4
+
+CACHE:
+index.html
+directory.html
+events.html
+main.css
+js/my-app.js
+js/firebase.min.js
+js/moment.js
+../js/tabletop.min.js
+bower_components/Framework7/dist/js/framework7.min.js
+bower_components/Framework7/dist/css/framework7.ios.min.css
+bower_components/Framework7/dist/css/framework7.ios.colors.min.css
+
+NETWORK:
+*

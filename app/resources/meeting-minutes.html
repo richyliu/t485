@@ -1,0 +1,251 @@
+{% set title="Troop 485 | Meeting Minutes" %}
+{% set basepath="../" %}
+
+{% extends "base.html" %}
+
+{% block main %}
+<div class="container" id="content">
+
+        <div class="row">
+            <div class="box col-sm-12">
+                <div class="col-lg-12">
+                    <hr>
+                    <h2 class="intro-text text-center">Meeting Minutes</h2>
+                    <hr>
+                </div>
+                <div class="col-lg-12">
+
+
+
+
+                    <div id="main">
+
+                        <ul class="list list-group" id="mm-list">
+                                <li>2/19/18 <a onclick="openModal(this, 'https://docs.google.com/document/d/1PyI9a6Sz2GTMoKEpvMPNtWwNQV7Da1VhVVRCUmiXgus/mobilebasic')">Troop Meeting Minutes</a>,
+                                    <a onclick="openModal(this, 'https://docs.google.com/document/d/11idWfFJvz-JRSVp6Z_6Xx76AkPQOChtezRLqkd749fs/mobilebasic')">PLC Meeting Minutes</a>,
+                                    <a href="https://docs.google.com/spreadsheets/d/1zXEjZ46s9_oH1ecNyEil6lRKOplS2jFt8A7l69C1Axk/edit#gid=668569925" target="_blank">Headcounts</a></li>
+                                    <li>2/5/18 <a onclick="openModal(this, 'https://docs.google.com/document/d/1DEg0vkZ1Zj2nT457Io9SZ30Hry299KRRYx41ggiCzw4/mobilebasic')">Troop Meeting Minutes</a>,
+                                        <a onclick="openModal(this, 'https://docs.google.com/document/d/1A2EyhHnTKwqzlpCdVP7p_uqjIj_hL2jGLF8z72Epg7s/mobilebasic')">PLC Meeting Minutes</a>,
+                                        <a href="https://docs.google.com/spreadsheets/d/1zXEjZ46s9_oH1ecNyEil6lRKOplS2jFt8A7l69C1Axk/edit#gid=0" target="_blank">Headcounts</a></li>
+                                   
+                            </ul>
+
+                    </div>
+
+                    <div class="accordion-group">
+                        <button class="viewmore btn btn-default" data-toggle="collapse" href="#collapse" onclick="if(this.innerHTML === 'Show More') {this.innerHTML = 'Show Less'} else {this.innerHTML = 'Show More'}">Show More</button>
+                        <div id="collapse" class="accordion-body collapse">
+                            <div class="accordion-inner">
+                                <p>
+                                    <a onclick="openModal(this, 'https://docs.google.com/document/d/10kfQKMtf4grqz1r7bveeUNaQ7dS27czRxgfPiJ5HdKo/mobilebasic')">Troop Meeting Headcounts 2/20/2017</a><br>
+                                    <a href="https://docs.google.com/spreadsheets/d/1zFwKPGARFbVPxOO5U4CKolL_8qZPDTZgyVuO1K6ev8Q" target="_blank">PLC Headcounts 8/24/2015 - 4/25/2016</a><br>
+                                    <a href="https://docs.google.com/spreadsheets/d/1EF8Bbf0o9GymAdh7kVYLkfuXKHQLaGV-hgs1fIDlM7Y" target="_blank">PLC Headcounts 4/25/2016 - 1/30/17</a><br>
+                                    <a href="https://docs.google.com/spreadsheets/d/1YO--SYuKL2BRyKjyS3ucLOvIfr2JLRgWZSEQLst_Ruc" target="_blank">Troop Meeting Headcounts 8/3/2015 - 12/5/2017</a><br>
+                                    <a href="https://docs.google.com/spreadsheets/d/1jTW0rk3aguf-27bOCQxeSFtFBYXWrt5EyVQl8B4SUos" target="_blank">Troop and PLC Headcounts 1/2/2017 - 2/6/2017</a><br>
+                                </p>
+                                <br>
+                                <ul id="meeting-minute-list">
+                                    <li>10/23/17 <a onclick="openModal(this, 'https://docs.google.com/document/d/1i_T0qjFspccXhuzTfWmQjPNaxqxCAMz8inrt8U405M0/mobilebasic')">Troop Meeting Minutes</a>,
+                                        <a onclick="openModal(this, 'https://docs.google.com/document/d/1oB5Ez7lyyvqcv2o_P_t730c-tH29VhvOV7iOtWPN-Jk/mobilebasic')">PLC Meeting Minutes</a></li>
+                                    
+                                    <li>5/1/17 <a onclick="openModal(this, 'https://docs.google.com/document/d/1EPYd4YIQwHOr162seNU4GgR_XB7r477ByOmszXoOgBc/mobilebasic')">Troop Meeting Minutes</a>,
+                                        <a onclick="openModal(this, 'https://docs.google.com/document/d/125eIuDc-prx3VGL9aPXq8mC_siJGG4Jogu6ILEMJMZI/mobilebasic')">PLC Meeting Minutes</a>,
+                                        <a href="https://docs.google.com/spreadsheets/d/1qiNsrInjRAtxI4VOnCu7T6_P0QtS9T-ZFpvozJCdRB8/edit#gid=0" target="_blank">Headcounts</a></li>
+                                    <li>4/24/17
+                                        <a onclick="openModal(this, 'https://docs.google.com/document/d/1wqIZr-f4pTFDN3A6-nVybb5C-0zPvN4NEca9yboPH4Y/edit')">PLC Meeting Minutes</a>,
+                                        <a href="https://docs.google.com/spreadsheets/d/1nn2cb_UlM-hEDwbk8PBowgNxumNW3I6FPMrwv6tFRKQ/edit#gid=0" target="_blank">Headcounts</a></li>
+                                    <li>4/17/17 <a onclick="openModal(this, 'https://docs.google.com/document/d/1HW_SsJ3BblqeuHMSTefc9tx2-v0945x1Ivrd7gNNpfc/moiblebasic')">Troop Meeting Minutes</a>,
+                                        <a onclick="openModal(this, 'https://docs.google.com/document/d/1P9KyfMVtUjLms9_vwNjBIT01_QYIPcTQ3FSOyLvqzOg/moiblebasic')">PLC Meeting Minutes</a>,
+                                        <a href="https://docs.google.com/spreadsheets/d/1qiNsrInjRAtxI4VOnCu7T6_P0QtS9T-ZFpvozJCdRB8/edit#gid=0" target="_blank">Headcounts</a></li>
+                                
+                                    <li>4/3/17 <a onclick="openModal(this, 'https://docs.google.com/document/d/1iHtvpSyHlXy2wczos-lURSaXjzmu90J59vRUpDR3Kgk/mobilebasic')">Troop Meeting Minutes</a>,
+                                        <a href="https://t485.slack.com/files/stevenj/F4TGQ24TB/3.pdf" target="_blank">PLC Meeting Minutes</a>,
+                                        <a onclick="openModal(this, 'https://docs.google.com/spreadsheets/d/14_kuMVAjlkCQ907L6-wb4ACDldbcLOcE21s-Rj26TKQ/edit')">Headcounts</a></li>
+                                    <li>3/20/17 <a onclick="openModal(this, 'https://docs.google.com/document/d/1OYbnzM9dwoB1ChtrmOiG7woj7Wkwxu0MkXMfaczrlCk/mobilebasic')">Troop Meeting Minutes</a>,
+                                        <a onclick="openModal(this, 'https://docs.google.com/document/d/1k_BJWbR6bwelt77TQT07Iyax_pSd6Dc1ZscZ1heLn4Q/mobilebasic')">PLC Meeting Minutes</a>,
+                                        <a onclick="openModal(this, 'https://docs.google.com/spreadsheets/d/1SBYdyNu-5Sy84xS9MNcsfHI1bfDe4ZsWUrMyeY2CEPk/edit')">Headcounts</a></li>
+                                    <li>3/6/17 <a onclick="openModal(this, 'https://docs.google.com/spreadsheets/d/1YquvLyixSrZ5TmFOTfixx3nWBU6OgkNRpaihCLnafbg/edit')">Troop Meeting Minutes</a>,
+                                        <a onclick="openModal(this, 'https://docs.google.com/document/d/1MV1bDywW38p0WlkTxx4dyMF0JqrU_zoeOpO_gX6zxtY/mobilebasic')">PLC Meeting Minutes</a>,
+                                        <a onclick="openModal(this, 'https://docs.google.com/document/d/10kfQKMtf4grqz1r7bveeUNaQ7dS27czRxgfPiJ5HdKo/mobilebasic')">Headcounts</a></li>
+                                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/10QY9JSkUGXaMdW5i-1qUs9lJyeCihbJjn1tQi5XLvTQ/mobilebasic')">Troop Meeting Minutes 2/20/2017</a></li>
+                                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/1wdDGZ5BXRk11NQK_Ye_456wB8SSQPPSaOItqoKlBOYI/mobilebasic')">Troop Meeting Minutes 2/6/2017</a></li>
+                                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/1PJxbz7_WWGMdECdhPdi9acR_Rm7EP6JMe05CT_7ryRE/mobilebasic')">Troop and PLC Meeting Minutes 1/23/2017</a></li>
+                                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/1w-WbEG4EfZS7wG7ktVt45Qe72MfrjHZ5aYVaVjBosXc/mobilebasic')">Troop and PLC Meeting Minutes 1/2/2017</a></li>
+                                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/1Gm1arICbdbkDhfGCKLj4AHeoeR5Uph44a8oV48dTPqs/mobilebasic')">Troop and PLC Meeting Minutes 12/5/2016</a></li>
+                                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/1svhQB1FUQDwpiIpHhq-PlnHTsmFgbMkc43Fybpk9vBE/mobilebasic')">PLC Meeting Minutes 11/28/2016</a></li>
+                                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/1uJ-GPNJUxZeFomFXGhv-1_at7CshIk8Gj08VQ_QG1ek/mobilebasic')">Troop and PLC Meeting Minutes 10/25/2016</a></li>
+                                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/1wMeX_6Ko9gKU2EHOLXcjIllNX_GP-11vvC36RvJ6c0g/mobilebasic')">Troop and PLC Meeting Minutes 10/10/2016</a></li>
+                                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/1TFALuBmcG8NBB5-pOqaA4cG9hfk2KWfUzoz76qpZsuc/mobilebasic')">PLC Meeting Minutes 10/3/2016</a></li>
+                                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/1S4jFqF52BmC0-i9OcG1adWXYoS1dWvx3cdWSsUDPlKQ/mobilebasic')">Troop and PLC Meeting Minutes 9/26/2016</a></li>
+                                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/1-Ec5_SK9pINkLvVYdfXclXA_UPXJapB7Ma0Hxc66lzc/mobilebasic')">Troop and PLC Meeting Minutes 9/12/2016</a></li>
+                                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/1WoOiBnirD96Yoz-e3RUF9tzHEiZ0cwqhkJSyt1RZT1c/mobilebasic')">PLC Meeting Minutes 8/29/2016</a></li>
+                                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/1rScuH3KabLv-TRuwgQz7WUiceM2wwwO1s2QJ-yrcvpg/mobilebasic')">Troop and PLC Meeting Minutes 8/22/2016</a></li>
+                                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/1imzEDlYFnsQdxrU1-R0i0AQXZ_x3VEYYehpjrKamMlA/mobilebasic')">Troop and PLC Meeting Minutes 8/8/2016</a></li>
+                                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/1Ulj6ssNhQ_B0pVygtTerX7BqcjWBwRqjvq_UQsbN8wk/mobilebasic')">Troop and PLC Meeting Minutes and headcounts 7/11/2016</a></li>
+                                    <li><a onclick="openModal(this, 'https://drive.google.com/file/d/0B9K0IagLuueKSm95WVlFOXdpNGc/')">PLC Meeting Minutes 6/27/2016</a></li>
+                                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/1lyn3eOc0zzJA0kxglPR7BgBGbpE5PkY0ef7uU2cs1bE/mobilebasic')">Troop and PLC Meeting Minutes 6/20/2016</a></li>
+                                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/1Ps-tO-JXMd1X01_AQc87Mg_VCTlhf2mD5wj2YxanDrU/mobilebasic')">Troop Meeting Minutes 6/6/2016</a></li>
+                                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/14VTi5ohoWvDQ2t4AbfGyAPSZY2B6bliZ_4Xn0uxoqwM/mobilebasic')">PLC Meeting Minutes 6/6/2016</a></li>
+                                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/1vDtEM7mL41dErMFEQJujoDmpwBjLT4SdJsZj9KTii6Y/mobilebasic')">PLC Meeting Minutes 5/23/2016</a></li>
+                                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/166nOfdK8cSSRRpRfAfDng60dWeiTcWjijgAksJplUEQ/mobilebasic')">Troop and PLC Meeting Minutes 5/16/2016</a></li>
+                                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/1c-QQc3eh2xHIYxkWgOOrOEF0Yq-3BxUPi-6jEU84ZMY/mobilebasic')">PLC Meeting Minutes 4/25/2016</a></li>
+                                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/10y5tqjtXeOfx0gp8DUI2Pi73AePRYhVPdT8VbNKsn5w/mobilebasic')">Troop and PLC Meeting Minutes 4/18/2016</a></li>
+                                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/1OwQ1LlsfTUOmRKb30SjmYkhe0JA4rzqYMxuZOxIHOq4/mobilebasic')">Troop and PLC Meeting Minutes 4/4/2016</a></li>
+                                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/1ybJ88md75YInYajGyGOU6aVLhTInzM5l6ABFSo5Roak/mobilebasic')">Troop and PLC Meeting Minutes 3/21/2016</a></li>
+                                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/1d1VhdC1crga5VItYz4n6ydR93K1cQOGa5uvArIEnw_k/mobilebasic')">PLC Meeting Minutes 2/29/2016</a></li>
+                                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/1VwJDTdugN8wJU82S04kI1OiaqH0QM_DopoYPEc_n5hQ/mobilebasic')">Troop Meeting Minutes 2/1/2016</a></li>
+                                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/1hbUxwFpCtrS_7153_0JUxx7fMBclJbgDi45WWgC__Uk/mobilebasic')">PLC Meeting Minutes 2/1/2016</a></li>
+                                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/1_VuoMPAHhVDFe3ThnVsKOfomObbSW_HhAUdzM3_VtKw/mobilebasic')">PLC Meeting Minutes 1/25/2016</a></li>
+                                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/189tpeYoDwV04J9eq8yH1p4Qa1ANKnW_eJmeuZR43PCw/mobilebasic')">Troop Meeting Minutes 1/18/2016</a></li>
+                                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/1QmY_57flLXb9qZ2x3dSVcRteqTFM4pC6ftzCgn6NFjY/mobilebasic')">PLC Meeting Minutes 1/18/2016</a></li>
+                                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/1O7dsg1Mi8hpxzQQyNIx2z2cP267K08TDoVkjQNg6N-k/mobilebasic')">Troop Meeting Minutes 1/4/2016</a></li>
+                                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/1OPION0-JLbRnTEefD-Q2tminoHL9lFCaGbOym6x0UgU/mobilebasic')">PLC Meeting Minutes 1/4/2016</a></li>
+                                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/15dPqK71mcCN3uLEpGqMOTriPNXrQwaFojEziWs-JKtk/mobilebasic')">PLC Meeting Minutes 12/21/2015</a></li>
+                                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/1SdQg_sqIphzOacu1ciT7EPM6LPZOMobELs7-Kqh06yE/mobilebasic')">Troop Meeting Minutes 12/14/2015</a></li>
+                                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/1soWTS4lhjRZhd7E8TqRH81DQDMelnGFqHSSZU-IYZ6I/mobilebasic')">PLC Meeting Minutes 12/14/2015</a></li>
+                                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/1Sg9HgfLkdnnA7dtOmY1P7Kkt2Ele7YiSdjHvyHvPF50/mobilebasic')">Troop Meeting Minutes 11/30/2015</a></li>
+                                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/1D610HR4qc8nHFzsGBvlEPZCduqqXGDLePz-Q6JKVp3I/mobilebasic')">PLC Meeting Minutes 11/30/2015</a></li>
+                                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/1gqPfONLJu3TumytrhZHultVrcCjUPgFENctuexgTaM4/mobilebasic')">PLC Meeting Minutes 11/23/2015</a></li>
+                                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/1k7xvYz7Y6shDZ5jpH5G6pKQAHMka8gPGhdLvhbCxcd8/mobilebasic')">Troop Meeting Minutes 11/17/2015</a></li>
+                                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/1zMcAPAwVjws2ZAsiJ9ImyL51DDLWV7xtrQhbozTP1K8/mobilebasic')">PLC Meeting Minutes 11/17/2015</a></li>
+                                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/13YzUQaOp9ek-BrLTsdsyA1YzZbV3-Q5PEj3jd-Tcya0/mobilebasic')">Troop Meeting Minutes 11/2/2015</a></li>
+                                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/1uqpu3FMX9nmt9M4QUW-Y1FSteiD80L73LpBqKMoa-s0/mobilebasic')">PLC Meeting Minutes 11/2/2015</a></li>
+                                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/1DoiDfqrRLlIk7YOMs12MSU1v8_Cqb980Vb3IfrX0dVo/mobilebasic')">PLC Meeting Minutes 10/26/2015</a></li>
+                                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/12E2vN76DFpwTR4QvAwFBpIPMcONxfmgBmcrm1p--7jo/mobilebasic')">Troop Meeting Minutes 10/19/2015</a></li>
+                                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/1WxlXFMSWAsStlIEHjEsTsTdVkIeg3AvLV2k3AJU-RdQ/mobilebasic')">PLC Meeting Minutes 10/19/2015</a></li>
+                                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/1mHFjfxnGfpnEgvDVqslK7QmEftSLDOoAwovcbVTykrk/mobilebasic')">Troop Meeting Minutes 10/5/2015</a></li>
+                                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/1iHmLmF3NTJ_NNEHG4qB8ya8J1DYy5HUAIV5mnnhTm2g/mobilebasic')">PLC Meeting Minutes 10/5/2015</a></li>
+                                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/1nt2I43SezuYPYqqgTaX5OROewZm9Y1o3eZnA3vaVZbM/mobilebasic')">PLC Meeting Minutes 9/28/2015</a></li>
+                                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/1fVhar4ZxNfw5I7x5SuHthdLqj8dydFxfus_32qytoMU/mobilebasic')">Troop Meeting Minutes 9/21/2015</a></li>
+                                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/1b9mrcrcHPaxtdmusNJhSX8IDJiwbVD4X6gD7Nc-BsIw/mobilebasic')">PLC Meeting Minutes 9/21/2015</a></li>
+                                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/1g3rP7HmreaeVRN_3mdnNmqfP_gsw57DNqrxh1N2lKjY/mobilebasic')">Troop Meeting Minutes 8/31/2015</a></li>
+                                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/1T0skJq55HorgjmuyWXHpmY2jQVdg7k9sjJaBQm3a1Fc/mobilebasic')">PLC Meeting Minutes 8/31/2015</a></li>
+                                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/1GTXYS5yGelLn3Q2QGRkDjh51_uveRnq9vx92jFB6VBE/mobilebasic')">PLC Meeting Minutes 8/24/2015</a></li>
+                                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/1WLFYI2ZLgYDZ76KSa8R35HY7292OBiggzw_nKQjYWxM/mobilebasic')">Troop Meeting Minutes 8/17/2015</a></li>
+                                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/1BdxViFiegKgPdl6kr3kN8vpJCUD0cEjRTQ57e4QNN6g/mobilebasic')">PLC Meeting Minutes 8/17/2015</a></li>
+                                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/17IBnuZjP8kfWh7LPWECvtD8XFW4KkWATu-pN4hDa2WU/mobilebasic')">Mini TLT Minutes 8/8/2015</a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+
+        </div>
+
+        <div class="row">
+            <!--
+            <div class="box col-sm-6">
+                <hr>
+                <h2 class="intro-text text-center">Committee Meeting Minutes</h2>
+                <hr>
+                <ul>
+                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/13iDmb7fXo5vUN95tcXjE8EIH1jSelG-f1LcgyX4Yamw/mobilebasic')">Committee Meeting Minutes 3/20/2016</a></li>
+                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/1YOtkdZICN-MRt6CS5J61EGGKTeZa_q2twdklxGHmOGY/mobilebasic')">Committee Meeting Minutes 1/18/2016</a></li>
+                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/1DpSoaIL0Hsq82MH3SUi18v1ubMYuDjgoOJ6Kzo609xc/mobilebasic')">Committee Meeting Minutes 12/14/2015</a></li>
+                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/13OSHYx1ssnN8E-GkrgsWtA8r9Fl_XCNfvD7_KSo8_ZY/mobilebasic')">Committee Meeting Minutes 11/16/2015</a></li>
+                </ul>
+            </div>
+            -->
+            <div class="box col-sm-12">
+                <hr>
+                <h2 class="intro-text text-center">Reflections</h2>
+                <hr>
+                <ul id="reflection-list">
+                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/1zGnBO5aqcTTsvEkNl-GLyY6Po1QDZdtjfDk1IdnY41M/mobilebasic')">2016 Term 1 Reflections</a></li>
+                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/15h4e0dppAbQ_vCUARkEo7FNG812f2uC90TRSY2P5SUg/mobilebasic')">TLT Reflections 1/9-10/2016</a></li>
+                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/177YYMJNPOzIV4qccfCZpfDmt9qMvclDGGHeqfO4lRXs/mobilebasic')">Rim of the Bay - Pinnacles Reflections 12/19-20/2015</a></li>
+                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/1BHi-TA2JKR3xXvQmlUgCzRZsbI1gmLd8gHE1PDmPl10/mobilebasic')">Coyote Creek Cycling Classic Reflections 9/26-27/2015</a></li>
+                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/1hZOGddGkE5gLuOk1DNF1npcl4HCrBfQsIBEJdxukRTQ/mobilebasic')">Labor Day Backpacking Reflections 9/5-6/2015</a></li>
+                    <li><a onclick="openModal(this, 'https://docs.google.com/document/d/159TciVVX0YrZvjSr8UeU0D7Vx-tKePcx0_j6XPkqoc0/mobilebasic')">Practice Labor Day Backpacking Reflections 8/22-23/2015</a></li>
+                </ul>
+            </div>
+        </div>
+</div>
+{% endblock %}
+
+{% block modal %}
+<!-- Modal -->
+<div aria-hidden="true" aria-labelledby="myModalLabel" class="modal fade" id="myModal" role="dialog" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button aria-hidden="true" class="close" data-dismiss="modal" type="button">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Content Unavailable</h4>
+            </div>
+
+            <div class="modal-body">
+                <iframe frameborder="0" height="90%" id="ifr" name="ifr" src="" width="90%">Unfortunately, this content is unavaliable at this time. Please give feedback for this bug, and view the document on your google drive.</iframe>
+            </div>
+
+            <div class="modal-footer">
+                <a class="btn btn-primary" href="https://google.com" id="mdlk" target="_blank" type="button">Open in new tab</a>
+                <button class="btn btn-primary" onclick="requestFullScreen();">Fullscreen mode</button>
+                <button class="btn btn-default" data-dismiss="modal" type="button">Close</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+
+{% endblock %} 
+
+{% block js %}   
+<script src="/js/list.min.js"></script>
+    <script>
+        firebase.database().ref("/meetingminutes/").once("value").then((snapshot) => {
+            let data = snapshot.val();
+            for (let key in data) {
+                if (data.hasOwnProperty(key)) {
+                    let value = data[key];
+                    
+                }
+            }
+        });
+
+        function openModal(_this, url) {
+            let editurl;
+            let editregex = /(https:\/\/docs\.google\.com\/document\/d\/.+\/)edit/g.exec(url);
+            if (editregex !== null) {
+                editurl = editregex[0] + "edit"
+            }
+            else {
+                editurl = url
+            }
+            title = $(_this).html();
+            $('#myModalLabel').html(title);
+            $('#ifr').attr('src', url);
+
+            $('#mdlk').attr('href', editurl);
+            $('#myModal').modal('show');
+        }
+
+        function requestFullScreen() {
+            let el = document.getElementById("ifr");
+            // Supports most browsers and their versions.
+            let requestMethod = el.requestFullScreen || el.webkitRequestFullScreen ||
+                el.mozRequestFullScreen || el.msRequestFullScreen;
+
+            if (requestMethod) {
+
+                // Native full screen.
+                requestMethod.call(el);
+
+            }
+            else if (typeof window.ActiveXObject !== "undefined") {
+
+                // Older IE.
+                let wscript = new ActiveXObject("WScript.Shell");
+
+                if (wscript !== null) {
+                    wscript.SendKeys("{F11}");
+                }
+            }
+        }
+    </script>
+
+{% endblock %}

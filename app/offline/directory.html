@@ -1,0 +1,45 @@
+<!-- We don't need full layout in this file because this page will be parsed with Ajax. It is just enough to put here .navbar and .page-->
+
+<!-- Top Navbar-->
+<div class="navbar">
+    <div class="navbar-inner">
+        <div class="left">
+            <a href="#" class="back link">
+                <i class="icon icon-back"></i>
+                <span>Back</span>
+            </a>
+        </div>
+        <div class="center sliding">Directory</div>
+    </div>
+</div>
+
+<div class="pages navbar-through">
+    <div data-page="directory" class="page">
+        <form data-search-list=".search-here" data-search-in=".item-title" class="searchbar searchbar-init">
+            <div class="searchbar-input">
+                <input type="search" placeholder="Search" />
+                <a href="#" class="searchbar-clear"></a>
+            </div><a href="#" class="searchbar-cancel">Cancel</a>
+        </form>
+        <div class="searchbar-overlay"></div>
+        
+        <div class="page-content">
+            <div class="list-block searchbar-not-found">
+                <ul>
+                    <li class="item-content">
+                        <div class="item-inner">
+                            <div class="item-title">Your search did not match any names</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            
+            <div id="search-content" class="list-block search-here searchbar-found">
+                <ul></ul>
+            </div>
+            <!--/search-content-->
+            
+        </div>
+        <!--/page-content-->
+    </div>
+</div>
