@@ -1,0 +1,41 @@
+body {
+  background-image: linear-gradient( rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25) ), url(../images/bg_cropped.jpg);
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center top;
+}
+#site-navbar, footer {
+
+  background-color: rgba(255,255,255,0) !important;
+
+}
+.container {
+  // 300px is a relatively arbitrary number. In reality, it just needs to be more than the height of the footer and navbar
+  height:calc(100vh - 300px);
+  overflow:hidden;
+}
+
+header {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  color:#eee;
+
+  h1 {
+    font-size:6em;
+  }
+
+  p {
+    font-size:1.5em;
+  }
+
+}
+
+footer span {
+  color: white;
+}
+
+.cta {
+  margin-left: 10px;
+  margin-right: 10px;
+}

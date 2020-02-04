@@ -2,36 +2,35 @@ import React from "react"
 import { Link } from "gatsby"
 
 import { Navbar, Nav, Form, FormControl, Button } from "react-bootstrap"
+function NavbarLink(props) {
 
+    return (
+          <Link to={"/" + props.page} className="link-no-style">
+            <Nav.Link as="span" eventKey={props.page}>
+              {props.children}
+            </Nav.Link>
+          </Link>
+    )
+
+}
 const CustomNavbar = ({ pageInfo }) => {
-  console.log(pageInfo)
+  console.log(pageInfo, pageInfo && pageInfo.pageName);
   return (
     <>
-      <Navbar bg="light" expand="lg" id="site-navbar" style={{"box-shadow": "0 2px 2px -2px rgba(0,0,0,.2)"}}>
+      <Navbar bg="dark" variant="dark" expand="lg" id="site-navbar">
         {/* <Container> */}
         <Link to="/" className="link-no-style">
           <Navbar.Brand as="span">BSA Troop 485</Navbar.Brand>
         </Link>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="mr-auto" activeKey={pageInfo && pageInfo.pageName}>
-            <Link to="/page-2" className="link-no-style">
-              <Nav.Link as="span" eventKey="page-2">
-                Page 2
-              </Nav.Link>
+        <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
+          <Nav activeKey={pageInfo && pageInfo.pageName}>
+            <NavbarLink page="page-2">Page 2</NavbarLink>
+            <NavbarLink page="404">Link Name 2</NavbarLink>
+            <NavbarLink page="404">Link Name 3</NavbarLink>
+            <Link to={"https://yahoo.com"} className="link-no-style">
+              <Button>Hello</Button>
             </Link>
-          </Nav>
-          <Nav className="ml-auto">
-            <Form inline onSubmit={e => e.preventDefault()}>
-              <Form.Group>
-                <FormControl
-                  type="text"
-                  placeholder="Fake Search"
-                  className="mr-2"
-                />
-              </Form.Group>
-              <Button>Fake Button</Button>
-            </Form>
           </Nav>
         </Navbar.Collapse>
         {/* </Container> */}
