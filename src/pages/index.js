@@ -15,7 +15,7 @@ const IndexPage = () => (
             <p>Cupertino, California</p>
             <div>
               <Button variant="outline-light" size="lg" className="cta">About Us</Button>
-              <Button variant="success" size="lg" className="cta">Join Today</Button>
+              <Button variant="primary" size="lg" className="cta">Join Today</Button>
             </div>
           </header>
 
