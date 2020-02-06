@@ -5,23 +5,26 @@ import Layout from "../components/layout"
 import SEO from "../components/seo"
 import "../styles/index.scss";
 
-document.querySelector('body').classList.add('image-not-loaded');
-let a = document.querySelector('body');
+function fadebg() {
+  document.querySelector('body').classList.add('image-not-loaded');
+  let a = document.querySelector('body');
 
-document.addEventListener("DOMContentLoaded", function() {
-  if (!a) return !1;
-  let b = BackgroundImage,
-      c = document.querySelector('body'),
-      img = new Image;
-  img.src = b;
-console.log(12);
-  img.onload = function () {
-    c.classList.add('image-loaded');
-    console.log(1);
-        c.style.backgroundImage = 'url(' + b + ')';
-  };
-  console.log(img);
-});
+  document.addEventListener("DOMContentLoaded", function() {
+    if (!a) return !1;
+    let b = BackgroundImage,
+        c = document.querySelector('body'),
+        img = new Image;
+    img.src = b;
+    console.log(12);
+    img.onload = function () {
+      c.classList.add('image-loaded');
+      console.log(1);
+      c.style.backgroundImage = 'url(' + b + ')';
+    };
+    console.log(img);
+  });
+}
+if (document) fadebg();
 
 const IndexPage = () => (
   <Layout pageInfo={{ pageName: "index" }}>
