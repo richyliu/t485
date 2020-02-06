@@ -6,6 +6,7 @@ import SEO from "../components/seo"
 import "../styles/index.scss";
 
 function fadebg() {
+  console.log(1);
   document.querySelector('body').classList.add('image-not-loaded');
   let a = document.querySelector('body');
 
@@ -24,7 +25,7 @@ function fadebg() {
     console.log(img);
   });
 }
-if (document) fadebg();
+if (typeof document !== "undefined") fadebg();
 
 const IndexPage = () => (
   <Layout pageInfo={{ pageName: "index" }}>
