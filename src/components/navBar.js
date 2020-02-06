@@ -28,7 +28,7 @@ const CustomNavbar = ({ pageInfo }) => {
             <NavbarLink page="page-2">Page 2</NavbarLink>
             <NavbarLink page="404">Link Name 2</NavbarLink>
             <NavbarLink page="404">Link Name 3</NavbarLink>
-            <Link to={"https://yahoo.com"} className="link-no-style">
+            <Link to="/404" className="link-no-style">
               <Button>Hello</Button>
             </Link>
           </Nav>
