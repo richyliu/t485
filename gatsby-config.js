@@ -19,9 +19,10 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `gatsby-starter-react-bootstrap`,
-        short_name: `react-bootstrap`,
+        name: `Troop 485`,
+        short_name: `T485`,
         start_url: `/`,
+        icon:`src/favicons/apple-touch-icon-180x180.png`,
         background_color: `#20232a`,
         theme_color: `#20232a`,
         display: `minimal-ui`,
