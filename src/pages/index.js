@@ -10,7 +10,6 @@ function fadebg() {
   document.querySelector('body').classList.add('image-not-loaded');
   let a = document.querySelector('body');
 
-  document.addEventListener("DOMContentLoaded", function() {
     if (!a) return !1;
     let b = BackgroundImage,
         c = document.querySelector('body'),
@@ -23,7 +22,7 @@ function fadebg() {
       c.style.backgroundImage = 'url(' + b + ')';
     };
     console.log(img);
-  });
+
 }
 if (typeof document !== "undefined") fadebg();
 
