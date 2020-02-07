@@ -3,18 +3,16 @@ import { Link } from "gatsby"
 
 import { Navbar, Nav, Button } from "react-bootstrap"
 function NavbarLink(props) {
-
-    return (
-          <Link to={"/" + props.page} className="link-no-style">
-            <Nav.Link as="span" eventKey={props.page}>
-              {props.children}
-            </Nav.Link>
-          </Link>
-    )
-
+  return (
+    <Link to={"/" + props.page} className="link-no-style">
+      <Nav.Link as="span" eventKey={props.page}>
+        {props.children}
+      </Nav.Link>
+    </Link>
+  )
 }
 const CustomNavbar = ({ pageInfo }) => {
-  console.log(pageInfo, pageInfo && pageInfo.pageName);
+  console.log(pageInfo, pageInfo && pageInfo.pageName)
   return (
     <>
       <Navbar bg="dark" variant="dark" expand="lg" id="site-navbar">
