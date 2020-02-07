@@ -4,6 +4,7 @@ import BackgroundImage from "../images/bg_cropped_progressive.jpg"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import "../styles/index.scss";
+import { graphql, StaticQuery } from "gatsby";
 
 // function fadebg() {
 //   document.querySelector("body").classList.add("image-not-loaded")
@@ -20,7 +21,21 @@ import "../styles/index.scss";
 // if (typeof document !== "undefined") fadebg()
 
 const IndexPage = () => (
-  <Layout pageInfo={{ pageName: "index" }} backgroundImage>
+  <StaticQuery
+    query={graphql`
+      query  {
+       
+        desktop: file(relativePath: { eq: "bg_cropped_progressive_darken25.jpg" }) {
+          childImageSharp {
+            fluid(quality: 100, maxWidth: 1920) {
+              ...GatsbyImageSharpFluid
+            }
+          }
+        }
+      }
+    `}
+    render = {(data) => (
+  <Layout pageInfo={{ pageName: "index" }} backgroundImage={data.desktop.childImageSharp.fluid}>
     <SEO
       title="Home"
       keywords={[`Troop 485`, `Scouting`, `Boy Scouts`, `Cupertino`]}
@@ -40,6 +55,7 @@ const IndexPage = () => (
       </header>
     </Container>
   </Layout>
-)
+)} />
+);
 
 export default IndexPage

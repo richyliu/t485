@@ -21,13 +21,6 @@ const Layout = ({ children, pageInfo, backgroundImage }) => (
           siteMetadata {
             title
           }
-        },
-        desktop: file(relativePath: { eq: "bg_cropped_progressive_darken25.jpg" }) {
-          childImageSharp {
-            fluid(quality: 100, maxWidth: 1920) {
-              ...GatsbyImageSharpFluid
-            }
-          }
         }
       }
     `}
@@ -65,13 +58,12 @@ const Layout = ({ children, pageInfo, backgroundImage }) => (
         if (!backgroundImage) {
           return page;
         } else {
-          const imageData = data.desktop.childImageSharp.fluid;
-          console.log(imageData);
           return (
             <BackgroundImage
               Tag="section"
               className={"bg-full"}
-              fluid={imageData}
+              fluid={backgroundImage}
+              placeholderStyle={{ visibility: "hidden" }}
             >
               {page}
             </BackgroundImage>
