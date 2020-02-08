@@ -26,8 +26,8 @@ const CustomNavbar = ({ pageInfo }) => {
             <NavbarLink page="page-2">Page 2</NavbarLink>
             <NavbarLink page="404">Link Name 2</NavbarLink>
             <NavbarLink page="404">Link Name 3</NavbarLink>
-            <Link to="/404" className="link-no-style">
-              <Button>Hello</Button>
+            <Link to="/plc/voting/vote" className="link-no-style">
+              <Button>PLC Voting</Button>
             </Link>
           </Nav>
         </Navbar.Collapse>

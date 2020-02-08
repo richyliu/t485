@@ -25,13 +25,17 @@ module.exports = {
         icon:`src/favicons/apple-touch-icon-180x180.png`,
         background_color: `#20232a`,
         theme_color: `#20232a`,
-        display: `minimal-ui`,
       }
     },
     `gatsby-plugin-postcss`,
-
+    {
+      resolve: `gatsby-plugin-nprogress`,
+      options: {
+        showSpinner: true,
+      },
+    },
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
-    `gatsby-plugin-offline`,
+    // `gatsby-plugin-offline`,
   ],
 }
