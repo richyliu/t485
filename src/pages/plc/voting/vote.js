@@ -1,17 +1,20 @@
 import React from "react"
-
+import { Link } from "gatsby";
 import Layout from "../../../components/layout"
 import SEO from "../../../components/seo"
 
 import { Alert, Button, Form } from "react-bootstrap";
 
-const VoteComponent = function ({name, data}) {
+const VoteComponent = function ({name, data, onSubmitted}) {
   const [vote, setVote] = React.useState(Array(data.length).fill([]));
   const [valid, setValid] = React.useState(Array(data.length).fill(true));
+  const [loading, setLoading] = React.useState(false);
+  const [mode, setMode] = React.useState("vote");
   return (
     <>
-      <p>Commence the voting, {name}!</p>
       {
+        {vote:<div>
+        {
         data.map( (category, i) =>
           <div key={i}>
             <h3>{category.name}</h3>
@@ -26,6 +29,7 @@ const VoteComponent = function ({name, data}) {
                   return newValid;
                 });
               }}
+              initialState={vote[i].slice()}
               onChange={function(newState) {
                 setVote(function(oldVote) {
                   let newVote = oldVote.slice();
@@ -33,23 +37,52 @@ const VoteComponent = function ({name, data}) {
                   return newVote;
                 });
               }}
+              disabled={loading}
 
             />
           </div>
-        )
+            )}
+            <Button block variant="primary" disabled={valid.filter((x) => !x).length > 0} onClick={() => setMode("verify")}>{ (valid.filter((x) => !x).length === 0) ? "Review Choices" : "You voted more than the limit in at least one category"}</Button>
+          </div>,
+        verify:<div>
+        <h3>Confirm your vote</h3>
+          {
+            data.map( (category, i) =>
+              <p key={i}>
+                <b>{category.name}</b>: {
+
+                vote[i].map((selected, i) => {
+
+                  if (selected) {
+                    return category.options[i] + ", ";
+                  } else {
+                    return ""
+                  }
+              }).join("").slice(0, -2) //remove the last comma and space
+              }
+              </p>
+            )
+          }
+
+          <Button block variant="link" disabled={loading} onClick={() => setMode("vote")}>Edit Your Selection</Button>
+
+          <Button block variant="primary" disabled={loading} onClick={() => setLoading(true)}>{ loading ? "Loading..." : "Submit Vote"}</Button>
+
+        </div>
+        }[mode]
       }
-      <Button block variant="primary" disabled={valid.filter((x) => !x).length > 0} onClick={() => console.log(vote)}>{ (valid.filter((x) => !x).length === 0) ? "Submit" : "You voted more than the limit in at least one category"}</Button>
+
     </>
   );
 };
 
-const VoteGroup = function({ id, options, maxVotes, onChange, onValidityChange, initialState }) {
-  const [checked, setChecked] = React.useState(initialState || options.map(() => false));
+const VoteGroup = function({ id, options, maxVotes, onChange, onValidityChange, initialState, disabled }) {
+  const [checked, setChecked] = React.useState(initialState || Array(options.length).fill(false));
   let [valid, setValid] = React.useState(true);
   return  (
     <>
       <p className={checked.filter((x) => x).length > maxVotes ? "text-danger" : "text-muted"}><b>{checked.filter((x) => x).length} of {maxVotes}</b> vote{maxVotes === 1 ? "" : "s"} used. You are not required to use all of your votes.</p>
-    <Form>
+    <Form onSubmit={() => null}>
 
       <Form.Group controlId={id} key={id}>
         {
@@ -60,7 +93,7 @@ const VoteGroup = function({ id, options, maxVotes, onChange, onValidityChange, 
                 type="checkbox"
                 id={id + "" + j} // required by react bootstrap for some stupid reason
                 label={name}
-
+                disabled={disabled}
                 checked={checked[j]}
                 onChange={() => {
                   setChecked(function(beforeChange) {
@@ -131,7 +164,19 @@ const PLCVotingPage = function () {
           </Form.Group>
           <Button variant="primary" block className="mt-2" onClick={function() { setPage("vote"); setName(name.trim());}}>Begin Voting</Button>
         </>,
-        vote:<VoteComponent name={name} data={data} />
+        vote:<VoteComponent name={name} data={data} onSubmitted={() => setPage("done")} />,
+        done:<>
+          <h3>Thanks, {name}!</h3>
+          <p>Your vote has been registered. You may now:</p>
+          <ul>
+            <li><a href="/plc/voting" onClick={(e) => {
+            e.preventDefault();
+            window.location.reload();
+            }
+            }>Hand your device to somebody else to allow them to vote</a></li>
+            <li><Link to="/plc/voting/">View Live Results</Link></li>
+          </ul>
+        </>
       }[page]
     }
 
