@@ -3,9 +3,9 @@ import { Link } from "gatsby";
 import Layout from "../../../components/layout"
 import SEO from "../../../components/seo"
 
-import { Alert, Button, Form } from "react-bootstrap";
-
-const VoteComponent = function ({name, data, onSubmitted}) {
+import { Spinner, Button, Form } from "react-bootstrap";
+//TODO: change name
+const VoteComponent = function ({name, data, onSubmitted, onCancel}) {
   const [vote, setVote] = React.useState(Array(data.length).fill([]));
   const [valid, setValid] = React.useState(Array(data.length).fill(true));
   const [loading, setLoading] = React.useState(false);
@@ -14,7 +14,9 @@ const VoteComponent = function ({name, data, onSubmitted}) {
     <>
       {
         {vote:<div>
-        {
+            <Button variant="link" className="p-0" onClick={() => {onCancel()}}>Cancel and return to login page</Button>
+
+            {
         data.map( (category, i) =>
           <div key={i}>
             <h3>{category.name}</h3>
@@ -50,23 +52,37 @@ const VoteComponent = function ({name, data, onSubmitted}) {
             data.map( (category, i) =>
               <p key={i}>
                 <b>{category.name}</b>: {
+                vote[i].filter(x => x).length === 0 ?
+                  <i>None Selected</i> :
+                    vote[i].map((selected, i) => {
 
-                vote[i].map((selected, i) => {
+                      if (selected) {
+                        return category.options[i] + ", ";
+                      } else {
+                        return ""
+                      }
+                    }).join("").slice(0, -2) //remove the last comma and space
 
-                  if (selected) {
-                    return category.options[i] + ", ";
-                  } else {
-                    return ""
-                  }
-              }).join("").slice(0, -2) //remove the last comma and space
               }
               </p>
             )
           }
 
-          <Button block variant="link" disabled={loading} onClick={() => setMode("vote")}>Edit Your Selection</Button>
+          <Button variant="link" block className="p-0" disabled={loading} onClick={() => setMode("vote")}>Edit Your Selection</Button>
 
-          <Button block variant="primary" disabled={loading} onClick={() => setLoading(true)}>{ loading ? "Loading..." : "Submit Vote"}</Button>
+          <Button block variant="primary" disabled={loading} onClick={() => {setLoading(true); setTimeout(() => {onSubmitted()}, 1500)}}>{
+            loading ?
+            <>
+              <Spinner
+                as="span"
+                animation="border"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+              />
+              <span className="sr-only">Loading...</span>
+            </>: "Submit Vote"
+          }</Button>
 
         </div>
         }[mode]
@@ -77,8 +93,23 @@ const VoteComponent = function ({name, data, onSubmitted}) {
 };
 
 const VoteGroup = function({ id, options, maxVotes, onChange, onValidityChange, initialState, disabled }) {
+  const isValid = (arr) => {
+    return arr.filter(x => x).length <= maxVotes; // 1. Remove all 'false' elements from the array, 2. compare new length to max
+  };
   const [checked, setChecked] = React.useState(initialState || Array(options.length).fill(false));
-  let [valid, setValid] = React.useState(true);
+  const [valid, setValid] = React.useState(true);
+
+  React.useEffect( () => {
+    onChange(checked);
+      setValid(isValid(checked));
+
+
+  }, [checked]);
+  React.useEffect(() => {
+    console.log(valid, 1133);
+    onValidityChange(valid)
+  }, [valid]);
+
   return  (
     <>
       <p className={checked.filter((x) => x).length > maxVotes ? "text-danger" : "text-muted"}><b>{checked.filter((x) => x).length} of {maxVotes}</b> vote{maxVotes === 1 ? "" : "s"} used. You are not required to use all of your votes.</p>
@@ -88,36 +119,52 @@ const VoteGroup = function({ id, options, maxVotes, onChange, onValidityChange, 
         {
           options.map( (name, j ) =>
             <div key={j}>
-              <Form.Check
-                custom
-                type="checkbox"
-                id={id + "" + j} // required by react bootstrap for some stupid reason
-                label={name}
+              <ControlledCustomCheck
+                id={id + "" + j}
+                name={options[j]}
+                initialChecked={initialState[j]}
                 disabled={disabled}
-                checked={checked[j]}
-                onChange={() => {
-                  setChecked(function(beforeChange) {
-                    let newState = beforeChange.slice();
-                    newState[j] = !newState[j];
-                    onChange && onChange(newState); // Only call onChange if onChange exists
-                    if ((newState.filter((x) => x).length <= maxVotes) !== valid) {
-                      setValid(newState.filter((x) => x).length <= maxVotes); // valid may not be immediately updated, so don't rely on it for the event
-                      onValidityChange && onValidityChange(newState.filter((x) => x).length <= maxVotes);
-                    }
-                    return newState;
-                  })
-                }
-                }
-
+                onChange={(checkboxState) => {
+                  setChecked(oldChecked => {
+                    let newChecked = oldChecked.slice();
+                    newChecked[j] = checkboxState;
+                    return newChecked;
+                  });
+                }}
               />
             </div>)
         }
-
       </Form.Group>
     </Form>
       </>
   )
 
+}
+
+const ControlledCustomCheck= ({initialChecked, id, name, disabled, onChange, ...passthroughProps}) => {
+  console.log(disabled);
+  const [checked, setChecked] = React.useState(initialChecked || false);
+  React.useEffect( () => {
+    onChange(checked);
+  }, [checked]);
+  return (
+    <Form.Check
+      custom
+      type="checkbox"
+      id={id} // required by react bootstrap for some weird reason
+      label={name}
+      disabled={disabled}
+      checked={checked}
+      onChange={() => {
+        setChecked(function(beforeChange) {
+          return !beforeChange;
+        });
+      }}
+
+      {...passthroughProps} // passthroughProps may not be required by Form.Check
+
+    />
+  )
 }
 
 const PLCVotingPage = function () {
@@ -164,7 +211,7 @@ const PLCVotingPage = function () {
           </Form.Group>
           <Button variant="primary" block className="mt-2" onClick={function() { setPage("vote"); setName(name.trim());}}>Begin Voting</Button>
         </>,
-        vote:<VoteComponent name={name} data={data} onSubmitted={() => setPage("done")} />,
+        vote:<VoteComponent name={name} data={data} onSubmitted={() => setPage("done")} onCancel={() => setPage("auth")} />,
         done:<>
           <h3>Thanks, {name}!</h3>
           <p>Your vote has been registered. You may now:</p>

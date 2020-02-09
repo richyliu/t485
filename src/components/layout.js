@@ -9,7 +9,6 @@ import React from "react"
 import { StaticQuery, graphql } from "gatsby"
 import { Container, Row, Col } from "react-bootstrap"
 import Navbar from "./navBar"
-import styled from "styled-components"
 import BackgroundImage from "gatsby-background-image"
 
 const Layout = ({ children, pageInfo, backgroundImage }) => (

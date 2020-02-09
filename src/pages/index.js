@@ -1,6 +1,5 @@
 import React from "react"
 import { Container, Button } from "react-bootstrap"
-import BackgroundImage from "../images/bg_cropped_progressive.jpg"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import "../styles/index.scss"
