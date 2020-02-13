@@ -5,7 +5,7 @@ import SEO from "../../../components/seo"
 import { Spinner, Button, Form } from "react-bootstrap";
 import { FirebaseContext, useFirebase } from "gatsby-plugin-firebase";
 
-const VoteComponent = function ({name, data, onSubmitted, onCancel, user, voterId}) {
+const VoteComponent = function ({name, data, onSubmitted, onCancel, user, voterId, campaignName}) {
   const firebase = React.useContext(FirebaseContext);
 
   const [vote, setVote] = React.useState(Array(data.length).fill([]));
@@ -17,7 +17,7 @@ const VoteComponent = function ({name, data, onSubmitted, onCancel, user, voterI
       firebase
         .firestore()
         .collection("plcvoting")
-        .doc("test")
+        .doc(campaignName)
         .collection("devices")
         .doc(user.uid)
         .set({
@@ -48,7 +48,7 @@ const VoteComponent = function ({name, data, onSubmitted, onCancel, user, voterI
     firebase
       .firestore()
       .collection("plcvoting")
-      .doc("test")
+      .doc(campaignName)
       .collection("devices")
       .doc(user.uid)
       .set({
@@ -65,7 +65,8 @@ const VoteComponent = function ({name, data, onSubmitted, onCancel, user, voterI
     firebase
       .firestore()
       .collection("plcvoting")
-      .doc("test")
+      .doc(campaignName
+      )
       .collection("devices")
       .doc(user.uid)
       .collection("votes")
@@ -98,7 +99,7 @@ const VoteComponent = function ({name, data, onSubmitted, onCancel, user, voterI
                   <h3>{category.name}</h3>
                   <VoteGroup
                     id={i}
-                    options={category.options}
+                    options={category.choices}
                     maxVotes={category.maxVotes}
                     onValidityChange={function (validity) {
                       setValid(function(oldValid) {
@@ -141,7 +142,7 @@ const VoteComponent = function ({name, data, onSubmitted, onCancel, user, voterI
                       vote[i].map((selected, i) => {
 
                         if (selected) {
-                          return category.options[i] + ", ";
+                          return category.choices[i] + ", ";
                         } else {
                           return "";
                         }
@@ -225,7 +226,6 @@ const VoteGroup = function({ id, options, maxVotes, onChange, onValidityChange: 
 }
 
 const ControlledCustomCheck= ({initialChecked, id, name, disabled, onChange, ...passthroughProps}) => {
-  console.log(disabled);
   const [checked, setChecked] = React.useState(initialChecked || false);
   React.useEffect( () => {
     onChange(checked);
@@ -253,42 +253,43 @@ const ControlledCustomCheck= ({initialChecked, id, name, disabled, onChange, ...
 const PLCVotingPage = function () {
   const firebase = React.useContext(FirebaseContext);
   const [name, setName] = React.useState("");
-  const [page, setPage] = React.useState(localStorage.getItem("fraudDetected") === "true" ? "fraudDetected" : "auth");
+  const [page, setPage] = React.useState(localStorage.getItem("fraudDetected") === "true" ? "fraudDetected" : "loading");
   const [user, setUser] = React.useState(null);
   const [voterId, setVoterId] = React.useState("");
   const [lastSubmitName, setLastSubmitName] = React.useState("");
   const getDbKey = (str) => str.toLowerCase().replace(/[^a-z]/g, "");
+  const [data, setData] = React.useState([]);
+  const [campaignName, setCampaignName] = React.useState();
 
-
-  let data = [
-    {
-      name:"Scout Skill",
-      maxVotes:2,
-      options:[
-        "Rum on the beach",
-        "Wine Making",
-        "Underwater basket weaving"
-      ]
-    },
-    {
-      name:"Game",
-      maxVotes:1,
-      options:[
-        "Apples",
-        "Oranges"
-      ]
-    }
-  ];
   useFirebase((fb) => {
     if (!fb) return;
     if (user) return;
     fb.auth().onAuthStateChanged((fbUser) => {
       if (fbUser) {
-        console.log(1, name, fbUser);
         setUser(fbUser);
-        if (name === "") {
+        fb.firestore()
+          .collection("plcvoting")
+          .doc("metadata")
+          .get()
+          .then((data) => {
+            if (data.data().closed) {
+              setPage("closed");
+              return;
+            }
+            setCampaignName(data.data().activeCampaign);
+            setPage("auth");
+            fb
+              .firestore()
+              .collection("plcvoting")
+              .doc(data.data().activeCampaign)
+              .get()
+              .then((data) => {
+                let options = data.data().options;
+                setData(options);
+              });
+          })
 
-        }
+
       } else {
         firebase.auth().signInAnonymously().catch(function(error) {
           // Handle Errors here.
@@ -304,7 +305,7 @@ const PLCVotingPage = function () {
     let voterId = firebase
       .firestore()
       .collection("plcvoting")
-      .doc("test")
+      .doc(campaignName)
       .collection("devices")
       .doc(user.uid)
       .collection("voters")
@@ -317,7 +318,7 @@ const PLCVotingPage = function () {
       firebase
         .firestore()
         .collection("plcvoting")
-        .doc("test")
+        .doc(campaignName)
         .collection("devices")
         .doc(user.uid) //deviceid
         .set({
@@ -353,6 +354,8 @@ const PLCVotingPage = function () {
       <hr />
       {
         {
+          loading:<p>Loading...</p>,
+          closed:<p>Sorry, but voting is currently closed.</p>,
           auth:<>
             <Form.Group controlId="name">
               <Form.Label>Your Name: </Form.Label>
@@ -363,7 +366,9 @@ const PLCVotingPage = function () {
             </Form.Group>
             <Button variant="primary" block disabled={name.trim().length === 0} className="mt-2" onClick={onAuthSubmit}>{name.trim().length === 0 ? "Enter your name to begin voting" : "Begin Voting"}</Button>
           </>,
-          vote:<VoteComponent voterId={voterId} user={user} name={name} data={data} onSubmitted={() => setPage("done")} onCancel={() => setPage("auth")} />,
+          vote:data ?
+            <VoteComponent campaignName={campaignName} voterId={voterId} user={user} name={name} data={data} onSubmitted={() => setPage("done")} onCancel={() => setPage("auth")} />
+            : <p>Loading...</p>,
           done:<>
             <h3>Thanks, {name}!</h3>
             <p>Your vote has been registered. You may now:</p>

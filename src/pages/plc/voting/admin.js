@@ -2,7 +2,7 @@ import React from "react"
 
 import Layout from "../../../components/layout/layout"
 import SEO from "../../../components/seo"
-import { Table } from "react-bootstrap";
+import { Table, Button } from "react-bootstrap";
 import { FirebaseContext, useFirebase } from "gatsby-plugin-firebase";
 
 const PLCVotingAdminPage = () => {
@@ -17,7 +17,6 @@ const PLCVotingAdminPage = () => {
       .doc("test")
       .collection("devices")
       .onSnapshot(function(querySnapshot) {
-        console.log(querySnapshot);
         querySnapshot.forEach((doc) => {
           let deviceId = doc.id;
           let currentVoter = doc.data();
@@ -70,20 +69,20 @@ const PLCVotingAdminPage = () => {
 
 
   let table = [];
-  console.log(devices);
   if(devices) {
     for (let [deviceid, docs] of Object.entries(devices)) {
       if (docs) {
 
         for (let [docid, data] of Object.entries(docs)) {
-          console.log(docid, data.voterId, data.voterId && docs[data.voterId])
-          if (docid === "currentlyVoting" && data.voterId && !!docs[data.voterId]) continue;
+          let confirmed = !(docid === "currentlyVoting");
+          if (!confirmed && data.voterId && !!docs[data.voterId]) continue;
           // data.voterId only exists on unassigned users.
           table.unshift(<tr key={deviceid + "" + docid}>
               <td>{deviceid}</td>
               <td>{data.voterId || docid}</td>
               <td>{data.name}</td>
               <td className={"text-" + data.statusColor}>{data.status}</td>
+              <td>{confirmed?<Button variant="danger">Remove Vote</Button> : <Button variant="danger">J'Accuse!</Button>}</td>
             </tr>)
         }
       }
@@ -94,6 +93,7 @@ const PLCVotingAdminPage = () => {
       <SEO title="PLC Voting | Admin" />
       <h1>PLC Voting Admin</h1>
       <b>Devices</b>
+      <p>{table.length} ballots tallied</p>
       <Table responsive hover>
         <thead>
         <tr>
@@ -101,6 +101,7 @@ const PLCVotingAdminPage = () => {
           <th>Voter ID</th>
           <th>Name</th>
           <th>Status</th>
+          <th>Manage</th>
         </tr>
         </thead>
         <tbody>

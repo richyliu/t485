@@ -2,6 +2,7 @@ import React from "react"
 import { Link } from "gatsby"
 
 import { Navbar, Nav, Button } from "react-bootstrap"
+import { useFirebase } from "gatsby-plugin-firebase";
 function NavbarLink(props) {
   return (
     <Link to={"/" + props.page} className="link-no-style">
@@ -13,6 +14,17 @@ function NavbarLink(props) {
 }
 const CustomNavbar = ({ pageInfo, admin }) => {
   console.log(pageInfo, pageInfo && pageInfo.pageName);
+  const [PLCVotingOpen, setPLCVotingOpen] = React.useState(false);
+  useFirebase((firebase) => {
+    firebase.firestore()
+      .collection("plcvoting")
+      .doc("metadata")
+      .get()
+      .then((data) => {
+        setPLCVotingOpen(data.data().open);
+        console.log(data.data());
+      })
+  }, []);
   return (
     <>
       <Navbar bg="dark" variant="dark" expand="lg" id="site-navbar">
@@ -26,7 +38,7 @@ const CustomNavbar = ({ pageInfo, admin }) => {
             <NavbarLink page="page-2">Page 2</NavbarLink>
             <NavbarLink page="404">Link Name 2</NavbarLink>
             <NavbarLink page="plc/voting/admin">PLC Admin</NavbarLink>
-            <Link to="/plc/voting/vote" className="link-no-style">
+            <Link to="/plc/voting/vote" className="link-no-style" hidden={!PLCVotingOpen}>
               <Button>PLC Voting</Button>
             </Link>
           </Nav>
