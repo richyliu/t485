@@ -11,7 +11,7 @@ import { Container, Row, Col } from "react-bootstrap"
 import Navbar from "./navBar"
 import BackgroundImage from "gatsby-background-image"
 
-const Layout = ({ children, pageInfo, backgroundImage }) => (
+const Layout = ({ children, pageInfo, admin, backgroundImage }) => (
   <StaticQuery
     query={graphql`
       query SiteTitleQuery {
@@ -26,7 +26,7 @@ const Layout = ({ children, pageInfo, backgroundImage }) => (
       let page = (
         <>
           <Container fluid className="px-0 main">
-            <Navbar pageInfo={pageInfo} />
+            <Navbar pageInfo={pageInfo} admin={admin} />
             <Row noGutters>
               <Col>
                 <Container className="mt-5">

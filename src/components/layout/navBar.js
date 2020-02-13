@@ -11,21 +11,21 @@ function NavbarLink(props) {
     </Link>
   )
 }
-const CustomNavbar = ({ pageInfo }) => {
-  console.log(pageInfo, pageInfo && pageInfo.pageName)
+const CustomNavbar = ({ pageInfo, admin }) => {
+  console.log(pageInfo, pageInfo && pageInfo.pageName);
   return (
     <>
       <Navbar bg="dark" variant="dark" expand="lg" id="site-navbar">
         {/* <Container> */}
         <Link to="/" className="link-no-style">
-          <Navbar.Brand as="span">BSA Troop 485</Navbar.Brand>
+          <Navbar.Brand as="span">BSA Troop 485 {admin ? <span style={{color:"#99ccff"}}>| Admin</span> : <></>}</Navbar.Brand>
         </Link>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
           <Nav activeKey={pageInfo && pageInfo.pageName}>
             <NavbarLink page="page-2">Page 2</NavbarLink>
             <NavbarLink page="404">Link Name 2</NavbarLink>
-            <NavbarLink page="404">Link Name 3</NavbarLink>
+            <NavbarLink page="plc/voting/admin">PLC Admin</NavbarLink>
             <Link to="/plc/voting/vote" className="link-no-style">
               <Button>PLC Voting</Button>
             </Link>

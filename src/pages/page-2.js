@@ -1,7 +1,7 @@
 import React from "react"
 import { graphql, Link, StaticQuery } from "gatsby"
 
-import Layout from "../components/layout"
+import Layout from "../components/layout/layout"
 import SEO from "../components/seo"
 
 const SecondPage = () => (
@@ -19,6 +19,7 @@ const SecondPage = () => (
     `}
     render={data => (
       <Layout
+
         pageInfo={{ pageName: "page-2" }}
         backgroundImage={data.desktop.childImageSharp.fluid}
       >
