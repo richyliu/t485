@@ -253,7 +253,7 @@ const ControlledCustomCheck= ({initialChecked, id, name, disabled, onChange, ...
 const PLCVotingPage = function () {
   const firebase = React.useContext(FirebaseContext);
   const [name, setName] = React.useState("");
-  const [page, setPage] = React.useState(localStorage.getItem("fraudDetected") === "true" ? "fraudDetected" : "loading");
+  const [page, setPage] = React.useState("loading");
   const [user, setUser] = React.useState(null);
   const [voterId, setVoterId] = React.useState("");
   const [lastSubmitName, setLastSubmitName] = React.useState("");

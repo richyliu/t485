@@ -58,7 +58,7 @@ const PLCVotingAdminPage = () => {
                     status: "Done",
                     statusColor:"success",
                     timestamp:voter.data().timestamp,
-                    submitted:false
+                    stage:true
                   }
                   return newDevices;
                 })
@@ -100,7 +100,7 @@ const PLCVotingAdminPage = () => {
     }
     table.sort((a, b) => {
       if (a.submitted !== b.submitted) {
-        return a.submitted ? -1 : 1; // a should be less than b to get sorted first
+        return a.submitted ? 1 : -1; // a should be less than b to get sorted first
       }
       return b.timestamp - a.timestamp;
     });
