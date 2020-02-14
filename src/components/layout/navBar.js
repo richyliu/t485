@@ -13,7 +13,6 @@ function NavbarLink(props) {
   )
 }
 const CustomNavbar = ({ pageInfo, admin }) => {
-  console.log(pageInfo, pageInfo && pageInfo.pageName);
   const [PLCVotingOpen, setPLCVotingOpen] = React.useState(false);
   useFirebase((firebase) => {
     firebase.firestore()
@@ -22,7 +21,6 @@ const CustomNavbar = ({ pageInfo, admin }) => {
       .get()
       .then((data) => {
         setPLCVotingOpen(data.data().open);
-        console.log(data.data());
       })
   }, []);
   return (

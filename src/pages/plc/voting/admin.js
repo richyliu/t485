@@ -33,6 +33,8 @@ const PLCVotingAdminPage = () => {
                 }[currentVoter.voteInProgress && currentVoter.voteInProgress.status ? currentVoter.voteInProgress.status.mode || "Unknown" : "Unknown"] || "Unknown",
                 statusColor:"warning",
                 voterId: currentVoter.voteInProgress.voterId,
+                timestamp: currentVoter.voteInProgress.timestamp,
+                submitted:false
               }
               return newDevices;
             })
@@ -54,7 +56,9 @@ const PLCVotingAdminPage = () => {
                   newDevices[deviceId][voterId] = {
                     name: voter.data().name,
                     status: "Done",
-                    statusColor:"success"
+                    statusColor:"success",
+                    timestamp:voter.data().timestamp,
+                    submitted:false
                   }
                   return newDevices;
                 })
@@ -70,6 +74,9 @@ const PLCVotingAdminPage = () => {
 
   let table = [];
   if(devices) {
+    // Sort devices so the same general order is presented
+    // all unsubmitted ones must be on top, but otherwise the newest ones should be earlier
+
     for (let [deviceid, docs] of Object.entries(devices)) {
       if (docs) {
 
@@ -77,16 +84,27 @@ const PLCVotingAdminPage = () => {
           let confirmed = !(docid === "currentlyVoting");
           if (!confirmed && data.voterId && !!docs[data.voterId]) continue;
           // data.voterId only exists on unassigned users.
-          table.unshift(<tr key={deviceid + "" + docid}>
+          table.unshift(
+            {
+              submitted:data.submitted,
+              timestamp:data.timestamp,
+          element:<tr key={deviceid + "" + docid}>
               <td>{deviceid}</td>
               <td>{data.voterId || docid}</td>
               <td>{data.name}</td>
               <td className={"text-" + data.statusColor}>{data.status}</td>
               <td>{confirmed?<Button variant="danger">Remove Vote</Button> : <Button variant="danger">J'Accuse!</Button>}</td>
-            </tr>)
+            </tr>})
         }
       }
     }
+    table.sort((a, b) => {
+      if (a.submitted !== b.submitted) {
+        return a.submitted ? -1 : 1; // a should be less than b to get sorted first
+      }
+      return b.timestamp - a.timestamp;
+    });
+
   }
   return (
     <Layout>
@@ -105,7 +123,7 @@ const PLCVotingAdminPage = () => {
         </tr>
         </thead>
         <tbody>
-        {table}
+        {table.map(el => el.element)}
         </tbody>
       </Table>
     </Layout>
