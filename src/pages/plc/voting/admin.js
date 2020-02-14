@@ -33,7 +33,7 @@ const PLCVotingAdminPage = () => {
                 }[currentVoter.voteInProgress && currentVoter.voteInProgress.status ? currentVoter.voteInProgress.status.mode || "Unknown" : "Unknown"] || "Unknown",
                 statusColor:"warning",
                 voterId: currentVoter.voteInProgress.voterId,
-                timestamp: currentVoter.voteInProgress.timestamp,
+                timestamp: currentVoter.voteInProgress.startTimestamp,
                 submitted:false
               }
               return newDevices;
