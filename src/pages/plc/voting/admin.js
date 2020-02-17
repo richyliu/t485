@@ -2,12 +2,31 @@ import React from "react"
 
 import Layout from "../../../components/layout/layout"
 import SEO from "../../../components/seo"
-import { Table, Button } from "react-bootstrap";
+import { Table, Button, ButtonGroup } from "react-bootstrap";
 import { FirebaseContext, useFirebase } from "gatsby-plugin-firebase";
 
 const PLCVotingAdminPage = () => {
   const [devices, setDevices] = React.useState({});
   const firebase = React.useContext(FirebaseContext);
+  const sendEvent = (type, id) => {
+    let timestamp;
+    if (type === "showFraudMessage" || type === "hideFraudMessage") {
+      // the default TTL for a fraud message is 12 hours. They can be overridden by future messages, however
+      timestamp = firebase.firestore.Timestamp.fromMillis(firebase.firestore.Timestamp.now().toMillis() + 1000 * 60 * 60 * 12);
+    } else {
+      timestamp = firebase.firestore.FieldValue.serverTimestamp();
+    }
+    firebase
+      .firestore()
+      .collection("plcvoting")
+      .doc("test")
+      .collection("events")
+      .add({
+        timestamp:timestamp,
+        type:type,
+        target:id,
+      })
+  }
 
   useFirebase(firebase => {
     setDevices({});// this is ok because useFirebase only gets called once
@@ -77,23 +96,31 @@ const PLCVotingAdminPage = () => {
     // Sort devices so the same general order is presented
     // all unsubmitted ones must be on top, but otherwise the newest ones should be earlier
 
-    for (let [deviceid, docs] of Object.entries(devices)) {
+    for (let [deviceId, docs] of Object.entries(devices)) {
       if (docs) {
 
-        for (let [docid, data] of Object.entries(docs)) {
-          let confirmed = !(docid === "currentlyVoting");
+        for (let [docId, data] of Object.entries(docs)) {
+          let confirmed = !(docId === "currentlyVoting");
           if (!confirmed && data.voterId && !!docs[data.voterId]) continue;
           // data.voterId only exists on unassigned users.
           table.unshift(
             {
               submitted:data.submitted,
               timestamp:data.timestamp,
-          element:<tr key={deviceid + "" + docid}>
-              <td>{deviceid}</td>
-              <td>{data.voterId || docid}</td>
+          element:<tr key={deviceId + "" + docId}>
+              <td>{deviceId}</td>
+              <td>{data.voterId || docId}</td>
               <td>{data.name}</td>
               <td className={"text-" + data.statusColor}>{data.status}</td>
-              <td>{confirmed?<Button variant="danger">Remove Vote</Button> : <Button variant="danger">J'Accuse!</Button>}</td>
+              <td>{
+                confirmed ?
+                  <Button variant="danger">Remove Vote</Button> :
+                  <ButtonGroup>
+                    <Button variant="danger" onClick={() => sendEvent("showFraudMessage", deviceId)}>J'Accuse!</Button>
+                    <Button variant="danger" onClick={() => sendEvent("hideFraudMessage", deviceId)}>Un J'Accuse!</Button>
+                    <Button variant="danger" onClick={() => sendEvent("rickroll", deviceId)}>Troll</Button>
+                  </ButtonGroup>
+              }</td>
             </tr>})
         }
       }

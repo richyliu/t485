@@ -86,6 +86,7 @@ const VoteComponent = function ({name, data, onSubmitted, onCancel, user, voterI
     }).catch((e) => {
       console.log(e);
     });
+
   }
   return (
     <>
@@ -334,15 +335,44 @@ const PLCVotingPage = function () {
       return trimmedName;
     });
     setPage("vote");
+    const eventStartTime =  firebase.firestore.FieldValue.serverTimestamp(); // only events created after this time will be called
+    firebase
+      .firestore()
+      .collection("plcvoting")
+      .doc("test")
+      .collection("events")
+      .where("timestamp", ">=", firebase.firestore.Timestamp.fromDate(new Date()))
+      .orderBy("timestamp", "asc") // we want the earliest ones to be processed first. This is only important for persistent events
+      // (e.g. their timestamp is set to a time that is not when the message is triggered, but one a while after)
+      .onSnapshot(function(querySnapshot) {
+        querySnapshot
+          .docChanges()
+          .forEach((change) => {
+            if (change.type === "added") {
+              let data = change.doc.data();
+              if (data.target && data.target !== "all" && data.target !== user.uid) return;
 
+              switch (data.type) {
+                case "rickroll":
+                  window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+                  break;
+                case "popup":
+                  alert(data.popupText || "An error occurred displaying this message. Code:PayloadNotSet");
+                  break;
+
+                case "showFraudMessage":
+                  setPage("fraudDetected");
+                  break;
+                case "hideFraudMessage":
+                  setPage("vote");
+                  break;
+
+              }
+            }
+          })
+      });
 
   };
-  React.useEffect(() => {
-    if (page === "fraudDetected") {
-      // localStorage.setItem("fraudDetected", "true");
-
-    }
-  }, [page]);
   return (
     <Layout admin={true}>
       <SEO title="PLC Voting" />
@@ -351,10 +381,11 @@ const PLCVotingPage = function () {
         Welcome to the PLC Voting Portal!&nbsp;
         {name.trim() ? (<>You are voting as <b>{name.trim()}</b>.</>) : ""}
       </p>
+      <p>Looking for the results instead? <Link to="/plc/voting/results">Click Here</Link>.</p>
       <hr />
       {
         {
-          loading:<p>Loading...</p>,
+          loading:<div className="text-center"><p>Awaiting verification...</p><Spinner animation="border" /></div>,
           closed:<p>Sorry, but voting is currently closed.</p>,
           auth:<>
             <Form.Group controlId="name">
@@ -378,7 +409,7 @@ const PLCVotingPage = function () {
                 window.location.reload();
               }
               }>Hand your device to somebody else to allow them to vote</a></li>
-              <li><Link to="/plc/voting/">View Live Results</Link></li>
+              <li><Link to="/plc/voting/results/">View Live Results</Link></li>
             </ul>
           </>,
           fraudDetected:<div style={{
