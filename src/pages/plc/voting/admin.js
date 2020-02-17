@@ -5,6 +5,34 @@ import SEO from "../../../components/seo"
 import { Table, Button, ButtonGroup } from "react-bootstrap";
 import { FirebaseContext, useFirebase } from "gatsby-plugin-firebase";
 
+const NuclearButton = ({width, firebase}) => {
+return (
+  <div>
+    <img
+      src="https://www.mobygames.com/images/shots/l/761261-dumb-ways-to-die-ipad-screenshot-don-t-push-the-red-button.png"
+      alt="Workplace" useMap="#workmap" width={width} />
+
+    <map name="workmap">
+      <area shape="rect" coords={[50,50,235,250].map(x => x*(width/400)).join(",")} href="#" onClick={(e) =>
+      {
+        if(window.confirm("Are you sure? Don't say I didn't warn you!")){
+          firebase
+            .firestore()
+            .collection("plcvoting")
+            .doc("test")
+            .collection("events")
+            .add({
+              timestamp:firebase.firestore.FieldValue.serverTimestamp(),
+              type:"rickroll",
+              target:"everyone",
+            })
+        }
+      }} />
+    </map>
+
+  </div>)
+}
+
 const PLCVotingAdminPage = () => {
   const [devices, setDevices] = React.useState({});
   const firebase = React.useContext(FirebaseContext);
@@ -137,6 +165,7 @@ const PLCVotingAdminPage = () => {
     <Layout>
       <SEO title="PLC Voting | Admin" />
       <h1>PLC Voting Admin</h1>
+      <NuclearButton width="500" firebase={firebase} />
       <b>Devices</b>
       <p>{table.length} ballots tallied</p>
       <Table responsive hover>

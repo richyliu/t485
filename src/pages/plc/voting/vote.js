@@ -335,7 +335,6 @@ const PLCVotingPage = function () {
       return trimmedName;
     });
     setPage("vote");
-    const eventStartTime =  firebase.firestore.FieldValue.serverTimestamp(); // only events created after this time will be called
     firebase
       .firestore()
       .collection("plcvoting")
@@ -350,7 +349,7 @@ const PLCVotingPage = function () {
           .forEach((change) => {
             if (change.type === "added") {
               let data = change.doc.data();
-              if (data.target && data.target !== "all" && data.target !== user.uid) return;
+              if (data.target !== "everyone" && data.target !== user.uid) return;
 
               switch (data.type) {
                 case "rickroll":
