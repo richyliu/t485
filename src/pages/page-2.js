@@ -19,7 +19,6 @@ const SecondPage = () => (
     `}
     render={data => (
       <Layout
-
         pageInfo={{ pageName: "page-2" }}
         backgroundImage={data.desktop.childImageSharp.fluid}
       >

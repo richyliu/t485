@@ -25,7 +25,8 @@ const Chart = ({voteData, title, seed}) => {
         title: {
             display: true,
             text: title
-        }
+        },
+
 
     }
     return (

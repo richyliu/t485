@@ -5,6 +5,187 @@ import SEO from "../../../components/seo"
 import { Spinner, Button, Form } from "react-bootstrap";
 import { FirebaseContext, useFirebase } from "gatsby-plugin-firebase";
 
+const PLCVotingPage = function () {
+  const firebase = React.useContext(FirebaseContext);
+  const [name, setName] = React.useState("");
+  const [page, setPage] = React.useState("loading");
+  const [user, setUser] = React.useState(null);
+  const [voterId, setVoterId] = React.useState("");
+  const [data, setData] = React.useState([]);
+  const [campaignName, setCampaignName] = React.useState();
+
+  useFirebase((fb) => {
+    if (!fb) return;
+    if (user) return;
+    fb.auth().onAuthStateChanged((fbUser) => {
+      if (fbUser) {
+        setUser(fbUser);
+        fb.firestore()
+          .collection("plcvoting")
+          .doc("metadata")
+          .get()
+          .then((data) => {
+            if (!data.data().open) {
+              setPage("closed");
+              return;
+            }
+            setCampaignName(data.data().activeCampaign);
+            setPage("auth");
+            fb
+              .firestore()
+              .collection("plcvoting")
+              .doc(data.data().activeCampaign)
+              .get()
+              .then((data) => {
+                let options = data.data().options;
+                setData(options);
+              });
+          })
+
+
+      } else {
+        firebase.auth().signInAnonymously().catch(function(error) {
+          // Handle Errors here.
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          // ...
+          console.log(error);
+        });
+      }
+    });
+  }, []);
+  let onAuthSubmit = () => {
+    let voterId = firebase
+      .firestore()
+      .collection("plcvoting")
+      .doc(campaignName)
+      .collection("devices")
+      .doc(user.uid)
+      .collection("voters")
+      .doc()
+      .id;
+    setVoterId(voterId);
+    setName((oldName) => {
+      let trimmedName = oldName.trim();
+
+      firebase
+        .firestore()
+        .collection("plcvoting")
+        .doc(campaignName)
+        .collection("devices")
+        .doc(user.uid) //deviceid
+        .set({
+          voteInProgress:{
+            startTimestamp:firebase.firestore.FieldValue.serverTimestamp(),
+            name: trimmedName,
+            voterId:voterId
+          },
+          currentlyVoting:true,
+        }, {merge:true}); // The field contains data pertinent to the unsubmitted data. The collection("submissions").doc() is the finished votes
+      // NOTE: merge is a shallow merge, which is what we want
+
+      return trimmedName;
+    });
+    setPage("vote");
+    let startTimestamp = firebase.firestore.Timestamp.fromDate(new Date());
+    firebase
+      .firestore()
+      .collection("plcvoting")
+      .doc(campaignName)
+      .collection("events")
+      .where("timestamp", ">=", startTimestamp)
+      .orderBy("timestamp", "asc") // we want the earliest ones to be processed first. This is only important for persistent events
+      // (e.g. their timestamp is set to a time that is not when the message is triggered, but one a while after)
+      .where("target", "in", [user.uid, "everyone"])
+      .onSnapshot(function(querySnapshot) {
+        querySnapshot
+          .docChanges()
+          .forEach((change) => {
+            if (change.type === "added") {
+              let data = change.doc.data();
+
+              switch (data.type) {
+                case "rickroll":
+                  window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+                  break;
+                case "popup":
+                  alert(data.popupText || "An error occurred displaying this message. Code:PayloadNotSet");
+                  break;
+                case "voteOptionUpdate":
+                  alert("Sorry, but a new voting option was added. This page will now reload so you can vote again.");
+                  window.location.reload();
+                  break;
+
+                case "showFraudMessage":
+                  setPage("fraudDetected");
+                  break;
+                case "hideFraudMessage":
+                  setPage("vote");
+                  break;
+
+              }
+            }
+          })
+      });
+
+  };
+  return (
+    <Layout admin={true}>
+      <SEO title="PLC Voting" />
+      <h1>PLC Voting</h1>
+      <p>
+        Welcome to the PLC Voting Portal!&nbsp;
+        {name.trim() ? (<>You are voting as <b>{name.trim()}</b>.</>) : ""}
+      </p>
+      <p>Looking for the results instead? <Link to="/plc/voting/results">Click Here</Link>.</p>
+      <hr />
+      {
+        {
+          loading:<div className="text-center"><p>Awaiting verification...</p><Spinner animation="border" /></div>,
+          closed:<p>Sorry, but voting is currently closed.</p>,
+          auth:<>
+            <Form.Group controlId="name">
+              <Form.Label>Your Name: </Form.Label>
+              <Form.Control type="text" placeholder="Enter your name..." name="full-name" value={name} onChange={(e) => setName(e.target.value)} />
+              <Form.Text className="text-muted">
+                Enter your real, full name, or your vote will be removed. Voting fraud corrupts headcounts and constitutes grounds for a three month voting ban.
+              </Form.Text>
+            </Form.Group>
+            <Button variant="primary" block disabled={name.trim().length === 0} className="mt-2" onClick={onAuthSubmit}>{name.trim().length === 0 ? "Enter your name to begin voting" : "Begin Voting"}</Button>
+          </>,
+          vote:data ?
+            <VoteComponent campaignName={campaignName} voterId={voterId} user={user} name={name} data={data} onSubmitted={() => setPage("done")} onCancel={() => setPage("auth")} />
+            : <p>Loading...</p>,
+          done:<>
+            <h3>Thanks, {name}!</h3>
+            <p>Your vote has been registered. You may now:</p>
+            <ul>
+              <li><a href="/plc/voting" onClick={(e) => {
+                e.preventDefault();
+                window.location.reload();
+              }
+              }>Hand your device to somebody else to allow them to vote</a></li>
+              <li><Link to="/plc/voting/results/">View Live Results</Link></li>
+            </ul>
+          </>,
+          fraudDetected:<div style={{
+            backgroundColor:"red",
+            height:"50vh",
+            padding:"3vw",
+          }}>
+            <h1>Voting Fraud Detected!</h1>
+            <p>bruhh.</p>
+            <p> Your vote was not counted. Give this to the SPL or webmaster to try again</p>
+            <button onClick={() => window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"}>SPL/webmaster click here</button>
+            <p>ID: {(user && user.uid) || "NAUTH"}</p>
+            {/*<input placeholder="override code" onChange={(e) => e.target.value === "webmasteroverride" ? setPage("auth") : null} type="password" />*/}
+          </div>
+        }[page]
+      }
+
+    </Layout>
+  )};
+
 const VoteComponent = function ({name, data, onSubmitted, onCancel, user, voterId, campaignName}) {
   const firebase = React.useContext(FirebaseContext);
 
@@ -12,6 +193,8 @@ const VoteComponent = function ({name, data, onSubmitted, onCancel, user, voterI
   const [valid, setValid] = React.useState(Array(data.length).fill(true));
   const [loading, setLoading] = React.useState(false);
   const [mode, setMode] = React.useState("vote");
+
+  // Update the mode on the server each time it changes
   React.useEffect(
     () => {
       firebase
@@ -25,14 +208,14 @@ const VoteComponent = function ({name, data, onSubmitted, onCancel, user, voterI
           status: {
 
             mode: mode,
-            timestamp: new Date().getTime()
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
           }
           }
         }, {merge:true})
     }, [mode]
   )
   const isEmptyVote = (voteArr) => {
-    // Make sure that every single vote is false.
+    // Check if every single vote is false.
     for (let i = 0; i < voteArr.length; i ++) {
       for (let j = 0; j < voteArr[i].length; j ++) {
         if (voteArr[i][j]) return false;
@@ -43,48 +226,54 @@ const VoteComponent = function ({name, data, onSubmitted, onCancel, user, voterI
 
   const onSubmit = () => {
     setLoading(true);
-    let clearVotingDone = false;
-    let submitVoteDone = false;
-    firebase
+    let batch = firebase
+      .firestore()
+      .batch();
+    let batchRef = firebase
       .firestore()
       .collection("plcvoting")
-      .doc(campaignName)
+      .doc(campaignName);
+
+    batch.set(
+      batchRef
       .collection("devices")
-      .doc(user.uid)
-      .set({
+      .doc(user.uid), {
         currentlyVoting:false
-      }).then(() => {
-        clearVotingDone = true;
-        if (submitVoteDone && clearVotingDone) {
-          setLoading(false);
-          onSubmitted();
-        }
-      }).catch((e) => {
-      console.log(e);
-    });
-    firebase
-      .firestore()
-      .collection("plcvoting")
-      .doc(campaignName
-      )
+      });
+    batch.set(
+      batchRef
       .collection("devices")
       .doc(user.uid)
       .collection("votes")
-      .doc(voterId)
-      .set({
+      .doc(voterId),
+      {
         vote:JSON.stringify(vote),
-        timestamp:new Date().getTime(),
+        timestamp:firebase.firestore.FieldValue.serverTimestamp(),
         name:name,
         device:user.uid
-      }).then(() => {
-      submitVoteDone = true;
-      if (submitVoteDone && clearVotingDone) {
-        setLoading(false);
-        onSubmitted();
+      });
 
+    // update the counters
+    for (let i = 0; i < vote.length; i ++) {
+      let update = {};
+      for (let j = 0; j < vote[i].length; j ++) {
+        if (vote[i][j]) {
+          update[j] = firebase.firestore.FieldValue.increment(1);
+        }
       }
-    }).catch((e) => {
-      console.log(e);
+      batch
+        .set(batchRef
+          .collection("counters")
+          .doc("1"), update, {merge: true});
+
+    }
+
+    batch.commit().then(() => {
+      setLoading(false);
+      onSubmitted();
+    }).catch((error) => {
+      console.log(error);
+      alert("Error: " + error.message);
     });
 
   }
@@ -250,183 +439,5 @@ const ControlledCustomCheck= ({initialChecked, id, name, disabled, onChange, ...
     />
   )
 }
-
-const PLCVotingPage = function () {
-  const firebase = React.useContext(FirebaseContext);
-  const [name, setName] = React.useState("");
-  const [page, setPage] = React.useState("loading");
-  const [user, setUser] = React.useState(null);
-  const [voterId, setVoterId] = React.useState("");
-  const [lastSubmitName, setLastSubmitName] = React.useState("");
-  const getDbKey = (str) => str.toLowerCase().replace(/[^a-z]/g, "");
-  const [data, setData] = React.useState([]);
-  const [campaignName, setCampaignName] = React.useState();
-
-  useFirebase((fb) => {
-    if (!fb) return;
-    if (user) return;
-    fb.auth().onAuthStateChanged((fbUser) => {
-      if (fbUser) {
-        setUser(fbUser);
-        fb.firestore()
-          .collection("plcvoting")
-          .doc("metadata")
-          .get()
-          .then((data) => {
-            if (data.data().closed) {
-              setPage("closed");
-              return;
-            }
-            setCampaignName(data.data().activeCampaign);
-            setPage("auth");
-            fb
-              .firestore()
-              .collection("plcvoting")
-              .doc(data.data().activeCampaign)
-              .get()
-              .then((data) => {
-                let options = data.data().options;
-                setData(options);
-              });
-          })
-
-
-      } else {
-        firebase.auth().signInAnonymously().catch(function(error) {
-          // Handle Errors here.
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          // ...
-          console.log(error);
-        });
-      }
-    });
-  })
-  let onAuthSubmit = () => {
-    let voterId = firebase
-      .firestore()
-      .collection("plcvoting")
-      .doc(campaignName)
-      .collection("devices")
-      .doc(user.uid)
-      .collection("voters")
-      .doc()
-      .id;
-    setVoterId(voterId);
-    setName((oldName) => {
-      let trimmedName = oldName.trim();
-
-      firebase
-        .firestore()
-        .collection("plcvoting")
-        .doc(campaignName)
-        .collection("devices")
-        .doc(user.uid) //deviceid
-        .set({
-          voteInProgress:{
-            startTimestamp:new Date().getTime(),
-            name: trimmedName,
-            voterId:voterId
-          },
-          currentlyVoting:true,
-        }, {merge:true}); // The field contains data pertinent to the unsubmitted data. The collection("submissions").doc() is the finished votes
-      // NOTE: merge is a shallow merge, which is what we want
-
-      return trimmedName;
-    });
-    setPage("vote");
-    firebase
-      .firestore()
-      .collection("plcvoting")
-      .doc("test")
-      .collection("events")
-      .where("timestamp", ">=", firebase.firestore.Timestamp.fromDate(new Date()))
-      .orderBy("timestamp", "asc") // we want the earliest ones to be processed first. This is only important for persistent events
-      // (e.g. their timestamp is set to a time that is not when the message is triggered, but one a while after)
-      .onSnapshot(function(querySnapshot) {
-        querySnapshot
-          .docChanges()
-          .forEach((change) => {
-            if (change.type === "added") {
-              let data = change.doc.data();
-              if (data.target !== "everyone" && data.target !== user.uid) return;
-
-              switch (data.type) {
-                case "rickroll":
-                  window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
-                  break;
-                case "popup":
-                  alert(data.popupText || "An error occurred displaying this message. Code:PayloadNotSet");
-                  break;
-
-                case "showFraudMessage":
-                  setPage("fraudDetected");
-                  break;
-                case "hideFraudMessage":
-                  setPage("vote");
-                  break;
-
-              }
-            }
-          })
-      });
-
-  };
-  return (
-    <Layout admin={true}>
-      <SEO title="PLC Voting" />
-      <h1>PLC Voting</h1>
-      <p>
-        Welcome to the PLC Voting Portal!&nbsp;
-        {name.trim() ? (<>You are voting as <b>{name.trim()}</b>.</>) : ""}
-      </p>
-      <p>Looking for the results instead? <Link to="/plc/voting/results">Click Here</Link>.</p>
-      <hr />
-      {
-        {
-          loading:<div className="text-center"><p>Awaiting verification...</p><Spinner animation="border" /></div>,
-          closed:<p>Sorry, but voting is currently closed.</p>,
-          auth:<>
-            <Form.Group controlId="name">
-              <Form.Label>Your Name: </Form.Label>
-              <Form.Control type="text" placeholder="Enter your name..." name="full-name" value={name} onChange={(e) => setName(e.target.value)} />
-              <Form.Text className="text-muted">
-                Enter your real, full name, or your vote will be removed. Voting fraud corrupts headcounts and constitutes grounds for a three month voting ban.
-              </Form.Text>
-            </Form.Group>
-            <Button variant="primary" block disabled={name.trim().length === 0} className="mt-2" onClick={onAuthSubmit}>{name.trim().length === 0 ? "Enter your name to begin voting" : "Begin Voting"}</Button>
-          </>,
-          vote:data ?
-            <VoteComponent campaignName={campaignName} voterId={voterId} user={user} name={name} data={data} onSubmitted={() => setPage("done")} onCancel={() => setPage("auth")} />
-            : <p>Loading...</p>,
-          done:<>
-            <h3>Thanks, {name}!</h3>
-            <p>Your vote has been registered. You may now:</p>
-            <ul>
-              <li><a href="/plc/voting" onClick={(e) => {
-                e.preventDefault();
-                window.location.reload();
-              }
-              }>Hand your device to somebody else to allow them to vote</a></li>
-              <li><Link to="/plc/voting/results/">View Live Results</Link></li>
-            </ul>
-          </>,
-          fraudDetected:<div style={{
-            backgroundColor:"red",
-            height:"50vh",
-            padding:"3vw",
-          }}>
-            <h1>Voting Fraud Detected!</h1>
-            <p>bruhh.</p>
-            <p> Your vote was not counted. Give this to the SPL or webmaster to try again</p>
-            <button onClick={() => window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"}>SPL/webmaster click here</button>
-            <p>ID: {(user && user.uid) || "NAUTH"}</p>
-            {/*<input placeholder="override code" onChange={(e) => e.target.value === "webmasteroverride" ? setPage("auth") : null} type="password" />*/}
-          </div>
-        }[page]
-      }
-
-    </Layout>
-  )};
 
 export default PLCVotingPage

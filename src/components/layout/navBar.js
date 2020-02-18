@@ -13,16 +13,7 @@ function NavbarLink(props) {
   )
 }
 const CustomNavbar = ({ pageInfo, admin }) => {
-  const [PLCVotingOpen, setPLCVotingOpen] = React.useState(false);
-  useFirebase((firebase) => {
-    firebase.firestore()
-      .collection("plcvoting")
-      .doc("metadata")
-      .get()
-      .then((data) => {
-        setPLCVotingOpen(data.data().open);
-      })
-  }, []);
+
   return (
     <>
       <Navbar bg="dark" variant="dark" expand="lg" id="site-navbar">
@@ -36,8 +27,8 @@ const CustomNavbar = ({ pageInfo, admin }) => {
             <NavbarLink page="page-2">Page 2</NavbarLink>
             <NavbarLink page="404">Link Name 2</NavbarLink>
             <NavbarLink page="plc/voting/admin">PLC Admin</NavbarLink>
-            <Link to="/plc/voting/vote" className="link-no-style" hidden={!PLCVotingOpen}>
-              <Button>PLC Voting</Button>
+            <Link to="/plc/voting/vote" className="link-no-style">
+              <Button>PLC Voting</Button> // TODO: delete
             </Link>
           </Nav>
         </Navbar.Collapse>
