@@ -2,7 +2,7 @@ import React from "react"
 
 import Layout from "../../../components/layout/layout"
 import SEO from "../../../components/seo"
-import { Table, Button, ButtonGroup, FormControl } from "react-bootstrap";
+import { Spinner,  Table, Button, ButtonGroup, Form, FormControl, InputGroup } from "react-bootstrap";
 import { FirebaseContext, useFirebase } from "gatsby-plugin-firebase";
 
 const CampaignManagement = ({firebase, campaign}) => {
@@ -155,6 +155,58 @@ const CampaignManagement = ({firebase, campaign}) => {
   )
 }
 
+const NewCampaign = ({firebase, campaignNames, onCreated}) => {
+  const [name, setName] = React.useState("");
+  const [submitting, setSubmitting] = React.useState(false);
+  const createNewCampaign = () => {
+    setSubmitting(true);
+    if (campaignNames.indexOf(name) > -1) {
+      return;
+    }
+    firebase
+      .firestore()
+      .collection("plcvoting")
+      .doc("metadata")
+      .set({
+        campaigns: firebase.firestore.FieldValue.arrayUnion(name)
+      }, {merge:true})
+      .then(() => {
+        setSubmitting(false);
+        onCreated(name)
+      }).catch((e) => {
+        console.log(e);
+        alert("Error: " + e.message);
+    });
+  }
+  return (<div>
+    <h3>Create new Campaign</h3>
+    <Form.Group md="4" controlId="validationCustomUsername">
+      <Form.Label>Campaign Name</Form.Label>
+        <Form.Control
+          type="text"
+          required
+          isInvalid={!submitting && campaignNames.indexOf(name) > -1}
+          onChange={(e) => {
+            setName(e.target.value.replace(/[^a-zA-Z0-9]/g, ""));
+          }}
+          value={name}
+        />
+        <Form.Control.Feedback type="invalid">
+          Name already exists
+        </Form.Control.Feedback>
+    </Form.Group>
+    <Button block className="mt-3" disabled={submitting || name === "" || campaignNames.indexOf(name) > -1} onClick={(e) => createNewCampaign(name)}>{submitting ?
+      <Spinner
+      as="span"
+      animation="border"
+      size="sm"
+      role="status"
+      aria-hidden="true"
+    /> : "Submit"}</Button>
+    <p className="text-muted">Only alphanumeric characters are allowed. All spaces and non alphanumeric characters will be removed.</p>
+  </div>)
+}
+
 const NuclearButton = ({width, firebase}) => {
 return (
   <div>
@@ -163,7 +215,7 @@ return (
       alt="Workplace" useMap="#workmap" width={width} />
 
     <map name="workmap">
-      <area shape="rect" coords={[50,50,235,250].map(x => x*(width/400)).join(",")} href="#" onClick={(e) =>
+      <area alt="clickable big red button" shape="rect" coords={[50,50,235,250].map(x => x*(width/400)).join(",")} href="#" onClick={(e) =>
       {
         if(window.confirm("Are you sure? Don't say I didn't warn you!")){
           firebase
@@ -187,17 +239,19 @@ const PLCVotingAdminPage = () => {
   const firebase = React.useContext(FirebaseContext);
   const [page, setPage] = React.useState("auth");
   const [campaigns, setCampaigns] = React.useState([]);
+  const [campaign, setCampaign] = React.useState("");
 
 
-  const onAuthenticated = (e) => {
+  const onAuthenticated = () => {
     firebase
       .firestore()
       .collection("plcvoting")
       .doc("metadata")
-      .get()
-      .then((snapshot) => {
+      .onSnapshot((snapshot) => {
+        console.log(snapshot, snapshot.data());
         setCampaigns(snapshot.data().campaigns)
-      })
+      });
+    setPage("campaignSelect")
   }
 
   return (
@@ -205,23 +259,34 @@ const PLCVotingAdminPage = () => {
     <Layout admin={true}>
       <SEO title="PLC Voting | Admin" />
       <h1>PLC Voting Admin</h1>
+      <Button variant="link" className="p-0" hidden={page === "auth" || page === "campaignSelect"} onClick={() => setPage("campaignSelect")}>Return to campaign select</Button>
+
       {
         {
           auth:<div>
             <h3>Authentication</h3>
-            <FormControl type="password" placeholder="Enter Password..." onChange={(e) => e.target.value === "athoc595014" ? onAuthenticated(e) : null} />
+            <FormControl type="password" placeholder="Enter Password..." onChange={(event) => event.target.value === "athoc595014" ? onAuthenticated() : null} />
           </div>,
           campaignSelect:<div>
             <h3>Select Campaign to Manage</h3>
             <ul>
               {
                 campaigns.map( (name) =>
-                  <li key={name}><Button className="p-0" variant="link" onClick={() => alert("rendering " + name)}>{name}</Button></li>
+                  <li key={name}><Button className="p-0" variant="link" onClick={() => {
+                    setCampaign(name);
+                    setPage("manage");
+                  }}>{name}</Button></li>
+
                 )
               }
-              <li><Button className="p-0" variant="link" onClick={() => alert("Creating")}>Create New</Button></li>
+              <li><Button className="p-0" variant="link" onClick={() => setPage("newCampaign")}>Create New</Button></li>
             </ul>
-          </div>
+          </div>,
+          newCampaign:<NewCampaign firebase={firebase} campaignNames={campaigns} onCreated={(name) => {
+            setCampaign(name);
+            setPage("manage");
+          }}/>,
+          manage: <CampaignManagement campaign={campaign} firebase={firebase} />
         }[page]
       }
     </Layout>
