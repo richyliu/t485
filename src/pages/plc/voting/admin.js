@@ -2,7 +2,7 @@ import React from "react"
 
 import Layout from "../../../components/layout/layout"
 import SEO from "../../../components/seo"
-import { Spinner,  Table, Button, ButtonGroup, Form, FormControl, InputGroup } from "react-bootstrap";
+import { Spinner,  Table, Button, ButtonGroup, Form, FormControl, Row, Col } from "react-bootstrap";
 import { FirebaseContext, useFirebase } from "gatsby-plugin-firebase";
 
 const CampaignManagement = ({firebase, campaign}) => {
@@ -10,7 +10,7 @@ const CampaignManagement = ({firebase, campaign}) => {
   const sendEvent = (type, id) => {
     let timestamp;
     if (type === "showFraudMessage" || type === "hideFraudMessage") {
-      // the default TTL for a fraud message is 12 hours. They can be overridden by future messages, however
+      // the default TTL for a fraud message is 12 hours. The message can be overridden by future messages, however
       timestamp = firebase.firestore.Timestamp.fromMillis(firebase.firestore.Timestamp.now().toMillis() + 1000 * 60 * 60 * 12);
     } else {
       timestamp = firebase.firestore.FieldValue.serverTimestamp();
@@ -133,25 +133,38 @@ const CampaignManagement = ({firebase, campaign}) => {
 
   }
   return (
-    <>
-      <NuclearButton width="500" firebase={firebase} />
-      <b>Devices</b>
-      <p>{table.length} ballots tallied</p>
-      <Table responsive hover>
-        <thead>
-        <tr>
-          <th>Device ID</th>
-          <th>Voter ID</th>
-          <th>Name</th>
-          <th>Status</th>
-          <th>Manage</th>
-        </tr>
-        </thead>
-        <tbody>
-        {table.map(el => el.element)}
-        </tbody>
-      </Table>
-    </>
+    <Row>
+      <Col xs={3}>
+        <h1>Emergencies Only</h1>
+        <b>Don't click the red button!</b>
+        <NuclearButton width="200" firebase={firebase} />
+      </Col>
+      <Col xs={6}>
+
+        <b>Devices</b>
+        <p>{table.length} ballots tallied</p>
+        <Table responsive hover>
+          <thead>
+          <tr>
+            <th>Device ID</th>
+            <th>Voter ID</th>
+            <th>Name</th>
+            <th>Status</th>
+            <th>Manage</th>
+          </tr>
+          </thead>
+          <tbody>
+          {table.map(el => el.element)}
+          </tbody>
+        </Table>
+      </Col>
+      <Col xs={3}>
+        <h1>Manage</h1>
+        <Button block variant="primary">Or me</Button>
+        <h3>Add Item</h3>
+        
+      </Col>
+    </Row>
   )
 }
 
@@ -187,7 +200,7 @@ const NewCampaign = ({firebase, campaignNames, onCreated}) => {
           required
           isInvalid={!submitting && campaignNames.indexOf(name) > -1}
           onChange={(e) => {
-            setName(e.target.value.replace(/[^a-zA-Z0-9]/g, ""));
+            setName(e.target.value.replace(/[^a-z0-9]/g, ""));
           }}
           value={name}
         />
@@ -203,7 +216,7 @@ const NewCampaign = ({firebase, campaignNames, onCreated}) => {
       role="status"
       aria-hidden="true"
     /> : "Submit"}</Button>
-    <p className="text-muted">Only alphanumeric characters are allowed. All spaces and non alphanumeric characters will be removed.</p>
+    <p className="text-muted">Only lowercase letters and numbers are allowed. All spaces and non alphanumeric characters will be removed.</p>
   </div>)
 }
 
