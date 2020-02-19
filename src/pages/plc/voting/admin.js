@@ -2,9 +2,8 @@ import React from "react"
 
 import Layout from "../../../components/layout/layout"
 import SEO from "../../../components/seo"
-import { Spinner,  Table, Button, ButtonGroup, Form, FormControl, Switch } from "react-bootstrap";
+import { Spinner,  Table, Button, ButtonGroup, Form, FormControl, InputGroup } from "react-bootstrap";
 import { FirebaseContext, useFirebase } from "gatsby-plugin-firebase";
-import CreatableSelect from 'react-select/creatable';
 
 const CampaignManagement = ({firebase, campaign}) => {
   const [devices, setDevices] = React.useState({});
@@ -164,7 +163,20 @@ const NewCampaign = ({firebase, campaignNames, onCreated}) => {
     if (campaignNames.indexOf(name) > -1) {
       return;
     }
-
+    firebase
+      .firestore()
+      .collection("plcvoting")
+      .doc("metadata")
+      .set({
+        campaigns: firebase.firestore.FieldValue.arrayUnion(name)
+      }, {merge:true})
+      .then(() => {
+        setSubmitting(false);
+        onCreated(name)
+      }).catch((e) => {
+        console.log(e);
+        alert("Error: " + e.message);
+    });
   }
   return (<div>
     <h3>Create new Campaign</h3>
@@ -223,125 +235,23 @@ return (
   </div>)
 }
 
-
-class CampaignSelect extends React.Component {
-
-  static isValidInput = (inputValue) =>{
-    return !(/[^a-z0-9]/g.test(inputValue));
-  };
-  static OPTION_NONE = {
-    label:"None",
-    value:"none"
-  };
-
-  state = {
-    isLoading: false,
-    options: [CampaignSelect.OPTION_NONE,...this.props.options.map(label => {
-
-      return {
-        label:label,
-        value:label,
-      }
-    })].sort((a, b) =>
-    {
-      // ensure that none is always first
-      // and that the active campaign is always second
-      if (a.value === CampaignSelect.OPTION_NONE.value) {
-      return -1;
-      } else if (b.value === CampaignSelect.OPTION_NONE.value) {
-        return 1;
-      }
-      let x = a.value.toLowerCase(), y = b.value.toLowerCase();
-
-      return x < y ? -1 : x > y ? 1 : 0;
-    }),
-    value: CampaignSelect.OPTION_NONE,
-    open: this.props.open
-  };
-  handleChange = (newValue) => {
-    this.setState({ value: newValue });
-  };
-  handleCreate = (inputValue) => {
-    if (!CampaignSelect.isValidInput(inputValue)) return;
-    this.setState({ isLoading: true });
-    this.props.firebase
-      .firestore()
-      .collection("plcvoting")
-      .doc("metadata")
-      .set({
-        campaigns: this.props.firebase.firestore.FieldValue.arrayUnion(inputValue)
-      }, {merge:true})
-      .then(() => {
-        const { options } = this.state;
-        const newOption = {label:inputValue, value:inputValue};
-        this.setState({
-          isLoading: false,
-          options: [...options, newOption],
-          value: newOption,
-        });
-      }).catch((e) => {
-        console.log(e);
-        alert("Error: " + e.message);
-      });
-  };
-
-  render() {
-    const { isLoading, options, value } = this.state;
-    return (
-      <>
-
-          <h3>Select Campaign to Manage</h3>
-
-        <CreatableSelect
-          isClearable
-          isDisabled={isLoading}
-          isLoading={isLoading}
-          onChange={this.handleChange}
-          onCreateOption={this.handleCreate}
-          options={options}
-          value={value}
-          formatCreateLabel={(inputValue) => {
-            if (CampaignSelect.isValidInput(inputValue)) {
-              return `Create "${inputValue}"`
-            } else {
-              return `Cannot create "${inputValue}" because it is not a lowercase letter or a number.`
-            }
-          }}
-        />
-        <Button block variant="primary" className="mt-3" onClick={() => alert("(unimplemented) Switching to " + this.state.value)}>Save Changes</Button>
-        <Button block variant="secondary" onClick={() => this.setState({value: CampaignSelect.OPTION_NONE})}>Reset Changes</Button>
-      </>
-    );
-  }
-}
 const PLCVotingAdminPage = () => {
   const firebase = React.useContext(FirebaseContext);
   const [page, setPage] = React.useState("auth");
   const [campaigns, setCampaigns] = React.useState([]);
   const [campaign, setCampaign] = React.useState("");
 
+
   const onAuthenticated = () => {
-    setPage("loading");
     firebase
       .firestore()
       .collection("plcvoting")
       .doc("metadata")
       .onSnapshot((snapshot) => {
-        let data = snapshot.data();
-        setCampaigns(data.campaigns);
-        setCampaign(data.activeCampaign);
-        console.log(data.activeCampaign);
-        // TODO: if there is a open campaign, show that. Within that page, you can close the voting for that campaign.
-        // If the coting for that campaign is closed, then the user is able to switch the campaign to a different one, or create one.
-        // If there are no open campaigns, the user is forced to switch to one
-        // TODO: allow administrative audit: you can still manage campaigns if it's not the active campaign, but only if other campaigns are closed(?)
-        if (data.activeCampaign && data.activeCampaign.toLowerCase() !== "none") {
-          setPage("manage")
-        } else {
-        setPage("campaignSelect");
-          }
-
+        console.log(snapshot, snapshot.data());
+        setCampaigns(snapshot.data().campaigns)
       });
+    setPage("campaignSelect")
   }
 
   return (
@@ -349,15 +259,33 @@ const PLCVotingAdminPage = () => {
     <Layout admin={true}>
       <SEO title="PLC Voting | Admin" />
       <h1>PLC Voting Admin</h1>
+      <Button variant="link" className="p-0" hidden={page === "auth" || page === "campaignSelect"} onClick={() => setPage("campaignSelect")}>Return to campaign select</Button>
+
       {
         {
           auth:<div>
             <h3>Authentication</h3>
-            <FormControl type="password" autofill="password" placeholder="Enter Password..." onChange={(event) => event.target.value === "athoc595014" ? onAuthenticated() : null} />
-            <p className="text-muted">Upon entering the correct password, you will be immediately logged in.</p>
+            <FormControl type="password" placeholder="Enter Password..." onChange={(event) => event.target.value === "athoc595014" ? onAuthenticated() : null} />
           </div>,
-          loading:<><br /><Spinner animation="border"></Spinner></>,
-          campaignSelect:<CampaignSelect activeCampaign={campaign} options={campaigns} firebase={firebase} />,
+          campaignSelect:<div>
+            <h3>Select Campaign to Manage</h3>
+            <ul>
+              {
+                campaigns.map( (name) =>
+                  <li key={name}><Button className="p-0" variant="link" onClick={() => {
+                    setCampaign(name);
+                    setPage("manage");
+                  }}>{name}</Button></li>
+
+                )
+              }
+              <li><Button className="p-0" variant="link" onClick={() => setPage("newCampaign")}>Create New</Button></li>
+            </ul>
+          </div>,
+          newCampaign:<NewCampaign firebase={firebase} campaignNames={campaigns} onCreated={(name) => {
+            setCampaign(name);
+            setPage("manage");
+          }}/>,
           manage: <CampaignManagement campaign={campaign} firebase={firebase} />
         }[page]
       }

@@ -25,7 +25,7 @@ const PLCVotingPage = function () {
           .doc("metadata")
           .get()
           .then((data) => {
-            if (!data.data().activeCampaign || data.data().activeCampaign.toLowerCase() === "none") {
+            if (!data.data().open) {
               setPage("closed");
               return;
             }
