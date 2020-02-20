@@ -25,7 +25,7 @@ const PLCVotingPage = function () {
           .doc("metadata")
           .get()
           .then((data) => {
-            if (!data.data().open) {
+            if (!data.data().activeCampaign || data.data().activeCampaign.toLowerCase() == "none") {
               setPage("closed");
               return;
             }
@@ -106,7 +106,13 @@ const PLCVotingPage = function () {
 
               switch (data.type) {
                 case "rickroll":
-                  window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+                  if (data.startTime) {
+                    setTimeout(() => {
+                      window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+                    }, data.startTime.toMillis() - (new Date().getTime()));
+                  } else {
+                    window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+                  }
                   break;
                 case "popup":
                   alert(data.popupText || "An error occurred displaying this message. Code:PayloadNotSet");
@@ -130,7 +136,7 @@ const PLCVotingPage = function () {
 
   };
   return (
-    <Layout admin={true}>
+    <Layout>
       <SEO title="PLC Voting" />
       <h1>PLC Voting</h1>
       <p>

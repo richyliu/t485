@@ -2,11 +2,15 @@ import React from "react"
 
 import Layout from "../../../components/layout/layout"
 import SEO from "../../../components/seo"
-import { Spinner,  Table, Button, ButtonGroup, Form, FormControl, Row, Col } from "react-bootstrap";
+import { Spinner,  Table, Button, ButtonGroup, Form, FormControl, Row, Col, Alert, InputGroup } from "react-bootstrap";
 import { FirebaseContext, useFirebase } from "gatsby-plugin-firebase";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlus } from '@fortawesome/pro-regular-svg-icons'
+
 
 const CampaignManagement = ({firebase, campaign}) => {
   const [devices, setDevices] = React.useState({});
+  const [detailedDeviceView, setDetailedDeviceView] = React.useState(false);
   const sendEvent = (type, id) => {
     let timestamp;
     if (type === "showFraudMessage" || type === "hideFraudMessage") {
@@ -132,17 +136,23 @@ const CampaignManagement = ({firebase, campaign}) => {
     });
 
   }
+  //TODO: either hide the device/voter id's on the non detailed view, or use some sort of table where you can toggle visibility (ideal)
+  // TODO: see https://react-bootstrap-table.github.io/
   return (
+    <>
+       &nbsp;| <a className="d-inline" className="p-0" onClick={() => setDetailedDeviceView((before) => !before)}> {detailedDeviceView ? "Disable" : "Enable"} Detailed Device View</a> | <p className="d-inline">{table.length} ballots tallied</p>
     <Row>
-      <Col xs={3}>
-        <h1>Emergencies Only</h1>
-        <b>Don't click the red button!</b>
-        <NuclearButton width="200" firebase={firebase} />
+      <Col lg={3} hidden={detailedDeviceView} className="ml-0">
+        <h3>Manage</h3>
+        <VotingStatus firebase={firebase} originalStatus={0} />
+        <div className="pt-3">
+          <h3>Emergencies Only</h3>
+          <b>Don't click the red button!</b>
+          <NuclearButton width="200" firebase={firebase} />
+        </div>
       </Col>
-      <Col xs={6}>
+      <Col lg={detailedDeviceView ? 12 : 6}>
 
-        <b>Devices</b>
-        <p>{table.length} ballots tallied</p>
         <Table responsive hover>
           <thead>
           <tr>
@@ -158,13 +168,132 @@ const CampaignManagement = ({firebase, campaign}) => {
           </tbody>
         </Table>
       </Col>
-      <Col xs={3}>
-        <h1>Manage</h1>
-        <Button block variant="primary">Or me</Button>
-        <h3>Add Item</h3>
-        
+      <Col lg={3} hidden={detailedDeviceView}>
+
+        <h3>Voting Options</h3>
+        <VotingOptions firebase={firebase} editable={true} />
       </Col>
     </Row>
+    </>
+  )
+}
+
+const VotingStatus = ({firebase, originalStatus}) => {
+  const [serverStatus, setServerStatus] = React.useState(originalStatus);
+  const [status, setStatus] = React.useState(originalStatus);
+  const [saving, setSaving] = React.useState(false);
+  const [saved, setSaved] = React.useState(false);
+  const statusOptions = ["Open", "Closed to New", "Closed"];
+
+  const onSubmit = () => {
+    setSaving(true);
+    setTimeout(() => {
+      setSaving(false);
+      setSaved(true);
+      setServerStatus(status);
+      setTimeout(() => {
+        setSaved(false);
+      }, 5000)
+    }, 1000)
+  }
+  return (
+    <>
+      <b>Voting Status</b>
+      <ButtonGroup>
+        {
+          statusOptions.map((name, i) => {
+
+            return (
+              <Button key={i} disabled={saving} variant={status == i ? "primary" : "secondary"} onClick={() => {setStatus(i);setSaved(false);}}>{name}</Button>
+            )
+          })
+        }
+
+      </ButtonGroup>
+      {
+        !saving && !saved ?
+          <>
+            <Button className="mt-3" hidden={status === serverStatus} block variant="primary" onClick={onSubmit}>Save Changes</Button>
+            <Button hidden={status === serverStatus} block onClick={() => setStatus(serverStatus)} variant="secondary">Reset</Button>
+          </> :
+          saving ?
+          <div class="text-center my-2">
+            <Spinner animation="border" />
+          </div>
+            : <span className="text-success">Saved!</span>
+      }
+    </>
+  )
+}
+
+const VotingOptions = ({firebase, editable}) => {
+  const [options, setOptions] = React.useState([
+    {
+      name:"Game",
+      maxVotes:2,
+      options:[
+        "G1",
+        "Game2",
+        "Game Game Game"
+      ]
+    },
+    {
+      name:"Scout Skill",
+      maxVotes:2,
+      options:[
+        "Skill 1",
+        "Skill 2",
+        "Skill Skill Skill 3"
+      ]
+    }
+  ]);
+  const [newOptions, setNewOptions] = React.useState(new Array(options.length).fill(""));
+  return (
+    <>
+      {
+        options.map((opt, i) => (
+          <div key={i}>
+            <h4>{opt.name}</h4>
+            <p className="text-muted">Max Votes: <b>{opt.maxVotes}</b> <span hidden={!editable}>(<a>Change</a>)</span></p>
+            <ul>
+              {
+                opt.options.map(name => (
+                  <li key={name}>{name}</li>
+                ))
+
+              }
+              <li hidden={!editable}>
+                <InputGroup className="mb-3">
+                <FormControl placeholder="Add new option..." value={newOptions[i]} onChange={(e) => {
+                  let value = e.target.value;
+                  setNewOptions((old) => {
+                    let newArr = old.slice();
+                    newArr[i] = value;
+                    return newArr;
+                  })
+                }}/>
+                <InputGroup.Append>
+                  <Button variant="outline-primary" disabled={newOptions[i].replace(/\s/g, "") === ""} onClick={() => {
+                    setOptions(old => {
+                      let newObj = Object.assign([], old);
+                      newObj[i].options.push(newOptions[i]);
+                      setNewOptions((old) => {
+                        let newArr = old.slice();
+                        newArr[i] = "";
+                        return newArr;
+                      })
+                      return newObj;
+                    })
+                  }}><FontAwesomeIcon icon={faPlus} /></Button>
+                </InputGroup.Append>
+              </InputGroup>
+              </li>
+            </ul>
+          </div>
+        ))
+      }
+      <h4><a>New Category</a></h4>
+    </>
   )
 }
 
@@ -231,16 +360,20 @@ return (
       <area alt="clickable big red button" shape="rect" coords={[50,50,235,250].map(x => x*(width/400)).join(",")} href="#" onClick={(e) =>
       {
         if(window.confirm("Are you sure? Don't say I didn't warn you!")){
-          firebase
-            .firestore()
-            .collection("plcvoting")
-            .doc("test")
-            .collection("events")
-            .add({
-              timestamp:firebase.firestore.FieldValue.serverTimestamp(),
-              type:"rickroll",
-              target:"everyone",
-            })
+          alert("Denied. Not time yet!");
+          {
+            // firebase
+            //   .firestore()
+            //   .collection("plcvoting")
+            //   .doc("test")
+            //   .collection("events")
+            //   .add({
+            //     timestamp:firebase.firestore.FieldValue.serverTimestamp(),
+            //     type:"rickroll",
+            //     target:"everyone",
+            //     startTime:firebase.firestore.Timestamp.fromMillis(new Date().getTime() + 3000)
+            //   })
+          }
         }
       }} />
     </map>
@@ -272,7 +405,7 @@ const PLCVotingAdminPage = () => {
     <Layout admin={true}>
       <SEO title="PLC Voting | Admin" />
       <h1>PLC Voting Admin</h1>
-      <Button variant="link" className="p-0" hidden={page === "auth" || page === "campaignSelect"} onClick={() => setPage("campaignSelect")}>Return to campaign select</Button>
+      <a hidden={page === "auth" || page === "campaignSelect"} onClick={() => setPage("campaignSelect")}>Return to campaign select</a>
 
       {
         {
@@ -285,14 +418,14 @@ const PLCVotingAdminPage = () => {
             <ul>
               {
                 campaigns.map( (name) =>
-                  <li key={name}><Button className="p-0" variant="link" onClick={() => {
+                  <li key={name}><a onClick={() => {
                     setCampaign(name);
                     setPage("manage");
-                  }}>{name}</Button></li>
+                  }}>{name}</a></li>
 
                 )
               }
-              <li><Button className="p-0" variant="link" onClick={() => setPage("newCampaign")}>Create New</Button></li>
+              <li><a onClick={() => setPage("newCampaign")}>Create New</a></li>
             </ul>
           </div>,
           newCampaign:<NewCampaign firebase={firebase} campaignNames={campaigns} onCreated={(name) => {
