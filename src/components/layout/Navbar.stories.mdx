@@ -1,0 +1,13 @@
+import { Meta, Story } from '@storybook/addon-docs/blocks';
+import * as stories from './Navbar.stories.tsx';
+import { Navbar } from './Navbar';
+
+<Meta title="Layout/Navbar" component={Navbar} />
+
+# Navbar
+
+Basic
+<Story name="basic">{stories.basic()}</Story>
+
+Admin
+<Story name="admin">{stories.admin()}</Story>

@@ -1,23 +1,9 @@
 import React from "react"
 import { Container, Button } from "react-bootstrap"
-import Layout from "../components/layout/layout"
-import SEO from "../components/seo"
+import Layout from "../components/layout/Layout"
+import SEO from "../components/SEO"
 import "../styles/index.scss"
 import { graphql, StaticQuery } from "gatsby"
-
-// function fadebg() {
-//   document.querySelector("body").classList.add("image-not-loaded")
-//   let b = BackgroundImage,
-//     c = document.querySelector("body"),
-//     img = new Image()
-//   img.src = b
-//   img.onload = function() {
-//     c.classList.add("image-loaded")
-//     c.classList.remove("image-not-loaded")
-//     c.style.backgroundImage = "url(" + b + ")"
-//   }
-// }
-// if (typeof document !== "undefined") fadebg()
 
 const IndexPage = () => (
   <StaticQuery
@@ -36,7 +22,7 @@ const IndexPage = () => (
     `}
     render={data => (
       <Layout
-        pageInfo={{ pageName: "index" }}
+        pageName="index"
         backgroundImage={data.desktop.childImageSharp.fluid}
       >
         <SEO
