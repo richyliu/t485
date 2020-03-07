@@ -1,18 +1,27 @@
-import React from "react"
+import React, { ReactElement } from "react"
 import { Link } from "gatsby"
-
+import { navigate } from "gatsby-link"
 import { Navbar as BootstrapNavbar, Nav, Button } from "react-bootstrap"
 
-function NavbarLink(props: { page: string; children: React.ReactNode }) {
+function NavbarLink(props: {
+  page: string
+  children: React.ReactNode
+}): ReactElement {
+  // Gatsby link element doesn't work well with our storybook config
   return (
-    <Link to={"/" + props.page} className="link-no-style">
-      <Nav.Link as="span" eventKey={props.page}>
+    <>
+      {/*<Link to={"/" + props.page} className="link-no-style">*/}
+      <Nav.Link
+        eventKey={props.page}
+        onClick={() => navigate("/" + props.page)}
+      >
         {props.children}
       </Nav.Link>
-    </Link>
+      {/*</Link>*/}
+    </>
   )
 }
-interface NavbarProps {
+interface PropDef {
   /**
    * The name of the page that should be active. This should be the path to the page.
    * For example, on a page /navbarDemo, the value should be `/navbarDemo`. This is used to determine which nav link should be highlighted.
@@ -23,7 +32,7 @@ interface NavbarProps {
    */
   admin?: boolean
 }
-const Navbar = ({ pageName, admin }: NavbarProps) => {
+export const Navbar = ({ pageName, admin }: PropDef): ReactElement => {
   return (
     <>
       <BootstrapNavbar bg="dark" variant="dark" expand="lg" id="site-navbar">
@@ -53,5 +62,4 @@ const Navbar = ({ pageName, admin }: NavbarProps) => {
     </>
   )
 }
-
 export default Navbar

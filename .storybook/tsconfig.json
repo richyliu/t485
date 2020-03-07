@@ -2,9 +2,10 @@
   "compilerOptions": {
     "baseUrl": "./",
     "allowSyntheticDefaultImports": true,
-    "module": "es2015",
     "target": "es5",
-    "lib": ["es6", "dom"],
+    "types": ["react", "jest"],
+    "module": "esnext",
+    "lib": ["esnext"],
     "sourceMap": true,
     "allowJs": false,
     "jsx": "react",
@@ -14,6 +15,7 @@
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noImplicitAny": true,
+    "noEmit": true,
     "strictNullChecks": true,
     "declaration": true
   },

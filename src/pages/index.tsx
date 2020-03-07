@@ -1,7 +1,7 @@
 import React from "react"
 import { Container, Button } from "react-bootstrap"
 import Layout from "../components/layout/Layout"
-import SEO from "../components/SEO"
+import SEO from "../components/layout/seo"
 import "../styles/index.scss"
 import { graphql, StaticQuery } from "gatsby"
 

@@ -14,8 +14,17 @@ import BackgroundImage from "gatsby-background-image"
 import "../../styles/style.scss"
 
 interface LayoutProps {
+  /**
+   * The content of the page. It will be wrapped in a contianer.
+   */
   children: React.ReactNode
+  /**
+   * The path to the current page. It will be used for the navbar.
+   */
   pageName?: string
+  /**
+   * If provided, a background image will be shown instead of the default white background color
+   */
   backgroundImage?: string
 }
 const Layout = ({ children, pageName, backgroundImage }: LayoutProps) => {
