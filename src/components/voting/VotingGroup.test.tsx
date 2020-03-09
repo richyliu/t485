@@ -1,5 +1,5 @@
 import * as React from "react"
-import { shallow, mount, render } from "enzyme"
+import { mount, shallow } from "enzyme"
 import toJson from "enzyme-to-json"
 import VotingGroup, { VotingGroupProps } from "./VotingGroup"
 

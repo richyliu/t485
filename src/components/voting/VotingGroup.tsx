@@ -5,11 +5,11 @@ interface VotingGroupProps {
   /**
    * The title of the group.
    */
-  title?: string;
+  title?: string
   /**
    * The description of the group.
    */
-  description?: string;
+  description?: string
   /**
    * The options to render. Each option should have a label property dictating what will be
    * shown to the user, and a value property, which will be referenced in events.
@@ -18,19 +18,19 @@ interface VotingGroupProps {
     /**
      * TEST Label
      */
-    label: string;
-    value: string | number;
-  }[];
+    label: string
+    value: string | number
+  }[]
   /**
    * An array of values that should be selected.
    */
-  value?: (string | number)[];
+  value?: (string | number)[]
   /**
    * A function to be called each time the value of an option changes.
    * @param value - The `value` of the option that was changed.
    * @param state - Whether or not the checkbox should now be checked (after the change).
    */
-  onSelectChange: (value: string | number, state: boolean) => void;
+  onSelectChange: (value: string | number, state: boolean) => void
 }
 
 /*
@@ -68,5 +68,5 @@ const VotingGroup = ({
   )
 }
 // eslint-disable-next-line no-undef
-export {VotingGroup, VotingGroupProps}
+export { VotingGroup, VotingGroupProps }
 export default VotingGroup

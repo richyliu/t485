@@ -1,7 +1,7 @@
 import React, { ReactElement, ReactNode } from "react"
 import { Link } from "gatsby"
 import { navigate } from "gatsby-link"
-import { Navbar as BootstrapNavbar, Nav, Button } from "react-bootstrap"
+import { Nav, Navbar as BootstrapNavbar } from "react-bootstrap"
 
 function NavbarLink(props: {
   page: string
@@ -23,6 +23,7 @@ function NavbarLink(props: {
     </>
   )
 }
+
 interface PropDef {
   /**
    * The name of the page that should be active. This should be the path to the page.
@@ -34,6 +35,7 @@ interface PropDef {
    */
   admin?: boolean
 }
+
 export const Navbar = ({ pageName, admin }: PropDef): ReactElement => {
   return (
     <>

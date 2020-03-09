@@ -17,10 +17,15 @@ module.exports = {
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
+    "prettier",
+    "prettier/@typescript-eslint",
+    "prettier/babel",
+    "prettier/react",
   ],
 
   rules: {
     "@typescript-eslint/explicit-function-return-type": "off",
+    semi: ["error", "never"],
   },
   overrides: [
     {

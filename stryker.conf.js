@@ -9,7 +9,7 @@ module.exports = function(config) {
     coverageAnalysis: "off",
     jest: {
       projectType: "custom",
-      config: require('./jest.config.js'),
+      config: require("./jest.config.js"),
     },
     timeoutMS: 60000,
     maxConcurrentTestRunners: 4,

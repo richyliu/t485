@@ -23,6 +23,7 @@
     "gatsby:nossl": "gatsby develop",
     "gatsby:serve": "gatsby serve",
     "lint": "eslint '**/*.{js,jsx,ts,tsx}' --cache && echo '\\033[1;32mLinting Passed' || echo '\\033[1;31mLinting Failed' && exit 0",
+    "prettier": "prettier --write '**/*.{ts,tsx,js,jsx,json,md,scss,css}'",
     "start": "npm run develop",
     "start:nossl": "npm run develop:nossl",
     "storybook": "start-storybook -p 6006 --https --ssl-cert ./t485.org.pem  --ssl-key ./t485.org-key.pem -c ./storybook-config",
@@ -71,6 +72,7 @@
     "enzyme-adapter-react-16": "^1.15.2",
     "enzyme-to-json": "^3.4.4",
     "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-react": "^7.18.3",
     "file-loader": "^5.1.0",
     "gatsby": "^2.19.29",
@@ -95,6 +97,7 @@
     "postcss-nested": "^4.2.1",
     "postcss-preset-env": "^6.7.0",
     "prettier": "^1.19.1",
+    "prettier-eslint": "^9.0.1",
     "react": "^16.13",
     "react-bootstrap": "^1.0.0-beta.17",
     "react-docgen": "^5.3.0",
@@ -116,5 +119,14 @@
     "react",
     "storybook",
     "typescript"
-  ]
+  ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,ts,jsx,tsx}": "eslint --cache",
+    "*.{ts,tsx,js,jsx,json,md,scss,css}": "prettier --write"
+  }
 }

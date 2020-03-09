@@ -1,11 +1,11 @@
-import React from "react"
-import { Container, Button } from "react-bootstrap"
+import React, { ReactElement } from "react"
+import { Button, Container } from "react-bootstrap"
 import Layout from "../components/layout/Layout"
 import SEO from "../components/layout/seo"
 import "../styles/index.scss"
 import { graphql, StaticQuery } from "gatsby"
 
-const IndexPage = () => (
+const IndexPage = (): ReactElement => (
   <StaticQuery
     query={graphql`
       query {
@@ -20,7 +20,7 @@ const IndexPage = () => (
         }
       }
     `}
-    render={data => (
+    render={(data): ReactElement => (
       <Layout
         pageName="index"
         backgroundImage={data.desktop.childImageSharp.fluid}

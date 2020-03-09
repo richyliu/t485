@@ -1,10 +1,10 @@
 @font-face {
-  font-family: 'Nexa Bold';
+  font-family: "Nexa Bold";
   src: url("../fonts/Nexa Bold.otf") format("opentype");
 }
 
 @font-face {
-  font-family: 'Proxima Nova Regular';
+  font-family: "Proxima Nova Regular";
   src: url("../fonts/ProximaNova-Regular.otf") format("opentype");
 }
 
@@ -28,34 +28,31 @@ a:not([href]):hover {
 .bg-full {
   background-position: top center;
 
-
-  #site-navbar, footer {
-
+  #site-navbar,
+  footer {
     background-color: transparent !important;
-
   }
   .container {
     // 300px is a relatively arbitrary number. In reality, it just needs to be more than the height of the footer and navbar
-    height:calc(100vh - 300px);
-    overflow:hidden;
+    height: calc(100vh - 300px);
+    overflow: hidden;
   }
 
   header {
     position: relative;
     top: 50%;
     transform: translateY(-50%);
-    color:#eee;
+    color: #eee;
 
     h1 {
-      font-size:6em;
+      font-size: 6em;
       font-family: "Nexa Bold", sans-serif;
     }
 
     p {
-      font-size:1.5em;
+      font-size: 1.5em;
       font-family: "Proxima Nova Regular", sans-serif;
     }
-
   }
 
   span {
@@ -66,5 +63,4 @@ a:not([href]):hover {
     margin-left: 10px;
     margin-right: 10px;
   }
-
 }

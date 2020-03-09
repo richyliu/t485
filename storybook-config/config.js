@@ -1,12 +1,7 @@
-import { configure, addParameters } from "@storybook/react"
-import { addDecorator } from "@storybook/react"
-import React from "react"
-import { ThemeProvider } from "styled-components"
+import { addDecorator, configure } from "@storybook/react"
 import { withOptions } from "@storybook/addon-options"
 import { action } from "@storybook/addon-actions"
-import theme from "./theme"
-import { setAddon } from "@storybook/react"
-import LiveEdit, { setOptions } from "storybook-addon-react-live-edit"
+
 const loadStories = () => {
   require.context("../src", true, /\.(stories)|(story)\.tsx$/)
 }
@@ -26,8 +21,12 @@ configure(loadStories, module)
 // Gatsby's Link overrides:
 // Gatsby defines a global called ___loader to prevent its method calls from creating console errors you override it here
 global.___loader = {
-  enqueue: () => {},
-  hovering: () => {},
+  enqueue: () => {
+    // noop
+  },
+  hovering: () => {
+    // noop
+  },
 }
 // Gatsby internal mocking to prevent unnecessary errors in storybook testing environment
 global.__PATH_PREFIX__ = ""
