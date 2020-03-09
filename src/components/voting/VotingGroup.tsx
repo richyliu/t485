@@ -1,15 +1,14 @@
 import React, { ReactElement } from "react"
 import { Form } from "react-bootstrap"
 
-export interface VotingGroupProps {
   /**
    * The title of the group.
    */
-  title?: string
+  title?: string;
   /**
    * The description of the group.
    */
-  description?: string
+  description?: string;
   /**
    * The options to render. Each option should have a label property dictating what will be
    * shown to the user, and a value property, which will be referenced in events.
@@ -18,19 +17,19 @@ export interface VotingGroupProps {
     /**
      * TEST Label
      */
-    label: string
-    value: string | number
-  }[]
+    label: string;
+    value: string | number;
+  }[];
   /**
    * An array of values that should be selected.
    */
-  value?: (string | number)[]
+  value?: (string | number)[];
   /**
    * A function to be called each time the value of an option changes.
    * @param value - The `value` of the option that was changed.
    * @param state - Whether or not the checkbox should now be checked (after the change).
    */
-  onSelectChange: (value: string | number, state: boolean) => void
+  onSelectChange: (value: string | number, state: boolean) => void;
 }
 
 /*
@@ -38,7 +37,7 @@ export interface VotingGroupProps {
  * Add typedoc and see how that works Maybe even write some way to link typedoc with storybook? Probably not that hard.
  * Re setup storybook because we don't use storybook for gatsby pages, only components.
  */
-export const VotingGroup = ({
+const VotingGroup = ({
   title,
   description,
   options,
@@ -67,4 +66,6 @@ export const VotingGroup = ({
     </div>
   )
 }
+// eslint-disable-next-line no-undef
+export {VotingGroup, VotingGroupProps}
 export default VotingGroup

@@ -17,19 +17,19 @@ interface LayoutProps {
   /**
    * The content of the page. It will be wrapped in a contianer.
    */
-  children: React.ReactNode
+  children: React.ReactNode;
   /**
    * The path to the current page. It will be used for the navbar.
    */
-  pageName?: string
+  pageName?: string;
   /**
    * If provided, a background image will be shown instead of the default white background color
    */
-  backgroundImage?: string
+  backgroundImage?: string;
   /**
    * Whether or not to render the admin layout, which includes the special admin navbar.
    */
-  admin?: boolean
+  admin?: boolean;
 }
 const Layout = ({
   children,
@@ -82,5 +82,5 @@ const Layout = ({
     )
   }
 }
-export { Layout }
-export default Layout
+// export { Layout };
+export default Layout;

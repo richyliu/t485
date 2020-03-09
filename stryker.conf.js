@@ -8,7 +8,8 @@ module.exports = function(config) {
     reporters: ["progress", "clear-text", "html"],
     coverageAnalysis: "off",
     jest: {
-      projectType: "react",
+      projectType: "custom",
+      config: require('./jest.config.js'),
     },
     timeoutMS: 60000,
     maxConcurrentTestRunners: 4,
