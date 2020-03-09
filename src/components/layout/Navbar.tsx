@@ -1,11 +1,11 @@
-import React, { ReactElement } from "react"
+import React, { ReactElement, ReactNode } from "react"
 import { Link } from "gatsby"
 import { navigate } from "gatsby-link"
 import { Navbar as BootstrapNavbar, Nav, Button } from "react-bootstrap"
 
 function NavbarLink(props: {
   page: string
-  children: React.ReactNode
+  children: ReactNode
 }): ReactElement {
   // Gatsby link element doesn't work well with our storybook config
   return (
@@ -13,7 +13,9 @@ function NavbarLink(props: {
       {/*<Link to={"/" + props.page} className="link-no-style">*/}
       <Nav.Link
         eventKey={props.page}
-        onClick={() => navigate("/" + props.page)}
+        onClick={(): void => {
+          navigate("/" + props.page)
+        }}
       >
         {props.children}
       </Nav.Link>
@@ -52,9 +54,9 @@ export const Navbar = ({ pageName, admin }: PropDef): ReactElement => {
             <NavbarLink page="/page-2">Page 2</NavbarLink>
             <NavbarLink page="/404">Link Name 2</NavbarLink>
             <NavbarLink page="/plc/voting/admin">PLC Admin</NavbarLink>
-            <Link to="/plc/voting/vote" className="link-no-style">
-              <Button>PLC Voting</Button> {/* TODO: delete */}
-            </Link>
+            {/*<Link to="/plc/voting/vote" className="link-no-style">*/}
+            {/*  <Button>PLC Voting</Button> /!* TODO: delete *!/*/}
+            {/*</Link>*/}
           </Nav>
         </BootstrapNavbar.Collapse>
         {/* </Container> */}

@@ -68,3 +68,8 @@ yarn-error.log
 # Yarn Integrity file
 .yarn-integrity
 .eslintcache
+
+*.pem
+
+# stryker temp files
+.stryker-tmp

@@ -3,8 +3,9 @@ import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks';
 import "../../styles/style.scss"
 import Navbar from './Navbar';
 import { withKnobs, text, boolean, number } from "@storybook/addon-knobs"
+import {withSmartKnobs} from "storybook-addon-smart-knobs";
 
-<Meta title="layout/Navbar" component={Navbar} decorators={[withKnobs]} />
+<Meta title="layout/Navbar" component={Navbar} decorators={[withKnobs(), withSmartKnobs()]} />
 
 # Navbar
 The site navbar is rendered as part of every page that uses `Layout`.
@@ -17,7 +18,7 @@ The site navbar is rendered as part of every page that uses `Layout`.
 
 <Preview>
     <Story name="basic">
-        <Navbar pageName={text("Active Page Path", "")} />
+        <Navbar />
     </Story>
 </Preview>
 
@@ -25,7 +26,7 @@ The site navbar is rendered as part of every page that uses `Layout`.
 
 <Preview>
     <Story name="admin">
-        <Navbar pageName={text("Active Page Path", "")} admin />
+        <Navbar admin />
     </Story>
 </Preview>
 

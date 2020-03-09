@@ -26,12 +26,21 @@ interface LayoutProps {
    * If provided, a background image will be shown instead of the default white background color
    */
   backgroundImage?: string
+  /**
+   * Whether or not to render the admin layout, which includes the special admin navbar.
+   */
+  admin?: boolean
 }
-const Layout = ({ children, pageName, backgroundImage }: LayoutProps) => {
+const Layout = ({
+  children,
+  pageName,
+  backgroundImage,
+  admin,
+}: LayoutProps): React.ReactElement => {
   const page = (
     <>
       <Container fluid className="px-0 main">
-        <Navbar pageName={pageName} />
+        <Navbar pageName={pageName} admin={admin} />
         <Row noGutters>
           <Col>
             <Container className="mt-5">
@@ -73,5 +82,5 @@ const Layout = ({ children, pageName, backgroundImage }: LayoutProps) => {
     )
   }
 }
-
+export { Layout }
 export default Layout

@@ -1,7 +1,7 @@
-import React from "react"
+import React, { ReactElement } from "react"
 import { Form } from "react-bootstrap"
 
-interface VotingGroupProps {
+export interface VotingGroupProps {
   /**
    * The title of the group.
    */
@@ -24,29 +24,46 @@ interface VotingGroupProps {
   /**
    * An array of values that should be selected.
    */
-  selected?: string[]
+  value?: (string | number)[]
   /**
-   * A callback onselect.
-   * @param value
+   * A function to be called each time the value of an option changes.
+   * @param value - The `value` of the option that was changed.
+   * @param state - Whether or not the checkbox should now be checked (after the change).
    */
-  onSelect: (value: string) => undefined
+  onSelectChange: (value: string | number, state: boolean) => void
 }
+
+/*
+ * TODO
+ * Add typedoc and see how that works Maybe even write some way to link typedoc with storybook? Probably not that hard.
+ * Re setup storybook because we don't use storybook for gatsby pages, only components.
+ */
 export const VotingGroup = ({
   title,
   description,
   options,
-}: VotingGroupProps) => {
+  value,
+  onSelectChange,
+}: VotingGroupProps): ReactElement => {
   return (
     <div>
-      <h4>{title}</h4>
-      <p>{description}</p>
-      {options.map((opt, i) => (
-        <Form.Check
-          custom
-          id={`check-${i}-${opt.value}, "")}`} // required for react bootstrap
-          label={opt.label}
-        />
-      ))}
+      <h4 className="mb-1">{title}</h4>
+      <p className="text-muted mb-2 mt-1" hidden={!description}>
+        {description}
+      </p>
+      {options.map((opt, i) => {
+        const checked = value?.indexOf(opt.value + "") > -1
+        return (
+          <Form.Check
+            key={i}
+            custom
+            id={`check-${i}-${typeof opt.value}-${opt.value}`} // required for react bootstrap
+            label={opt.label}
+            checked={checked}
+            onChange={(): void => onSelectChange(opt.value, !checked)}
+          />
+        )
+      })}
     </div>
   )
 }
