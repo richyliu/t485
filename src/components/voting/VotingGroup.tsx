@@ -1,6 +1,7 @@
 import React, { ReactElement } from "react"
 import { Form } from "react-bootstrap"
 
+interface VotingGroupProps {
   /**
    * The title of the group.
    */
