@@ -52,7 +52,7 @@ const VotingGroup = ({
         {description}
       </p>
       {options.map((opt, i) => {
-        const checked = value?.indexOf(opt.value + "") > -1
+        const checked = value?.indexOf(opt.value) > -1
         return (
           <Form.Check
             key={i}

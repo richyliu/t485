@@ -1,5 +1,4 @@
 {
-  "plugins": ["tailwind-components"],
   "presets": [
     [
       "babel-preset-gatsby",

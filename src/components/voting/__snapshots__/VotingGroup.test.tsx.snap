@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`It matches the snapshot with no title or description 1`] = `
-<Component
+<VotingGroup
   onSelectChange={[Function]}
   options={
     Array [
@@ -84,7 +84,7 @@ exports[`It matches the snapshot with no title or description 1`] = `
       </div>
     </FormCheck>
     <FormCheck
-      checked={false}
+      checked={true}
       custom={true}
       disabled={false}
       id="check-1-number-2"
@@ -102,7 +102,7 @@ exports[`It matches the snapshot with no title or description 1`] = `
       >
         <FormCheckInput
           as="input"
-          checked={false}
+          checked={true}
           disabled={false}
           isInvalid={false}
           isStatic={false}
@@ -111,7 +111,7 @@ exports[`It matches the snapshot with no title or description 1`] = `
           type="checkbox"
         >
           <input
-            checked={false}
+            checked={true}
             className="custom-control-input"
             disabled={false}
             id="check-1-number-2"
@@ -182,11 +182,11 @@ exports[`It matches the snapshot with no title or description 1`] = `
       </div>
     </FormCheck>
   </div>
-</Component>
+</VotingGroup>
 `;
 
 exports[`It matches the snapshot with title and description 1`] = `
-<Component
+<VotingGroup
   onSelectChange={[Function]}
   options={
     Array [
@@ -269,7 +269,7 @@ exports[`It matches the snapshot with title and description 1`] = `
       </div>
     </FormCheck>
     <FormCheck
-      checked={false}
+      checked={true}
       custom={true}
       disabled={false}
       id="check-1-number-2"
@@ -287,7 +287,7 @@ exports[`It matches the snapshot with title and description 1`] = `
       >
         <FormCheckInput
           as="input"
-          checked={false}
+          checked={true}
           disabled={false}
           isInvalid={false}
           isStatic={false}
@@ -296,7 +296,7 @@ exports[`It matches the snapshot with title and description 1`] = `
           type="checkbox"
         >
           <input
-            checked={false}
+            checked={true}
             className="custom-control-input"
             disabled={false}
             id="check-1-number-2"
@@ -367,5 +367,5 @@ exports[`It matches the snapshot with title and description 1`] = `
       </div>
     </FormCheck>
   </div>
-</Component>
+</VotingGroup>
 `;

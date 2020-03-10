@@ -28,6 +28,7 @@ describe("VotingGroup calls onSelectChanged with the proper argument", () => {
           value: 3,
         },
       ],
+      value: [3],
     }
 
     // subject under test
@@ -36,15 +37,15 @@ describe("VotingGroup calls onSelectChanged with the proper argument", () => {
     sut
       .find("#check-0-number-1")
       .simulate("change", { target: { value: "true" } })
-    expect(onSelectChange).toHaveBeenNthCalledWith(1, 1)
+    expect(onSelectChange).toHaveBeenNthCalledWith(1, 1, true)
     sut
       .find("#check-1-number-2")
       .simulate("change", { target: { value: "true" } })
-    expect(onSelectChange).toHaveBeenNthCalledWith(2, 2)
+    expect(onSelectChange).toHaveBeenNthCalledWith(2, 2, true)
     sut
       .find("#check-2-number-3")
       .simulate("change", { target: { value: "true" } })
-    expect(onSelectChange).toHaveBeenNthCalledWith(3, 3)
+    expect(onSelectChange).toHaveBeenNthCalledWith(3, 3, false)
   })
   test("with string values", () => {
     const onSelectChange = jest.fn()
@@ -64,7 +65,9 @@ describe("VotingGroup calls onSelectChanged with the proper argument", () => {
           label: "Option Three",
           value: "thiisareallylongstringvalue",
         },
+
       ],
+      value: ["thiisareallylongstringvalue"],
     }
 
     const sut = shallow(<VotingGroup {...props} />)
@@ -72,17 +75,18 @@ describe("VotingGroup calls onSelectChanged with the proper argument", () => {
     sut
       .find("#check-0-string-1")
       .simulate("change", { target: { value: "true" } })
-    expect(onSelectChange).toHaveBeenNthCalledWith(1, "1")
+    expect(onSelectChange).toHaveBeenNthCalledWith(1, "1", true)
     sut
       .find("#check-1-string-two")
       .simulate("change", { target: { value: "true" } })
-    expect(onSelectChange).toHaveBeenNthCalledWith(2, "two")
+    expect(onSelectChange).toHaveBeenNthCalledWith(2, "two", true)
     sut
       .find("#check-2-string-thiisareallylongstringvalue")
       .simulate("change", { target: { value: "true" } })
     expect(onSelectChange).toHaveBeenNthCalledWith(
       3,
-      "thiisareallylongstringvalue"
+      "thiisareallylongstringvalue",
+      false,
     )
   })
 })

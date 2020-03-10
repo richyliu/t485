@@ -1,4 +1,18 @@
 {
+<<<<<<< Updated upstream
+	"compilerOptions": {
+		"module": "umd",
+		"target": "es6",
+		"lib":["es6", "dom"],
+		"typeRoots": ["node_modules/@types", "custom_typings"],
+		"sourceMap": true,
+		"moduleResolution": "node",
+		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true,
+		"skipLibCheck": true
+	}
+}
+=======
   "compilerOptions": {
     "sourceMap": true,
     "noImplicitAny": true,
@@ -11,3 +25,4 @@
   },
   "exclude": ["node_modules", "public", ".cache"]
 }
+>>>>>>> Stashed changes
