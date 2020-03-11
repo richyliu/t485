@@ -1,3 +1,35 @@
+@font-face {
+  font-family: "Nexa Bold";
+  src: url("../fonts/Nexa Bold.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Proxima Nova Regular";
+  src: url("../fonts/ProximaNova-Regular.otf") format("opentype");
+}
+
+body {
+  font-family: "Proxima Nova Regular", sans-serif;
+}
+h1,
+h2,
+h3 {
+  font-family: "Nexa Bold", sans-serif;
+}
+
+.navbar-brand {
+  font-family: "Nexa Bold", sans-serif;
+}
+.transparent-navbar,
+.transparent-footer {
+  background-color: transparent !important;
+}
+.transparent-footer p,
+.transparent-footer span,
+.transparent-footer a {
+  color: white;
+}
+
 div.main {
   min-height: 100vh;
   padding-bottom: 60px;
@@ -5,6 +37,19 @@ div.main {
 
 div.full-height {
   min-height: 100vh;
+}
+
+// Style ALL links, even without href (bootstrap doesnt do this by default)
+a:not([href]) {
+  color: #007bff;
+  text-decoration: none;
+  background-color: transparent;
+  cursor: grab;
+}
+
+a:not([href]):hover {
+  color: #0056b3;
+  text-decoration: underline;
 }
 
 a.link-no-style {

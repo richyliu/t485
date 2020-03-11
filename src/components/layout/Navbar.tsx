@@ -1,26 +1,94 @@
 import React, { ReactElement, ReactNode } from "react"
 import { Link } from "gatsby"
 import { navigate } from "gatsby-link"
-import { Nav, Navbar as BootstrapNavbar } from "react-bootstrap"
+import { Nav, Navbar as BootstrapNavbar, NavDropdown } from "react-bootstrap"
+import firebase from "gatsby-plugin-firebase"
+import { useAuthState } from "react-firebase-hooks/auth"
+import classNames from "classnames"
 
 function NavbarLink(props: {
+  /**
+   * The page the link should redirect to.
+   */
   page: string
+  /**
+   * The text of the navbar link.
+   */
   children: ReactNode
+  /**
+   * Whether the link should be a dropdown link
+   */
+  dropdown?: boolean
 }): ReactElement {
   // Gatsby link element doesn't work well with our storybook config
-  return (
-    <>
-      {/*<Link to={"/" + props.page} className="link-no-style">*/}
-      <Nav.Link
-        eventKey={props.page}
-        onClick={(): void => {
-          navigate("/" + props.page)
-        }}
+  const linkProps = {
+    eventKey: props.page,
+    onClick: (): void => {
+      navigate("/" + props.page)
+    },
+  }
+  if (props.dropdown) {
+    return (
+      <>
+        <NavDropdown.Item {...linkProps}>{props.children}</NavDropdown.Item>
+      </>
+    )
+  } else {
+    return (
+      <Nav.Item>
+        <Nav.Link {...linkProps}>{props.children}</Nav.Link>
+      </Nav.Item>
+    )
+  }
+}
+
+const AuthDropdown = (): ReactElement => {
+  const [user, loading, error] = useAuthState(firebase.auth())
+
+  if (loading) {
+    return (
+      <NavDropdown id={"authDropdown"} title={"Loading..."} alignRight>
+        <NavDropdown.Header>Loading...</NavDropdown.Header>
+      </NavDropdown>
+    )
+  }
+  if (user) {
+    return (
+      <NavDropdown
+        id={"authDropdown"}
+        title={`Hello, ${user.displayName || user.email}`}
+        alignRight
       >
-        {props.children}
-      </Nav.Link>
-      {/*</Link>*/}
-    </>
+        <NavDropdown.Header>
+          You are logged in as <b>{user.displayName || user.email}</b>
+        </NavDropdown.Header>
+        <NavbarLink page="/account" dropdown>
+          Account Settings
+        </NavbarLink>
+        <NavDropdown.Divider />
+        <NavbarLink page="/account/logout" dropdown>
+          Logout
+        </NavbarLink>
+      </NavDropdown>
+    )
+  }
+  if (error) {
+    return (
+      <NavDropdown id={"authDropdown"} title={"Account"} alignRight>
+        <NavDropdown.Header>
+          There was an error logging you in: error.code
+        </NavDropdown.Header>
+        <NavbarLink page="/account" dropdown>
+          Login Again
+        </NavbarLink>
+      </NavDropdown>
+    )
+  }
+  return (
+    // <NavDropdown id={"authDropdown"} title={"NLI"} alignRight>
+    //   <NavDropdown.Header>You are not logged in</NavDropdown.Header>
+    <NavbarLink page="/account/login">Login</NavbarLink>
+    // </NavDropdown>
   )
 }
 
@@ -34,12 +102,26 @@ interface PropDef {
    * Whether or not the admin variant of the navbar should be rendered instead of the normal component.
    */
   admin?: boolean
+  /**
+   * Whether or not the navbar should be transparent
+   */
+  transparent?: boolean
 }
 
-export const Navbar = ({ pageName, admin }: PropDef): ReactElement => {
+export const Navbar = ({
+  pageName,
+  admin,
+  transparent,
+}: PropDef): ReactElement => {
   return (
     <>
-      <BootstrapNavbar bg="dark" variant="dark" expand="lg" id="site-navbar">
+      <BootstrapNavbar
+        bg="dark"
+        variant="dark"
+        expand="lg"
+        id="site-navbar"
+        className={transparent ? "transparent-navbar" : ""}
+      >
         {/* <Container> */}
         <Link to="/" className="link-no-style">
           <BootstrapNavbar.Brand as="span">
@@ -55,10 +137,11 @@ export const Navbar = ({ pageName, admin }: PropDef): ReactElement => {
           <Nav activeKey={pageName}>
             <NavbarLink page="/page-2">Page 2</NavbarLink>
             <NavbarLink page="/404">Link Name 2</NavbarLink>
-            <NavbarLink page="/plc/voting/admin">PLC Admin</NavbarLink>
+            {/*<NavbarLink page="/plc/voting/admin">PLC Admin</NavbarLink>*/}
             {/*<Link to="/plc/voting/vote" className="link-no-style">*/}
             {/*  <Button>PLC Voting</Button> /!* TODO: delete *!/*/}
             {/*</Link>*/}
+            <AuthDropdown />
           </Nav>
         </BootstrapNavbar.Collapse>
         {/* </Container> */}

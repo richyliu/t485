@@ -1,6 +1,7 @@
 import { addDecorator, configure } from "@storybook/react"
 import { withOptions } from "@storybook/addon-options"
 import { action } from "@storybook/addon-actions"
+import DocsLogo from "./img/docs_logo.png"
 
 const loadStories = () => {
   require.context("../src", true, /\.(stories)|(story)\.tsx$/)
@@ -10,6 +11,7 @@ addDecorator(
   withOptions({
     name: "T485 Docs",
     url: "https://t485.org/",
+    brandImage: DocsLogo,
     // hierarchySeparator: /\/|\./,
     // hierarchyRootSeparator: /\|/,
   })

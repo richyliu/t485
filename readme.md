@@ -25,7 +25,7 @@ The easiest way to configure SSL is using `mkcert`, as follows.
 2. Install `mkcert` using `npm`: `$ npm i -g mkcert`
 3. Setup `mkcert`'s certificate authority: `$ mkcert --install`
 4. Create a local SSL certificate for t485 and localhost:
-   `\$mkcert t485.org "\*.t485.org" t485.test localhost 127.0.0.1 ::1
+   `\$mkcert t485.org "\*.t485.org" t485.test localhost 127.0.0.1 ::1`
 
 #### Building
 

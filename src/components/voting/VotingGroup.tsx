@@ -1,5 +1,6 @@
 import React, { ReactElement } from "react"
 import { Form } from "react-bootstrap"
+import classNames from "classnames"
 
 interface VotingGroupProps {
   /**
@@ -17,6 +18,7 @@ interface VotingGroupProps {
   options: {
     /**
      * TEST Label
+     * @param label - TEST TEST
      */
     label: string
     value: string | number
@@ -25,6 +27,11 @@ interface VotingGroupProps {
    * An array of values that should be selected.
    */
   value?: (string | number)[]
+  /**
+   * If provided, the maximum number of votes will be displayed, and visual validation styling will be applied.
+   *
+   */
+  maxVotes?: number
   /**
    * A function to be called each time the value of an option changes.
    * @param value - The `value` of the option that was changed.
@@ -44,13 +51,27 @@ const VotingGroup = ({
   options,
   value,
   onSelectChange,
+  maxVotes,
 }: VotingGroupProps): ReactElement => {
   return (
     <div>
-      <h4 className="mb-1">{title}</h4>
-      <p className="text-muted mb-2 mt-1" hidden={!description}>
-        {description}
-      </p>
+      {title && <h4 className="mb-1 votingGroupTitle">{title}</h4>}
+      {description && (
+        <p className="text-muted mb-2 mt-1 votingGroupDescription">
+          {description}
+        </p>
+      )}
+      {maxVotes && (
+        <p
+          className={classNames(
+            "mt-2 mb-1 votingGroupMaxVotes",
+            (value || []).length > maxVotes ? "text-danger" : "text-muted"
+          )}
+        >
+          {(value || []).length} of {maxVotes} votes used. You are not required
+          to use all your votes.
+        </p>
+      )}
       {options.map((opt, i) => {
         const checked = value?.indexOf(opt.value) > -1
         return (

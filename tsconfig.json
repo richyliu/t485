@@ -1,18 +1,4 @@
 {
-<<<<<<< Updated upstream
-	"compilerOptions": {
-		"module": "umd",
-		"target": "es6",
-		"lib":["es6", "dom"],
-		"typeRoots": ["node_modules/@types", "custom_typings"],
-		"sourceMap": true,
-		"moduleResolution": "node",
-		"esModuleInterop": true,
-		"allowSyntheticDefaultImports": true,
-		"skipLibCheck": true
-	}
-}
-=======
   "compilerOptions": {
     "sourceMap": true,
     "noImplicitAny": true,
@@ -21,8 +7,8 @@
     "jsx": "react",
     "lib": ["dom", "esnext"],
     "esModuleInterop": true,
-    "noUnusedLocals": false
+    "noUnusedLocals": false,
+    "typeRoots": ["node_modules/@types"]
   },
   "exclude": ["node_modules", "public", ".cache"]
 }
->>>>>>> Stashed changes

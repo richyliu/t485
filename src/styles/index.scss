@@ -1,62 +1,37 @@
-@font-face {
-  font-family: "Nexa Bold";
-  src: url("../fonts/Nexa Bold.otf") format("opentype");
-}
-
-@font-face {
-  font-family: "Proxima Nova Regular";
-  src: url("../fonts/ProximaNova-Regular.otf") format("opentype");
-}
-
-.navbar-brand {
-  font-family: "Nexa Bold", sans-serif;
-}
-
-// Style ALL links, even without href (bootstrap doesnt do this by default)
-a:not([href]) {
-  color: #007bff;
-  text-decoration: none;
-  background-color: transparent;
-  cursor: grab;
-}
-
-a:not([href]):hover {
-  color: #0056b3;
-  text-decoration: underline;
-}
-
-.bg-full {
-  background-position: top center;
-
-  #site-navbar,
-  footer {
-    background-color: transparent !important;
-  }
-  .container {
-    // 300px is a relatively arbitrary number. In reality, it just needs to be more than the height of the footer and navbar
-    height: calc(100vh - 300px);
+.index-page-container {
+  .background-image,
+  .gatsby-image-wrapper {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: -10;
+    height: 100vh;
+    width: 100vw;
     overflow: hidden;
-  }
 
-  header {
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #eee;
-
-    h1 {
-      font-size: 6em;
-      font-family: "Nexa Bold", sans-serif;
-    }
-
-    p {
-      font-size: 1.5em;
-      font-family: "Proxima Nova Regular", sans-serif;
+    & img {
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
     }
   }
 
-  span {
+  h1 {
+    margin-top: 25vh;
+    font-size: 6em;
     color: white;
+  }
+  h3 {
+    color: #eee;
+  }
+  p {
+    font-size: 1.5em;
+  }
+
+  .cta-block {
+    margin-top: 10vh;
   }
 
   .cta {
