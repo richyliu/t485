@@ -1,10 +1,11 @@
-import React, { Dispatch, ReactElement, SetStateAction } from "react"
-
-import Layout from "../components/layout/Layout"
-import SEO from "../components/layout/seo"
+import React, { Dispatch, ReactElement, ReactNode, SetStateAction } from "react"
 import { useAuthState } from "react-firebase-hooks/auth"
 import firebase from "gatsby-plugin-firebase"
 import { Button, Form, Table } from "react-bootstrap"
+import { Layout, SEO } from "../components/layout"
+import NewPassword from "../components/forms/NewPassword"
+import { navigate } from "gatsby-link"
+import AuthContinueState from "../components/auth/AuthContinueState"
 
 const UpdateDisplayNameForm = (): ReactElement => {
   const [user, loading, error] = useAuthState(firebase.auth())
@@ -32,7 +33,7 @@ interface AccountDetailsProps {
    */
   editable?: boolean
   /**
-   * A function to be called each time the editable state changes. This is also called if the user submits, since that is considered a state change as well.
+   * A function to be called each time the editable state changes. This is also called when the user submits, after their data has been synced with the server.
    * @param newValue
    */
   onEditableChange?: (newValue: boolean) => void
@@ -45,6 +46,44 @@ interface AccountDetailsProps {
   }
 }
 
+interface AccountDetailFieldProps {
+  name: string
+  children: ReactNode
+  renderIf?: boolean
+}
+
+const AccountDetailField = ({
+  name,
+  children,
+  renderIf,
+}: AccountDetailFieldProps): ReactElement => {
+  if (renderIf === false) return <></>
+  // if renderIf is undefined, don't return nothing
+
+  return (
+    <tr>
+      <td
+        className="w-33"
+        style={{
+          height: "4em",
+          verticalAlign: "middle",
+        }}
+      >
+        {name}
+      </td>
+      <td
+        className="w-66"
+        style={{
+          height: "4em",
+          verticalAlign: "middle",
+        }}
+      >
+        {children}
+      </td>
+    </tr>
+  )
+}
+
 const AccountDetails = ({
   editable,
   onEditableChange,
@@ -52,6 +91,7 @@ const AccountDetails = ({
 }: AccountDetailsProps): ReactElement => {
   const [newEmail, setNewEmail] = React.useState(userData.email || "")
   const [newPassword, setNewPassword] = React.useState("")
+  const [confirmPassword, setConfirmPassword] = React.useState("")
 
   interface ChangeMap {
     [key: string]: boolean
@@ -79,85 +119,64 @@ const AccountDetails = ({
 
   return (
     <Form onSubmit={(e): void => e.preventDefault()}>
-      <Table>
+      <Table responsive>
         <tbody>
-          <tr>
-            <th>Full Name</th>
-            <td>
-              {userData.displayName || "Not Set"}
-              {editable && (
-                <b>
-                  {" "}
-                  (Please contact the webmaster to change your account name)
-                </b>
-              )}
-            </td>
-          </tr>
-          <tr>
-            <th>Email</th>
-            <td>
-              {editable ? (
-                <Form.Control
-                  placeholder="Enter a new email"
-                  value={newEmail}
-                  onChange={(e): void => setNewEmail(e.target.value)}
-                  autoComplete="new-email"
-                />
-              ) : (
-                <>{userData.email || "Not Set"}</>
-              )}
-            </td>
-          </tr>
-          <tr>
-            <th>Password</th>
-            <td>
-              {editable ? (
-                <Form.Control
-                  placeholder="Enter a new password..."
-                  type="password"
-                  value={newPassword}
-                  onChange={(e): void => setNewPassword(e.target.value)}
-                  autoComplete="new-password"
-                />
-              ) : (
-                <>
-                  <a onClick={(): void => onEditableChange(true)}>
-                    Enter editing mode
-                  </a>{" "}
-                  to change your password
-                </>
-              )}
-            </td>
-          </tr>
-          {editable && changes.password && (
-            <tr>
-              <th>Confirm New Password</th>
-              <td>
-                {editable ? (
-                  <Form.Control
-                    placeholder="Confirm Password"
-                    type="password"
-                    value={newPassword}
-                    onChange={(e): void => setNewPassword(e.target.value)}
-                    autoComplete="new-password"
-                  />
-                ) : (
-                  <>
-                    <a onClick={(): void => onEditableChange(true)}>
-                      Enter editing mode
-                    </a>{" "}
-                    to change your password
-                  </>
-                )}
-              </td>
-            </tr>
-          )}
-          <tr>
-            <th>Sign in with google</th>
-            <td>
-              <a>Disable</a>
-            </td>
-          </tr>
+          <AccountDetailField name={"Full Name"}>
+            {userData.displayName || "Not Set"}
+            {editable && (
+              <b> (Please contact the webmaster to change your account name)</b>
+            )}
+          </AccountDetailField>
+          <AccountDetailField name={"Email"}>
+            {editable ? (
+              <Form.Control
+                placeholder="Enter a new email"
+                value={newEmail}
+                onChange={(e): void => setNewEmail(e.target.value)}
+                autoComplete="new-email"
+              />
+            ) : (
+              <>{userData.email || "Not Set"}</>
+            )}
+          </AccountDetailField>
+          <AccountDetailField name={"Password"} renderIf={editable}>
+            <NewPassword
+              value={newPassword}
+              onChange={(v): void => setNewPassword(v)}
+            />
+          </AccountDetailField>
+          <AccountDetailField name={"Password"} renderIf={!editable}>
+            <a onClick={(): void => onEditableChange(true)}>
+              Enter editing mode
+            </a>{" "}
+            to change your password
+          </AccountDetailField>
+          <AccountDetailField
+            name={"Confirm New Password"}
+            renderIf={editable && changes.password}
+          >
+            <Form.Group>
+              <Form.Control
+                placeholder="Confirm Password"
+                type="password"
+                value={confirmPassword}
+                onChange={(e): void => setConfirmPassword(e.target.value)}
+                autoComplete="new-password"
+                isInvalid={
+                  newPassword !== confirmPassword && confirmPassword !== ""
+                }
+                isValid={
+                  newPassword === confirmPassword && confirmPassword !== ""
+                }
+              />
+              <Form.Control.Feedback type="invalid">
+                Passwords don&apos;t match!
+              </Form.Control.Feedback>
+            </Form.Group>
+          </AccountDetailField>
+          <AccountDetailField name={"Login with Google"}>
+            <a>Unlink</a>
+          </AccountDetailField>
         </tbody>
       </Table>
       {editable && (
@@ -193,12 +212,22 @@ const AccountDetails = ({
 const AccountPage = (): ReactElement => {
   const [user, loading, error] = useAuthState(firebase.auth())
   const [editable, setEditable] = React.useState(false)
+  if (!user) {
+    navigate("/account/login", {
+      state: {
+        from: "/account",
+        message: true,
+        return: true,
+      } as AuthContinueState,
+    })
+  }
   return (
     <Layout>
       <SEO title="Your Account" />
       <h1>Your Account</h1>
       <p>Hello, {user?.displayName || user?.email}!</p>
       <p>Your Name: {user?.displayName}</p>
+      {/*TODO: make it so that it clears inputs if you cancel, especially passwor dinput*/}
       <a onClick={(): void => setEditable(old => !old)}>
         {editable ? "Cancel Editing (don't save changes)" : "Edit"}
       </a>
