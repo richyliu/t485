@@ -19,7 +19,7 @@ module.exports = {
       options: {
         credentials: {
           apiKey: "AIzaSyAjQFEdQmqFBFJsU4wq09CT2BkBOVmTa1o",
-          authDomain: "t485-main.firebaseapp.com",
+          authDomain: "t485.org",
           databaseURL: "https://t485-main.firebaseio.com",
           projectId: "t485-main",
           storageBucket: "t485-main.appspot.com",

@@ -11,6 +11,7 @@
 body {
   font-family: "Proxima Nova Regular", sans-serif;
 }
+
 h1,
 h2,
 h3 {
@@ -20,10 +21,12 @@ h3 {
 .navbar-brand {
   font-family: "Nexa Bold", sans-serif;
 }
+
 .transparent-navbar,
 .transparent-footer {
   background-color: transparent !important;
 }
+
 .transparent-footer p,
 .transparent-footer span,
 .transparent-footer a {
@@ -37,6 +40,20 @@ div.main {
 
 div.full-height {
   min-height: 100vh;
+}
+
+// Text with a line
+.text-divider {
+  width: 100%;
+  text-align: center;
+  border-bottom: 1px solid #000;
+  line-height: 0.1em;
+  margin: 10px 0 20px;
+}
+
+.text-divider-inner {
+  background: #fff;
+  padding: 0 10px;
 }
 
 // Style ALL links, even without href (bootstrap doesnt do this by default)
@@ -63,7 +80,9 @@ a.link-no-style {
   flex-direction: column;
   align-content: center;
   align-items: center;
+
   footer {
+    padding: 0px 10px;
     display: flex;
     position: relative;
     bottom: 0;

@@ -4,7 +4,6 @@ import { navigate } from "gatsby-link"
 import { Nav, Navbar as BootstrapNavbar, NavDropdown } from "react-bootstrap"
 import firebase from "gatsby-plugin-firebase"
 import { useAuthState } from "react-firebase-hooks/auth"
-import classNames from "classnames"
 
 function NavbarLink(props: {
   /**

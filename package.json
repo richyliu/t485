@@ -33,6 +33,10 @@
   },
   "dependencies": {
     "@babel/core": "^7.8.7",
+    "@fortawesome/fontawesome-svg-core": "^1.2.27",
+    "@fortawesome/free-brands-svg-icons": "^5.12.1",
+    "@fortawesome/free-solid-svg-icons": "^5.12.1",
+    "@fortawesome/react-fontawesome": "^0.1.9",
     "@storybook/addon-actions": "^5.3.14",
     "@storybook/addon-docs": "^5.3.14",
     "@storybook/addon-knobs": "^5.3.14",
@@ -115,6 +119,7 @@
     "react-firebase-hooks": "^2.1.1",
     "react-helmet": "^5.2.1",
     "react-is": "^16.13",
+    "react-social-login-buttons": "^3.0.0",
     "sass-loader": "^8.0.2",
     "storybook-addon-react-live-edit": "^2.0.4",
     "storybook-addon-smart-knobs": "^6.0.1",

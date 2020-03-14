@@ -14,6 +14,11 @@ interface AuthContinueState {
    * to account home.
    */
   return?: boolean | string
+
+  /**
+   * Data that will be returned to the initiating page.
+   */
+  state?: any
 }
 
 // eslint-disable-next-line no-undef

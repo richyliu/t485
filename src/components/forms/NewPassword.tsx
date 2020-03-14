@@ -1,14 +1,22 @@
-import React, { ReactElement } from "react"
+import React, { FormEvent, ReactElement } from "react"
 import { Form } from "react-bootstrap"
 import zxcvbn from "zxcvbn"
 
 const NewPassword = ({
   value,
   onChange,
+  name,
+  error,
+  ...restProps
 }: {
   value: string
-  onChange: (value: string) => void
-}): ReactElement => {
+  onChange: (value: FormEvent) => void
+  name: string
+  /**
+   * Will be displayed only if invalid
+   */
+  error: string
+} & React.HTMLAttributes<HTMLButtonElement>): ReactElement => {
   const feedback = zxcvbn(value, [
     "troop",
     "hoc5",
@@ -22,13 +30,18 @@ const NewPassword = ({
 
   return (
     <>
-      <Form.Control
-        placeholder="Enter a new password..."
-        type="password"
-        value={value}
-        onChange={(e): void => onChange(e.target.value)}
-      />
-
+      <Form.Group>
+        <Form.Control
+          placeholder="Enter a new password..."
+          type="password"
+          value={value}
+          autoComplete="new-password"
+          onChange={(e): void => onChange(e)}
+          name={name}
+          {...restProps}
+        />
+        <Form.Control.Feedback type="invalid">{error}</Form.Control.Feedback>
+      </Form.Group>
       {value !== "" && feedback.score > -1 && (
         <>
           <p>
