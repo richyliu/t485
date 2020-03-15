@@ -8,26 +8,35 @@ import * as Yup from "yup"
 import firebase from "gatsby-plugin-firebase"
 import { WindowLocation } from "reach__router"
 import AuthContinueState from "../../components/auth/AuthContinueState"
+import { User } from "firebase"
+import { useAuthState } from "react-firebase-hooks/auth"
 // import {GoogleLoginButton} from "react-social-login-buttons"
 
 const LoginForm = ({
   continueTo,
   continueState,
+  reauthenticateUser,
+  continueButton,
 }: {
   continueTo: string
   continueState?: object
+  reauthenticateUser?: User
+  continueButton?: boolean
 }): ReactElement => {
   interface FormData {
-    email: string
+    email?: string
     password: string
   }
 
   const schema = Yup.object().shape({
-    email: Yup.string()
-      .email("The email you entered isn't valid.")
-      .required("Please enter an email"),
+    email: reauthenticateUser
+      ? undefined
+      : Yup.string()
+          .email("The email you entered isn't valid.")
+          .required("Please enter an email"),
     password: Yup.string().required("Please enter a password"),
   })
+
   const onAuthSuccess = (): void => {
     navigate(continueTo, {
       state: {
@@ -41,51 +50,93 @@ const LoginForm = ({
     { email, password }: FormData,
     { setSubmitting, setErrors }: FormikBag<FormData, FormData>
   ): void => {
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(email, password)
-      .then(onAuthSuccess)
-      .catch(e => {
-        switch (e.code) {
-          case "auth/user-disabled":
-            setErrors({
-              email:
-                "Your account has been disabled. If you believe this is a mistake, please contact the webmaster.",
-            })
-            break
-          case "auth/wrong-password":
-            setErrors({
-              password: "The password is incorrect.",
-            })
-            break
-          case "auth/user-not-found":
-          case "auth/invalid-email":
-            setErrors({
-              email: "No user exists with that email.",
-            })
-            break
-          default:
-            setErrors({
-              email:
-                "An unknown error occurred. Please contact the webmaster. Include the following Reference Data: \n\n" +
-                "<<<<<<<<<<! START SUPPORT DATA V1 !>>>>>>>>>>\n" +
-                encodeURIComponent(
-                  btoa(
-                    JSON.stringify({
-                      version: "1",
-                      code: e.code,
-                      message: e.message,
-                      date: new Date().getTime(),
-                    })
+    if (reauthenticateUser) {
+      const user = reauthenticateUser
+      const credentials = firebase.auth.EmailAuthProvider.credential(
+        user.email,
+        password
+      )
+      // console.log(user, user.email, password)
+      user
+        .reauthenticateWithCredential(credentials)
+        .then(onAuthSuccess)
+        .catch(e => {
+          console.log(e)
+          switch (e.code) {
+            case "auth/wrong-password":
+              setErrors({
+                password: "The password is incorrect.",
+              })
+              break
+            default:
+              setErrors({
+                password:
+                  "An unknown error occurred. Please contact the webmaster. Include the following Reference Data: \n\n" +
+                  "<<<<<<<<<<! START SUPPORT DATA V1 !>>>>>>>>>>\n" +
+                  encodeURIComponent(
+                    btoa(
+                      JSON.stringify({
+                        version: "1",
+                        code: e.code,
+                        message: e.message,
+                        date: new Date().getTime(),
+                      })
+                    )
                   )
-                )
-                  .match(/.{1,50}/g)
-                  .join("") +
-                "\n<<<<<<<<<<! END SUPPORT DATA V1 !>>>>>>>>>>",
-            })
-        }
-        setSubmitting(false)
-      })
+                    .match(/.{1,50}/g)
+                    .join("") +
+                  "\n<<<<<<<<<<! END SUPPORT DATA V1 !>>>>>>>>>>",
+              })
+          }
+          setSubmitting(false)
+        })
+    } else {
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(email, password)
+        .then(onAuthSuccess)
+        .catch(e => {
+          switch (e.code) {
+            case "auth/user-disabled":
+              setErrors({
+                email:
+                  "Your account has been disabled. If you believe this is a mistake, please contact the webmaster.",
+              })
+              break
+            case "auth/wrong-password":
+              setErrors({
+                password: "The password is incorrect.",
+              })
+              break
+            case "auth/user-not-found":
+            case "auth/invalid-email":
+              setErrors({
+                email: "No user exists with that email.",
+              })
+              break
+            default:
+              setErrors({
+                password:
+                  "An unknown error occurred. Please contact the webmaster. Include the following Reference Data: \n\n" +
+                  "<<<<<<<<<<! START SUPPORT DATA V1 !>>>>>>>>>>\n" +
+                  encodeURIComponent(
+                    btoa(
+                      JSON.stringify({
+                        version: "1",
+                        code: e.code,
+                        message: e.message,
+                        date: new Date().getTime(),
+                      })
+                    )
+                  )
+                    .match(/.{1,50}/g)
+                    .join("") +
+                  "\n<<<<<<<<<<! END SUPPORT DATA V1 !>>>>>>>>>>",
+              })
+          }
+          setSubmitting(false)
+        })
+    }
   }
   // const GoogleLoginButton = styled(Button)`
   //
@@ -119,30 +170,32 @@ const LoginForm = ({
           isSubmitting: boolean
         }): ReactElement => (
           <Form onSubmit={handleSubmit}>
-            <Form.Group controlId="authEmail">
-              <Form.Label>Email address</Form.Label>
-              {/*<Form.Control*/}
-              {/*    type="email"*/}
-              {/*    placeholder="Enter your email..."*/}
-              {/*    value={email}*/}
-              {/*    onChange={(e): void => setEmail(e.target.value)}*/}
-              {/*/>*/}
-              <Field
-                as={Form.Control}
-                name={"email"}
-                isInvalid={errors.email && touched.email}
-                disabled={isSubmitting}
-              />
-              <Form.Control.Feedback
-                type="invalid"
-                style={{
-                  whiteSpace: "pre-wrap",
-                  wordBreak: "break-all",
-                }}
-              >
-                {errors.email}
-              </Form.Control.Feedback>
-            </Form.Group>
+            {!reauthenticateUser && (
+              <Form.Group controlId="authEmail">
+                <Form.Label>Email address</Form.Label>
+                {/*<Form.Control*/}
+                {/*    type="email"*/}
+                {/*    placeholder="Enter your email..."*/}
+                {/*    value={email}*/}
+                {/*    onChange={(e): void => setEmail(e.target.value)}*/}
+                {/*/>*/}
+                <Field
+                  as={Form.Control}
+                  name={"email"}
+                  isInvalid={errors.email && touched.email}
+                  disabled={isSubmitting}
+                />
+                <Form.Control.Feedback
+                  type="invalid"
+                  style={{
+                    whiteSpace: "pre-wrap",
+                    wordBreak: "break-all",
+                  }}
+                >
+                  {errors.email}
+                </Form.Control.Feedback>
+              </Form.Group>
+            )}
             <Form.Group controlId="authPassword">
               <Form.Label>Password</Form.Label>
               <Field
@@ -156,16 +209,28 @@ const LoginForm = ({
                 {errors.password}
               </Form.Control.Feedback>
             </Form.Group>
-            <p>
-              <a>Forgot Password</a> | <a>Create Account</a>
+
+            <p className="text-center">
+              <a>Forgot Password</a>
+              {!reauthenticateUser && (
+                <>
+                  {" "}
+                  | <a>Create Account</a>
+                </>
+              )}
             </p>
+
             <Button
               block
               variant="primary"
               type="submit"
               disabled={isSubmitting}
             >
-              {isSubmitting ? "Loading..." : "Login"}
+              {isSubmitting
+                ? "Loading..."
+                : continueButton
+                ? "Continue"
+                : "Login"}
             </Button>
           </Form>
         )}
@@ -187,6 +252,8 @@ const LoginPage = ({
 }: {
   location: WindowLocation
 }): ReactElement => {
+  const [user, loading, error] = useAuthState(firebase.auth())
+
   let continuePath: string
   const continueObj = location?.state as AuthContinueState
   if (continueObj?.return) {
@@ -196,12 +263,44 @@ const LoginPage = ({
       continuePath = continueObj?.return
     }
   }
-
+  console.log(continueObj)
   return (
-    <Layout>
+    <Layout
+      style={{
+        top: "15vh",
+        maxWidth: "600px",
+      }}
+    >
       <SEO title="Login" />
-      <h1>{continueObj?.message ? "Please login to continue" : "Login"}</h1>
-      <LoginForm continueTo={continuePath || "/"} />
+      <div
+        style={{
+          margin: "auto",
+          // position: "absolute",
+          // top: "50%",
+          // transform: "translateY(-50%)"
+        }}
+      >
+        <h1 className="text-center">
+          {continueObj?.message
+            ? "Please login to continue"
+            : continueObj?.reauthenticate
+            ? "Verify it's you"
+            : "Login"}
+        </h1>
+        {continueObj?.reauthenticate && (
+          <p className="text-muted text-center">
+            For security reasons, you&apos;ll need to confirm your password to
+            continue.
+          </p>
+        )}
+        <LoginForm
+          continueTo={continuePath || "/"}
+          reauthenticateUser={continueObj?.reauthenticate ? user : undefined}
+          continueButton={
+            !!continueObj?.return || !!continueObj?.reauthenticate
+          }
+        />
+      </div>
     </Layout>
   )
 }

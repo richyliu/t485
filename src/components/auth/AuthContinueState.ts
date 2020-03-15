@@ -19,6 +19,10 @@ interface AuthContinueState {
    * Data that will be returned to the initiating page.
    */
   state?: any
+  /**
+   *	Whether or not to reauthenticate the currently logged in user instead.
+   */
+  reauthenticate?: boolean
 }
 
 // eslint-disable-next-line no-undef

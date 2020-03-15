@@ -1,3 +1,5 @@
+@import "variables";
+
 @font-face {
   font-family: "Nexa Bold";
   src: url("../fonts/Nexa Bold.otf") format("opentype");
@@ -89,7 +91,7 @@ a.link-no-style {
     margin-top: -60px;
     height: 60px;
     clear: both;
-    background-color: $color-primary;
+    background-color: $color-secondary;
     color: rgba(0, 0, 0, 0.9);
     justify-content: center;
     width: 100%;
@@ -99,4 +101,16 @@ a.link-no-style {
       text-align: center;
     }
   }
+}
+
+.main-background {
+  background-color: $color-secondary;
+}
+
+.main-card {
+  padding: 30px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 3px 3px 5px 1px #ccc;
+  margin-bottom: 30px;
 }

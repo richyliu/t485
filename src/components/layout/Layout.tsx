@@ -11,6 +11,7 @@ import { Col, Container, Row } from "react-bootstrap"
 import Navbar from "./Navbar"
 // import styled from "styled-components"
 import "../../styles/style.scss"
+import classNames from "classnames"
 
 interface LayoutProps {
   /**
@@ -29,6 +30,22 @@ interface LayoutProps {
    * Whether or not to render the admin layout, which includes the special admin navbar.
    */
   admin?: boolean
+  /**
+   * Whether or not to use the card layout. Defaults to true.
+   */
+  card?: boolean
+  /**
+   * Set to false to disable the grey background. Default is true.
+   */
+  background?: boolean
+  /**
+   * CSS Classes to pass onto the container closest to the content.
+   */
+  className?: string
+  /**
+   * Style to pass onto the container closest to the content.
+   */
+  style?: React.CSSProperties
 }
 
 const Layout = ({
@@ -36,40 +53,64 @@ const Layout = ({
   pageName,
   transparentNavFooter,
   admin,
-}: LayoutProps): React.ReactElement => (
-  <>
-    <Container fluid className="px-0 main">
-      <Navbar
-        pageName={pageName}
-        admin={admin}
-        transparent={transparentNavFooter}
-      />
-      <Row noGutters>
-        <Col>
-          <Container className="mt-5">
-            <main>{children}</main>
-          </Container>
-        </Col>
-      </Row>
-    </Container>
-    <Container fluid className="px-0">
-      <Row noGutters>
-        <Col className="footer-col">
-          <footer className={transparentNavFooter ? "transparent-footer" : ""}>
-            <span>
-              Copyright © 2006
-              {new Date().getFullYear() > 2006
-                ? "-" + new Date().getFullYear()
-                : ""}{" "}
-              Troop 485, Silicon Valley Monterey Bay Council, Boy Scouts of
-              America.
-            </span>
-          </footer>
-        </Col>
-      </Row>
-    </Container>
-  </>
-)
+  card,
+  background,
+  className,
+  style,
+}: LayoutProps): React.ReactElement => {
+  if (card !== false) {
+    card = true
+  }
+  if (background !== false) {
+    background = true
+  }
+  return (
+    <>
+      <Container
+        fluid
+        className={classNames("px-0 main", background ? "main-background" : "")}
+      >
+        <Navbar
+          pageName={pageName}
+          admin={admin}
+          transparent={transparentNavFooter}
+        />
+        <Row noGutters>
+          <Col>
+            <Container
+              className={classNames(
+                "mt-5",
+                card ? "main-card" : "",
+                className || ""
+              )}
+              style={style}
+            >
+              <main>{children}</main>
+            </Container>
+          </Col>
+        </Row>
+      </Container>
+      <Container fluid className="px-0">
+        <Row noGutters>
+          <Col className="footer-col">
+            <footer
+              className={transparentNavFooter ? "transparent-footer" : ""}
+            >
+              <span>
+                Copyright © 2006
+                {new Date().getFullYear() > 2006
+                  ? "-" + new Date().getFullYear()
+                  : ""}{" "}
+                Troop 485, Silicon Valley Monterey Bay Council, Boy Scouts of
+                America.
+              </span>
+            </footer>
+          </Col>
+        </Row>
+      </Container>
+    </>
+  )
+}
 
 // export { Layout };
 export default Layout

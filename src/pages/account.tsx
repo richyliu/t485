@@ -1,13 +1,15 @@
 import React, { ReactElement, ReactNode } from "react"
 import { useAuthState } from "react-firebase-hooks/auth"
 import firebase from "gatsby-plugin-firebase"
-import { Button, Form, Table } from "react-bootstrap"
+import { Alert, Button, Form, Table } from "react-bootstrap"
 import { Layout, SEO } from "../components/layout"
 import NewPassword from "../components/forms/NewPassword"
-import { navigate } from "gatsby-link"
+import { navigate } from "gatsby"
 import AuthContinueState from "../components/auth/AuthContinueState"
 import { Field, Formik, FormikBag } from "formik"
 import * as Yup from "yup"
+import Mailcheck from "mailcheck"
+import { User } from "firebase"
 
 // const UpdateDisplayNameForm = (): ReactElement => {
 // 	const [user, loading, error] = useAuthState(firebase.auth())
@@ -42,10 +44,7 @@ interface AccountDetailsProps {
   /**
    * The user data to display.
    */
-  userData: {
-    displayName?: string
-    email?: string
-  }
+  user: User
 
   /**
    * A function to be called when the user cancels their submission.
@@ -54,19 +53,30 @@ interface AccountDetailsProps {
 }
 
 interface AccountDetailFieldProps {
-  name: string
-  children: ReactNode
+  name?: string
+  children?: ReactNode
   renderIf?: boolean
+  /**
+   * Used for rendering just a divider.
+   */
+  empty?: boolean
 }
 
 const AccountDetailField = ({
   name,
   children,
   renderIf,
+  empty,
 }: AccountDetailFieldProps): ReactElement => {
   if (renderIf === false) return <></>
   // if renderIf is undefined, don't return nothing
-
+  if (empty) {
+    return (
+      <tr>
+        <td colSpan={2} />
+      </tr>
+    )
+  }
   return (
     <tr>
       <td
@@ -96,7 +106,7 @@ const AccountDetailField = ({
 const AccountDetails = ({
   editable,
   onEditableChange,
-  userData,
+  user,
   onCancel,
 }: AccountDetailsProps): ReactElement => {
   interface FormData {
@@ -106,21 +116,41 @@ const AccountDetails = ({
   }
 
   const handleSubmit = (
-    data: FormData,
+    { newPassword, confirmNewPassword, newEmail }: FormData,
     { setSubmitting, setErrors }: FormikBag<FormData, FormData>
   ): void => {
-    // TODO
-    console.log(data)
+    console.log(newPassword, confirmNewPassword, newEmail)
+
+    if (newPassword) {
+      if (newPassword !== confirmNewPassword) {
+        setErrors({
+          confirmNewPassword: "The password you entered doesn't match.",
+        })
+        setSubmitting(false)
+        return
+      }
+      user
+        .updatePassword(newPassword)
+        .then(function() {
+          // Update successful.
+          console.log("DONE")
+        })
+        .catch(function(error) {
+          // An error happened.
+          alert("ERROR")
+          console.log(error)
+        })
+    }
   }
   const schema = Yup.object().shape({
     newEmail: Yup.string().email("The email you entered isn't valid."),
     newPassword: Yup.string().min(
       6,
-      "Passwords must be at least 6 characters!"
+      "Your password isn't at least six characters."
     ),
     confirmNewPassword: Yup.string().oneOf(
       [Yup.ref("newPassword")],
-      "Passwords must match"
+      "The password you entered doesn't match."
     ),
   })
 
@@ -128,7 +158,7 @@ const AccountDetails = ({
     <Formik
       validationSchema={schema}
       initialValues={{
-        newEmail: userData.email || "",
+        newEmail: user.email || "",
         newPassword: "",
         confirmNewPassword: "",
       }}
@@ -156,18 +186,34 @@ const AccountDetails = ({
         isValid: boolean
       }): ReactElement => {
         const changes = {
-          newEmail:
-            values.newEmail !== userData.email && values.newEmail !== "",
+          newEmail: values.newEmail !== user.email && values.newEmail !== "",
           newPassword: values.newPassword !== "",
           any: false,
         }
         changes.any = changes.newEmail || changes.newPassword
+
+        const emailSuggestion = React.useMemo(
+          () =>
+            Mailcheck.run({
+              secondLevelDomains: [
+                "yahoo",
+                "hotmail",
+                "mail",
+                "live",
+                "outlook",
+                "icloud",
+              ],
+              email: values.newEmail,
+            })?.full,
+          [values.newEmail]
+        )
+
         return (
-          <Form onSubmit={handleSubmit} className="py-3" pb-5>
+          <Form onSubmit={handleSubmit} className="py-3">
             <Table responsive>
               <tbody>
                 <AccountDetailField name={"Full Name"}>
-                  {userData.displayName || "Not Set"}
+                  {user.displayName || "Not Set"}
                   {editable && (
                     <Form.Text className="text-muted">
                       To change your account name, please contact the webmaster.
@@ -183,6 +229,21 @@ const AccountDetails = ({
                         isInvalid={errors.newEmail && touched.newEmail}
                         placeholder={"Enter a new email"}
                       />
+                      <Form.Text>
+                        {emailSuggestion && (
+                          <>
+                            Did you mean:{" "}
+                            <a
+                              onClick={(): void =>
+                                setFieldValue("newEmail", emailSuggestion)
+                              }
+                            >
+                              {emailSuggestion}
+                            </a>
+                            ?
+                          </>
+                        )}
+                      </Form.Text>
                       <Form.Control.Feedback type={"invalid"}>
                         {errors.newEmail}
                       </Form.Control.Feedback>
@@ -192,7 +253,7 @@ const AccountDetails = ({
                       </Form.Text>
                     </Form.Group>
                   ) : (
-                    <>{userData.email || "Not Set"}</>
+                    <>{user.email || "Not Set"}</>
                   )}
                 </AccountDetailField>
                 <AccountDetailField name={"Password"} renderIf={editable}>
@@ -226,7 +287,9 @@ const AccountDetails = ({
                       name={"confirmNewPassword"}
                       placeholder={"Confirm your new password"}
                       type="password"
-                      isInvalid={errors.confirmNewPassword}
+                      isInvalid={
+                        errors.confirmNewPassword && touched.confirmNewPassword
+                      }
                     />
 
                     <Form.Control.Feedback type="invalid">
@@ -234,11 +297,11 @@ const AccountDetails = ({
                     </Form.Control.Feedback>
                   </Form.Group>
                 </AccountDetailField>
+                <AccountDetailField empty />
               </tbody>
             </Table>
             {editable && (
               <>
-                {/*TODO: fix changes */}
                 {changes.any && (
                   <div>
                     <h3>Summary of your unsaved changes</h3>
@@ -259,11 +322,11 @@ const AccountDetails = ({
                       )}
                       {changes.newEmail && (
                         <li>
-                          Email changed from {userData.email} to{" "}
+                          Email changed from {user.email} to{" "}
                           <b>{values.newEmail}</b> (
                           <a
                             onClick={(): void =>
-                              setFieldValue("newEmail", userData.email)
+                              setFieldValue("newEmail", user.email)
                             }
                           >
                             Undo
@@ -272,25 +335,10 @@ const AccountDetails = ({
                         </li>
                       )}
                     </ul>
-                    <h3>Confirm your password to continue</h3>
-                    <Form.Group>
-                      <Field
-                        as={Form.Control}
-                        name={"currentPassword"}
-                        type={"password"}
-                        isInvalid={
-                          errors.currentPassword && touched.currentPassword
-                        }
-                        placeholder={"Confirm your current password"}
-                      />
-                      <Form.Control.Feedback type={"invalid"}>
-                        {errors.currentPassword}
-                      </Form.Control.Feedback>
-                    </Form.Group>
                   </div>
                 )}
                 <Button
-                  variant="danger"
+                  variant="outline-danger"
                   className=""
                   onClick={(): void => onCancel()}
                 >
@@ -346,14 +394,23 @@ const AccountPage = (): ReactElement => {
       <p>
         Hello, <b>{user?.displayName}</b>
       </p>
+      <Alert variant={"success"} dismissible>
+        Your password has been successfully updated.
+      </Alert>
+      {/*<button onClick={(): void => {*/}
+      {/*	*/}
+      {/*}}*/}
+      {/*>click to reauthenticate*/}
+      {/*</button>*/}
       <a onClick={(): void => setEditable(old => !old)}>
-        {editable ? "Cancel Editing (don't save changes)" : "Edit"}
+        {editable ? "Cancel Editing" : "Edit"}
       </a>
+
       {user && (
         <AccountDetails
           editable={editable}
           onEditableChange={(value): void => setEditable(value)}
-          userData={user}
+          user={user}
           onCancel={(): void => setEditable(false)}
         />
       )}

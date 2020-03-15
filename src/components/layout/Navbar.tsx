@@ -136,10 +136,7 @@ export const Navbar = ({
           <Nav activeKey={pageName}>
             <NavbarLink page="/page-2">Page 2</NavbarLink>
             <NavbarLink page="/404">Link Name 2</NavbarLink>
-            {/*<NavbarLink page="/plc/voting/admin">PLC Admin</NavbarLink>*/}
-            {/*<Link to="/plc/voting/vote" className="link-no-style">*/}
-            {/*  <Button>PLC Voting</Button> /!* TODO: delete *!/*/}
-            {/*</Link>*/}
+
             <AuthDropdown />
           </Nav>
         </BootstrapNavbar.Collapse>

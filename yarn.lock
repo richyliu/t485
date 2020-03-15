@@ -3003,6 +3003,13 @@
     jest-diff "^25.1.0"
     pretty-format "^25.1.0"
 
+"@types/jquery@*":
+  version "3.3.33"
+  resolved "https://registry.yarnpkg.com/@types/jquery/-/jquery-3.3.33.tgz#61d9cbd4004ffcdf6cf7e34720a87a5625a7d8e9"
+  integrity sha512-U6IdXYGkfUI42SR79vB2Spj+h1Ly3J3UZjpd8mi943lh126TK7CB+HZOxGh2nM3IySor7wqVQdemD/xtydsBKA==
+  dependencies:
+    "@types/sizzle" "*"
+
 "@types/jsdom@^16.1.0":
   version "16.1.0"
   resolved "https://registry.yarnpkg.com/@types/jsdom/-/jsdom-16.1.0.tgz#89d0ad0707eceb223c0db9b76611f8d487dd7d1b"
@@ -3026,6 +3033,13 @@
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/@types/long/-/long-4.0.1.tgz#459c65fa1867dafe6a8f322c4c51695663cc55e9"
   integrity sha512-5tXH6Bx/kNGd3MgffdmP4dy2Z+G4eaXw0SE81Tq3BNadtnMR5/ySMzX4SLEzHJzSmPNn4HIdpQsBvXMUykr58w==
+
+"@types/mailcheck@^1.1.31":
+  version "1.1.31"
+  resolved "https://registry.yarnpkg.com/@types/mailcheck/-/mailcheck-1.1.31.tgz#d6cf919c6e88903034add5b9da20f635c30d0377"
+  integrity sha512-jx+FJjIPUMAIZle/9UDt791QAA+uvoxgJ3wXJd0XIsoXezNQnq/Rbh3CGg4bA5CBBxk6GGDuvTXOQkO5HcSuvQ==
+  dependencies:
+    "@types/jquery" "*"
 
 "@types/minimatch@*":
   version "3.0.3"
@@ -3152,6 +3166,11 @@
   dependencies:
     "@types/glob" "*"
     "@types/node" "*"
+
+"@types/sizzle@*":
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/@types/sizzle/-/sizzle-2.3.2.tgz#a811b8c18e2babab7d542b3365887ae2e4d9de47"
+  integrity sha512-7EJYyKTL7tFR8+gDbB6Wwz/arpGa0Mywk1TJbNzKzHtzbwVmY4HR9WqS5VV7dsBUKQmPNr192jHr/VpBluj/hg==
 
 "@types/stack-utils@^1.0.1":
   version "1.0.1"
@@ -12851,6 +12870,11 @@ lru-cache@^5.1.1:
   integrity sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==
   dependencies:
     yallist "^3.0.2"
+
+mailcheck@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/mailcheck/-/mailcheck-1.1.1.tgz#d87cf6ba0b64ba512199dbf93f1489f479591e34"
+  integrity sha1-2Hz2ugtkulEhmdv5PxSJ9HlZHjQ=
 
 make-dir@^1.0.0, make-dir@^1.2.0:
   version "1.3.0"
