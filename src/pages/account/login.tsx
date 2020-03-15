@@ -7,20 +7,21 @@ import { Field, Formik, FormikBag } from "formik"
 import * as Yup from "yup"
 import firebase from "gatsby-plugin-firebase"
 import { WindowLocation } from "reach__router"
-import AuthContinueState from "../../components/auth/AuthContinueState"
+import { AuthContinueState, AuthReturnState } from "../../components/auth"
 import { User } from "firebase"
 import { useAuthState } from "react-firebase-hooks/auth"
 // import {GoogleLoginButton} from "react-social-login-buttons"
+import { unexpectedFirebaseError } from "../../utils/unexpectedError"
 
 const LoginForm = ({
   continueTo,
   continueState,
-  reauthenticateUser,
+  challengeUser,
   continueButton,
 }: {
   continueTo: string
   continueState?: object
-  reauthenticateUser?: User
+  challengeUser?: User
   continueButton?: boolean
 }): ReactElement => {
   interface FormData {
@@ -29,7 +30,7 @@ const LoginForm = ({
   }
 
   const schema = Yup.object().shape({
-    email: reauthenticateUser
+    email: challengeUser
       ? undefined
       : Yup.string()
           .email("The email you entered isn't valid.")
@@ -41,8 +42,9 @@ const LoginForm = ({
     navigate(continueTo, {
       state: {
         from: "login",
-        continueState: continueState || {},
-      },
+        state: continueState || {},
+      } as AuthReturnState,
+      replace: true,
     })
   }
 
@@ -50,8 +52,8 @@ const LoginForm = ({
     { email, password }: FormData,
     { setSubmitting, setErrors }: FormikBag<FormData, FormData>
   ): void => {
-    if (reauthenticateUser) {
-      const user = reauthenticateUser
+    if (challengeUser) {
+      const user = challengeUser
       const credentials = firebase.auth.EmailAuthProvider.credential(
         user.email,
         password
@@ -116,22 +118,7 @@ const LoginForm = ({
               break
             default:
               setErrors({
-                password:
-                  "An unknown error occurred. Please contact the webmaster. Include the following Reference Data: \n\n" +
-                  "<<<<<<<<<<! START SUPPORT DATA V1 !>>>>>>>>>>\n" +
-                  encodeURIComponent(
-                    btoa(
-                      JSON.stringify({
-                        version: "1",
-                        code: e.code,
-                        message: e.message,
-                        date: new Date().getTime(),
-                      })
-                    )
-                  )
-                    .match(/.{1,50}/g)
-                    .join("") +
-                  "\n<<<<<<<<<<! END SUPPORT DATA V1 !>>>>>>>>>>",
+                password: unexpectedFirebaseError(e),
               })
           }
           setSubmitting(false)
@@ -170,7 +157,7 @@ const LoginForm = ({
           isSubmitting: boolean
         }): ReactElement => (
           <Form onSubmit={handleSubmit}>
-            {!reauthenticateUser && (
+            {!challengeUser && (
               <Form.Group controlId="authEmail">
                 <Form.Label>Email address</Form.Label>
                 {/*<Form.Control*/}
@@ -212,7 +199,7 @@ const LoginForm = ({
 
             <p className="text-center">
               <a>Forgot Password</a>
-              {!reauthenticateUser && (
+              {!challengeUser && (
                 <>
                   {" "}
                   | <a>Create Account</a>
@@ -252,7 +239,7 @@ const LoginPage = ({
 }: {
   location: WindowLocation
 }): ReactElement => {
-  const [user, loading, error] = useAuthState(firebase.auth())
+  const [user, ,] = useAuthState(firebase.auth())
 
   let continuePath: string
   const continueObj = location?.state as AuthContinueState
@@ -283,22 +270,20 @@ const LoginPage = ({
         <h1 className="text-center">
           {continueObj?.message
             ? "Please login to continue"
-            : continueObj?.reauthenticate
-            ? "Verify it's you"
+            : continueObj?.isChallenge
+            ? "Hi " + (user?.displayName.split(" ")[0] || "")
             : "Login"}
         </h1>
-        {continueObj?.reauthenticate && (
+        {continueObj?.isChallenge && (
           <p className="text-muted text-center">
-            For security reasons, you&apos;ll need to confirm your password to
-            continue.
+            Please confirm your current password to continue.
           </p>
         )}
         <LoginForm
+          continueState={continueObj.state}
           continueTo={continuePath || "/"}
-          reauthenticateUser={continueObj?.reauthenticate ? user : undefined}
-          continueButton={
-            !!continueObj?.return || !!continueObj?.reauthenticate
-          }
+          challengeUser={continueObj?.isChallenge ? user : undefined}
+          continueButton={!!continueObj?.return || !!continueObj?.isChallenge}
         />
       </div>
     </Layout>

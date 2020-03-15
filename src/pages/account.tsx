@@ -5,12 +5,11 @@ import { Alert, Button, Form, Table } from "react-bootstrap"
 import { Layout, SEO } from "../components/layout"
 import NewPassword from "../components/forms/NewPassword"
 import { navigate } from "gatsby"
-import AuthContinueState from "../components/auth/AuthContinueState"
+import { AuthContinueState, AuthReturnState } from "../components/auth"
 import { Field, Formik, FormikBag } from "formik"
 import * as Yup from "yup"
 import Mailcheck from "mailcheck"
 import { User } from "firebase"
-
 // const UpdateDisplayNameForm = (): ReactElement => {
 // 	const [user, loading, error] = useAuthState(firebase.auth())
 // 	const [name, setName] = React.useState(user?.displayName || "Loading...")
@@ -32,24 +31,14 @@ import { User } from "firebase"
 // }
 
 interface AccountDetailsProps {
-  /**
-   * Whether or not the user can edit the information fields.
-   */
-  editable?: boolean
-  /**
-   * A function to be called each time the editable state changes. This is also called when the user submits, after their data has been synced with the server.
-   * @param newValue
-   */
-  onEditableChange?: (newValue: boolean) => void
+  editable: boolean
+  onEdit: () => void
+  onCancel: () => void
+  onSuccess: () => void
   /**
    * The user data to display.
    */
   user: User
-
-  /**
-   * A function to be called when the user cancels their submission.
-   */
-  onCancel: () => void
 }
 
 interface AccountDetailFieldProps {
@@ -104,10 +93,11 @@ const AccountDetailField = ({
 }
 
 const AccountDetails = ({
-  editable,
-  onEditableChange,
   user,
+  editable,
+  onEdit,
   onCancel,
+  onSuccess,
 }: AccountDetailsProps): ReactElement => {
   interface FormData {
     newEmail: string
@@ -120,7 +110,8 @@ const AccountDetails = ({
     { setSubmitting, setErrors }: FormikBag<FormData, FormData>
   ): void => {
     console.log(newPassword, confirmNewPassword, newEmail)
-
+    const requiresChallenge = false
+    const pendingUpdates = []
     if (newPassword) {
       if (newPassword !== confirmNewPassword) {
         setErrors({
@@ -129,18 +120,50 @@ const AccountDetails = ({
         setSubmitting(false)
         return
       }
-      user
-        .updatePassword(newPassword)
-        .then(function() {
-          // Update successful.
-          console.log("DONE")
-        })
-        .catch(function(error) {
-          // An error happened.
-          alert("ERROR")
-          console.log(error)
-        })
+
+      pendingUpdates.push(
+        user
+          .updatePassword("") //newPassword) // TODO REMOVE
+          .catch(error => Promise.reject(error)) // pass the error through
+      )
     }
+    Promise.all(pendingUpdates)
+      .then(function() {
+        // Updates successful.
+        console.log("DONE")
+        setSubmitting(false)
+        onSuccess()
+      })
+      .catch(function(error) {
+        // An error happened.
+        // alert("ERROR")
+        console.log(error)
+        // switch (error.code) {
+        // 	case "auth/requires-recent-login":
+        navigate("/account/login", {
+          state: {
+            from: "/account",
+            isChallenge: true,
+            return: true,
+            state: {
+              updateInProgress: true,
+              editable: false,
+              newPassword: newPassword !== "" ? newPassword : undefined,
+              newEmail:
+                newEmail !== "" && newEmail !== user.email
+                  ? newEmail
+                  : undefined,
+            },
+          } as AuthContinueState,
+        })
+        // break
+        // 	default:
+        // 		setErrors({
+        // 			confirmNewPassword: unexpectedFirebaseError(error)
+        // 		})
+        // }
+        setSubmitting(false)
+      })
   }
   const schema = Yup.object().shape({
     newEmail: Yup.string().email("The email you entered isn't valid."),
@@ -210,6 +233,18 @@ const AccountDetails = ({
 
         return (
           <Form onSubmit={handleSubmit} className="py-3">
+            <a
+              onClick={(): void => {
+                if (!editable) {
+                  onEdit()
+                } else {
+                  onCancel()
+                }
+              }}
+              className={isSubmitting ? "text-muted" : ""}
+            >
+              {editable ? "Cancel" : "Edit"}
+            </a>
             <Table responsive>
               <tbody>
                 <AccountDetailField name={"Full Name"}>
@@ -228,6 +263,7 @@ const AccountDetails = ({
                         name={"newEmail"}
                         isInvalid={errors.newEmail && touched.newEmail}
                         placeholder={"Enter a new email"}
+                        disabled={isSubmitting}
                       />
                       <Form.Text>
                         {emailSuggestion && (
@@ -256,7 +292,7 @@ const AccountDetails = ({
                     <>{user.email || "Not Set"}</>
                   )}
                 </AccountDetailField>
-                <AccountDetailField name={"Password"} renderIf={editable}>
+                <AccountDetailField name={"New Password"} renderIf={editable}>
                   <Form.Group>
                     <Field
                       as={NewPassword}
@@ -264,6 +300,7 @@ const AccountDetails = ({
                       isInvalid={errors.newPassword && touched.newPassword}
                       error={errors.newPassword}
                       placeholder={"Enter a new password"}
+                      disabled={isSubmitting}
                     />
                     <Form.Text className="text-muted">
                       If you do not want to change your password, leave this
@@ -272,10 +309,8 @@ const AccountDetails = ({
                   </Form.Group>
                 </AccountDetailField>
                 <AccountDetailField name={"Password"} renderIf={!editable}>
-                  <a onClick={(): void => onEditableChange(true)}>
-                    Enter editing mode
-                  </a>{" "}
-                  to change your password
+                  <a onClick={(): void => onEdit()}>Enter editing mode</a> to
+                  change your password
                 </AccountDetailField>
                 <AccountDetailField
                   name={"Confirm New Password"}
@@ -287,6 +322,7 @@ const AccountDetails = ({
                       name={"confirmNewPassword"}
                       placeholder={"Confirm your new password"}
                       type="password"
+                      disabled={isSubmitting}
                       isInvalid={
                         errors.confirmNewPassword && touched.confirmNewPassword
                       }
@@ -297,6 +333,7 @@ const AccountDetails = ({
                     </Form.Control.Feedback>
                   </Form.Group>
                 </AccountDetailField>
+
                 <AccountDetailField empty />
               </tbody>
             </Table>
@@ -341,6 +378,7 @@ const AccountDetails = ({
                   variant="outline-danger"
                   className=""
                   onClick={(): void => onCancel()}
+                  disabled={isSubmitting}
                 >
                   Cancel
                 </Button>
@@ -348,7 +386,7 @@ const AccountDetails = ({
                   variant="primary"
                   type={"submit"}
                   className="float-right"
-                  disabled={!changes.any || !isValid}
+                  disabled={!changes.any || !isValid || isSubmitting}
                 >
                   {!changes.any
                     ? "No changes to save"
@@ -364,9 +402,17 @@ const AccountDetails = ({
     </Formik>
   )
 }
-const AccountPage = (): ReactElement => {
+const AccountPage = ({
+  location,
+}: {
+  location?: AuthReturnState
+}): ReactElement => {
   const [user, loading, error] = useAuthState(firebase.auth())
-  const [editable, setEditable] = React.useState(false)
+  const [editable, setEditable] = React.useState(
+    location?.state?.state?.editable || false
+  )
+  const [showSuccess, setShowSuccess] = React.useState(false)
+
   if (!loading && !user) {
     navigate("/account/login", {
       state: {
@@ -376,6 +422,14 @@ const AccountPage = (): ReactElement => {
       } as AuthContinueState,
     })
   }
+
+  React.useEffect(() => {
+    // The state needs to be updated on reload, otherwise some functions may be performed twice.
+    window.onbeforeunload = (): void => {
+      history.replaceState({}, "")
+    }
+  }, [])
+
   // React.useEffect(() => {
   // 	if (!user)return;
   // 	user.updateProfile({
@@ -387,31 +441,84 @@ const AccountPage = (): ReactElement => {
   // 		console.log(error);
   // 	})
   // }, [user])
+  console.log("LL", location.state)
+
+  React.useEffect(() => {
+    if (!user) return
+
+    if (location?.state?.state?.updateInProgress) {
+      if (location?.state?.state?.newPassword) {
+        user
+          .updatePassword(location?.state?.state?.newPassword)
+          .then(function() {
+            // Update successful.
+            console.log("DONE")
+            setShowSuccess(true)
+
+            // onSuccess()
+          })
+          .catch(function(error) {
+            // An error happened.
+            // alert("ERROR")
+            console.log(error)
+            // switch (error.code) {
+            // 	case "auth/requires-recent-login":
+            // requiresChallenge = true
+            // break
+            // 	default:
+            // 		setErrors({
+            // 			confirmNewPassword: unexpectedFirebaseError(error)
+            // 		})
+            // }
+            // setSubmitting(false)
+          })
+      }
+    }
+  }, [user])
+
   return (
     <Layout>
       <SEO title="Your Account" />
       <h1>Account Settings</h1>
       <p>
-        Hello, <b>{user?.displayName}</b>
+        Hello, <b>{user?.displayName}</b>. These are your settings.
       </p>
-      <Alert variant={"success"} dismissible>
-        Your password has been successfully updated.
+      <Alert
+        variant={"success"}
+        dismissible
+        show={showSuccess}
+        onClose={(): void => setShowSuccess(false)}
+      >
+        Your setttings has been successfully updated.
       </Alert>
       {/*<button onClick={(): void => {*/}
       {/*	*/}
       {/*}}*/}
       {/*>click to reauthenticate*/}
       {/*</button>*/}
-      <a onClick={(): void => setEditable(old => !old)}>
-        {editable ? "Cancel Editing" : "Edit"}
-      </a>
 
       {user && (
         <AccountDetails
           editable={editable}
-          onEditableChange={(value): void => setEditable(value)}
-          user={user}
           onCancel={(): void => setEditable(false)}
+          onEdit={(): void => {
+            navigate("/account/login", {
+              state: {
+                from: "/account",
+                isChallenge: true,
+                return: true,
+                state: {
+                  editable: true,
+                },
+              } as AuthContinueState,
+            })
+          }}
+          onSuccess={(): void => {
+            setShowSuccess(true)
+            setEditable(false)
+          }}
+          // onEdit={}
+          user={user}
         />
       )}
     </Layout>

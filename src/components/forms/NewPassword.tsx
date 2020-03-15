@@ -29,25 +29,32 @@ const NewPassword = ({
     "cupertino",
     "correcthorsebatterystaple",
   ])
-  {
-    /* eslint-disable */ // TODO: fix?
-    const UpdatingPopover = React.forwardRef<Popover>(
-      // @ts-ignore
-      ({ scheduleUpdate, children, ...props }, ref) => {
-        React.useEffect(() => {
-          // console.log('updating!');
-          scheduleUpdate()
-        }, [children, scheduleUpdate])
+  const UpdatingPopoverBase = (
+    {
+      scheduleUpdate,
+      children,
+      id,
+      ...props
+    }: {
+      id: string
+      children: ReactElement | ReactElement[]
+      scheduleUpdate: () => void
+    },
+    ref
+  ): ReactElement => {
+    React.useEffect(() => {
+      // console.log('updating!');
+      scheduleUpdate()
+    }, [children, scheduleUpdate])
 
-        return (
-          // @ts-ignore
-          <Popover ref={ref} {...props}>
-            {children}
-          </Popover>
-        )
-      }
+    return (
+      <Popover ref={ref} id={id} {...props}>
+        {children}
+      </Popover>
     )
   }
+  const UpdatingPopover = React.forwardRef(UpdatingPopoverBase)
+
   return (
     <>
       <Form.Group>
@@ -76,7 +83,7 @@ const NewPassword = ({
                 }`}
               >
                 Password Strength:{" "}
-                {value.length <= 6
+                {value.length < 6
                   ? "Too Short!"
                   : [
                       "Loading...",

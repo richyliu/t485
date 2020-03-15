@@ -18,11 +18,12 @@ interface AuthContinueState {
   /**
    * Data that will be returned to the initiating page.
    */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   state?: any
   /**
    *	Whether or not to reauthenticate the currently logged in user instead.
    */
-  reauthenticate?: boolean
+  isChallenge?: boolean
 }
 
 // eslint-disable-next-line no-undef

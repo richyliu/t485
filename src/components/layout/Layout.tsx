@@ -9,8 +9,11 @@ import React from "react"
 // import { StaticQuery, graphql } from "gatsby"
 import { Col, Container, Row } from "react-bootstrap"
 import Navbar from "./Navbar"
-// import styled from "styled-components"
+// fonts and base styles
+import "typeface-muli"
+// import "typeface-oswald"
 import "../../styles/style.scss"
+
 import classNames from "classnames"
 
 interface LayoutProps {

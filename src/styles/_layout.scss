@@ -17,14 +17,23 @@ body {
 h1,
 h2,
 h3 {
-  font-family: "Nexa Bold", sans-serif;
+  font-family: "Muli", sans-serif;
 }
 
 .navbar-brand {
   font-family: "Nexa Bold", sans-serif;
 }
 
-.transparent-navbar,
+.transparent-navbar {
+  @include desktop() {
+    background-color: transparent !important;
+  }
+  @include mobile() {
+    background-color: rgba(0, 0, 0, 0.6) !important;
+    //color: black !important;
+  }
+}
+
 .transparent-footer {
   background-color: transparent !important;
 }
@@ -84,14 +93,17 @@ a.link-no-style {
   align-items: center;
 
   footer {
-    padding: 0px 10px;
     display: flex;
     position: relative;
     bottom: 0;
     margin-top: -60px;
     height: 60px;
     clear: both;
-    background-color: $color-secondary;
+    @include desktop() {
+      background-color: $color-secondary;
+      padding: 0px 10px;
+    }
+
     color: rgba(0, 0, 0, 0.9);
     justify-content: center;
     width: 100%;
@@ -103,14 +115,16 @@ a.link-no-style {
   }
 }
 
-.main-background {
-  background-color: $color-secondary;
-}
+@include desktop() {
+  .main-background {
+    background-color: $color-secondary;
+  }
 
-.main-card {
-  padding: 30px;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 3px 3px 5px 1px #ccc;
-  margin-bottom: 30px;
+  .main-card {
+    padding: 30px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 3px 3px 5px 1px #ccc;
+    margin-bottom: 30px;
+  }
 }

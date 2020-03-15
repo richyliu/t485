@@ -1,5 +1,4 @@
 import React, { ReactElement } from "react"
-import { Button, Form } from "react-bootstrap"
 import Layout from "../../components/layout/Layout"
 import SEO from "../../components/layout/seo"
 import firebase from "gatsby-plugin-firebase"
@@ -10,6 +9,7 @@ const LogoutPage = (): ReactElement => {
     message?: string
     code?: string
   }
+
   const [error, setError]: [
     Error,
     React.Dispatch<React.SetStateAction<Error>>
