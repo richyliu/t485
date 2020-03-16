@@ -285,7 +285,7 @@ const LoginPage = ({
           </p>
         )}
         <LoginForm
-          continueState={continueObj.state}
+          continueState={continueObj?.state}
           continueTo={continuePath || "/"}
           challengeUser={continueObj?.isChallenge ? user : undefined}
           continueButton={!!continueObj?.return || !!continueObj?.isChallenge}

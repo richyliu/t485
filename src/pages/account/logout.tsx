@@ -17,15 +17,17 @@ const LogoutPage = (): ReactElement => {
     exists: false,
   });
   const [loading, setLoading] = React.useState(true);
-  firebase
-    .auth()
-    .signOut()
-    .then(() => {
-      setLoading(false);
-    })
-    .catch((e: Error) => {
-      setError(e);
-    });
+  React.useEffect(() => {
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((e: Error) => {
+        setError(e);
+      });
+  }, [firebase]);
   return (
     <Layout>
       <SEO title="Login" />
