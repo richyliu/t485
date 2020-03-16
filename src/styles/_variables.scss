@@ -5,12 +5,12 @@ $color-secondary: #eeeeee; // #e1e6ea; // TODO: or #f8f9fa or #eee
 $mobile-end: 799px;
 
 @mixin mobile {
-  @media screen and (max-width: $mobile-end) {
-    @content;
-  }
+	@media screen and (max-width: $mobile-end) {
+		@content;
+	}
 }
 @mixin desktop {
-  @media not screen, (min-width: $mobile-end + 1) {
-    @content;
-  }
+	@media not screen, (min-width: $mobile-end + 1) {
+		@content;
+	}
 }

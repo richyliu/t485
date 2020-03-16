@@ -5,9 +5,9 @@ import NewPassword from "./NewPassword";
 import useAuthState from "./useAuthState";
 
 export {
-  AuthContinueState,
-  AuthReturnState,
-  AuthForm,
-  NewPassword,
-  useAuthState,
+	AuthContinueState,
+	AuthReturnState,
+	AuthForm,
+	NewPassword,
+	useAuthState,
 };
