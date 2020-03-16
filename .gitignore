@@ -1,6 +1,11 @@
 #gulp
 node_modules/
 devserver/**
+
+public/
+.cache/
+.idea/
+**/*.pem
 #build/
 #docs/ - we want to keep compiled output
 
