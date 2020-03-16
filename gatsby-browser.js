@@ -4,5 +4,5 @@
  * See: https://www.gatsbyjs.org/docs/browser-apis/
  */
 
-import "firebase/auth"
-import "firebase/firestore"
+import "firebase/auth";
+import "firebase/firestore";

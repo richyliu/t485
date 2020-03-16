@@ -1,15 +1,18 @@
-import React, { ReactElement, ReactNode } from "react"
-import { useAuthState } from "react-firebase-hooks/auth"
-import firebase from "gatsby-plugin-firebase"
-import { Alert, Button, Form, Table } from "react-bootstrap"
-import { Layout, SEO } from "../components/layout"
-import NewPassword from "../components/forms/NewPassword"
-import { navigate } from "gatsby"
-import { AuthContinueState, AuthReturnState } from "../components/auth"
-import { Field, Formik, FormikBag } from "formik"
-import * as Yup from "yup"
-import Mailcheck from "mailcheck"
-import { User } from "firebase"
+import React, { ReactElement, ReactNode } from "react";
+import firebase from "gatsby-plugin-firebase";
+import { Alert, Button, Form, Table } from "react-bootstrap";
+import { Layout, SEO } from "../components/layout";
+import NewPassword from "../components/auth/NewPassword";
+import { navigate } from "gatsby";
+import {
+  AuthContinueState,
+  AuthReturnState,
+  useAuthState,
+} from "../components/auth";
+import { Field, Formik, FormikBag } from "formik";
+import * as Yup from "yup";
+import Mailcheck from "mailcheck";
+import { User } from "firebase";
 // const UpdateDisplayNameForm = (): ReactElement => {
 // 	const [user, loading, error] = useAuthState(firebase.auth())
 // 	const [name, setName] = React.useState(user?.displayName || "Loading...")
@@ -31,24 +34,24 @@ import { User } from "firebase"
 // }
 
 interface AccountDetailsProps {
-  editable: boolean
-  onEdit: () => void
-  onCancel: () => void
-  onSuccess: () => void
+  editable: boolean;
+  onEdit: () => void;
+  onCancel: () => void;
+  onSuccess: () => void;
   /**
    * The user data to display.
    */
-  user: User
+  user: User;
 }
 
 interface AccountDetailFieldProps {
-  name?: string
-  children?: ReactNode
-  renderIf?: boolean
+  name?: string;
+  children?: ReactNode;
+  renderIf?: boolean;
   /**
    * Used for rendering just a divider.
    */
-  empty?: boolean
+  empty?: boolean;
 }
 
 const AccountDetailField = ({
@@ -57,14 +60,14 @@ const AccountDetailField = ({
   renderIf,
   empty,
 }: AccountDetailFieldProps): ReactElement => {
-  if (renderIf === false) return <></>
+  if (renderIf === false) return <></>;
   // if renderIf is undefined, don't return nothing
   if (empty) {
     return (
       <tr>
         <td colSpan={2} />
       </tr>
-    )
+    );
   }
   return (
     <tr>
@@ -89,8 +92,8 @@ const AccountDetailField = ({
         {children}
       </td>
     </tr>
-  )
-}
+  );
+};
 
 const AccountDetails = ({
   user,
@@ -100,44 +103,44 @@ const AccountDetails = ({
   onSuccess,
 }: AccountDetailsProps): ReactElement => {
   interface FormData {
-    newEmail: string
-    newPassword: string
-    confirmNewPassword: string
+    newEmail: string;
+    newPassword: string;
+    confirmNewPassword: string;
   }
 
   const handleSubmit = (
     { newPassword, confirmNewPassword, newEmail }: FormData,
     { setSubmitting, setErrors }: FormikBag<FormData, FormData>
   ): void => {
-    console.log(newPassword, confirmNewPassword, newEmail)
-    const requiresChallenge = false
-    const pendingUpdates = []
+    console.log(newPassword, confirmNewPassword, newEmail);
+    const requiresChallenge = false;
+    const pendingUpdates = [];
     if (newPassword) {
       if (newPassword !== confirmNewPassword) {
         setErrors({
           confirmNewPassword: "The password you entered doesn't match.",
-        })
-        setSubmitting(false)
-        return
+        });
+        setSubmitting(false);
+        return;
       }
 
       pendingUpdates.push(
         user
           .updatePassword("") //newPassword) // TODO REMOVE
           .catch(error => Promise.reject(error)) // pass the error through
-      )
+      );
     }
     Promise.all(pendingUpdates)
       .then(function() {
         // Updates successful.
-        console.log("DONE")
-        setSubmitting(false)
-        onSuccess()
+        console.log("DONE");
+        setSubmitting(false);
+        onSuccess();
       })
       .catch(function(error) {
         // An error happened.
         // alert("ERROR")
-        console.log(error)
+        console.log(error);
         // switch (error.code) {
         // 	case "auth/requires-recent-login":
         navigate("/account/login", {
@@ -155,16 +158,16 @@ const AccountDetails = ({
                   : undefined,
             },
           } as AuthContinueState,
-        })
+        });
         // break
         // 	default:
         // 		setErrors({
         // 			confirmNewPassword: unexpectedFirebaseError(error)
         // 		})
         // }
-        setSubmitting(false)
-      })
-  }
+        setSubmitting(false);
+      });
+  };
   const schema = Yup.object().shape({
     newEmail: Yup.string().email("The email you entered isn't valid."),
     newPassword: Yup.string().min(
@@ -175,7 +178,7 @@ const AccountDetails = ({
       [Yup.ref("newPassword")],
       "The password you entered doesn't match."
     ),
-  })
+  });
 
   return (
     <Formik
@@ -196,24 +199,24 @@ const AccountDetails = ({
         setFieldValue,
         isValid,
       }: {
-        errors: { [Field: string]: string }
-        touched: { [Field: string]: boolean }
-        handleSubmit: (e: React.FormEvent) => void
-        values: FormData
-        isSubmitting: boolean
+        errors: { [Field: string]: string };
+        touched: { [Field: string]: boolean };
+        handleSubmit: (e: React.FormEvent) => void;
+        values: FormData;
+        isSubmitting: boolean;
         setFieldValue: (
           field: string,
           value: any,
           shouldValidate?: boolean
-        ) => void
-        isValid: boolean
+        ) => void;
+        isValid: boolean;
       }): ReactElement => {
         const changes = {
           newEmail: values.newEmail !== user.email && values.newEmail !== "",
           newPassword: values.newPassword !== "",
           any: false,
-        }
-        changes.any = changes.newEmail || changes.newPassword
+        };
+        changes.any = changes.newEmail || changes.newPassword;
 
         const emailSuggestion = React.useMemo(
           () =>
@@ -229,16 +232,16 @@ const AccountDetails = ({
               email: values.newEmail,
             })?.full,
           [values.newEmail]
-        )
+        );
 
         return (
           <Form onSubmit={handleSubmit} className="py-3">
             <a
               onClick={(): void => {
                 if (!editable) {
-                  onEdit()
+                  onEdit();
                 } else {
-                  onCancel()
+                  onCancel();
                 }
               }}
               className={isSubmitting ? "text-muted" : ""}
@@ -348,8 +351,8 @@ const AccountDetails = ({
                           Password changed (
                           <a
                             onClick={(): void => {
-                              setFieldValue("newPassword", "")
-                              setFieldValue("confirmNewPassword", "")
+                              setFieldValue("newPassword", "");
+                              setFieldValue("confirmNewPassword", "");
                             }}
                           >
                             Undo
@@ -397,21 +400,21 @@ const AccountDetails = ({
               </>
             )}
           </Form>
-        )
+        );
       }}
     </Formik>
-  )
-}
+  );
+};
 const AccountPage = ({
   location,
 }: {
-  location?: AuthReturnState
+  location?: AuthReturnState;
 }): ReactElement => {
-  const [user, loading, error] = useAuthState(firebase.auth())
+  const [user, loading, error] = useAuthState(firebase);
   const [editable, setEditable] = React.useState(
     location?.state?.state?.editable || false
-  )
-  const [showSuccess, setShowSuccess] = React.useState(false)
+  );
+  const [showSuccess, setShowSuccess] = React.useState(false);
 
   if (!loading && !user) {
     navigate("/account/login", {
@@ -420,15 +423,15 @@ const AccountPage = ({
         message: true,
         return: true,
       } as AuthContinueState,
-    })
+    });
   }
 
   React.useEffect(() => {
     // The state needs to be updated on reload, otherwise some functions may be performed twice.
     window.onbeforeunload = (): void => {
-      history.replaceState({}, "")
-    }
-  }, [])
+      history.replaceState({}, "");
+    };
+  }, []);
 
   // React.useEffect(() => {
   // 	if (!user)return;
@@ -441,10 +444,10 @@ const AccountPage = ({
   // 		console.log(error);
   // 	})
   // }, [user])
-  console.log("LL", location.state)
+  console.log("LL", location.state);
 
   React.useEffect(() => {
-    if (!user) return
+    if (!user) return;
 
     if (location?.state?.state?.updateInProgress) {
       if (location?.state?.state?.newPassword) {
@@ -452,15 +455,15 @@ const AccountPage = ({
           .updatePassword(location?.state?.state?.newPassword)
           .then(function() {
             // Update successful.
-            console.log("DONE")
-            setShowSuccess(true)
+            console.log("DONE");
+            setShowSuccess(true);
 
             // onSuccess()
           })
-          .catch(function(error) {
+          .catch(function(error: firebase.auth.Error) {
             // An error happened.
             // alert("ERROR")
-            console.log(error)
+            console.log(error);
             // switch (error.code) {
             // 	case "auth/requires-recent-login":
             // requiresChallenge = true
@@ -471,10 +474,10 @@ const AccountPage = ({
             // 		})
             // }
             // setSubmitting(false)
-          })
+          });
       }
     }
-  }, [user])
+  }, [user]);
 
   return (
     <Layout>
@@ -511,18 +514,18 @@ const AccountPage = ({
                   editable: true,
                 },
               } as AuthContinueState,
-            })
+            });
           }}
           onSuccess={(): void => {
-            setShowSuccess(true)
-            setEditable(false)
+            setShowSuccess(true);
+            setEditable(false);
           }}
           // onEdit={}
           user={user}
         />
       )}
     </Layout>
-  )
-}
+  );
+};
 
-export default AccountPage
+export default AccountPage;

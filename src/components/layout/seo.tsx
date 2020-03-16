@@ -5,9 +5,9 @@
  * See: https://www.gatsbyjs.org/docs/use-static-query/
  */
 
-import React, { ReactElement } from "react"
-import Helmet from "react-helmet"
-import { graphql, useStaticQuery } from "gatsby"
+import React, { ReactElement } from "react";
+import Helmet from "react-helmet";
+import { graphql, useStaticQuery } from "gatsby";
 
 function SEO({
   description,
@@ -16,16 +16,16 @@ function SEO({
   keywords,
   title,
 }: {
-  description?: string
-  lang?: string
-  meta?: any[] // eslint-disable-line @typescript-eslint/no-explicit-any
-  keywords?: string[]
-  title: string
+  description?: string;
+  lang?: string;
+  meta?: any[]; // eslint-disable-line @typescript-eslint/no-explicit-any
+  keywords?: string[];
+  title: string;
 }): ReactElement {
-  lang = lang || "en"
-  description = description || ""
-  meta = meta || []
-  keywords = keywords || []
+  lang = lang || "en";
+  description = description || "";
+  meta = meta || [];
+  keywords = keywords || [];
 
   const { site } = useStaticQuery(
     graphql`
@@ -39,9 +39,9 @@ function SEO({
         }
       }
     `
-  )
+  );
 
-  const metaDescription = description || site.siteMetadata.description
+  const metaDescription = description || site.siteMetadata.description;
 
   return (
     <Helmet
@@ -94,7 +94,7 @@ function SEO({
         )
         .concat(meta)}
     />
-  )
+  );
 }
 
-export default SEO
+export default SEO;

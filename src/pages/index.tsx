@@ -1,17 +1,17 @@
-import React, { ReactElement } from "react"
-import { Button, Container } from "react-bootstrap"
-import Layout from "../components/layout/Layout"
-import SEO from "../components/layout/seo"
-import "../styles/index.scss"
-import { graphql } from "gatsby"
-import Img, { FluidObject } from "gatsby-image"
+import React, { ReactElement } from "react";
+import { Button, Container } from "react-bootstrap";
+import Layout from "../components/layout/Layout";
+import SEO from "../components/layout/seo";
+import "../styles/index.scss";
+import { graphql } from "gatsby";
+import Img, { FluidObject } from "gatsby-image";
 
 interface GraphQLQueryResult {
   bgImage: {
     childImageSharp: {
-      fluid: FluidObject
-    }
-  }
+      fluid: FluidObject;
+    };
+  };
 }
 
 const IndexPage = ({ data }: { data: GraphQLQueryResult }): ReactElement => (
@@ -42,18 +42,18 @@ const IndexPage = ({ data }: { data: GraphQLQueryResult }): ReactElement => (
       </div>
     </Container>
   </Layout>
-)
+);
 
 export const query = graphql`
   query {
-    bgImage: file(relativePath: { eq: "header.jpg" }) {
+    bgImage: file(relativePath: { eq: "bg_index.jpg" }) {
       childImageSharp {
         fluid(maxWidth: 1920) {
-          ...GatsbyImageSharpFluid
+          ...GatsbyImageSharpFluid_withWebp
         }
       }
     }
   }
-`
+`;
 
-export default IndexPage
+export default IndexPage;

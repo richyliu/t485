@@ -1,4 +1,4 @@
-import { FirebaseError } from "firebase"
+import { FirebaseError } from "firebase";
 
 function unexpectedFirebaseError(error: FirebaseError): string {
   return (
@@ -17,7 +17,7 @@ function unexpectedFirebaseError(error: FirebaseError): string {
       .match(/.{1,15}/g)
       .join(" ") +
     " <<SDV1:END>>"
-  )
+  );
 }
 
-export { unexpectedFirebaseError }
+export { unexpectedFirebaseError };

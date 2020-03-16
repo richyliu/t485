@@ -1,5 +1,5 @@
-import { create } from "@storybook/theming"
-import DocsLogo from "./img/docs_logo.png"
+import { create } from "@storybook/theming";
+import DocsLogo from "./img/docs_logo.png";
 export default create({
   base: "light",
   //
@@ -34,4 +34,4 @@ export default create({
   brandTitle: "Troop 485 Docs",
   brandUrl: "https://t485.org",
   brandImage: DocsLogo,
-})
+});

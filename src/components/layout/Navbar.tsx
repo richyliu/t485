@@ -1,55 +1,56 @@
-import React, { ReactElement, ReactNode } from "react"
-import { Link } from "gatsby"
-import { navigate } from "gatsby-link"
-import { Nav, Navbar as BootstrapNavbar, NavDropdown } from "react-bootstrap"
-import firebase from "gatsby-plugin-firebase"
-import { useAuthState } from "react-firebase-hooks/auth"
+import React, { ReactElement, ReactNode } from "react";
+import { Link } from "gatsby";
+import { navigate } from "gatsby-link";
+import { Nav, Navbar as BootstrapNavbar, NavDropdown } from "react-bootstrap";
+import firebase from "gatsby-plugin-firebase";
+import { useAuthState } from "../../components/auth";
 
 function NavbarLink(props: {
   /**
    * The page the link should redirect to.
    */
-  page: string
+  page: string;
   /**
    * The text of the navbar link.
    */
-  children: ReactNode
+  children: ReactNode;
   /**
    * Whether the link should be a dropdown link
    */
-  dropdown?: boolean
+  dropdown?: boolean;
 }): ReactElement {
   // Gatsby link element doesn't work well with our storybook config
   const linkProps = {
     eventKey: props.page,
     onClick: (): void => {
-      navigate("/" + props.page)
+      navigate("/" + props.page);
     },
-  }
+  };
   if (props.dropdown) {
     return (
       <>
         <NavDropdown.Item {...linkProps}>{props.children}</NavDropdown.Item>
       </>
-    )
+    );
   } else {
     return (
       <Nav.Item>
         <Nav.Link {...linkProps}>{props.children}</Nav.Link>
       </Nav.Item>
-    )
+    );
   }
 }
 
 const AuthDropdown = (): ReactElement => {
-  const [user, loading, error] = useAuthState(firebase.auth())
+  // console.log(firebase.auth())
+  const [user, loading, error] = useAuthState(firebase);
 
   if (loading) {
     return (
       <NavDropdown id={"authDropdown"} title={"Loading..."} alignRight>
         <NavDropdown.Header>Loading...</NavDropdown.Header>
       </NavDropdown>
-    )
+    );
   }
   if (user) {
     return (
@@ -69,42 +70,42 @@ const AuthDropdown = (): ReactElement => {
           Logout
         </NavbarLink>
       </NavDropdown>
-    )
+    );
   }
   if (error) {
     return (
-      <NavDropdown id={"authDropdown"} title={"Account"} alignRight>
+      <NavDropdown id={"authDropdown"} title={"Account Error"} alignRight>
         <NavDropdown.Header>
           There was an error logging you in: error.code
         </NavDropdown.Header>
-        <NavbarLink page="/account" dropdown>
+        <NavbarLink page="/account/login" dropdown>
           Login Again
         </NavbarLink>
       </NavDropdown>
-    )
+    );
   }
   return (
     // <NavDropdown id={"authDropdown"} title={"NLI"} alignRight>
     //   <NavDropdown.Header>You are not logged in</NavDropdown.Header>
     <NavbarLink page="/account/login">Login</NavbarLink>
     // </NavDropdown>
-  )
-}
+  );
+};
 
 interface PropDef {
   /**
    * The name of the page that should be active. This should be the path to the page.
    * For example, on a page /navbarDemo, the value should be `/navbarDemo`. This is used to determine which nav link should be highlighted.
    */
-  pageName?: string
+  pageName?: string;
   /**
    * Whether or not the admin variant of the navbar should be rendered instead of the normal component.
    */
-  admin?: boolean
+  admin?: boolean;
   /**
    * Whether or not the navbar should be transparent
    */
-  transparent?: boolean
+  transparent?: boolean;
 }
 
 export const Navbar = ({
@@ -143,6 +144,6 @@ export const Navbar = ({
         {/* </Container> */}
       </BootstrapNavbar>
     </>
-  )
-}
-export default Navbar
+  );
+};
+export default Navbar;

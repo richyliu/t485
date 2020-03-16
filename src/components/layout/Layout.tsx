@@ -5,50 +5,50 @@
  * See: https://www.gatsbyjs.org/docs/static-query/
  */
 
-import React from "react"
+import React from "react";
 // import { StaticQuery, graphql } from "gatsby"
-import { Col, Container, Row } from "react-bootstrap"
-import Navbar from "./Navbar"
+import { Col, Container, Row } from "react-bootstrap";
+import Navbar from "./Navbar";
 // fonts and base styles
-import "typeface-muli"
+import "typeface-muli";
 // import "typeface-oswald"
-import "../../styles/style.scss"
+import "../../styles/style.scss";
 
-import classNames from "classnames"
+import classNames from "classnames";
 
 interface LayoutProps {
   /**
    * The content of the page. It will be wrapped in a contianer.
    */
-  children: React.ReactNode
+  children: React.ReactNode;
   /**
    * The path to the current page. It will be used for the navbar.
    */
-  pageName?: string
+  pageName?: string;
   /**
    * If provided, the navbar will have a transparent background.
    */
-  transparentNavFooter?: boolean
+  transparentNavFooter?: boolean;
   /**
    * Whether or not to render the admin layout, which includes the special admin navbar.
    */
-  admin?: boolean
+  admin?: boolean;
   /**
    * Whether or not to use the card layout. Defaults to true.
    */
-  card?: boolean
+  card?: boolean;
   /**
    * Set to false to disable the grey background. Default is true.
    */
-  background?: boolean
+  background?: boolean;
   /**
    * CSS Classes to pass onto the container closest to the content.
    */
-  className?: string
+  className?: string;
   /**
    * Style to pass onto the container closest to the content.
    */
-  style?: React.CSSProperties
+  style?: React.CSSProperties;
 }
 
 const Layout = ({
@@ -62,10 +62,10 @@ const Layout = ({
   style,
 }: LayoutProps): React.ReactElement => {
   if (card !== false) {
-    card = true
+    card = true;
   }
   if (background !== false) {
-    background = true
+    background = true;
   }
   return (
     <>
@@ -112,8 +112,8 @@ const Layout = ({
         </Row>
       </Container>
     </>
-  )
-}
+  );
+};
 
 // export { Layout };
-export default Layout
+export default Layout;

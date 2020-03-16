@@ -26,14 +26,14 @@ module.exports = {
 
   rules: {
     "@typescript-eslint/explicit-function-return-type": "off",
-    semi: ["error", "never"],
+    semi: ["error", "always"],
   },
   overrides: [
     {
-      files: ["*.ts", "*.tsx"],
+      files: ["**/*.ts", "**/*.tsx"],
       rules: {
         "@typescript-eslint/explicit-function-return-type": ["error"],
       },
     },
   ],
-}
+};

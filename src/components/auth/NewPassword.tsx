@@ -1,6 +1,6 @@
-import React, { FormEvent, ReactElement } from "react"
-import { Form, OverlayTrigger, Popover } from "react-bootstrap"
-import zxcvbn from "zxcvbn"
+import React, { FormEvent, ReactElement } from "react";
+import { Form, OverlayTrigger, Popover } from "react-bootstrap";
+import zxcvbn from "zxcvbn";
 
 const NewPassword = ({
   value,
@@ -9,13 +9,13 @@ const NewPassword = ({
   error,
   ...restProps
 }: {
-  value: string
-  onChange: (value: FormEvent) => void
-  name: string
+  value: string;
+  onChange: (value: FormEvent) => void;
+  name: string;
   /**
    * Will be displayed only if invalid
    */
-  error: string
+  error: string;
 } & React.HTMLAttributes<HTMLButtonElement>): ReactElement => {
   const feedback = zxcvbn(value, [
     "troop",
@@ -28,7 +28,7 @@ const NewPassword = ({
     "95014",
     "cupertino",
     "correcthorsebatterystaple",
-  ])
+  ]);
   const UpdatingPopoverBase = (
     {
       scheduleUpdate,
@@ -36,24 +36,24 @@ const NewPassword = ({
       id,
       ...props
     }: {
-      id: string
-      children: ReactElement | ReactElement[]
-      scheduleUpdate: () => void
+      id: string;
+      children: ReactElement | ReactElement[];
+      scheduleUpdate: () => void;
     },
     ref
   ): ReactElement => {
     React.useEffect(() => {
       // console.log('updating!');
-      scheduleUpdate()
-    }, [children, scheduleUpdate])
+      scheduleUpdate();
+    }, [children, scheduleUpdate]);
 
     return (
       <Popover ref={ref} id={id} {...props}>
         {children}
       </Popover>
-    )
-  }
-  const UpdatingPopover = React.forwardRef(UpdatingPopoverBase)
+    );
+  };
+  const UpdatingPopover = React.forwardRef(UpdatingPopoverBase);
 
   return (
     <>
@@ -153,7 +153,7 @@ const NewPassword = ({
         </>
       )}
     </>
-  )
-}
+  );
+};
 
-export default NewPassword
+export default NewPassword;

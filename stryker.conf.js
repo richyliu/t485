@@ -13,5 +13,5 @@ module.exports = function(config) {
     },
     timeoutMS: 60000,
     maxConcurrentTestRunners: 4,
-  })
-}
+  });
+};

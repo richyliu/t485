@@ -9,4 +9,4 @@ module.exports = {
     "<rootDir>/.cache/",
     "<rootDir>/.stryker-tmp/",
   ],
-}
+};

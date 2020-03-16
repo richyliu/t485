@@ -1,16 +1,16 @@
-import React, { ReactElement } from "react"
-import { Form } from "react-bootstrap"
-import classNames from "classnames"
+import React, { ReactElement } from "react";
+import { Form } from "react-bootstrap";
+import classNames from "classnames";
 
 interface VotingGroupProps {
   /**
    * The title of the group.
    */
-  title?: string
+  title?: string;
   /**
    * The description of the group.
    */
-  description?: string
+  description?: string;
   /**
    * The options to render. Each option should have a label property dictating what will be
    * shown to the user, and a value property, which will be referenced in events.
@@ -20,24 +20,24 @@ interface VotingGroupProps {
      * TEST Label
      * @param label - TEST TEST
      */
-    label: string
-    value: string | number
-  }[]
+    label: string;
+    value: string | number;
+  }[];
   /**
    * An array of values that should be selected.
    */
-  value?: (string | number)[]
+  value?: (string | number)[];
   /**
    * If provided, the maximum number of votes will be displayed, and visual validation styling will be applied.
    *
    */
-  maxVotes?: number
+  maxVotes?: number;
   /**
    * A function to be called each time the value of an option changes.
    * @param value - The `value` of the option that was changed.
    * @param state - Whether or not the checkbox should now be checked (after the change).
    */
-  onSelectChange: (value: string | number, state: boolean) => void
+  onSelectChange: (value: string | number, state: boolean) => void;
 }
 
 /*
@@ -73,7 +73,7 @@ const VotingGroup = ({
         </p>
       )}
       {options.map((opt, i) => {
-        const checked = value?.indexOf(opt.value) > -1
+        const checked = value?.indexOf(opt.value) > -1;
         return (
           <Form.Check
             key={i}
@@ -83,11 +83,11 @@ const VotingGroup = ({
             checked={checked}
             onChange={(): void => onSelectChange(opt.value, !checked)}
           />
-        )
+        );
       })}
     </div>
-  )
-}
+  );
+};
 // eslint-disable-next-line no-undef
-export { VotingGroup, VotingGroupProps }
-export default VotingGroup
+export { VotingGroup, VotingGroupProps };
+export default VotingGroup;

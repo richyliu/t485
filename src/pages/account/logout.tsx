@@ -1,13 +1,13 @@
-import React, { ReactElement } from "react"
-import Layout from "../../components/layout/Layout"
-import SEO from "../../components/layout/seo"
-import firebase from "gatsby-plugin-firebase"
+import React, { ReactElement } from "react";
+import Layout from "../../components/layout/Layout";
+import SEO from "../../components/layout/seo";
+import firebase from "gatsby-plugin-firebase";
 
 const LogoutPage = (): ReactElement => {
   interface Error {
-    exists: boolean
-    message?: string
-    code?: string
+    exists: boolean;
+    message?: string;
+    code?: string;
   }
 
   const [error, setError]: [
@@ -15,17 +15,17 @@ const LogoutPage = (): ReactElement => {
     React.Dispatch<React.SetStateAction<Error>>
   ] = React.useState({
     exists: false,
-  })
-  const [loading, setLoading] = React.useState(true)
+  });
+  const [loading, setLoading] = React.useState(true);
   firebase
     .auth()
     .signOut()
     .then(() => {
-      setLoading(false)
+      setLoading(false);
     })
     .catch((e: Error) => {
-      setError(e)
-    })
+      setError(e);
+    });
   return (
     <Layout>
       <SEO title="Login" />
@@ -38,7 +38,7 @@ const LogoutPage = (): ReactElement => {
           : "You have been logged out successfully"}
       </p>
     </Layout>
-  )
-}
+  );
+};
 
-export default LogoutPage
+export default LogoutPage;

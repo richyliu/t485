@@ -1,17 +1,20 @@
-import React, { ReactElement } from "react"
-import { Button, Form } from "react-bootstrap"
-import { navigate } from "gatsby-link"
-import Layout from "../../components/layout/Layout"
-import SEO from "../../components/layout/seo"
-import { Field, Formik, FormikBag } from "formik"
-import * as Yup from "yup"
-import firebase from "gatsby-plugin-firebase"
-import { WindowLocation } from "reach__router"
-import { AuthContinueState, AuthReturnState } from "../../components/auth"
-import { User } from "firebase"
-import { useAuthState } from "react-firebase-hooks/auth"
+import React, { ReactElement } from "react";
+import { Button, Form } from "react-bootstrap";
+import { navigate } from "gatsby-link";
+import Layout from "../../components/layout/Layout";
+import SEO from "../../components/layout/seo";
+import { Field, Formik, FormikBag } from "formik";
+import * as Yup from "yup";
+import firebase from "gatsby-plugin-firebase";
+import { WindowLocation } from "reach__router";
+import {
+  AuthContinueState,
+  AuthReturnState,
+  useAuthState,
+} from "../../components/auth";
+import { User } from "firebase";
 // import {GoogleLoginButton} from "react-social-login-buttons"
-import { unexpectedFirebaseError } from "../../utils/unexpectedError"
+import { unexpectedFirebaseError } from "../../utils/unexpectedError";
 
 const LoginForm = ({
   continueTo,
@@ -19,14 +22,14 @@ const LoginForm = ({
   challengeUser,
   continueButton,
 }: {
-  continueTo: string
-  continueState?: object
-  challengeUser?: User
-  continueButton?: boolean
+  continueTo: string;
+  continueState?: object;
+  challengeUser?: User;
+  continueButton?: boolean;
 }): ReactElement => {
   interface FormData {
-    email?: string
-    password: string
+    email?: string;
+    password: string;
   }
 
   const schema = Yup.object().shape({
@@ -36,7 +39,7 @@ const LoginForm = ({
           .email("The email you entered isn't valid.")
           .required("Please enter an email"),
     password: Yup.string().required("Please enter a password"),
-  })
+  });
 
   const onAuthSuccess = (): void => {
     navigate(continueTo, {
@@ -45,31 +48,31 @@ const LoginForm = ({
         state: continueState || {},
       } as AuthReturnState,
       replace: true,
-    })
-  }
+    });
+  };
 
   const handleSubmit = (
     { email, password }: FormData,
     { setSubmitting, setErrors }: FormikBag<FormData, FormData>
   ): void => {
     if (challengeUser) {
-      const user = challengeUser
+      const user = challengeUser;
       const credentials = firebase.auth.EmailAuthProvider.credential(
         user.email,
         password
-      )
+      );
       // console.log(user, user.email, password)
       user
         .reauthenticateWithCredential(credentials)
         .then(onAuthSuccess)
         .catch(e => {
-          console.log(e)
+          console.log(e);
           switch (e.code) {
             case "auth/wrong-password":
               setErrors({
                 password: "The password is incorrect.",
-              })
-              break
+              });
+              break;
             default:
               setErrors({
                 password:
@@ -88,10 +91,10 @@ const LoginForm = ({
                     .match(/.{1,50}/g)
                     .join("") +
                   "\n<<<<<<<<<<! END SUPPORT DATA V1 !>>>>>>>>>>",
-              })
+              });
           }
-          setSubmitting(false)
-        })
+          setSubmitting(false);
+        });
     } else {
       firebase
         .auth()
@@ -103,28 +106,28 @@ const LoginForm = ({
               setErrors({
                 email:
                   "Your account has been disabled. If you believe this is a mistake, please contact the webmaster.",
-              })
-              break
+              });
+              break;
             case "auth/wrong-password":
               setErrors({
                 password: "The password is incorrect.",
-              })
-              break
+              });
+              break;
             case "auth/user-not-found":
             case "auth/invalid-email":
               setErrors({
                 email: "No user exists with that email.",
-              })
-              break
+              });
+              break;
             default:
               setErrors({
                 password: unexpectedFirebaseError(e),
-              })
+              });
           }
-          setSubmitting(false)
-        })
+          setSubmitting(false);
+        });
     }
-  }
+  };
   // const GoogleLoginButton = styled(Button)`
   //
   // 	background-color: rgb(203, 63, 34);
@@ -151,10 +154,10 @@ const LoginForm = ({
           handleSubmit,
           isSubmitting,
         }: {
-          errors: { [Field: string]: string }
-          touched: { [Field: string]: boolean }
-          handleSubmit: (e: React.FormEvent) => void
-          isSubmitting: boolean
+          errors: { [Field: string]: string };
+          touched: { [Field: string]: boolean };
+          handleSubmit: (e: React.FormEvent) => void;
+          isSubmitting: boolean;
         }): ReactElement => (
           <Form onSubmit={handleSubmit}>
             {!challengeUser && (
@@ -231,26 +234,26 @@ const LoginForm = ({
       {/*	{" "}*/}
       {/*	Login with Google</GoogleLoginButton>*/}
     </>
-  )
-}
+  );
+};
 
 const LoginPage = ({
   location,
 }: {
-  location: WindowLocation
+  location: WindowLocation;
 }): ReactElement => {
-  const [user, ,] = useAuthState(firebase.auth())
+  const [user, ,] = useAuthState(firebase);
 
-  let continuePath: string
-  const continueObj = location?.state as AuthContinueState
+  let continuePath: string;
+  const continueObj = location?.state as AuthContinueState;
   if (continueObj?.return) {
     if (continueObj?.return === true) {
-      continuePath = continueObj?.from
+      continuePath = continueObj?.from;
     } else {
-      continuePath = continueObj?.return
+      continuePath = continueObj?.return;
     }
   }
-  console.log(continueObj)
+  console.log(continueObj);
   return (
     <Layout
       style={{
@@ -260,12 +263,14 @@ const LoginPage = ({
     >
       <SEO title="Login" />
       <div
-        style={{
-          margin: "auto",
-          // position: "absolute",
-          // top: "50%",
-          // transform: "translateY(-50%)"
-        }}
+        style={
+          {
+            // margin: "auto",
+            // position: "absolute",
+            // top: "50%",
+            // transform: "translateY(-50%)"
+          }
+        }
       >
         <h1 className="text-center">
           {continueObj?.message
@@ -287,7 +292,7 @@ const LoginPage = ({
         />
       </div>
     </Layout>
-  )
-}
+  );
+};
 
-export default LoginPage
+export default LoginPage;
